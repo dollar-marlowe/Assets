@@ -1,11 +1,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <style>
-	.wrap{
+	
+		.container{
+			width:fit-content;
 			margin:auto;
-			margin-left:80px;
-			margin-top:20px;
+		}
+		.sum{
+			width:fit-content;
 			display:inline-flex;
-			align-items:left;
+			margin:auto;
+			margin-top:0px;
+			margin-left:50px;
+						
 		}
 		ul#listavail li#availhead,
 		ul#listdep li#dephead{
@@ -23,11 +29,7 @@
 		.list p{
 			font-weight:bold;
 		}
-		.sum{
-			width:fit-content;
-			margin:auto;
-			align-items:left;
-		}
+		
 		
 		.imgform-img p{
 			margin-left:10px;
@@ -108,6 +110,7 @@
 				margin:auto;
 			}
 		}
+	
 		@media (max-width:820px){
 			table{
 				width:95%;
@@ -119,10 +122,15 @@
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:95%;
 			}
+			p.head{
+				font-size:23px;
+			}
+			
 		}
-		@media (max-width:600px){
+		@media (max-width:700px){
+			
 			table{
-				width:95%;
+				width:90%;
 				font-size:9px;
 			}
 			th:nth-child(5), td:nth-child(5),
@@ -132,33 +140,52 @@
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:15px;
 			}
-			
-		}
-		@media (max-width:400px){
-			table{
-				width:88%;	
+			p.head{
+				font-size:23px;
+			}
+			.sum{
+				display:block;
 			}
 		}
-		@media (max-width:380px){
+		
+		@media (max-width:452px){
+			.sum{
+				display:block;
+			}
 			table{
-				width:75%;
+				width:50%;	
+			}
+			
+			th:nth-child(2), td:nth-child(2), th:nth-child(5), td:nth-child(5),
+				th:nth-child(6), td:nth-child(6)				{
+				display:none;
+			}
+		}
+		@media (max-width:390px){
+			table{
+				width:20%;
 				font-size:10px;	
 			}
-			th:nth-child(2), td:nth-child(2), th:nth-child(5), td:nth-child(5),
-			th:nth-child(6), td:nth-child(6){
-			display:none;
-			}
+			
 		}
-			@media (max-width:308px){
+			@media (max-width:358px){
 				table{
-					width:75%;
-					font-size:11px;	
+					width:25%;
+					font-size:8px;	
 				}
-				th:nth-child(2), td:nth-child(2), th:nth-child(5), td:nth-child(5),
+				
+			th:nth-child(2), td:nth-child(2), th:nth-child(5), td:nth-child(5),
 				th:nth-child(6), td:nth-child(6),
 				th:nth-child(7), td:nth-child(7){
 				display:none;
 			}
+			th:nth-child(2), td:nth-child(2){
+				color:red;
+			}
+		}
+		.sum .wrap1 ul li{
+			overflow-wrap: break-word;
+		
 		}
 
 </style>
@@ -166,9 +193,46 @@
 	<section id="imgform">
     <div class="imgform-container ">
 	
-		<!-- this ection if for table--> 
+		<!-- this section if for the summary--> 
 	  <div class="imgform-img" >
 	  
+
+	  
+		  <p class='head' style="margin-bottom:10px;margin-top:10px;">Assets Summary</p>
+	  <hr class="divide2">
+	  <div class="container" >
+			<?php 
+				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='available' group by category";
+				$cols=  array("name","category","quantity");
+			
+				echo"<div class='sum'>";
+					echo"<ul id='listavail'>";
+					loadlist($str,$cols,"availhead","Available");	
+					echo"</ul>";
+				echo"</div>";
+				echo"<div class=' sum'>";
+				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='deployed' group by category";
+					echo"<ul id='listdep'>";
+					loadlist($str,$cols,"dephead","Deployed");	
+					echo"</ul>";
+				echo"</div>";
+				echo"<div class=' sum'>";
+				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='To Receive' group by category";
+					echo"<ul id='listreceive'>";
+					loadlist($str,$cols,"toreceive","To Receive");	
+					echo"</ul>";
+				echo"</div>";
+			?>
+		</div >
+		<hr class="divide2" style="margin-top:5px;margin-bottom:10px;">
+	  <h3 id='total' style='width:100%;'>
+	  <?php
+	  		echo total("select count(id) as id from assetowner where office_id=".$_SESSION["officeid"],"id");
+	  ?>
+	  </h3>
+	  <hr class="divide2" style="margin-top:2px">
+	  <br>
+	  	<!-- this ection if for table--> 
 	  <p class='head'>Inventory Table</p>
 	  <hr class="divide2" style="margin-top:5px;margin-bottom:10px;">
 	  <p>Status: 
@@ -185,7 +249,7 @@
 	  echo "<input type='hidden' id='office' value='".$_SESSION["officeid"]."'>";
 	  ?>
 		<p>
-		Aseets Category
+		Assets Category
 	  <select id='category'>
 		<?php 
 		$str="SELECT distinct category, category FROM assets";
@@ -200,7 +264,8 @@
 					`assets`.`serial` as `serial`, assets.name as name, assets.category as category, 
 					assets.brand as brand, assetowner.date_aquired as `date`, 
 					`assets`.`status` as `status` from assets, assetowner 
-					where assetowner.assets_id=assets.id and assetowner.office_id =".$_SESSION["officeid"]." and assets.status='available'";
+					where assetowner.assets_id=assets.id and assetowner.office_id =".$_SESSION["officeid"]." and assets.status='available' 
+					order by assets.category";
 					$headers=  array(" ","ASSET NUMBER","SERIAL","ITEM NAME","CATEGORY","BRAND",
 								"DATE AQUIRED","STATUS");
 					$elem=array("all","item");
@@ -209,45 +274,12 @@
 		  </table>
 		  <input   id="sbdemove" type='submit' Value='Demobilize' class='sub-bttn' >
 		  <input   id="receive" type='submit' Value='Receive' class='sub-bttn'>
-			<hr class="divide2" style="margin-top:20px;" >
-		  <p class='head' style="margin-bottom:10px;margin-top:10px;">Assets Summary</p>
-	  <hr class="divide2">
-	  <div class='sum'>
-			<?php 
-				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='available' group by category";
-				$cols=  array("name","category","quantity");
-			
-				echo"<div class='wrap'>";
-					echo"<ul id='listavail'>";
-					loadlist($str,$cols,"availhead","Available");	
-					echo"</ul>";
-				echo"</div>";
-				echo"<div class='wrap'>";
-				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='deployed' group by category";
-					echo"<ul id='listdep'>";
-					loadlist($str,$cols,"dephead","Deployed");	
-					echo"</ul>";
-				echo"</div>";
-				echo"<div class='wrap'>";
-				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='To Receive' group by category";
-					echo"<ul id='listreceive'>";
-					loadlist($str,$cols,"toreceive","To Receive");	
-					echo"</ul>";
-				echo"</div>";
-			?>
-		</div >
-		<hr class="divide2" style="margin-top:5px;margin-bottom:10px;">
-	  <h3 id='total' style='width:100%;'>
-	  <?php
-	  		echo total("select count(id) as id from assetowner where office_id=".$_SESSION["officeid"],"id");
-	  ?>
-	  </h3>
-	  <hr class="divide2" style="margin-top:2px">
+		  <hr class="divide2" style="margin-top:20px;" >
 	  <br>
         </div>
 		<!-- this section is for the form transfer and deploy--> 
 		<div class="form-container">
-		<h3 id='assetmgt'>Deploy Assets</h3>
+		<p class='head' id="assetmgt">Deploy Assets</p>
 		<label for="action">Action</label>
 					<select id="action" name="action" >
 						<option value='1'>Deploy</option>
@@ -463,6 +495,7 @@
 					$(".transfer").css("display","none");
 					$(".deploy").css("display","inherit");
 					$("#assetmgt").html("Deploy Assets");
+					
 				}
 				else{
 					$(".transfer").css("display","inherit");
@@ -480,13 +513,13 @@
 				if(status=="all"){
 					$("#category").attr("disabled","disabled");
 					$("#category").val(0);
-					str=str+$("#office").val();
+					str=str+$("#office").val()+" order by assets.category";
 				}	
 				else{
 					
 					$("#category").removeAttr("disabled");
 					if($("#category").val()==0){
-						str=str+$("#office").val()+" and assets.status='"+status+"'";
+						str=str+$("#office").val()+" and assets.status='"+status+"' order by assets.category";
 					}
 					else{
 						str=str+$("#office").val()+" and assets.status='"+status+"' and assets.category='"+$("#category").val()+"'";
@@ -494,7 +527,14 @@
 				}
 				if(status=="deployed"){
 						headers=" %Asset id%Assets%Province%Municipality%Brgy.%Date deployed%Deployment Status";	
-						str="SELECT deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name,  province.name as province, municipality.name as muni, barangay.name as brgy,deployment.datemobilized as `datedep`, deployment.deployment_stat as depstat FROM deployment,region,province,municipality,barangay,assetowner,assets where deployment.reg_id=region.id and deployment.prov_id=province.id and deployment.muni_id=municipality.id and deployment.brgy_id=barangay.id and assetowner.id=deployment.asset_owner_id and assets.id=assetowner.assets_id and deployment.deployment_stat='Active'  and assetowner.office_id="+$("#office").val();
+						str="SELECT deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name, \
+						 province.name as province, municipality.name as muni, barangay.name as brgy,deployment.datemobilized\
+						  as `datedep`, deployment.deployment_stat as depstat FROM deployment,region,province,municipality,\
+						  barangay,assetowner,assets where deployment.reg_id=region.id and \
+						  deployment.prov_id=province.id and deployment.muni_id=municipality.id \
+						  and deployment.brgy_id=barangay.id and assetowner.id=deployment.asset_owner_id \
+						  and assets.id=assetowner.assets_id and deployment.deployment_stat='Active' order by assets.category \
+						  and assetowner.office_id="+$("#office").val();
 						$("#sbdemove").css("display","inline-block");
 					}
 					else{

@@ -6,8 +6,6 @@
 			font-size: 2.7rem;
 			font-weight: 500;
 			color: #444;
-			
-			
 		}
 		.mainhead{
 			text-align:center;
@@ -307,7 +305,7 @@
 						class='single'
 						cols="30"
 						rows="6"
-							placeholder="SERIAL:
+							placeholder="SERIAL:*
 								For multiple input, place / in between each serial"
 						id="serial"
 					></textarea>
@@ -372,9 +370,10 @@
 			//ADD ANY MORE MESSAGE IF THE FORM IS ALREADY IN ERROR STATE UNLESS CLEARED
 		function validate_elem(id,value,key){//COMMON FUNCTION FOR VALIDATION OF ELEMENT PAREAMETERS
 			//ARE ID FOR THE ID OF THE ELEMENT EX #aname value if the null value for an element 
-			//0 for combo box or select element and "" or empty string for input texts
+			//0 for combo box or select element and  or empty string for input texts
 			//LAST PARAMETER IS THE KEY TO BE USED IN ASSOCIATIVE ARRAR THSI IS SAME ID WITH THE ELEMENT BEING PASSED
 				if($(id).val()==value){
+				
 					$(id).css("border-bottom-color","red");
 					isok[key]=false;
 					if(err_label<1){
@@ -387,6 +386,7 @@
 				else{
 					$(id).css("border-bottom-color","#ddd");
 					isok[key]=true;
+				
 				
 				}
 				
@@ -422,31 +422,41 @@
 					isok[key]=false;
 				}
 				$("#others").hide();
+				$("#aname,#category,#brand,#status,#office,#serial").css("border-bottom-color","#ddd");
+				$("#msgasset").remove();
+				$("#errserial").remove();
+				$("#errime").remove();
+			
 			
 			}
 			$("#submitclear").click(function(){
 				clearassetform();
-				$("#aname,#category,#brand,#status,#office,#serial").css("border-bottom-color","#ddd");
-				$("#msgasset").remove();
-				$("#errserial").remove();
+				
 				
 			});
+			function toarray(values){
+				return values.split("/");
+
+			}
 			function validate_serials(id,lbl,errmsg){
-				var serials=$(id).val().split("/");
+				var serials=toarray($(id).val());
 				var size=count(serials);
-				if(size==$("#quantity").val()){
-					$(errmsg).remove();
+			
+				if(size==$("#quantity").val() && $(id).val()!=""){
+				
+					$("#"+errmsg).remove();
 					$(id).css("border-bottom-color","#ddd");
 					return true;	
 					
 				}
 				else{
-					$(id).css("border-bottom-color","red");
-					$(errmsg).remove();
-					$("#assetheader").after("<p color='red' id='"+errmsg+"' style='color:red'>"+lbl+" and quantity does not match!</p>");
+					$(id).css("border-bottom-color"," #1a1aff");
+					$("#"+errmsg).remove();
+					$("#assetheader").after("<p id='"+errmsg+"' style='color:#1a1aff'>"+lbl+" and quantity does not match!</p>");
 					
 					return false;
 				}
+				
 			}
 
 			$("#submitasset").click(function(){//EVENT WHEN THE BUTTON SUBMIT IF CLICKED JQUERY USES
@@ -474,7 +484,20 @@
 					if($("#category").val()=='0'){
 						validate_elem("#category",'0',"category");
 					}
-				
+					
+					//serials and ime validation	
+					if(!validate_serials("#serial","Serials","errserial")){
+					isok["serial"]=false;
+					}
+					var goime=false;
+					if($("#ime").val()!=""){
+						if(validate_serials("#ime","IMEIs","errime")){
+							goime=true;
+						}
+					}
+					else{
+						goime=true;
+					}
 				if($("#type").val()=="single")	{
 					validate_elem("#aname","","aname");//the structure of validate_elem here unlike other val;idations
 					//in other jquery form it doesn't return a value instead uses the isok array with keys corresponding to the names
@@ -485,58 +508,53 @@
 					validate_elem("#brand","","brand");
 					validate_elem("#status",0,"status");
 					validate_elem("#office",0,"office");
-					validate_elem("#serial",0,"serial");
-					if(!validate_serials("#serial","Serials","#errserial")){
-					isok["serial"]=false;
-					}
-					var goime=false;
-					if($("#ime").val()!=""){
-						if(validate_serials("#ime","IMEI's","#errime")){
-							goime=true;
-						}
-					}
-					else{
-						goime=true;
-					}
+				
 					if(goasset() && goime){// TESTING IF ALL FIELDS ARE CLEARED
 						//EXECUTE CLEAR FORM AFTER SUCCESSFUL ENTRY 
-						$.post("AJAX/insertasset.php",
-						{
-							aname: 		$("#aname").val(),
-							category:	cat,
-							brand:		$("#brand").val(),
-							model:		$("#model").val(),
-							serial:		$("#serial").val(),
-							ime:		$("#ime").val(),
-							fundsource:	$("#fundsource").val(),
-							donor:		$("#donor").val(),
-							provider:	$("#provider").val(),
-							status:		$("#status").val(),
-							remarks:	$("#remarks").val(),
-							office:		$("#office").val(),
-							type:		"single"
-						},
-							function(data){
-								$("#msgaddasset").remove();//the command for adding thisa message 
-								// that a new asset has been successfully saved is in AJAX/insertasset
-								//it removes the previously added msgaddasset to avoid piling up of messages
-								// in the header
-								$("#new_asset").remove();// this is a hidden input filed to identy that there is one submitted
-								$("#assetheader").after(data);
+						var serials=toarray($("#serial").val());
+						var imes=toarray($("#ime").val());
+						var size=count(serials);
+						for(let i=0;i<size;i++){
+							var imei ="n/a";
+							if($("#ime").val()!=""){
+								imei=imes[i];
 							}
-						);
+								$.post("AJAX/insertasset.php",
+							{
+								aname: 		$("#aname").val(),
+								category:	cat,
+								brand:		$("#brand").val(),
+								model:		$("#model").val(),
+								serial:		serials[i],
+								ime:		imei,
+								fundsource:	$("#fundsource").val(),
+								donor:		$("#donor").val(),
+								provider:	$("#provider").val(),
+								status:		$("#status").val(),
+								remarks:	$("#remarks").val(),
+								office:		$("#office").val(),
+								type:		"single"
+							},
+								function(data){
+									$("#msgaddasset").remove();//the command for adding thisa message 
+									// that a new asset has been successfully saved is in AJAX/insertasset
+									//it removes the previously added msgaddasset to avoid piling up of messages
+									// in the header
+									$("#new_asset").remove();// this is a hidden input filed to identy that there is one submitted
+									$("#assetheader").after(data);
+								}
+							);
+						}
+						
 						clearassetform();
 					}
 				}	
 				if($("#type").val()=="set")	{
 					validate_elem("#aname","","aname");
-					validate_elem("#office",0,"office")
-
+					validate_elem("#office",0,"office");
 					if(isok["aname"] && isok["office"]){
 						alert($("#new_asset").val());
 						if($("#new_asset").val()=='0'){
-
-							
 							$.post("AJAX/insertasset.php",
 								{
 									aname: 		$("#aname").val(),
@@ -625,14 +643,36 @@
 				goasset();
 			});
 			$("#serial").change(function(){
-				validate_elem("#serial",0,"serial");
-				validate_serials("#serial","Serials","#errserial")
+				validate_elem("#serial","","serial");
+				validate_serials("#serial","Serials","errserial")
 				goasset();
 			});
+			$("#ime").change(function(){
+				if($("#ime").val()!=""){
+				 validate_serials("#ime","IMEIs","errime")
+					
+				}
+				else{
+					$("#errime").remove();
+					$(this).css("border-bottom-color","#ddd");
+				}
+			
+			});
+
 
 			$("#quantity").change(function(){
-				validate_serials("#serial","Serials","#errserial")
+				
+				validate_serials("#serial","Serials","errserial")
 				goasset();
+
+				if($("#ime").val()!=""){
+				 validate_serials("#ime","IMEIs","errime")
+					
+				}
+				else{
+					$("#errime").remove();
+					$("#ime").css("border-bottom-color","#ddd");
+				}
 			});
 			
 			var allsub ={
@@ -651,8 +691,8 @@
 			//Funtion for sub item validation
 			//this is another function for sub-item validation it returns a value so no need to use keys in here
 			// this was coded this way to avoid recoding the whole form :D
-			//as coding structures improves, future jquery will be moved in one file just like the php to allow code reuse	
-			function validate_sub_item(id,null_val,lbl,target)	{
+			//as coding structures improves, future jquery will be moved in one file just like the php to allow code re-use	
+			function validate_sub_item(id,null_val,lbl,target){
 				if($(id).val()==null_val){
 					$("#"+lbl).remove();
 					$("#sub_msg_success").remove();
@@ -721,6 +761,7 @@
 					}
 					else{
 						$("#err_4sub").remove();
+						$("#sub_msg_success").remove();
 						$("#assetheader").after("<p id='err_4sub' style='color:red;'>You must fill-up and save the Inventory set form first!</p>");
 					}
 				}

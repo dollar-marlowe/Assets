@@ -137,6 +137,26 @@ function removepecialchars($str){
    
     return trim($str);
 }
+function shorten($txt){
+    $arr=explode(" ",$txt);
+    $size=sizeof($arr);
+    $str="";
+    if($size>1){
+        $str=$arr[0]." ".$arr[1];
+    }
+    else{
+        $str=$txt;
+    }
+    return $str;
+}
+function replace($text,$orig){
+    $elems=explode("%",$text);
+    $val=shorten($orig);
+    foreach($elems as $elem){
+        $val=str_replace($elem,$elem." ",$val);
+    }
+    return $val;
+}
 //loading values into dropdown <select><option>
 function loadlist($str, $col, $header,$label){
     $db= new Database();
@@ -144,9 +164,11 @@ function loadlist($str, $col, $header,$label){
     $data=$db->selectrows($str,0);
     
     if($data!=null){
-        echo "<li id='".$header."' style='list-style-type: none;'><p>".$label."</p></li>";
+        echo "<li id='".$header."' style='list-style-type: none; font-weight: bold;'><p>".$label."</p></li>";
+        $keys=",%.%:%/%\%-%_%)%(";
         foreach($data as $row){
-           echo "<li> ".$row[$col[0]]."(".$row[$col[1]]."):&nbsp".$row[$col[2]]."</li>";
+           echo "<li> ".replace($keys,$row[$col[0]])."<br>
+           (".replace($keys,$row[$col[1]])."):&nbsp".replace($keys,$row[$col[2]])."</li>";
         }
     
     }
@@ -220,10 +242,11 @@ function loadtable($str,$headers,$chkbox,$all,$class){
     }
 }
 
-function loadropdown1($str,$col1,$col2){
+function loadropdown1($str,$col1,$col2){//the second  dropdown has others 
     
     $db = new Database();
     $db->connect();
+    
     $data=$db->selectrows($str,0);
    
     if($data!=null){
@@ -253,13 +276,9 @@ function loadropdown($str,$col1,$col2,$from){
     else{
         echo"<option value='0'>Select from ".$from."</option>";
     }
-    
 }
-
 function loadintodb(){
-        
     require_once "PHPExcel/Classes/PHPExcel.php";
-
     $tmpfname = "RESOURCES/geo_map.xlsx";
     $excelReader = PHPExcel_IOFactory::createReaderForFile($tmpfname);
     $excelObj = $excelReader->load($tmpfname);
@@ -294,8 +313,6 @@ function loadintodb(){
                     "provcode"=>$excel_arr[$row][6],"provname"=>$excel_arr[$row][7],"municode"=>$excel_arr[$row][11],
                     "muniname"=>$excel_arr[$row][12],"brgycode"=>$excel_arr[$row][14],"brgyname"=>$excel_arr[$row][15],
                      "lat"=>$excel_arr[$row][16],"long"=>$excel_arr[$row][17]);
-
-                   
         /*echo $excel_arr[$row][0]." -0- ".$excel_arr[$row][2]." -2- ".
         $excel_arr[$row][4]." -4- ".$excel_arr[$row][6]." -6- ".
         $excel_arr[$row][7]." -7- ".$excel_arr[$row][8]." -8- ".
@@ -313,8 +330,6 @@ function loadintodb(){
               $num++;
             
         }
-       
-      
        if($prov!=$data["provcode"]){
         $query="insert into province (id,reg_id,prov_code,name, geocode)
         values (".$provid.",".($regid-1).",'".$data["provcode"]."',
@@ -326,8 +341,6 @@ function loadintodb(){
         $provid++;
         $num++;
        }
-          
-      
        if($muni!=$data["municode"]){
        $query="insert into municipality (id,province_id, muni_code, name, geocode)
        values (".$munid.",".($provid-1).",'".$data["municode"]."',
@@ -339,7 +352,6 @@ function loadintodb(){
        $munid++;
        $num++;
        }
-
         $query="insert into barangay (id,muni_id,brgy_code, name, `long`,lat,geocode)
         values (".$brgyid.",".($munid-1).",'".$data["brgycode"]."',
         '".$data["brgyname"]."','".$data["long"]."','".$data["lat"]."','"
