@@ -207,17 +207,13 @@
     <div class="imgform-container"  >
 		<!-- this section is for  sub items--> 
 	  	<div class="imgform-img"  >
-
 			  <h2 id='assetsub'>
 			  <div  id="minus-item" class='set'></div> 
 				  Sub-Inventory Items
 			  <div  id="add-item" class='set'></div></h2>
-			
 	 	 	<img src="images/asset.jpg" alt="" id="img"/>
 			<section class='ac-container' >
-				
 				<div id='subitem1'>
-					
 					<input id='ac-6' name='accordion-6' type='checkbox' >
 					<label for='ac-6' class='acc-label'>Sub-item1</label>
 					<article class='sizeauto' >							
@@ -235,10 +231,6 @@
 						<input type='text' placeholder='Provider' id='prov1'/>
 						<input type='text' placeholder='Fund source'  id='fs1' />
 						<input type='text' placeholder='Donor' id='donor1' />
-						
-					
-						
-						
 						<textarea
 							cols='25'
 							rows='2'
@@ -426,8 +418,6 @@
 				$("#msgasset").remove();
 				$("#errserial").remove();
 				$("#errime").remove();
-			
-			
 			}
 			$("#submitclear").click(function(){
 				clearassetform();
@@ -438,21 +428,21 @@
 				return values.split("/");
 
 			}
-			function validate_serials(id,lbl,errmsg){
+			function validate_serials(id,lbl,errmsg,target,cssproperty,cssval,cssok){
 				var serials=toarray($(id).val());
 				var size=count(serials);
 			
 				if(size==$("#quantity").val() && $(id).val()!=""){
 				
 					$("#"+errmsg).remove();
-					$(id).css("border-bottom-color","#ddd");
+					$(id).css(cssproperty,cssok);//#ddd
 					return true;	
 					
 				}
 				else{
-					$(id).css("border-bottom-color"," #1a1aff");
+					$(id).css(cssproperty,cssval);//#1a1aff
 					$("#"+errmsg).remove();
-					$("#assetheader").after("<p id='"+errmsg+"' style='color:#1a1aff'>"+lbl+" and quantity does not match!</p>");
+					$(target).after("<p id='"+errmsg+"' style='color:#1a1aff'>"+lbl+" and quantity does not match!</p>");//"#assetheader"
 					
 					return false;
 				}
@@ -485,19 +475,7 @@
 						validate_elem("#category",'0',"category");
 					}
 					
-					//serials and ime validation	
-					if(!validate_serials("#serial","Serials","errserial")){
-					isok["serial"]=false;
-					}
-					var goime=false;
-					if($("#ime").val()!=""){
-						if(validate_serials("#ime","IMEIs","errime")){
-							goime=true;
-						}
-					}
-					else{
-						goime=true;
-					}
+				
 				if($("#type").val()=="single")	{
 					validate_elem("#aname","","aname");//the structure of validate_elem here unlike other val;idations
 					//in other jquery form it doesn't return a value instead uses the isok array with keys corresponding to the names
@@ -508,7 +486,19 @@
 					validate_elem("#brand","","brand");
 					validate_elem("#status",0,"status");
 					validate_elem("#office",0,"office");
-				
+						//serials and ime validation	
+						if(!validate_serials("#serial","Serials","errserial","#assetheader","border-bottom-color","#1a1aff","#ddd")){
+					isok["serial"]=false;
+					}
+					var goime=false;
+					if($("#ime").val()!=""){
+						if(validate_serials("#ime","IMEIs","errime","#assetheader","border-bottom-color","#1a1aff","#ddd")){
+							goime=true;
+						}
+					}
+					else{
+						goime=true;
+					}
 					if(goasset() && goime){// TESTING IF ALL FIELDS ARE CLEARED
 						//EXECUTE CLEAR FORM AFTER SUCCESSFUL ENTRY 
 						var serials=toarray($("#serial").val());
@@ -533,7 +523,8 @@
 								status:		$("#status").val(),
 								remarks:	$("#remarks").val(),
 								office:		$("#office").val(),
-								type:		"single"
+								type:		"single",
+								new_asset:	$("#new_asset").val()
 							},
 								function(data){
 									$("#msgaddasset").remove();//the command for adding thisa message 
@@ -541,7 +532,10 @@
 									//it removes the previously added msgaddasset to avoid piling up of messages
 									// in the header
 									$("#new_asset").remove();// this is a hidden input filed to identy that there is one submitted
-									$("#assetheader").after(data);
+									var val=data.split("%");
+										$("#new_asset").val($("#new_asset").val()+"/"+val[1]);
+									
+										$("#assetheader").after("<h4 id='msgaddasset'>"+val[0]+" "+val[1]+"</h4>");
 								}
 							);
 						}
@@ -552,40 +546,47 @@
 				if($("#type").val()=="set")	{
 					validate_elem("#aname","","aname");
 					validate_elem("#office",0,"office");
-					if(isok["aname"] && isok["office"]){
-						alert($("#new_asset").val());
-						if($("#new_asset").val()=='0'){
-							$.post("AJAX/insertasset.php",
-								{
-									aname: 		$("#aname").val(),
-									category:	cat,
-									brand:		"",
-									model:		"",
-									serial:		"",
-									ime:		"",
-									fundsource:	"",
-									donor:		"",
-									provider:	"",
-									status:		$("#status").val(),
-									remarks:	$("#remarks").val(),
-									office:		$("#office").val(),
-									type:		"set"
-								},
-								function(data){
-									$("#msgaddasset").remove();
-									$("#new_asset").remove();
-									$("#sub_msg_success").remove();
-									$("#err_4sub").remove();
-									$("#assetheader").after(data);
-								}
-							);
+					
+						var qty=$("#quantity").val();						
+						for(let i=1; i<=qty;i++){							
+							if($("#new_asset").val()=='0' && qty>1){
+							
+								$.post("AJAX/insertasset.php",
+									{
+										aname: 		$("#aname").val(), 
+										category:	cat,
+										brand:		"",
+										model:		"",
+										serial:		"",
+										ime:		"",
+										fundsource:	"",
+										donor:		"",
+										provider:	"",
+										status:		$("#status").val(),
+										remarks:	$("#remarks").val(),
+										office:		$("#office").val(),
+										type:		"set",
+										new_asset:	$("#new_asset").val()
+									},
+									function(data){
+										$("#msgaddasset").remove();
+										
+										$("#sub_msg_success").remove();
+										$("#err_4sub").remove();
+										var val=data.split("%");
+										$("#new_asset").val($("#new_asset").val()+"/"+val[1]);
+										
+										$("#assetheader").after("<h4 id='msgaddasset'>"+val[0]+" "+val[1]+"</h4>");
+									});
+							}
+							else{
+								$("#err_open").remove();
+								$("#assetheader").after("<p id='err_open' style='color:red;'>Sub-aset entry is still open, you must enter sub-inventory firts!</p>")
+							}
 						}
-						else{
-							$("#err_open").remove();
-							$("#assetheader").after("<p id='err_open' style='color:red;'>Sub-aset entry is still open, you must enter sub-inventory firts!</p>")
-						}
+						
 					}
-				}
+				
 			});
 
 			//EVENT FUNCTION FOR EACH ELEMENT ON CHANGE OF ELEMENT VALUE EXECUTE VALIDATE DATA ABD CHECK IF ALL FIELDS 
@@ -644,12 +645,12 @@
 			});
 			$("#serial").change(function(){
 				validate_elem("#serial","","serial");
-				validate_serials("#serial","Serials","errserial")
+				validate_serials("#serial","Serials","errserial","#assetheader","border-bottom-color","#1a1aff","#ddd")
 				goasset();
 			});
 			$("#ime").change(function(){
 				if($("#ime").val()!=""){
-				 validate_serials("#ime","IMEIs","errime")
+				 validate_serials("#ime","IMEIs","errime","#assetheader","border-bottom-color","#1a1aff","#ddd")
 					
 				}
 				else{
@@ -660,14 +661,11 @@
 			});
 
 
-			$("#quantity").change(function(){
-				
-				validate_serials("#serial","Serials","errserial")
+			$("#quantity").change(function(){				
+				validate_serials("#serial","Serials","errserial","#assetheader","border-bottom-color","#1a1aff","#ddd")
 				goasset();
-
 				if($("#ime").val()!=""){
-				 validate_serials("#ime","IMEIs","errime")
-					
+				 validate_serials("#ime","IMEIs","errime","#assetheader","border-bottom-color","#1a1aff","#ddd");					
 				}
 				else{
 					$("#errime").remove();
@@ -705,7 +703,9 @@
 					return true;
 				}
 			}
+			
 			function validateallsub(){
+			
 				var subitems ={
 				asset:"#asset",
 				cat:"#cat",
@@ -715,46 +715,85 @@
 				};
 				var sub_ok=false;
 				var okok=true;
+				var okime1=true;
+				var okime2=false;
 				for(let i=1; i<=elemid;i++){
+					
 					for(var item in subitems){
-						if(validate_sub_item(subitems[item]+i+"","","errsub","#assetsub")){
+						if(subitems[item]!="#serial" ){
+							if(validate_sub_item(subitems[item]+i+"","","errsub","#assetsub")){
 							sub_ok=true;
+							}
+							else{
+								okok=false;
+							}
 						}
 						else{
-							okok=false;
-						}
+							if(!validate_serials(subitems[item]+i+"","Serials","errsubser","#assetsub","border","solid 2px #1a1aff","solid 1px rgb(120, 120, 120)")){
+								okok=false;
+							}
+						
+						}	
 					}
+					if($("#ime"+i+"").val()!=""){
+						if(!validate_serials("#ime"+i+"","IMEs","errsubime","#assetsub","border","solid 2px #1a1aff","solid 1px rgb(120, 120, 120)")){
+								okok=false;
+								okime1=false;
+							}
+					}
+					else{
+						$("#ime"+i+"").css("border","solid 1px rgb(120, 120, 120)");
+						okime2=true;
+						
+
+					}
+					
 				}
+				okime2=okime1;
+					if(okime2){$("#errsubime").remove();}
 				sub_ok=okok;
 				return sub_ok;
 			}
 			//Event for saving all sub-items
 			$("#save-items").click(function(){
+				var new_assets=toarray($("#new_asset").val());
+					
 				if(validateallsub()){
-					$("#errsub").remove();
+				
+					var qty=$("#quantity").val();
+					$("#errsub,#errsubser,#errsubime").remove();
 					if($("#new_asset").val()!='0'){
-						for(let i=1; i<=elemid; i++){
-							$.post("AJAX/insert_sub_item.php",
-								{
-									asset_id:	$("#new_asset").val(),
-									asset:		$("#asset"+i).val(),
-									cat:		$("#cat"+i).val(),
-									brand: 		$("#brand"+i).val(),
-									provider: 	$("#prov"+i).val(),
-									fundsource:	$("#fs"+i).val(),
-									donor:		$("#donor"+i).val(),
-									model:		$("#model"+i).val(),
-									serial:		$("#serial"+i).val(),
-									ime:		$("#ime"+i).val(),
-									status:		$("#status"+i).val(),
-									remarks:	$("#remarks"+i).val()
-								},
-								function(data){
-									$("#sub_msg_success").remove();
-									$("#assetsub").after("<p id='sub_msg_success'>"+data+"</p>");
+						for(let j=1;j<=qty;j++){
+							for(let i=1; i<=elemid; i++){
+								var new_serial=toarray($("#serial"+i).val());
+								var imei="";
+								if($("#ime"+i).val()!=""){
+									var new_ime=toarray($("#ime"+i).val());
+									imei=new_ime[j-1];
 
-							});
+								}
+								$.post("AJAX/insert_sub_item.php",
+									{
+										asset_id:	new_assets[j],
+										asset:		$("#asset"+i).val(),
+										cat:		$("#cat"+i).val(),
+										brand: 		$("#brand"+i).val(),
+										provider: 	$("#prov"+i).val(),
+										fundsource:	$("#fs"+i).val(),
+										donor:		$("#donor"+i).val(),
+										model:		$("#model"+i).val(),
+										serial:		new_serial[j-1],
+										ime:		imei,
+										status:		$("#status"+i).val(),
+										remarks:	$("#remarks"+i).val()
+									},
+									function(data){
+										$("#sub_msg_success, #msgaddasset").remove();
+										$("#assetsub").after("<p id='sub_msg_success'>"+data+"</p>");
+								});
+							}
 						}
+						
 						$("#new_asset").val("0");
 						clear_sub();
 						clearassetform();
@@ -762,6 +801,7 @@
 					else{
 						$("#err_4sub").remove();
 						$("#sub_msg_success").remove();
+						$("#msgaddasset").remove();
 						$("#assetheader").after("<p id='err_4sub' style='color:red;'>You must fill-up and save the Inventory set form first!</p>");
 					}
 				}
@@ -769,7 +809,8 @@
 			//clearing all sub-items
 			function clear_sub(){
 				$(".subset").css("border","solid 1px rgb(120, 120, 120)");
-				$("#errsub").remove();
+				$("#errsub,#errsubser,#errsubime").remove();
+
 				for(let i=1;i<=elemid;i++){
 					for(var key in allsub){
 						$(allsub[key]+i+"").val("");

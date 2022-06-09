@@ -639,8 +639,8 @@ body {
 }
 
 #imgform {
-  padding: 5rem 0;
-  background: rgb(236, 235, 235);
+  padding: 2rem 0;
+  background: white;
 
   
 }
@@ -648,6 +648,9 @@ body {
   display: flex;
   background: #fff;
   margin-top:-0px;
+  border: solid 1px rgb(209, 208, 208);
+  border-radius: 5px;
+ 
 }
 
 .imgform-img {

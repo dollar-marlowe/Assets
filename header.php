@@ -14,7 +14,7 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/apple.css" />
+    <link rel="stylesheet" href="CSS/grapes.css" />
 	  <style>
       .navbar .ac-container label,  
       .navbar .ac-container label a,  

@@ -131,10 +131,18 @@ function linig($str){
 function removepecialchars($str){
     $str=str_replace("'","",$str);
     $str=str_replace("`","",$str);
-    $str=str_replace(";",";@@@@@",$str);
+    $str=str_replace(";","",$str);
     $str=str_replace("=","",$str);
-  
-   
+    $str=str_replace("%","",$str);
+    $str=str_replace("/","",$str);    
+    $str=str_replace("~","",$str);    
+    $str=str_replace("||","",$str); 
+    $str=str_replace("|","",$str); 
+    $str=str_replace("&","",$str); 
+    $str=str_replace("&&","",$str); 
+    $str=str_replace("==","",$str); 
+    $str=str_replace("^^","",$str); 
+    $str=str_replace("^","",$str); 
     return trim($str);
 }
 function shorten($txt){
@@ -246,7 +254,7 @@ function loadropdown1($str,$col1,$col2){//the second  dropdown has others
     
     $db = new Database();
     $db->connect();
-    
+
     $data=$db->selectrows($str,0);
    
     if($data!=null){
@@ -373,5 +381,4 @@ function loadintodb(){
 //echo $db->connect();
  $str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
 //echo linig($str); 
-
 ?>

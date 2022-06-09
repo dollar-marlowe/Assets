@@ -16,7 +16,7 @@
         $donor=removepecialchars($_POST["donor"]);
         $remarks=removepecialchars($_POST["remarks"]);
         $today=date("y-m-d h:m:sa");
-        $month=date("ymd");
+        $month=date("ymdhms");
         //this insertion in asset owner does not use the office dropdown as of yet will be adding access level for this
         $str="insert into sub_assets (assets_id, assetnumber,category,name,serial,IMEI,brand,model,provider,fundsource,donor,status,remarks)
         values (".$assetid.",'".$month."-".$serial."','".$category."','".$aname."','".$serial."','".$ime."','".$brand."','".$model."','".$provider."','".$fundsource."',

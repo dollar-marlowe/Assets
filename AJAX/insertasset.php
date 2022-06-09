@@ -17,6 +17,7 @@
         $office=removepecialchars($_POST["office"]);
         $remarks=removepecialchars($_POST["remarks"]);
         $type=removepecialchars($_POST["type"]);
+        $new_asset=$_POST["new_asset"];
         $today=date("y-m-d h:m:sa");
         $month=date("ymd");
         $aid=1;
@@ -27,8 +28,7 @@
             $aid=intval($aid)+1;
 
         }
-      
-
+       
         $officeid=$_SESSION["officeid"];
         $officialid=$_SESSION["officialid"];
         $region=$_SESSION["region_id"];
@@ -36,6 +36,14 @@
         $muni=  $_SESSION["muni_id"];
         $brgy=  $_SESSION["brgy_id"];
         $msg="";
+        $valids="";
+      
+        if($new_asset!=0){
+            $valids=$new_asset."/".$aid;
+        }
+        else{
+            $valids="".$aid;
+        }
         //this insertion in asset owner does not use the office dropdown as of yet will be adding access level for this
         if($type=="single"){
             $str="insert into assets (id, assetid,category,name,serial,IMEI,brand,model,provider,fundsource,donor,status,remarks,date)
@@ -58,8 +66,8 @@
        if($type=="single"){
            $msg=$msg2;
        }
-       echo "<h4 id='msgaddasset'>".$msg."</h4>
-       <input type='hidden' value='".$aid."' id='new_asset'>";
+       echo $msg."%".$valids;
+      
     }
 
 ?>
