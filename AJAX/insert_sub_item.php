@@ -15,12 +15,30 @@
         $fundsource=removepecialchars($_POST["fundsource"]);
         $donor=removepecialchars($_POST["donor"]);
         $remarks=removepecialchars($_POST["remarks"]);
+        $set_info=removepecialchars($_POST["set"]);
+        $subqty=$_POST["subqty"];
         $today=date("y-m-d h:m:sa");
         $month=date("ymdhms");
+        $officeid=$_SESSION["officeid"];
+
+
+        $qrcode="1";
+        $str="select qrcode from assetowner where assets_id=".$assetid;
+        $data=$mydb->selectrows($str,1);
+        if($data!=null){
+            $qrcode=$data[0]["qrcode"]; 
+            $qrint=(int)get_string_at($qrcode,3);
+            $qrcode=$qrint."";
+           
+        }
+        
+
+       $cat_code=abreviate( $category,2);
+       $qrcode=officecode()."-".$cat_code."-". $set_info."-". $qrcode."-".$subqty;
         //this insertion in asset owner does not use the office dropdown as of yet will be adding access level for this
-        $str="insert into sub_assets (assets_id, assetnumber,category,name,serial,IMEI,brand,model,provider,fundsource,donor,status,remarks)
-        values (".$assetid.",'".$month."-".$serial."','".$category."','".$aname."','".$serial."','".$ime."','".$brand."','".$model."','".$provider."','".$fundsource."',
-        '".$donor."','".$status."','".$remarks."')";
+        $str="insert into sub_assets (assets_id, assetnumber,category,name,serial,IMEI,brand,model,provider,fundsource,donor,status,remarks,cat_code,qrcode)
+        values (".$assetid.",'". $officeid."-".$cat_code."-".$serial."','".$category."','".$aname."','".$serial."','".$ime."','".$brand."','".$model."','".$provider."','".$fundsource."',
+        '".$donor."','".$status."','".$remarks."','". $cat_code."','". $qrcode."')";
         echo $mydb->insert($str);
 
     }

@@ -11,7 +11,11 @@
 			margin:auto;
 			margin-top:0px;
 			margin-left:50px;
+			text-align: left;
 						
+		}
+		.sum ul li{
+			margin-bottom:10px;
 		}
 		ul#listavail li#availhead,
 		ul#listdep li#dephead{
@@ -33,7 +37,7 @@
 		
 		.imgform-img p{
 			margin-left:10px;
-			margin-bottom:10px;
+		
 			display:inline-block;
 			font-size:18px;
 		}
@@ -66,11 +70,15 @@
 		}
 		table{
 			border-collapse: collapse;
-			width:100%;
+			width:fit-content;
 			margin-left:10px;
 			border-style:none;
 			font-size:16px;		
-			box-shadow:0px 0px 7px #3f4240;
+		
+		}
+		table tr td{
+			padding-bottom:10px;
+			padding-top:10px;
 		}
 		.imgform select{
 			z-index:-1;
@@ -105,7 +113,7 @@
 				padding-top:40px;
 			}
 			table{
-				width:98%;
+				width:fit-content;
 				font-size:12px;
 				margin:auto;
 			}
@@ -113,7 +121,7 @@
 	
 		@media (max-width:820px){
 			table{
-				width:95%;
+				width:fit-content;
 				font-size:13px;
 			}
 			th:nth-child(6), td:nth-child(6){
@@ -130,7 +138,7 @@
 		@media (max-width:700px){
 			
 			table{
-				width:90%;
+				width:fit-content;
 				font-size:9px;
 			}
 			th:nth-child(5), td:nth-child(5),
@@ -153,7 +161,7 @@
 				display:block;
 			}
 			table{
-				width:50%;	
+				width:fit-content;
 			}
 			
 			th:nth-child(2), td:nth-child(2), th:nth-child(5), td:nth-child(5),
@@ -163,14 +171,14 @@
 		}
 		@media (max-width:390px){
 			table{
-				width:20%;
+				width:fit-content;
 				font-size:10px;	
 			}
 			
 		}
 			@media (max-width:358px){
 				table{
-					width:25%;
+					width:fit-content;
 					font-size:8px;	
 				}
 				
@@ -188,146 +196,227 @@
 		
 		}
 
+	/*accodion styles */
+	.imgform-img .ac-container{
+        width: 100%;
+        display:block;
+		text-align:center;
+		margin:auto;		
+		box-shadow:0px 0px 7px #3f4240;
+	
+      }
+	 
+	  .imgform-img .ac-container label{
+        width:100%;
+		position:relative;
+		z-index: 0;		
+		margin-bottom:10px;
+      }	
+	  .imgform-img .ac-container article{
+		 width:100%;
+	  }
+	  .imgform-img .ac-container label:hover{
+       
+		font-weight:700;
+		
+      }
+	  .imgform-img section.ac-container div:nth-child(odd)   {
+			background-color:	rgb(120,120,120);
+			color:white;
+		}
+		.imgform-img section.ac-container div:nth-child(odd) article  {
+			background-color:	white;
+			color:black;
+		}
+		/* .imgform-img section.ac-container div:nth-child(even) {
+			background-color:	rgb(245, 243, 240);
+		
+			
+		} */
+		.imgform-img section.ac-container div:nth-child(even) article input {
+		display:block;
+			
+		}
+		.imgform-img section.ac-container div.acc-head:nth-child(even){
+			border: solid 1px rgb(217, 216, 215);
+		}
+		.imgform-img section.ac-container div article {
+			border-top:solid 1px rgb(217, 216, 215);
+			
+		}
+		.ac-container input:checked ~ article.sizeauto{
+       
+		height:auto;
+		display:inline-block;
+		padding-bottom:15px;
+		padding-top:8;
+		
+		}
+		article.sizeauto > * {
+			display:inline-block;
+			overflow:hidden;
+		}	
+		
+
 </style>
 	
 	<section id="imgform">
     <div class="imgform-container ">
-	
+		
 		<!-- this section if for the summary--> 
-	  <div class="imgform-img" >
-	  
-
-	  
-		  <p class='head' style="margin-bottom:10px;margin-top:10px;">Assets Summary</p>
-	  <hr class="divide2">
-	  <div class="container" >
-			<?php 
-				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='available' group by category";
-				$cols=  array("name","category","quantity");
-			
-				echo"<div class='sum'>";
-					echo"<ul id='listavail'>";
-					loadlist($str,$cols,"availhead","Available");	
-					echo"</ul>";
-				echo"</div>";
-				echo"<div class=' sum'>";
-				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='deployed' group by category";
-					echo"<ul id='listdep'>";
-					loadlist($str,$cols,"dephead","Deployed");	
-					echo"</ul>";
-				echo"</div>";
-				echo"<div class=' sum'>";
-				$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='To Receive' group by category";
-					echo"<ul id='listreceive'>";
-					loadlist($str,$cols,"toreceive","To Receive");	
-					echo"</ul>";
-				echo"</div>";
-			?>
-		</div >
-		<hr class="divide2" style="margin-top:5px;margin-bottom:10px;">
-	  <h3 id='total' style='width:100%;'>
-	  <?php
-	  		echo total("select count(id) as id from assetowner where office_id=".$_SESSION["officeid"],"id");
-	  ?>
-	  </h3>
-	  <hr class="divide2" style="margin-top:2px">
-	  <br>
-	  	<!-- this ection if for table--> 
-	  <p class='head'>Inventory Table</p>
-	  <hr class="divide2" style="margin-top:5px;margin-bottom:10px;">
-	  <p>Status: 
-	  <select id='status'>
-	  	<option value='all'>All</option>
-		<option value='available'>Available</option>
-		<option value='To Receive'>To Receive</option>
-		<option value='deployed'>Deployed</option>
-		<option value='transfered'>Transfered</option>
-		<option value='damaged'>Damaged</option>
-	  </select>
-	  </p>
-	  <?php 
-	  echo "<input type='hidden' id='office' value='".$_SESSION["officeid"]."'>";
-	  ?>
-		<p>
-		Assets Category
-	  <select id='category'>
-		<?php 
-		$str="SELECT distinct category, category FROM assets";
-		loadropdown($str,"category","category","Category");
-		?>
-	  </select>
-	  </p>
-	  <table class="asset">
-			 		
-				<?php
-					$str="select `assetowner`.`id` as id,`assets`.`assetid` as `assetid`, 
-					`assets`.`serial` as `serial`, assets.name as name, assets.category as category, 
-					assets.brand as brand, assetowner.date_aquired as `date`, 
-					`assets`.`status` as `status` from assets, assetowner 
-					where assetowner.assets_id=assets.id and assetowner.office_id =".$_SESSION["officeid"]." and assets.status='available' 
-					order by assets.category";
-					$headers=  array(" ","ASSET NUMBER","SERIAL","ITEM NAME","CATEGORY","BRAND",
-								"DATE AQUIRED","STATUS");
-					$elem=array("all","item");
-					loadtable($str,$headers,true, false, $elem);		
-				?>
-		  </table>
-		  <input   id="sbdemove" type='submit' Value='Demobilize' class='sub-bttn' >
-		  <input   id="receive" type='submit' Value='Receive' class='sub-bttn'>
-		  <hr class="divide2" style="margin-top:20px;" >
-	  <br>
+	  	<div class="imgform-img" >
+				
+		  <section class='ac-container' >
+				<div id='assets_summary'>
+					<input id='ac-6' name='accordion-6' type='checkbox' class="acc-head">
+					<label for='ac-6' class='acc-label' style='padding-bottom:20px;'>Assets Summary</label>
+					<article class='sizeauto' >							
+						<p class='head' style="margin-bottom:10px;margin-top:10px;"></p>
+						
+						<div class="container" >
+								<?php 
+									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='available' group by category";
+									$cols=  array("name","category","quantity");
+								
+									echo"<div class='sum' style='background-color:white;color:black'>";
+										echo"<ul id='listavail'>";
+										loadlist($str,$cols,"availhead","Available");	
+										echo"</ul>";
+									echo"</div>";
+									echo"<div class=' sum'>";
+									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='deployed' group by category";
+										echo"<ul id='listdep'>";
+										loadlist($str,$cols,"dephead","Deployed");	
+										echo"</ul>";
+									echo"</div>";
+									echo"<div class=' sum'>";
+									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='To Receive' group by category";
+										echo"<ul id='listreceive'>";
+										loadlist($str,$cols,"toreceive","To Receive");	
+										echo"</ul>";
+									echo"</div>";
+								?>
+							</div >
+							<hr class="divide2" style="margin-top:5px;margin-bottom:10px;">
+						<h3 id='total' style='width:100%;'>
+						<?php
+								echo total("select count(id) as id from assetowner where office_id=".$_SESSION["officeid"],"id");
+						?>
+						</h3>
+						<hr class="divide2" style="margin-top:2px">
+						
+					</article>
+					
+				</div>
+				<div id='inventory_table' class="acc-head">
+					<input id='ac-7' name='accordion-7' type='checkbox' >
+					<label for='ac-7' class='acc-label'>Inventory Table</label>
+					<article class='sizeauto' >							
+						<p class='head'></p>
+						<p>Status: 
+						<select id='status'>
+							<option value='all'>All</option>
+							<option value='available'>Available</option>
+							<option value='To Receive'>To Receive</option>
+							<option value='deployed'>Deployed</option>
+							<option value='transfered'>Transfered</option>
+							<option value='damaged'>Damaged</option>
+						</select>
+							</p>
+							<?php 
+							echo "<input type='hidden' id='office' value='".$_SESSION["officeid"]."'>";
+							?>
+								<p>
+								Assets Category
+							<select id='category'>
+								<?php 
+								$str="SELECT distinct category, category FROM assets";
+								loadropdown($str,"category","category","Category");
+								?>
+							</select>
+							</p>
+							<table class="asset">
+											
+										<?php
+											$str="select `assetowner`.`id` as id,`assets`.`qrcode` as `assetid`, 
+											`assets`.`serial` as `serial`, assets.name as name, assets.category as category, 
+											assets.brand as brand, assetowner.date_aquired as `date`, 
+											`assets`.`status` as `status` from assets, assetowner 
+											where assetowner.assets_id=assets.id and assetowner.office_id =".$_SESSION["officeid"]." and assets.status='available' 
+											order by assets.category";
+											$headers=  array(" ","ASSET NUMBER","SERIAL","ITEM NAME","CATEGORY","BRAND",
+														"DATE AQUIRED","STATUS");
+											$elem=array("all","item");
+											loadtable($str,$headers,true, false, $elem);		
+										?>
+								</table>
+								<input   id="sbdemove" type='submit' Value='Demobilize' class='sub-bttn' >
+								<input   id="receive" type='submit' Value='Receive' class='sub-bttn'>
+								
+					</article>
+					
+				</div>
+				
+			</section>
+				
+				
+				<br>
+					<!-- this ection if for table--> 
+				
+				<br>
         </div>
 		<!-- this section is for the form transfer and deploy--> 
 		<div class="form-container">
-		<p class='head' id="assetmgt">Deploy Assets</p>
-		<label for="action">Action</label>
-					<select id="action" name="action" >
-						<option value='1'>Deploy</option>
-						<option value='2'>Transfer Ownership</option>
-					</select>
-				<label for="office" class="transfer">Select from Regional Offices:*</label>
-					<select id="mgtoffice" name="office" class="transfer">
-						<?php
-						$str="SELECT id,office_name FROM office";
-						loadropdown($str,"id","office_name","Offices");//function for loading values into the dropdown accepts sql command and name of columns 
-						?>
-					</select>
-					<!-- this section is for transfer form idenfied by transfer class on each of the element defined--> 
-				<label for="remarks" class="transfer">Remarks:</label>	
-				
-				<!-- this section is for deploy--> 
-				<label for="province" class="deploy">Region:</label>
-						<select id="region" name="region" class="deploy">
+			<p class='head' id="assetmgt">Deploy Assets</p>
+			<label for="action">Action</label>
+						<select id="action" name="action" >
+							<option value='1'>Deploy</option>
+							<option value='2'>Transfer Ownership</option>
+						</select>
+					<label for="office" class="transfer">Select from Regional Offices:*</label>
+						<select id="mgtoffice" name="office" class="transfer">
 							<?php
-							$str="SELECT id,name FROM region";
-							loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
+							$str="SELECT id,office_name FROM office";
+							loadropdown($str,"id","office_name","Offices");//function for loading values into the dropdown accepts sql command and name of columns 
 							?>
-						</select>	
-				<label for="province" class="deploy">Province:</label>
-						<select id="province" name="province" class="deploy" disabled>
-						<option value=0>Select from Region</option>
 						</select>
-				<label for="municipality" class="deploy">Municipality:</label>
-						<select id="municipality" name="municipality" class="deploy" disabled>
-						<option value=0>Select from Region</option>
-						</select>
-				<label for="brgy" class="deploy">Barangay:</label>
-						<select id="brgy" name="brgy" class="deploy" disabled>
-						<option value=0>Select from Region</option>
-						</select>	
-				<textarea	
-					cols="30"
-					rows="6"
-					placeholder="Descreption/Remarks"
-					id="remarks">
-				</textarea>
-				<input   id="sbmmgt" type='submit' Value='Submit' class="btn btn-primary " style="color:white;font-weight:800;" >
-				<input   id="submitmgtclr" type='submit' Value='Clear' class="btn btn-primary " style="color:white;font-weight:800;" >	
+						<!-- this section is for transfer form idenfied by transfer class on each of the element defined--> 
+					<label for="remarks" class="transfer">Remarks:</label>	
+					
+					<!-- this section is for deploy--> 
+					<label for="province" class="deploy">Region:</label>
+							<select id="region" name="region" class="deploy">
+								<?php
+								$str="SELECT id,name FROM region";
+								loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
+								?>
+							</select>	
+					<label for="province" class="deploy">Province:</label>
+							<select id="province" name="province" class="deploy" disabled>
+							<option value=0>Select from Region</option>
+							</select>
+					<label for="municipality" class="deploy">Municipality:</label>
+							<select id="municipality" name="municipality" class="deploy" disabled>
+							<option value=0>Select from Region</option>
+							</select>
+					<label for="brgy" class="deploy">Barangay:</label>
+							<select id="brgy" name="brgy" class="deploy" disabled>
+							<option value=0>Select from Region</option>
+							</select>	
+					<textarea	
+						cols="30"
+						rows="6"
+						placeholder="Descreption/Remarks"
+						id="remarks">
+					</textarea>
+					<input   id="sbmmgt" type='submit' Value='Submit' class="btn btn-primary " style="color:white;font-weight:800;" >
+					<input   id="submitmgtclr" type='submit' Value='Clear' class="btn btn-primary " style="color:white;font-weight:800;" >	
         </div>
       </div>
     </section>
 	<script>
 		$(document).ready(function(){
+			$('#ac-7').attr('checked', true);
 			$("#status").val("available");
 			$(".transfer").css("display","none");
 			$("#sbdemove, #receive").css("display","none");

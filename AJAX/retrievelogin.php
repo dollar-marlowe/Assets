@@ -21,6 +21,7 @@
           $_SESSION["province_id"]=$row["province_id"]; 
           $_SESSION["muni_id"]=$row["muni_id"]; 
           $_SESSION["brgy_id"]=$row["brgy_id"]; 
+          $_SESSION["office_cat"]=$row["category"]; 
          
          echo"true";
         

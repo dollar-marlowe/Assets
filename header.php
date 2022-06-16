@@ -14,7 +14,7 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/grapes.css" />
+    <link rel="stylesheet" href="CSS/avocado.css" />
 	  <style>
       .navbar .ac-container label,  
       .navbar .ac-container label a,  
@@ -38,6 +38,7 @@
        
        
       }
+     
     </style>
   </head>
   <body>
@@ -102,12 +103,12 @@
     <section class="showcase-area" id="showcase">
       <br>
       <div class="showcase-container">
-        <h1 class="main-title" id="home">DICT-ETC</h1>
+        <h1 class="main-title" id="home">DICT-DRRM FOCALS</h1>
         <p class='header'>Shared Assets Management Portal.</p>
       </div>
     </section>
       <script>
-        function hidelogo(){}
+     
         $(document).ready(function(){
           function hidelogo(){
             var lenght=$(window).width();

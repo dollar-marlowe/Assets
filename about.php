@@ -1,3 +1,8 @@
+<style>
+    #about{
+      box-shadow:1px 1px 5px #b3b3b3;
+    }
+</style>
 <section id="about">
       <div class="about-wrapper container">
         <div class="about-text">

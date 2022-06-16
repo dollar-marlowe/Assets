@@ -141,9 +141,184 @@ function removepecialchars($str){
     $str=str_replace("&","",$str); 
     $str=str_replace("&&","",$str); 
     $str=str_replace("==","",$str); 
+    $str=str_replace("=","",$str); 
     $str=str_replace("^^","",$str); 
     $str=str_replace("^","",$str); 
     return trim($str);
+}
+function region_to_letter($val){
+    $code="";
+    switch($val){
+        case 1:
+            $code="A";
+        break;
+        case 2:
+            $code="B";
+        break;
+        case 3:
+            $code="C";
+        break;
+        case 4:
+            $code="E";
+        break;
+        case 5:
+            $code="F";
+        break;
+        case 6:
+            $code="G";
+        break;
+        case 7:
+            $code="H";
+        break;
+        case 8:
+            $code="I";
+        break;
+        case 9:
+            $code="J";
+        break;
+        case 10:
+            $code="K";
+        break;
+        case 11:
+            $code="L";
+        break;
+        case 12:
+            $code="M";
+        break;
+        case 13:
+            $code="D";
+        break;
+        case 14:
+            $code="N";
+        break;
+        case 15:
+            $code="O";
+        break;
+        case 16:
+            $code="P";
+        break;
+        case 17:
+            $code="Q";
+        break;
+       
+        default:
+            $code="AB";
+        break;
+    }
+    return $code;
+}
+function region_decode($val){
+    $code="";
+    switch($val){
+        case "A":
+            $code=1;
+        break;
+        case "B":
+            $code=2;
+        break;
+        case "C":
+            $code=3;
+        break;
+        case "E":
+            $code=4;
+        break;
+        case "F":
+            $code=5;
+        break;
+        case "G":
+            $code=6;
+        break;
+        case "H":
+            $code=7;
+        break;
+        case "I":
+            $code=8;
+        break;
+        case "J":
+            $code=9;
+        break;
+        case "K":
+            $code=10;
+        break;
+        case "L":
+            $code=11;
+        break;
+        case "M":
+            $code=12;
+        break;
+        case "D":
+            $code=13;
+        break;
+        case "N":
+            $code=14;
+        break;
+        case "O":
+            $code=15;
+        break;
+        case "P":
+            $code=16;
+        break;
+        case "Q":
+            $code=17;
+        break;
+       
+        default:
+            $code=0;
+        break;
+    }
+    return $code;
+}
+function get_string_at($str,$at){
+    $word=explode("-",$str);
+    $result="";
+    $size=sizeof($word);
+    if($size<=$at){
+        $result=$word[$size-1];
+    }else{
+        $result=$word[$at];
+    }
+    return $result;
+}
+function officecode(){
+    $regid= $_SESSION["region_id"];
+    
+    return region_to_letter($regid);
+
+}
+function abreviate($str,$num_char){
+    $word= explode(" ",$str);
+    $size=sizeof($word);
+    $abreviate="";
+    if($size>1){
+        if($size>=$num_char){
+            for($i=0;$i<$num_char;$i++){
+                $chars=str_split($word[$i]);
+                $abreviate=$abreviate.$chars[0];
+            }
+        }
+        else{
+            for($i=0;$i<$size;$i++){
+                $chars=str_split($word[$i]);
+                $abreviate=$abreviate.$chars[0];
+            }
+        }
+        
+       
+    }
+    else{
+        $chars=str_split($word[0]);
+        $n=sizeof($chars);
+        if($n>=$num_char){
+            for($i=0;$i<$num_char;$i++){
+                $abreviate=$abreviate.$chars[$i];
+            }
+        }else{
+            $abreviate=$chars[0];
+        }
+       
+      
+    }
+    return strtoupper($abreviate);
 }
 function shorten($txt){
     $arr=explode(" ",$txt);
@@ -157,9 +332,9 @@ function shorten($txt){
     }
     return $str;
 }
-function replace($text,$orig){
-    $elems=explode("%",$text);
-    $val=shorten($orig);
+function replace($chars,$orig){
+    $elems=explode("%",$chars);
+    $val=$orig;
     foreach($elems as $elem){
         $val=str_replace($elem,$elem." ",$val);
     }
@@ -175,8 +350,8 @@ function loadlist($str, $col, $header,$label){
         echo "<li id='".$header."' style='list-style-type: none; font-weight: bold;'><p>".$label."</p></li>";
         $keys=",%.%:%/%\%-%_%)%(";
         foreach($data as $row){
-           echo "<li> ".replace($keys,$row[$col[0]])."<br>
-           (".replace($keys,$row[$col[1]])."):&nbsp".replace($keys,$row[$col[2]])."</li>";
+           echo "<li> ".replace($keys,shorten($row[$col[0]]))."<br>
+           (".replace($keys,shorten($row[$col[1]]))."):&nbsp".replace($keys,shorten($row[$col[2]]))."</li>";
         }
     
     }
@@ -376,9 +551,27 @@ function loadintodb(){
     echo $queries[43807]." ".$num;
   $db->close();
 }
-//$db=new Database();
 
+function test(){
+    $mydb = new Database();
+    $mydb->connect();
+    $qrcode="0001";
+    $str="select qrcode from assetowner where assets_id=45";
+    $data=$mydb->selectrows($str,1);
+    if($data!=null){
+        $qrcode=$data[0]["qrcode"]; 
+        $qrint=(int)get_string_at($qrcode,3);
+        $qrint++;
+        $qrcode= substr(str_repeat(0, 11).$qrint, -11);
+    }
+    return $qrcode;
+    
+}
+
+
+//$db=new Database();
+//echo test();
 //echo $db->connect();
- $str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
-//echo linig($str); 
+ //$str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
+//echo abreviate("ACCESS POINT",2); 
 ?>

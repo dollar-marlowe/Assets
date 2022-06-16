@@ -79,7 +79,10 @@
 			
 			height:200px;
 			}
-			
+			.ss, .pp{
+				margin-top:6px;
+			}
+
 		}
 		
 		/**Accordion styles */
@@ -188,6 +191,7 @@
 	}
 	.ac-container article p{
 		margin:0;
+		margin-bottom:-6px;
 		padding:0;
 	
 	}
@@ -201,7 +205,13 @@
 	#serial::placeholder, #ime::placeholder{
 		font-size:18px;
 	}
-	
+	.setset{
+		width:165px;
+		display:inline-block;
+	}
+	.pp{
+		margin-bottom:-6px;
+	}
 </style>
 	<section id="imgform">
     <div class="imgform-container"  >
@@ -225,8 +235,10 @@
 								<option value='Damaged1'>Damaged</option>
 							</select>
 						</p>
-						<input type='text' placeholder='Category*' id="cat1" class='subset' />							
-						<input type='text' placeholder='Brand*' id='brand1' class='subset'/>
+						<input type='text' placeholder='Category*' id="cat1" class='subset ss' />	
+						<p>Set:*<input type='text' placeholder='Set*' id='set1' class='subset setset' value='A' style='display:inline-block;'/>
+						</p>							
+						<input type='text' placeholder='Brand*' id='brand1' class='subset ss'/>
 						<input type='text' placeholder='Model' id='model1'/>
 						<input type='text' placeholder='Provider' id='prov1'/>
 						<input type='text' placeholder='Fund source'  id='fs1' />
@@ -234,21 +246,23 @@
 						<textarea
 							cols='25'
 							rows='2'
-							placeholder='Serial*'
+							placeholder='SERIAL:* for multiple input, place / in between each serial'
 							id='serial1'
-							class='subset'
+							class='subset pp'
 						></textarea>
 						<textarea
 							cols='25'
 							rows='2'
-							placeholder='IMEI'
+							placeholder='IMEI:* for multiple input, place / in between each imei'
 							id='ime1'
+							class='pp'
 						></textarea>
 						<textarea
 							cols='25'
 							rows='2'
 							placeholder='Descreption/Remarks'
 							id='remarks1'
+							 class=' pp'
 						></textarea>
 						
 					</article>
@@ -259,6 +273,7 @@
 			</section>
 			<input type="submit" value="Save" id='save-items' class='set sub-bttn'/>
 			<input type="submit" value="Clear" id='clear-sub' class='set sub-bttn'/>
+			<p class="set">All sub items has same data &nbsp <input type="checkbox" id="allinput" ></p>
 			<br><br>
 		
 	</div >
@@ -274,6 +289,11 @@
 				<input type='hidden' value='0' id='new_asset'>
 				<p class="wrap"><label for="quantity">Quantity:*</label>
 				<input type="number"  id="quantity" min="1" value=1 placeholder="Quantity" /></p>
+				<p class="wrap"><label for="Set">SET:*</label>
+				<input type="text"  id="set_info" value="A" disabled/>
+				<input type="submit" id="iset" value="+">
+				<input type="submit" id="dset" value="-">
+				</p>
 				<input type="text" placeholder="Assets Name*" id="aname" />
 
 				
@@ -406,7 +426,7 @@
 		}
 
 		function clearassetform(){// COMMON FUNCTION FOR CLEARING THE FORM AFTER SUCCESSFUL ENTRY
-			$("#remarks, #aname,#brand, #provider, #fundsource, #donor, #model, #serial, #ime").val("");
+			$("#remarks, #aname,#brand, #provider, #fundsource, #donor, #model, #serial, #ime, #others").val("");
 			$("#category, #status, #office").val(0);
 		
 			err_label=0;
@@ -474,18 +494,19 @@
 					if($("#category").val()=='0'){
 						validate_elem("#category",'0',"category");
 					}
-					
+					validate_elem("#status",0,"status");
+					validate_elem("#aname","","aname");
+					validate_elem("#office",0,"office");
 				
 				if($("#type").val()=="single")	{
-					validate_elem("#aname","","aname");//the structure of validate_elem here unlike other val;idations
+					//the structure of validate_elem here unlike other val;idations
 					//in other jquery form it doesn't return a value instead uses the isok array with keys corresponding to the names
 					//of the input holding a boolean value if input is not empty then the value of its 
 					//corresponding key in isok array is set to true
 					//once all required fields are filled in and goassets validation returns true if all keys in isok is true
 					//then the form is reset including all keys in isok array are all set to false for another round of input
 					validate_elem("#brand","","brand");
-					validate_elem("#status",0,"status");
-					validate_elem("#office",0,"office");
+					
 						//serials and ime validation	
 						if(!validate_serials("#serial","Serials","errserial","#assetheader","border-bottom-color","#1a1aff","#ddd")){
 					isok["serial"]=false;
@@ -524,7 +545,9 @@
 								remarks:	$("#remarks").val(),
 								office:		$("#office").val(),
 								type:		"single",
-								new_asset:	$("#new_asset").val()
+								new_asset:	$("#new_asset").val(),
+								set:		$("#set_info").val()
+
 							},
 								function(data){
 									$("#msgaddasset").remove();//the command for adding thisa message 
@@ -544,46 +567,52 @@
 					}
 				}	
 				if($("#type").val()=="set")	{
-					validate_elem("#aname","","aname");
-					validate_elem("#office",0,"office");
+				
+				
 					
-						var qty=$("#quantity").val();						
-						for(let i=1; i<=qty;i++){							
-							if($("#new_asset").val()=='0' && qty>1){
+						var qty=$("#quantity").val();
+						if(isok["category"] && isok["status"]  && isok["aname"]	&& isok["office"]){
+								if($("#new_asset").val()=='0' && qty>=1 ){						
+									for(let i=1; i<=qty;i++){							
+									
+									
+										$.post("AJAX/insertasset.php",
+											{
+												aname: 		$("#aname").val(), 
+												category:	cat,
+												brand:		"",
+												model:		"",
+												serial:		"",
+												ime:		"",
+												fundsource:	"",
+												donor:		"",
+												provider:	"",
+												status:		$("#status").val(),
+												remarks:	$("#remarks").val(),
+												office:		$("#office").val(),
+												type:		"set",
+												new_asset:	$("#new_asset").val(),
+												set:		$("#set_info").val()
+											},
+											function(data){
+												$("#msgaddasset, #msgasset").remove();
+												
+												$("#sub_msg_success").remove();
+												$("#err_4sub, #errserial, #err_open").remove();
+												var val=data.split("%");
+												$("#new_asset").val($("#new_asset").val()+"/"+val[1]);
+												
+												$("#assetheader").after("<h4 id='msgaddasset'>"+val[0]+" "+val[1]+"</h4>");
+											});
+									}
 							
-								$.post("AJAX/insertasset.php",
-									{
-										aname: 		$("#aname").val(), 
-										category:	cat,
-										brand:		"",
-										model:		"",
-										serial:		"",
-										ime:		"",
-										fundsource:	"",
-										donor:		"",
-										provider:	"",
-										status:		$("#status").val(),
-										remarks:	$("#remarks").val(),
-										office:		$("#office").val(),
-										type:		"set",
-										new_asset:	$("#new_asset").val()
-									},
-									function(data){
-										$("#msgaddasset").remove();
-										
-										$("#sub_msg_success").remove();
-										$("#err_4sub").remove();
-										var val=data.split("%");
-										$("#new_asset").val($("#new_asset").val()+"/"+val[1]);
-										
-										$("#assetheader").after("<h4 id='msgaddasset'>"+val[0]+" "+val[1]+"</h4>");
-									});
-							}
-							else{
-								$("#err_open").remove();
-								$("#assetheader").after("<p id='err_open' style='color:red;'>Sub-aset entry is still open, you must enter sub-inventory firts!</p>")
-							}
+								}	
+								else{
+										$("#err_open").remove();
+										$("#assetheader").after("<p id='err_open' style='color:red;'>Sub-aset entry is still open, you must enter sub-inventory firts!</p>")
+								}
 						}
+						
 						
 					}
 				
@@ -660,19 +689,6 @@
 			
 			});
 
-
-			$("#quantity").change(function(){				
-				validate_serials("#serial","Serials","errserial","#assetheader","border-bottom-color","#1a1aff","#ddd")
-				goasset();
-				if($("#ime").val()!=""){
-				 validate_serials("#ime","IMEIs","errime","#assetheader","border-bottom-color","#1a1aff","#ddd");					
-				}
-				else{
-					$("#errime").remove();
-					$("#ime").css("border-bottom-color","#ddd");
-				}
-			});
-			
 			var allsub ={
 				asset:"#asset",
 				cat:"#cat",
@@ -686,6 +702,31 @@
 				status:"#status",
 				remarks:"#remarks"
 				};
+
+			$("#quantity").change(function(){				
+				validate_serials("#serial","Serials","errserial","#assetheader","border-bottom-color","#1a1aff","#ddd")
+				goasset();
+				if($("#ime").val()!=""){
+				 validate_serials("#ime","IMEIs","errime","#assetheader","border-bottom-color","#1a1aff","#ddd");					
+				}
+				else{
+					$("#errime").remove();
+					$("#ime").css("border-bottom-color","#ddd");
+				}
+			});
+			$("#allinput").change(function(){
+				//var twoD=[allsub,allsub];
+				
+				alert(allsub["asset"]);
+				if($(this).is(":checked")){
+					
+				}else{
+				
+				}
+				
+			});
+			
+			
 			//Funtion for sub item validation
 			//this is another function for sub-item validation it returns a value so no need to use keys in here
 			// this was coded this way to avoid recoding the whole form :D
@@ -711,7 +752,8 @@
 				cat:"#cat",
 				brand:"#brand",
 				serial:"#serial",
-				status:"#status"
+				status:"#status",
+				set:"#set"
 				};
 				var sub_ok=false;
 				var okok=true;
@@ -744,27 +786,40 @@
 					else{
 						$("#ime"+i+"").css("border","solid 1px rgb(120, 120, 120)");
 						okime2=true;
-						
-
 					}
-					
 				}
 				okime2=okime1;
 					if(okime2){$("#errsubime").remove();}
 				sub_ok=okok;
 				return sub_ok;
 			}
+			$("#iset").click(function(){
+				var set=$("#set_info").val();
+				$("#set_info").val(String.fromCharCode(set.charCodeAt() + 1));
+
+			});
+			$("#dset").click(function(){
+				var set=$("#set_info").val();
+				if(set>'A'){
+					$("#set_info").val(String.fromCharCode(set.charCodeAt() - 1));
+				}
+				
+
+			});
 			//Event for saving all sub-items
 			$("#save-items").click(function(){
 				var new_assets=toarray($("#new_asset").val());
-					
+				
+				
 				if(validateallsub()){
 				
 					var qty=$("#quantity").val();
 					$("#errsub,#errsubser,#errsubime").remove();
 					if($("#new_asset").val()!='0'){
 						for(let j=1;j<=qty;j++){
+							var subitem="A";
 							for(let i=1; i<=elemid; i++){
+								
 								var new_serial=toarray($("#serial"+i).val());
 								var imei="";
 								if($("#ime"+i).val()!=""){
@@ -785,12 +840,16 @@
 										serial:		new_serial[j-1],
 										ime:		imei,
 										status:		$("#status"+i).val(),
-										remarks:	$("#remarks"+i).val()
+										remarks:	$("#remarks"+i).val(),
+										set:		$("#set"+i).val(),
+										subqty:		subitem
 									},
 									function(data){
-										$("#sub_msg_success, #msgaddasset").remove();
+									
+										$("#sub_msg_success, #msgaddasset, #err_open").remove();
 										$("#assetsub").after("<p id='sub_msg_success'>"+data+"</p>");
 								});
+								subitem=(String.fromCharCode(subitem.charCodeAt() + 1));
 							}
 						}
 						
@@ -843,16 +902,21 @@
 				<option value='Available'>Intact</option>\
 				<option value='Damaged'>Damaged</option>\
 				</select></p>\
-				<input type='text' placeholder='Category*' id='cat"+elemid+"' class='subset' />\
-				<input type='text'  placeholder='Brand*' id='brand"+elemid+"'class='subset' />\
+				<input type='text' placeholder='Category*' id='cat"+elemid+"' class='subset ss' /><p>	\
+				Set:*<input type='text' placeholder='Set*' id='set"+elemid+"' class='subset setset' value='A' style='display:inline-block;'/></p>\
+				<input type='text'  placeholder='Brand*' id='brand"+elemid+"'class='subset ss' />\
 				<input type='text' placeholder='Model' id='model"+elemid+"'/>\
 				<input type='text'  placeholder='Provider' id='prov"+elemid+"' ng-bind='prov'/>\
 				<input type='text'  placeholder='Fund source' id='fs"+elemid+"' ng-bind='fs'/>\
 				<input type='text'  placeholder='Donor' id='donor"+elemid+"' ng-bind='donor'/>\
-				<textarea cols='25' rows='2'placeholder='Serial*' id='serial"+elemid+"' class='subset'></textarea>\
-				<textarea cols='25' rows='2'placeholder='IMEI' id='ime"+elemid+"'></textarea>\
-				<textarea cols='25' rows='2'placeholder='Descreption/Remarks'id='remarks"+elemid+"'></textarea>";
-				var elem="<div id='subitem"+elemid+"'><input id='ac-"+acid+"' name='accordion-"+acid+"' type='checkbox' ><label for='ac-"+acid+"' class='acc-label'>Sub-item"+elemid+"</label><article class='sizeauto'>"+forms+"</article></div>";
+				<textarea cols='25' rows='2'placeholder='SERIAL:* for multiple input, place / in between each serial'\
+				 id='serial"+elemid+"' class='subset pp'></textarea>\
+				<textarea cols='25' rows='2'placeholder='IMEI:* for multiple input, place / in between each imei' \
+				id='ime"+elemid+"' class='pp'></textarea>\
+				<textarea cols='25' rows='2'placeholder='Descreption/Remarks'id='remarks"+elemid+"' class='pp'></textarea>";
+				var elem="<div id='subitem"+elemid+"' ><input id='ac-"+acid+"' name='accordion-"+acid+"' \
+				type='checkbox' ><label for='ac-"+acid+"' class='acc-label'>Sub-item"+elemid+"</label>\
+				<article class='sizeauto'>"+forms+"</article></div>";
 				$("#subitem"+(elemid-1)+"").last().after(elem);
 				
 				if($("#fs1").val()!=""){$("#fs"+elemid).val($("#fs1").val());}
