@@ -70,7 +70,7 @@
          echo "<section class='ac-container'>";
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1'><a href='#'>Home</a></label>";
+         echo       "<label for='ac-1' id='home'><a href=''>Home</a></label>";
          echo  "</div>";
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
@@ -136,7 +136,9 @@
             hidelogo();
           
           });
-          
+          $("#home").click(function(){
+            window.location="home.php";
+          });
           $(window).resize(function(){
             var lenght=$(window).width();
          
