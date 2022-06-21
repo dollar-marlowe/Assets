@@ -212,6 +212,8 @@
 	.pp{
 		margin-bottom:-6px;
 	}
+
+	
 </style>
 	<section id="imgform">
     <div class="imgform-container"  >
@@ -361,6 +363,21 @@
     </section>
 	<script>
 		//GLOBAL ASSOCIATIVE ARRAY VARIABLES FOR  VALIDATION
+
+		var allsub ={
+				asset:"#asset",
+				cat:"#cat",
+				brand:"#brand",
+				prov:"#prov",
+				funds:"#fs",
+				donor:"#donor",
+				model:"#model",
+				serial:"#serial",
+				ime:"#ime",
+				status:"#status",
+				remarks:"#remarks"
+				};
+
 		$(document).ready(function(){
 			windsize();
 			var acid=6;
@@ -689,7 +706,8 @@
 			
 			});
 
-			var allsub ={
+			
+				var sub_copy ={
 				asset:"#asset",
 				cat:"#cat",
 				brand:"#brand",
@@ -697,11 +715,12 @@
 				funds:"#fs",
 				donor:"#donor",
 				model:"#model",
-				serial:"#serial",
-				ime:"#ime",
+				
 				status:"#status",
 				remarks:"#remarks"
 				};
+
+				
 
 			$("#quantity").change(function(){				
 				validate_serials("#serial","Serials","errserial","#assetheader","border-bottom-color","#1a1aff","#ddd")
@@ -714,17 +733,51 @@
 					$("#ime").css("border-bottom-color","#ddd");
 				}
 			});
-			$("#allinput").change(function(){
-				//var twoD=[allsub,allsub];
+			var global_allsub_inputs=[];
+		/* 	$("#allinput").change(function(){
+				var twoD=[];
+
+				var arr={
+				asset:"#asset",
+				cat:"#cat",
+				brand:"#brand",
+				prov:"#prov",
+				funds:"#fs",
+				donor:"#donor",
+				model:"#model",
+			
+				status:"#status",
+				remarks:"#remarks"
+				};
 				
-				alert(allsub["asset"]);
+				for(let x=0;x<elemid;x++){
+					twoD.push(arr);
+				}
+				var size=count(twoD);
+				
 				if($(this).is(":checked")){
+					//alert(size);
+					for(let i=0;i<size;i++){
+						for(var key in twoD[i])	{
+							twoD[i][key]=$("#"+key+""+(i+1)).val();
+							console.log(twoD[i][key]+" "+i+" "+key);
+						//	alert($("#"+key+""+(i+1)).val());
+						//alert(twoD[i][key]);
+						}
+					}
+				
+					for(let i=2;i<=elemid;i++){
+						for(var key in arr){
+							alert(twoD[0][key]);
+						}
+					}
+					
 					
 				}else{
 				
 				}
 				
-			});
+			}); */
 			
 			
 			//Funtion for sub item validation
@@ -896,24 +949,24 @@
 			$("#add-item").click(function(){
 				acid++; 
 				elemid++;
-				var forms="<input type='text' placeholder='Item Name*' id='asset"+elemid+"' class='subset' />\
-				<p>Status:*<select id='status"+elemid+"' class='subset'>\
+				var forms="<input type='text' placeholder='Item Name*' id='asset"+elemid+"' class='subset sasset' />\
+				<p>Status:*<select id='status"+elemid+"' class='subset sstatus'>\
 				<option value=''>Select from below</option>\
 				<option value='Available'>Intact</option>\
 				<option value='Damaged'>Damaged</option>\
 				</select></p>\
-				<input type='text' placeholder='Category*' id='cat"+elemid+"' class='subset ss' /><p>	\
-				Set:*<input type='text' placeholder='Set*' id='set"+elemid+"' class='subset setset' value='A' style='display:inline-block;'/></p>\
-				<input type='text'  placeholder='Brand*' id='brand"+elemid+"'class='subset ss' />\
-				<input type='text' placeholder='Model' id='model"+elemid+"'/>\
-				<input type='text'  placeholder='Provider' id='prov"+elemid+"' ng-bind='prov'/>\
-				<input type='text'  placeholder='Fund source' id='fs"+elemid+"' ng-bind='fs'/>\
-				<input type='text'  placeholder='Donor' id='donor"+elemid+"' ng-bind='donor'/>\
+				<input type='text' placeholder='Category*' id='cat"+elemid+"' class='subset ss scat' /><p>	\
+				Set:*<input type='text' placeholder='Set*' id='set"+elemid+"' class='subset setset sset' value='A' style='display:inline-block;'/></p>\
+				<input type='text'  placeholder='Brand*' id='brand"+elemid+"'class='subset ss sbrand' />\
+				<input type='text' placeholder='Model' id='model"+elemid+"' class='smodel'/>\
+				<input type='text'  placeholder='Provider' id='prov"+elemid+"' ng-bind='prov' class='sprov'/>\
+				<input type='text'  placeholder='Fund source' id='fs"+elemid+"' ng-bind='fs' class='sfs'/>\
+				<input type='text'  placeholder='Donor' id='donor"+elemid+"' ng-bind='donor' class='sdonor'/>\
 				<textarea cols='25' rows='2'placeholder='SERIAL:* for multiple input, place / in between each serial'\
-				 id='serial"+elemid+"' class='subset pp'></textarea>\
+				 id='serial"+elemid+"' class='subset pp sserial'></textarea>\
 				<textarea cols='25' rows='2'placeholder='IMEI:* for multiple input, place / in between each imei' \
-				id='ime"+elemid+"' class='pp'></textarea>\
-				<textarea cols='25' rows='2'placeholder='Descreption/Remarks'id='remarks"+elemid+"' class='pp'></textarea>";
+				id='ime"+elemid+"' class='pp sime'></textarea>\
+				<textarea cols='25' rows='2'placeholder='Descreption/Remarks'id='remarks"+elemid+"' class='pp sremarks'></textarea>";
 				var elem="<div id='subitem"+elemid+"' ><input id='ac-"+acid+"' name='accordion-"+acid+"' \
 				type='checkbox' ><label for='ac-"+acid+"' class='acc-label'>Sub-item"+elemid+"</label>\
 				<article class='sizeauto'>"+forms+"</article></div>";
@@ -921,6 +974,12 @@
 				
 				if($("#fs1").val()!=""){$("#fs"+elemid).val($("#fs1").val());}
 				if($("#donor1").val()!=""){$("#donor"+elemid).val($("#donor1").val());}
+				if($("#allinput").is(":checked")){
+					for(var keyid in sub_copy){
+						var str_val=$(sub_copy[keyid]+"1").val()
+						$(sub_copy[keyid]+""+elemid).val(str_val);
+					}
+				}
 			});
 			$("#minus-item").click(function(){
 				if(elemid>1){

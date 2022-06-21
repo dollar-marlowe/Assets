@@ -84,9 +84,10 @@
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-3'>Office Management</label>";
-         echo       "<article class='ac-small'>";
+         echo       "<article class='ac-medium'>";
          echo           "<a href='officesentry'>Office Data Entry</a>";
-         echo           "<a href='officialsentry'>Officials</a>"; 
+         echo           "<a href='officialsentry'>Personnel Data Entry</a>"; 
+         echo           "<a href='officialsentry'>Personnels' User Account</a>"; 
          echo       "</article>";
          echo   "</div>";
          echo   "<div>";

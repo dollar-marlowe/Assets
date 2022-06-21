@@ -130,18 +130,35 @@
 				text-align:center;
 				
 			}
-			
+			#hide_show {
+    border: 1px solid #ddd;
+	background-color:white;
+    padding: .5em;
+  width:fit-content;
+
+position:absolute;
+	  transform: rotate(90deg);
+	  
+	  margin:auto;
+	  margin-top:25px;
+	  margin-left:-9px;
+
+}
+#hide_show:hover{
+	background-color:#ddd;
+}
 		
 </style>
  <section id="imgform"><div class="imgform-container ">
 
       <div class="imgform-container ">
-
+	  <p id="hide_show" class="top">Hide</p>
 	  	<div class="sidebar">
-				<div class="imgform-img radiusnone top" >
+		 
+				<div class="imgform-img radiusnone top pannel_con" >
 					<h3 onclick="test('#panel1','pannel')" class="sidehead">Lorem ipsum1</h3>
 						<p id="panel1" class="pannel">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+						&nbsp &nbsp Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
 						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
@@ -150,7 +167,8 @@
 						    culpa qui officia deserunt mollit anim id est laborum.
 						</p>
 				</div>
-				<div class="imgform-img radiusnone marginleft">
+				
+				<div class="imgform-img radiusnone marginleft pannel_con">
 					<h3  onclick="test('#panel2','pannel')" class="sidehead">Lorem ipsum</h3>
 						<p id="panel2" class="pannel">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -162,7 +180,7 @@
 						    culpa qui officia deserunt mollit anim id est laborum.
 						</p>
 				</div>
-				<div class="imgform-img radiusnone marginleft">
+				<div class="imgform-img radiusnone marginleft pannel_con">
 					<h3  onclick="test('#panel3','pannel')" class="sidehead">Lorem ipsum</h3>
 						<p id="panel3" class="pannel">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -179,7 +197,8 @@
       <div class="imgform-img " style='border:none;'>
 	  
               <div class="imgform-img block">
-                <p onclick="test('#windy','iframe')" class="iframhead">WINDY.COM LIVE MONITORING</p>
+                <p onclick="test('#windy','iframe')" class="iframhead">&nbsp &nbsp WINDY.COM LIVE MONITORING</p>
+			
                 <iframe style="border:none;width:100%; " src="https://embed.windy.com/embed2.html?lat=9.709&lon=123.750&
                   detailLat=9.709&detailLon=123.750&width=650&height=450&zoom=5&level=surface&overlay=rain&product
                   =ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metric
@@ -191,6 +210,7 @@
 
               <div class="imgform-img block">
               <p onclick="test('#flood','iframe')">DOST FLOOD DAM INFROMATION LIVE MONITORING</p>
+			  
                 <iframe id="flood"style="border:none;width:100%; " src="https://bagong.pagasa.dost.gov.ph/flood#dam-information" ></iframe>
                 
               </iframe>
@@ -238,7 +258,23 @@
 			
 			
 		}
+
+
       $(document).ready(function(){
+		var hidden=false;
+		$("#hide_show").click(function(){
+			if(hidden){
+				$(".sidebar").show(400);
+				$("#hide_show").text("Hide");
+				hidden=false;
+			}else{
+				$(".sidebar").hide(400);
+				
+				$("#hide_show").text("Show");
+				hidden=true;
+			}
+			
+		});
 		$(window).resize(function(){
 			var l=$(window).width();
 			if(l<=1467 && l>820){

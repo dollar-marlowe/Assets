@@ -61,7 +61,7 @@
                       }, 
                       function(data){
                         if(data=="true"){
-                          window.location="assets_mgt.php";
+                          window.location="home.php";
                         }else{
                             if(err_label<1){
                             $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Login Failed!</p>");

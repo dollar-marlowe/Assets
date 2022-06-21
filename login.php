@@ -20,6 +20,8 @@
     body{
       background:url("images/DICT.png") center no-repeat;
       background-size:60%;
+      /*background-position: 50% 11%;*/
+
 
     }
     @media (min-width: 901px) and (max-width: 1400px){
