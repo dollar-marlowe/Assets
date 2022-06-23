@@ -72,7 +72,7 @@
         </div>
 
             <div class="form-container">
-            <h2 id="header">Office Information Data Entry</h2>
+            <h2 id="header">Office Data Entry</h2>
                 
                 <label for="type">Office Type:</label>
 						<select id="category" name='category' onchange="revertcss('#category')">

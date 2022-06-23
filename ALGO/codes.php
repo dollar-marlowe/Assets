@@ -7,6 +7,26 @@ if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
 }
 $_SESSION['start'] = time();
 
+/* 
+   
+if(!isset($_SESSION["auth"])){
+            if( basename($_SERVER["SCRIPT_FILENAME"], '.php')!="login"){
+                header("Location:../login.php");
+        }
+    
+  }
+  else{
+        if( basename($_SERVER["SCRIPT_FILENAME"], '.php')=="codes"){
+                if($_SESSION['auth_level']!=4){
+                    header("Location:../login.php");
+                }
+                
+        }
+   
+  }  */
+
+  
+
 //Class for databce connection for dynamically reusing of codes
 class Database{
 
@@ -371,7 +391,10 @@ function total($str, $col){
         echo "No items as of yet";
     }
 }
-function loadtable($str,$headers,$chkbox,$all,$class){
+function loadtable($str,$headers,$chkbox,$all,$class){//the class is an array 
+    //1st elem is the class header of checkbox for check all an dthe send elem 
+    //is the class name for each checkbox in the table rows
+    //$all is a a boolean variable if true will add check all at the very first table header cell
     $db =new Database();
     $db->connect();
     $data=$db->selectrows($str,0);
@@ -424,7 +447,14 @@ function loadtable($str,$headers,$chkbox,$all,$class){
         }
     }
 }
-
+function office_combobox(){
+	echo "<select id='office' name='office' >";
+							
+         $str="SELECT id,office_name FROM office";
+         loadropdown($str,"id","office_name","Offices");//function for loading values into the dropdown accepts sql command and name of columns 
+							
+	echo"</select>";
+}
 function loadropdown1($str,$col1,$col2){//the second  dropdown has others 
     
     $db = new Database();
@@ -552,23 +582,58 @@ function loadintodb(){
   $db->close();
 }
 
+
+function generate_password($len){
+    $pass="";
+    $aplhabet="abcdefghijklmnopqrstuvwxyz";
+    
+    $chars="1234567890$@#*1234567890".$aplhabet.strtoupper($aplhabet);
+    $char=str_split($chars);
+    $size=sizeof($char);
+    for($i=0;$i<$len;$i++){
+        $pass.=$char[rand(0,$size-1)];
+    }
+    return $pass;
+}
 function test(){
     $mydb = new Database();
     $mydb->connect();
-    $qrcode="0001";
-    $str="select qrcode from assetowner where assets_id=45";
-    $data=$mydb->selectrows($str,1);
-    if($data!=null){
-        $qrcode=$data[0]["qrcode"]; 
-        $qrint=(int)get_string_at($qrcode,3);
-        $qrint++;
-        $qrcode= substr(str_repeat(0, 11).$qrint, -11);
-    }
-    return $qrcode;
-    
+    $id="1";
+   $str="select max(id) as id from officials";
+        $data=$mydb->selectrows($str,0);
+        if($data!=-null){
+            $id=$data[0]["id"];
+        }
+    return $id;
 }
 
-
+define("encryption_method", "AES-128-CBC");
+define("key", "nO2T0fp6D@*P_yd6cmVUw$0oC");
+function encrypt($data) {
+    $key = key;
+    $plaintext = $data;
+    $ivlen = openssl_cipher_iv_length($cipher = encryption_method);
+    $iv = openssl_random_pseudo_bytes($ivlen);
+    $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+    $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+    $ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
+    return $ciphertext;
+}
+function decrypt($data) {
+    $key = key;
+    $c = base64_decode($data);
+    $ivlen = openssl_cipher_iv_length($cipher = encryption_method);
+    $iv = substr($c, 0, $ivlen);
+    $hmac = substr($c, $ivlen, $sha2len = 32);
+    $ciphertext_raw = substr($c, $ivlen + $sha2len);
+    $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+    $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+    if (hash_equals($hmac, $calcmac))
+    {
+        return $original_plaintext;
+    }
+}
+//echo encrypt('test');
 //$db=new Database();
 //echo test();
 //echo $db->connect();

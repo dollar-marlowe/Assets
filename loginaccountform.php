@@ -78,19 +78,14 @@
                 <input type="text" placeholder="Contact Number" id="off_cnumber"/>
                 <input type="email" placeholder="E-mail Address *" id="off_email"/>
                 
-                <label for="position">Position/Designation:*</label>
+                <label for="position">Position/Function:*</label>
 
-                <input type="text" id="position" plaeholder="Postion/Designation">
-                    
-
-                <label for="position">Authority Level:*</label>
-
-                <select id="auth_level">
+                <select id="position">
                     <option value=0>Select from options below</option>
-                    <option value=1>Regular User</option>
-                    <option value=2>Admin</option>
-                    <option value=3>Director</option>
-                    <option value=4>Super Admin</option>
+                    <option value='Regional Director'>Regional Director</option>
+                    <option value='Technical Operations Division Head'>Technical Operations Division Head</option>
+                    <option value='Administrative and Finance Division Head'>Administrative and Finance Division Head</option>
+                    <option value='Administrative and Finance Division Head'>Regional Focal</option>
                 </select>
 
                 <label for="off_designation">Office Designation: *</label>
@@ -118,8 +113,7 @@
             "contact":false,
             "email":false,
             "position":false,
-            "office":false,
-            "auth_level":false
+            "office":false
           };
           var errmsg=0;
           function validate_elem_office(id,value){
@@ -140,7 +134,7 @@
             }
           }
           function go_add_official(){
-            if( okoff["fname"] && okoff["lname"] && okoff["mname"] && okoff["contact"] &&  okoff["email"] && okoff["position"] && okoff["office"] && okoff["auth_level"]){
+            if( okoff["fname"] && okoff["lname"] && okoff["mname"] && okoff["contact"] &&  okoff["email"] && okoff["position"] && okoff["office"]){
               errmsg=0;
               $("#errofficial").remove();
               return true;
@@ -168,10 +162,8 @@
             okoff["mname"]=validate_elem_office("#off_mname","");
             okoff["contact"]=validate_elem_office("#off_cnumber","");
             okoff["email"]=validate_elem_office("#off_email","");
-            okoff["position"]=validate_elem_office("#position","");
+            okoff["position"]=validate_elem_office("#position",0);
             okoff["office"]=validate_elem_office("#off_designation",0);
-            okoff["auth_level"]=validate_elem_office("#auth_level",0);
-
             if(go_add_official()){
               $.post("AJAX/insertofficials.php",{
                 fname:    $("#off_fname").val(),
@@ -180,8 +172,7 @@
                 contact:  $("#off_cnumber").val(),
                 email:    $("#off_email").val(),
                 position: $("#position").val(),
-                office:   $("#off_designation").val(),
-                office:   $("#auth_level").val()
+                office:   $("#off_designation").val()
               },
               function(data){
                 $("#msgadded").remove();
@@ -217,12 +208,7 @@
             go_add_official();
           });
           $("#off_designation").change(function(){
-            okoff["office"]=validate_elem_office("#off_designation",0);
-            go_add_official();
-          });
-
-          $("#auth_level").change(function(){
-            okoff["auth_level"]=validate_elem_office("#auth_level",0);
+            okoff["office"]=validate_elem_office("#off_designation","");
             go_add_official();
           });
       });

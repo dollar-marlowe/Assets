@@ -49,28 +49,38 @@
                 }
               }
               function login(){
+                  var reroute=true;
                 
                     isoklogin["uname"]=validate_elem("#username","");
                     isoklogin["pass"]=validate_elem("#password","");
                     if(gologin()){
-                    
                       $.post("AJAX/retrievelogin.php",
                       {
                         uname:$("#username").val(),
                         pass:$("#password").val()
                       }, 
                       function(data){
+                        alert(data);
                         if(data=="true"){
-                          window.location="home.php";
+                         
+                              window.location="home.php";
+                            
                         }else{
                             if(err_label<1){
                             $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Login Failed!</p>");
                             err_label++;
+                            reroute=false;
+                           // alert("Login Failed!");
                           
                             }
                         }
                       });
                     }
+                   /*  var delayInMilliseconds = 2000; //1 second
+                        setTimeout(function() {
+                          window.location="login.php";  
+                            }, delayInMilliseconds);
+                       */
               }
 
               $("#submitlogin").click(function(){
@@ -80,6 +90,7 @@
                 var keycode =(event.keyCode ? event.keyCode: event.which);
                 if(keycode=='13'){
                   login();
+                 
                 }
               });
 

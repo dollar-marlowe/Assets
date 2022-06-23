@@ -47,6 +47,7 @@
 <nav class="navbar">
       
         <?php
+        $_SESSION["page"]="";
         if(isset($_SESSION["auth"])){
           echo "<div class='navbar-container'>";
          echo " <input type='checkbox' name='' id='nbrger'>";
@@ -87,7 +88,7 @@
          echo       "<article class='ac-medium'>";
          echo           "<a href='officesentry'>Office Data Entry</a>";
          echo           "<a href='officialsentry'>Personnel Data Entry</a>"; 
-         echo           "<a href='officialsentry'>Personnels' User Account</a>"; 
+         echo           "<a href='officialsentry'>Personnel's User Account</a>"; 
          echo       "</article>";
          echo   "</div>";
          echo   "<div>";
