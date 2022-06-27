@@ -47,7 +47,7 @@
 <nav class="navbar">
       
         <?php
-        $_SESSION["page"]="";
+       $P="";//this is for the page name
         if(isset($_SESSION["auth"])){
           echo "<div class='navbar-container'>";
          echo " <input type='checkbox' name='' id='nbrger'>";

@@ -1,4 +1,5 @@
 <?php
+
     include "../ALGO/codes.php";
     if(isset($_POST["fname"])){
         $mydb = new Database();

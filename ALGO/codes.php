@@ -7,23 +7,9 @@ if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
 }
 $_SESSION['start'] = time();
 
-/* 
-   
-if(!isset($_SESSION["auth"])){
-            if( basename($_SERVER["SCRIPT_FILENAME"], '.php')!="login"){
-                header("Location:../login.php");
-        }
-    
-  }
-  else{
-        if( basename($_SERVER["SCRIPT_FILENAME"], '.php')=="codes"){
-                if($_SESSION['auth_level']!=4){
-                    header("Location:../login.php");
-                }
-                
-        }
-   
-  }  */
+if( basename($_SERVER["SCRIPT_FILENAME"], '.php')=="codes" && !(isset($_SESSION["auth"]))){
+   header("Location:../login.php");
+}
 
   
 

@@ -7,7 +7,7 @@
         <div class="form-container" style="width:300px;margin:auto;opacity:1" >
           <h2 id="loginheader">Login</h2>
 		  
-
+        
 				<input type="text" placeholder="Username*" id="username"/>
 				<input type="password" placeholder="Password*" id="password"/>
 				

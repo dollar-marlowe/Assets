@@ -1,5 +1,6 @@
 
     <?php
+     $P="officesentry";
     include "ALGO/codes.php";
     $submitted=$_SERVER['REQUEST_METHOD']=='POST';
     $frmsubmit=isset($_POST['submit']);

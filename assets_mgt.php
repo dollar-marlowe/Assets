@@ -1,7 +1,7 @@
 
     
     <?php
-    
+     $P="assets_mgt";
     include "ALGO/codes.php";
 
     

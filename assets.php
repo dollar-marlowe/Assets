@@ -1,6 +1,6 @@
 
     <?php
-    
+     $P="assets";
     include "ALGO/codes.php";
 
     

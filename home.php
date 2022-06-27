@@ -1,5 +1,6 @@
 
     <?php
+    $P="home";
     include "ALGO/codes.php";
    
     if(!isset($_SESSION["auth"]) && $_SESSION["auth"]!=true ){
