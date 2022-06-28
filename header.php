@@ -88,7 +88,7 @@
          echo       "<article class='ac-medium'>";
          echo           "<a href='officesentry'>Office Data Entry</a>";
          echo           "<a href='officialsentry'>Personnel Data Entry</a>"; 
-         echo           "<a href='officialsentry'>Personnel's User Account</a>"; 
+         echo           "<a href='loginaccount'>Personnel's User Account</a>"; 
          echo       "</article>";
          echo   "</div>";
          echo   "<div>";

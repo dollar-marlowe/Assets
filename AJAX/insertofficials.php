@@ -24,7 +24,9 @@
         values(".$id.",".$office.",'".$fname."','".$mname."','".$lname."','".$position."','".$contact."','".$email."','".$today."')";
 
        $msg= $mydb->insert($str);
-       $str="";
+       $str="insert into login (official_id,username,  `password`,`status`) values(".$id.",'".$fname.$lname."','".encrypt(generate_password(8))."','activation')";
+       $msg2= $mydb->insert($str);
+       echo $msg2;
 
 
     }

@@ -27,7 +27,7 @@
                   if($(id).val()==val){
                     $(id).css("border-bottom-color","red");
                     if(err_label<1){
-                      $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Required Feild(s)* cannot be empty!</p>");
+                      $("#loginheader").after("<p  style='color:red' id='msgerrlogin'>Required Feild(s)* cannot be empty!</p>");
                       err_label++;
                      
                     }
@@ -60,7 +60,7 @@
                         pass:$("#password").val()
                       }, 
                       function(data){
-                        alert(data);
+                        //alert(data);
                         if(data=="true"){
                          
                               window.location="home.php";
