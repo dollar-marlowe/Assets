@@ -181,7 +181,7 @@
                 email:    $("#off_email").val(),
                 position: $("#position").val(),
                 office:   $("#off_designation").val(),
-                office:   $("#auth_level").val()
+                auth_level:   $("#auth_level").val()
               },
               function(data){
                 $("#msgadded").remove();

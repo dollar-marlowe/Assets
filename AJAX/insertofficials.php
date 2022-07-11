@@ -17,6 +17,7 @@
         $data=$mydb->selectrows($str,0);
         if($data!=-null){
             $id=$data[0]["id"];
+            $id++;
         }
 
         $today=date("Y-m-d h:m:sa");
@@ -26,8 +27,7 @@
        $msg= $mydb->insert($str);
        $str="insert into login (official_id,username,  `password`,`status`) values(".$id.",'".$fname.$lname."','".encrypt(generate_password(8))."','activation')";
        $msg2= $mydb->insert($str);
-       echo $msg2;
-
+      echo $msg;
 
     }
 

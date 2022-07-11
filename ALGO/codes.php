@@ -377,11 +377,15 @@ function total($str, $col){
         echo "No items as of yet";
     }
 }
-function loadtable($str,$headers,$chkbox,$all,$class){//the class is an array 
-    //1st elem is the class header of checkbox for check all an dthe send elem 
+function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
+    //$str id thhe sql command, 
+    //$headers(array): are the header that shows on the table column head 
+    //$chkbox is a boolean to add checkboxes at the begiining of each row
+      //$all is a  boolean variable if true will add check all at the very first table header cell
+    //the class is an array: 
+    //1st elem is the class header of checkbox for check all and the second elem 
     //is the class name for each checkbox in the table rows
-    //$all is a a boolean variable if true will add check all at the very first table header cell
-    $db =new Database();
+   $db =new Database();
     $db->connect();
     $data=$db->selectrows($str,0);
     if($data!=null){
@@ -419,6 +423,10 @@ function loadtable($str,$headers,$chkbox,$all,$class){//the class is an array
                     $chkbox=false; 
                 }
                 else{
+                    if($e=='activation'){
+                        $e="For ".$e;
+                    }
+                       
                     if($i==$size-1){
                         echo"<td class='last'>".$e."</td>";
                     }else{
