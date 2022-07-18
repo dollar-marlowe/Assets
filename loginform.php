@@ -10,14 +10,18 @@
         
 				<input type="text" placeholder="Username*" id="username"/>
 				<input type="password" placeholder="Password*" id="password"/>
+        <input type="password" placeholder="Repeat Password*" id="repassword"/>
 				
 				<input type='submit' Value='Submit' class="btn btn-primary"  style="color:white;font-weight:800;"  id="submitlogin">
 			
         </div>
       </div>
     </section>
+    <script src="JS/mine.js" >
+    </script>
     <script>
       $(document).ready(function(){
+          $("#repassword").hide();
               var isoklogin={
                 "uname":false,
                 "pass":false
@@ -65,7 +69,7 @@
                          
                               window.location="home.php";
                             
-                        }else{
+                        }else if(data=="false"){
                             if(err_label<1){
                             $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Login Failed!</p>");
                             err_label++;
@@ -73,6 +77,15 @@
                            // alert("Login Failed!");
                           
                             }
+                        }
+                        else if(data=="change_pass"){
+                            $("#username").val(session("uname"));
+                            $("#repassword").show();
+                        }
+                        else if(data=="activation"){
+                          $("#msgerrlogin").remove();
+                          $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Account needs to be activated first! Please contact the admnisitrator!</p>");
+                           
                         }
                       });
                     }

@@ -179,7 +179,7 @@
             
         </div>
       </div>
-	  <div id="reset" class="pannel"><h2>Password Reset</23></div>
+	  <div id="pass_reset" class="pannel"><h2>Password Reset</23></div>
       <div class="imgform-container " id="resets_form">
 		
         <div class="imgform-img">
@@ -194,6 +194,7 @@
     </section>
 
     <script>
+		
       $(document).ready(function(){
 		$("#accounts_form").slideUp("slow");
 		$("#status").val("activation");
@@ -248,9 +249,27 @@
 
 	  });
 
-	  $("#reset").click(function(){
+	  $("#pass_reset").click(function(){
 		$("#accounts_form").slideUp("slow");
 		$("#resets_form").slideToggle("slow");
 
+	  });
+	  $("#submit_account").click(function(){
+		if($("#status").val()=="activation"){
+			$.each($(".item:checked"),function(){
+			var elem=$(this).val();
+			//alert(elem);
+				$.post("AJAX/activate.php",
+					{
+						staff_id:elem,
+						auth_level:$("#auth_level").val()
+					},
+					function(data){
+
+					}
+				);
+			});
+		}
+		
 	  });
     </script>

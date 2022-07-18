@@ -26,18 +26,20 @@
               $_SESSION["brgy_id"]=$row["brgy_id"]; 
               $_SESSION["office_cat"]=$row["category"]; 
               $_SESSION["auth_level"]=$row["auth_level"]; 
-            
-             echo "true";
-          
-
+              $_SESSION["status"]=$row["status"]; 
+            if(  $_SESSION["status"]=="change_pass"){
+              echo "change-pass";
+            }
+            if(  $_SESSION["status"]=="active"){
+              echo "true";
+            }
+            if(  $_SESSION["status"]=="activation"){
+              echo "activation";
+            }
           }
           else{
             echo "false";
           }
-
-         
-
-
       }
       
       else{

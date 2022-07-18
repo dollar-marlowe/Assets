@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.5.5-10.3.15-MariaDB
+-- Server version	5.5.5-10.4.22-MariaDB
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -26,48 +26,12 @@ USE assets;
 --
 DROP TABLE IF EXISTS `current_etc`;
 DROP VIEW IF EXISTS `current_etc`;
-CREATE TABLE `current_etc` (
-  `id` int(10) unsigned,
-  `etc_id` int(10) unsigned,
-  `disaster_id` int(10) unsigned,
-  `etc_act_name` varchar(90),
-  `disasterlevel` varchar(45),
-  `disatercategory` varchar(45),
-  `natureofdisaster` varchar(245),
-  `disasterdate` datetime,
-  `disasterend` datetime,
-  `disater_status` varchar(45),
-  `etcstart` datetime,
-  `etcend` datetime,
-  `resoactivate` varchar(45),
-  `resodeact` varchar(45),
-  `etcstatus` varchar(45),
-  `etclevel` varchar(45)
-);
 
 --
 -- Temporary table structure for view `etc_disater_consolidated`
 --
 DROP TABLE IF EXISTS `etc_disater_consolidated`;
 DROP VIEW IF EXISTS `etc_disater_consolidated`;
-CREATE TABLE `etc_disater_consolidated` (
-  `id` int(10) unsigned,
-  `etc_id` int(10) unsigned,
-  `disaster_id` int(10) unsigned,
-  `etc_act_name` varchar(90),
-  `disasterlevel` varchar(45),
-  `disatercategory` varchar(45),
-  `natureofdisaster` varchar(245),
-  `disasterdate` datetime,
-  `disasterend` datetime,
-  `disater_status` varchar(45),
-  `etcstart` datetime,
-  `etcend` datetime,
-  `resoactivate` varchar(45),
-  `resodeact` varchar(45),
-  `etcstatus` varchar(45),
-  `etclevel` varchar(45)
-);
 
 --
 -- Temporary table structure for view `geo_add`
@@ -42570,9 +42534,8 @@ CREATE TABLE `disaster` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `category` varchar(45) NOT NULL,
-  `alertlevel` varchar(45) NOT NULL,
   `natureofdisaster` varchar(245) NOT NULL,
-  `Description` varchar(245) NOT NULL,
+  `description` varchar(245) NOT NULL,
   `datestarted` datetime NOT NULL,
   `dateended` datetime NOT NULL,
   `status` varchar(45) NOT NULL,
@@ -42600,7 +42563,8 @@ CREATE TABLE `etc` (
   `resoactivation` varchar(45) NOT NULL,
   `resodeactivation` varchar(45) NOT NULL,
   `status` varchar(45) NOT NULL,
-  `level` varchar(45) NOT NULL,
+  `alert_level` varchar(45) NOT NULL,
+  `etc_level` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -42663,26 +42627,27 @@ CREATE TABLE `etc_disaster` (
 
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL,
   `official_id` int(10) unsigned NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(300) NOT NULL,
   `auth_level` int(10) unsigned DEFAULT NULL,
   `auth_desc` varchar(45) DEFAULT NULL,
   `status` varchar(45) NOT NULL,
+  `date_activated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `login`
 --
 
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` (`id`,`official_id`,`username`,`password`,`auth_level`,`auth_desc`,`status`) VALUES 
- (2,2,'lowe_mayores','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active'),
- (12,3,'lowe','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active'),
- (13,3,'james','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',3,'Super Admin','active'),
- (15,7,'JamesSmith','8WsOdER/T177lWpY59V7WDRR6mtil8BXMc4WSUBMza8mOQy2Pcnsgc9xD4GRRs1DY3qSgdmL2gYLm7Aw8eMBiA==',NULL,NULL,'activation');
+INSERT INTO `login` (`id`,`official_id`,`username`,`password`,`auth_level`,`auth_desc`,`status`,`date_activated`) VALUES 
+ (2,2,'lowe_mayores','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','acive','2022-06-18 00:00:00'),
+ (12,3,'lowe','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','acive','2022-06-18 00:00:00'),
+ (13,3,'james','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',3,'Super Admin','acive','2022-06-18 00:00:00'),
+ (15,7,'JamesSmith','8WsOdER/T177lWpY59V7WDRR6mtil8BXMc4WSUBMza8mOQy2Pcnsgc9xD4GRRs1DY3qSgdmL2gYLm7Aw8eMBiA==',NULL,NULL,'activation',NULL);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 
 
@@ -44426,8 +44391,6 @@ INSERT INTO `officials` (`id`,`office_id`,`fname`,`mname`,`lname`,`position`,`co
  (1,3,'Rey','','Parnacio','Regional Director','','rey.parnacio@dict.gov.ph',NULL,NULL,NULL,NULL),
  (2,3,'Marry Jane','B','Nerona','TECHNICAL OPERATIONS DIVISION','','jane.nerona@dict.gov.ph',NULL,NULL,NULL,NULL),
  (3,2,'Lowe James','V','Forescal','DRRMD WEB ADMIN','','loue.mayores@dict.gov.ph',NULL,NULL,NULL,NULL),
- (5,15,'John','','','Technical Operations Division Head','09098888777','email@email.com','0000-00-00 00:00:00',NULL,NULL,NULL),
- (6,15,'John','','Smith','Administrative and Finance Division Head','09098888777','email@email.com','2022-03-30 08:03:16',NULL,NULL,NULL),
  (7,7,'James','Potter','Bond','Regional Director','(02)7684654','james@edotco.uk.com','2022-03-30 08:03:25',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `officials` ENABLE KEYS */;
 
@@ -44676,7 +44639,7 @@ INSERT INTO `transferhistory` (`id`,`asset_owner_id`,`from`,`to`,`datetransfered
 
 DROP TABLE IF EXISTS `current_etc`;
 DROP VIEW IF EXISTS `current_etc`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `current_etc` AS select `etc_disater_consolidated`.`id` AS `id`,`etc_disater_consolidated`.`etc_id` AS `etc_id`,`etc_disater_consolidated`.`disaster_id` AS `disaster_id`,`etc_disater_consolidated`.`etc_act_name` AS `etc_act_name`,`etc_disater_consolidated`.`disasterlevel` AS `disasterlevel`,`etc_disater_consolidated`.`disatercategory` AS `disatercategory`,`etc_disater_consolidated`.`natureofdisaster` AS `natureofdisaster`,`etc_disater_consolidated`.`disasterdate` AS `disasterdate`,`etc_disater_consolidated`.`disasterend` AS `disasterend`,`etc_disater_consolidated`.`disater_status` AS `disater_status`,`etc_disater_consolidated`.`etcstart` AS `etcstart`,`etc_disater_consolidated`.`etcend` AS `etcend`,`etc_disater_consolidated`.`resoactivate` AS `resoactivate`,`etc_disater_consolidated`.`resodeact` AS `resodeact`,`etc_disater_consolidated`.`etcstatus` AS `etcstatus`,`etc_disater_consolidated`.`etclevel` AS `etclevel` from `etc_disater_consolidated` where `etc_disater_consolidated`.`etcstatus` = 'active';
+CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `current_etc` AS select `assets`.`etc_disater_consolidated`.`id` AS `id`,`assets`.`etc_disater_consolidated`.`etc_id` AS `etc_id`,`assets`.`etc_disater_consolidated`.`disaster_id` AS `disaster_id`,`assets`.`etc_disater_consolidated`.`etc_act_name` AS `etc_act_name`,`assets`.`etc_disater_consolidated`.`disasterlevel` AS `disasterlevel`,`assets`.`etc_disater_consolidated`.`disatercategory` AS `disatercategory`,`assets`.`etc_disater_consolidated`.`natureofdisaster` AS `natureofdisaster`,`assets`.`etc_disater_consolidated`.`disasterdate` AS `disasterdate`,`assets`.`etc_disater_consolidated`.`disasterend` AS `disasterend`,`assets`.`etc_disater_consolidated`.`disater_status` AS `disater_status`,`assets`.`etc_disater_consolidated`.`etcstart` AS `etcstart`,`assets`.`etc_disater_consolidated`.`etcend` AS `etcend`,`assets`.`etc_disater_consolidated`.`resoactivate` AS `resoactivate`,`assets`.`etc_disater_consolidated`.`resodeact` AS `resodeact`,`assets`.`etc_disater_consolidated`.`etcstatus` AS `etcstatus`,`assets`.`etc_disater_consolidated`.`etclevel` AS `etclevel` from `etc_disater_consolidated` where `assets`.`etc_disater_consolidated`.`etcstatus` = 'active';
 
 --
 -- Definition of view `etc_disater_consolidated`
@@ -44684,7 +44647,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `current
 
 DROP TABLE IF EXISTS `etc_disater_consolidated`;
 DROP VIEW IF EXISTS `etc_disater_consolidated`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `etc_disater_consolidated` AS select `etc_disaster`.`id` AS `id`,`etc`.`id` AS `etc_id`,`disaster`.`id` AS `disaster_id`,concat(`etc`.`activation_no`,`disaster`.`name`) AS `etc_act_name`,`disaster`.`alertlevel` AS `disasterlevel`,`disaster`.`category` AS `disatercategory`,`disaster`.`natureofdisaster` AS `natureofdisaster`,`disaster`.`datestarted` AS `disasterdate`,`disaster`.`dateended` AS `disasterend`,`disaster`.`status` AS `disater_status`,`etc`.`datestarted` AS `etcstart`,`etc`.`dateended` AS `etcend`,`etc`.`resoactivation` AS `resoactivate`,`etc`.`resodeactivation` AS `resodeact`,`etc`.`status` AS `etcstatus`,`etc`.`level` AS `etclevel` from ((`etc_disaster` join `etc`) join `disaster`) where `etc_disaster`.`etc_id` = `etc`.`id` and `etc_disaster`.`disaster_id` = `disaster`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `etc_disater_consolidated` AS select `etc_disaster`.`id` AS `id`,`etc`.`id` AS `etc_id`,`disaster`.`id` AS `disaster_id`,concat(`etc`.`activation_no`,`disaster`.`name`) AS `etc_act_name`,`assets`.`disaster`.`alertlevel` AS `disasterlevel`,`assets`.`disaster`.`category` AS `disatercategory`,`assets`.`disaster`.`natureofdisaster` AS `natureofdisaster`,`assets`.`disaster`.`datestarted` AS `disasterdate`,`assets`.`disaster`.`dateended` AS `disasterend`,`assets`.`disaster`.`status` AS `disater_status`,`assets`.`etc`.`datestarted` AS `etcstart`,`assets`.`etc`.`dateended` AS `etcend`,`assets`.`etc`.`resoactivation` AS `resoactivate`,`assets`.`etc`.`resodeactivation` AS `resodeact`,`assets`.`etc`.`status` AS `etcstatus`,`assets`.`etc`.`level` AS `etclevel` from ((`etc_disaster` join `etc`) join `disaster`) where `assets`.`etc_disaster`.`etc_id` = `assets`.`etc`.`id` and `assets`.`etc_disaster`.`disaster_id` = `assets`.`disaster`.`id`;
 
 --
 -- Definition of view `geo_add`

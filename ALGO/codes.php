@@ -633,4 +633,15 @@ function decrypt($data) {
 //echo $db->connect();
  //$str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
 //echo abreviate("ACCESS POINT",2); 
+
+//JS API
+function get_session($name){
+    if(isset($_SESSION[$name]))
+    {
+        return $_SESSION[$name];
+    }
+    else{
+        return "false";
+    }
+}
 ?>
