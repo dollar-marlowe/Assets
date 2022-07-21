@@ -170,7 +170,7 @@ INSERT INTO `assetowner` (`id`,`office_id`,`assets_id`,`date_aquired`,`date_tran
  (76,2,43,'2022-06-14 05:06:05',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (77,2,44,'2022-06-14 05:06:05',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (78,2,45,'2022-06-14 05:06:05',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (79,2,46,'2022-06-15 08:06:41',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,'D-GE-A-00000000001'),
+ (79,2,46,'2022-06-15 08:06:41',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,'D-GE-A-00000000001'),
  (83,2,47,'2022-06-16 04:06:32',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,'D-MS-A-00000000002');
 /*!40000 ALTER TABLE `assetowner` ENABLE KEYS */;
 
@@ -249,7 +249,7 @@ INSERT INTO `assets` (`id`,`assetid`,`category`,`name`,`serial`,`IMEI`,`brand`,`
  (43,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0004'),
  (44,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0005'),
  (45,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0006'),
- (46,'2-GE-','GENSET','GENSET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-15 08:06:41','GE',NULL),
+ (46,'2-GE-','GENSET','GENSET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Deployed','','2022-06-15 08:06:41','GE',NULL),
  (47,'2-MS-','MOVE SET','MOVE HUB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-16 04:06:32','MS',NULL);
 /*!40000 ALTER TABLE `assets` ENABLE KEYS */;
 
@@ -42400,7 +42400,7 @@ CREATE TABLE `deployment` (
   `remarks` varchar(200) DEFAULT NULL,
   `deployment_stat` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `deployment`
@@ -42521,7 +42521,8 @@ INSERT INTO `deployment` (`id`,`asset_owner_id`,`reg_id`,`prov_id`,`muni_id`,`br
  (112,38,4,17,365,9271,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized'),
  (113,73,17,83,1576,40673,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized'),
  (114,74,17,83,1576,40673,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized'),
- (115,75,17,83,1576,40673,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized');
+ (115,75,17,83,1576,40673,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized'),
+ (116,79,5,22,500,13130,'deployed under normal circumstances','2022-07-20 00:00:00',NULL,0,'','Active');
 /*!40000 ALTER TABLE `deployment` ENABLE KEYS */;
 
 
@@ -42635,6 +42636,7 @@ CREATE TABLE `login` (
   `auth_desc` varchar(45) DEFAULT NULL,
   `status` varchar(45) NOT NULL,
   `date_activated` datetime DEFAULT NULL,
+  `failed_attemps` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -42643,11 +42645,12 @@ CREATE TABLE `login` (
 --
 
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` (`id`,`official_id`,`username`,`password`,`auth_level`,`auth_desc`,`status`,`date_activated`) VALUES 
- (2,2,'lowe_mayores','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','acive','2022-06-18 00:00:00'),
- (12,3,'lowe','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','acive','2022-06-18 00:00:00'),
- (13,3,'james','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',3,'Super Admin','acive','2022-06-18 00:00:00'),
- (15,7,'JamesSmith','8WsOdER/T177lWpY59V7WDRR6mtil8BXMc4WSUBMza8mOQy2Pcnsgc9xD4GRRs1DY3qSgdmL2gYLm7Aw8eMBiA==',NULL,NULL,'activation',NULL);
+INSERT INTO `login` (`id`,`official_id`,`username`,`password`,`auth_level`,`auth_desc`,`status`,`date_activated`,`failed_attemps`) VALUES 
+ (0,8,'ronibethcastamado','BoPCtJfdU04pA8CJODx8CK0aWduQiB8yJhilU/qmRVPpz1YijJ9inJoTimg9RcFgyNi3ofENxqryejKTz8CvoQ==',1,'Regular User','change_pass','2022-07-21 00:00:00',0),
+ (2,2,'lowe_mayores','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active','2022-06-18 00:00:00',0),
+ (12,3,'lowe','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active','2022-06-18 00:00:00',0),
+ (13,3,'james','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',3,'Super Admin','active','2022-06-18 00:00:00',0),
+ (15,7,'jamessmith','KOhr8/Er/6Fzxbom6CEfyPKLrLYGkoTGUZcMazeMMlpfyalMyDckFFKUX5xtReI8803BWyHgPh8v1uBQkiS26A==',2,'Technical Operator','active','2022-07-20 00:00:00',0);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 
 
@@ -44391,7 +44394,8 @@ INSERT INTO `officials` (`id`,`office_id`,`fname`,`mname`,`lname`,`position`,`co
  (1,3,'Rey','','Parnacio','Regional Director','','rey.parnacio@dict.gov.ph',NULL,NULL,NULL,NULL),
  (2,3,'Marry Jane','B','Nerona','TECHNICAL OPERATIONS DIVISION','','jane.nerona@dict.gov.ph',NULL,NULL,NULL,NULL),
  (3,2,'Lowe James','V','Forescal','DRRMD WEB ADMIN','','loue.mayores@dict.gov.ph',NULL,NULL,NULL,NULL),
- (7,7,'James','Potter','Bond','Regional Director','(02)7684654','james@edotco.uk.com','2022-03-30 08:03:25',NULL,NULL,NULL);
+ (7,7,'James','Potter','Bond','Regional Director','(02)7684654','james@edotco.uk.com','2022-03-30 08:03:25',NULL,NULL,NULL),
+ (8,2,'Ronibeth','M','Castamado','ESET I','68768768768','ronibeth.castamado@dict.gov.ph','2022-07-21 10:07:44',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `officials` ENABLE KEYS */;
 
 

@@ -5,8 +5,8 @@ function session(name,id){//the id is the id of input elemtn as this is the only
     let value="";
   
   //alert("test1");
-    const xhttp= new XMLHttpRequest();//this is anothyer way of doing AJAX without 
-    //using jquery
+    const xhttp= new XMLHttpRequest();//this is anothyer way of doing AJAX  
+    //without using jquery
     xhttp.open("GET","AJAX/mycodes.php?command=session&name="+name);
     xhttp.send();
     xhttp.onload=function(){
@@ -14,14 +14,13 @@ function session(name,id){//the id is the id of input elemtn as this is the only
       document.getElementById(id).value=this.responseText;
       //(value);
       //(value+"3");
-     
       }
     }
     
 function session1(){
   alert("test");
 }
-//this is the Jquery version of adding adding function to an event click
+//this is the Jquery version of adding function to an event click
 //this will work as long as there is a script src tag for jquery before the src for this file
 
 /* $("#clearlogin").click(function(){

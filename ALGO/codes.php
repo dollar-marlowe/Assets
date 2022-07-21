@@ -643,7 +643,7 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
         header("Location:".$destination);
       }
 }
-//echo decrypt('8WsOdER/T177lWpY59V7WDRR6mtil8BXMc4WSUBMza8mOQy2Pcnsgc9xD4GRRs1DY3qSgdmL2gYLm7Aw8eMBiA==');
+//echo decrypt('BoPCtJfdU04pA8CJODx8CK0aWduQiB8yJhilU/qmRVPpz1YijJ9inJoTimg9RcFgyNi3ofENxqryejKTz8CvoQ==');
 //$db=new Database();
 //echo test();
 //echo $db->connect();

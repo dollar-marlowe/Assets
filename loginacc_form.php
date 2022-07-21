@@ -185,6 +185,7 @@
 		
         <div class="imgform-img">
 		
+
 		<img src="images/personnellogo.png" alt="" />
         </div>
 
@@ -256,6 +257,8 @@
 
 	  });
 	  $("#submit_account").click(function(){
+		var  str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='active'";
+		var headers=" %First Name%Last Name%User Name%Position%Level%Status";
 		if($("#status").val()=="activation"){
 			$.each($(".item:checked"),function(){
 			var elem=$(this).val();
@@ -267,8 +270,7 @@
 					},
 					function(data){
 						alert(data);
-						var  str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
-						var headers=" %First Name%Last Name%User Name%Position%Level%Status";
+						
 						loadtable(str,headers,1,0);
 					}
 				);
