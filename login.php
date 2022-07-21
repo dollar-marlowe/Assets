@@ -42,7 +42,7 @@
    
    
     if(isset($_SESSION["auth"])){
-      if($_SESSION["auth"]){
+      if($_SESSION["auth"] &&   $_SESSION["status"]=="active" ){
         header("Location:assets.php");
       }
     }

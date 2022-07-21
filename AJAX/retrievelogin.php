@@ -27,15 +27,7 @@
               $_SESSION["office_cat"]=$row["category"]; 
               $_SESSION["auth_level"]=$row["auth_level"]; 
               $_SESSION["status"]=$row["status"]; 
-            if(  $_SESSION["status"]=="change_pass"){
-              echo "change-pass";
-            }
-            if(  $_SESSION["status"]=="active"){
-              echo "true";
-            }
-            if(  $_SESSION["status"]=="activation"){
-              echo "activation";
-            }
+              echo $row["status"];
           }
           else{
             echo "false";

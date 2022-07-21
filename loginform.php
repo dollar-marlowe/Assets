@@ -13,14 +13,18 @@
         <input type="password" placeholder="Repeat Password*" id="repassword"/>
 				
 				<input type='submit' Value='Submit' class="btn btn-primary"  style="color:white;font-weight:800;"  id="submitlogin">
-			
+       <!--  <input type='submit' Value='Clear' class="btn btn-primary"  style="color:white;font-weight:800;"  id="clearlogin">
+			 -->
         </div>
       </div>
     </section>
-    <script src="JS/mine.js" >
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="JS/mm.js"></script>
     <script>
+
       $(document).ready(function(){
+       // session();
+        var change_pass=false;
           $("#repassword").hide();
               var isoklogin={
                 "uname":false,
@@ -54,46 +58,105 @@
               }
               function login(){
                   var reroute=true;
-                
-                    isoklogin["uname"]=validate_elem("#username","");
-                    isoklogin["pass"]=validate_elem("#password","");
-                    if(gologin()){
-                      $.post("AJAX/retrievelogin.php",
-                      {
-                        uname:$("#username").val(),
-                        pass:$("#password").val()
-                      }, 
-                      function(data){
-                        //alert(data);
-                        if(data=="true"){
-                         
-                              window.location="home.php";
+                  //alert(change_pass);
+                    if(change_pass){
+                      if(validate_elem("#repassword","")){
+                        if($("#password").val()== $("#repassword").val()){
+                          $.post("AJAX/changepass.php",
+                            {
+                              staffid:  $("#username").val(),
+                              pass:     $("#password").val()
+                            },
+                            function(data){
+                              //alert(data);
+                              if(data=="true"){
+                              
+                                $("#repassword").hide();
+                                $("#password").val("");
+                                  change_pass=false;
+                                  $("#msgerrlogin").remove();
+                                  $("#loginmsg").remove();
+                                  $("#loginheader").after("<p  id='loginmsg'>Change password successful! Please login using your new password.</p>");
+                                  $("#username").removeAttr("disabled");
+                                }
+                                else{
+                                  $("#msgerrlogin").remove();
+                                  $("#loginheader").after("<p style='color:red' id='msgerrlogin'>error"+data+"</p>");
+                                }
                             
-                        }else if(data=="false"){
-                            if(err_label<1){
-                            $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Login Failed!</p>");
-                            err_label++;
-                            reroute=false;
-                           // alert("Login Failed!");
-                          
-                            }
+                            });
                         }
-                        else if(data=="change_pass"){
-                            $("#username").val(session("uname"));
-                            $("#repassword").show();
-                        }
-                        else if(data=="activation"){
+                        else{
                           $("#msgerrlogin").remove();
-                          $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Account needs to be activated first! Please contact the admnisitrator!</p>");
-                           
+                          $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Password missmatched!</p>");
+                          
                         }
-                      });
+                         
+
+                      }
+                      else{
+                        $("#msgerrlogin").remove();
+                        $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Repeat password caanot be empty!</p>");
+                             
+                      }
+
                     }
+                    else{
+                      isoklogin["uname"]=validate_elem("#username","");
+                      isoklogin["pass"]=validate_elem("#password","");
+
+                        if(gologin()){
+                          $.post("AJAX/retrievelogin.php",
+                          {
+                            uname:$("#username").val(),
+                            pass:$("#password").val()
+                          }, 
+                          function(data){
+                            //alert(data);
+                            if(data=="active"){
+                                 // alert(data);
+                                  window.location="home.php";
+                                
+                            }
+                            else if (data=="false"){
+                                if(err_label<1){
+                                $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Login Failed!</p>");
+                                err_label++;
+                                reroute=false;
+                              // alert("Login Failed!");
+                              
+                                }
+                            }
+                            else if (data=="change_pass"){
+                              //
+                              $("#loginmsg").remove();
+                                $("#loginheader").after("<p  id='loginmsg'>Please create new password.</p>");
+                              
+                                 session("uname","username");
+                                $("#repassword").show();
+                                change_pass=true;
+                                $("#password").val("");
+                                $("#username").attr("disabled","disabled");
+                                //alert(session("uname"));
+                            }
+                            else if(data=="activation"){
+                              $("#msgerrlogin").remove();
+                              $("#loginheader").after("<p style='color:red' id='msgerrlogin'>Account needs to be activated first! Please contact the admnisitrator!</p>");
+                           
+                            }
+                            else{
+                              $("#msgerrlogin").remove();
+                              $("#loginheader").after("<p style='color:red' id='msgerrlogin'>"+data+"</p>");
+                           
+                            }
+                          });
+                        }
                    /*  var delayInMilliseconds = 2000; //1 second
                         setTimeout(function() {
                           window.location="login.php";  
                             }, delayInMilliseconds);
                        */
+                  }
               }
 
               $("#submitlogin").click(function(){

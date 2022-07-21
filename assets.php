@@ -4,9 +4,7 @@
     include "ALGO/codes.php";
 
     
-    if(!isset($_SESSION["auth"]) && $_SESSION["auth"]!=true ){
-      header("Location:login.php");
-    }
+    include "COMPONENTS/reroute.php";
     include "header.php";
     include "asset_entry_form1.php";//content
     include "about.php";

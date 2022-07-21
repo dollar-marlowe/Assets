@@ -4,9 +4,7 @@
     include "ALGO/codes.php";
     $submitted=$_SERVER['REQUEST_METHOD']=='POST';
     $frmsubmit=isset($_POST['submit']);
-    if(!isset($_SESSION["auth"]) && $_SESSION["auth"]!=true ){
-      header("Location:login.php");
-    }
+    include "COMPONENTS/reroute.php";
     
     include "header.php";
     include "officeform.php";

@@ -151,6 +151,7 @@
 						<option value="active">Active</option>
 						<option value="activation">For activation</option>
 						<option value="deactivated">Deactivated</option>
+						<option value="change_pass">For password changing</option>
 					</select>
 				<label for="auth_level">User Access Level</label>
 					<select id="auth_level">
@@ -258,14 +259,17 @@
 		if($("#status").val()=="activation"){
 			$.each($(".item:checked"),function(){
 			var elem=$(this).val();
-			//alert(elem);
+			
 				$.post("AJAX/activate.php",
 					{
 						staff_id:elem,
 						auth_level:$("#auth_level").val()
 					},
 					function(data){
-
+						alert(data);
+						var  str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
+						var headers=" %First Name%Last Name%User Name%Position%Level%Status";
+						loadtable(str,headers,1,0);
 					}
 				);
 			});

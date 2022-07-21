@@ -222,6 +222,7 @@
 			  <h2 id='assetsub'>
 			  <div  id="minus-item" class='set'></div> 
 				  Sub-Inventory Items
+				 
 			  <div  id="add-item" class='set'></div></h2>
 	 	 	<img src="images/asset.jpg" alt="" id="img"/>
 			<section class='ac-container' >
@@ -230,7 +231,7 @@
 					<label for='ac-6' class='acc-label'>Sub-item1</label>
 					<article class='sizeauto' >							
 						<input type='text' placeholder='Item Name*' id='asset1' class='subset' />
-						<p>Status:*
+						<p>Status:* 
 							<select id='status1' class='subset' >
 								<option value=''>Select from below</option>
 								<option value='Available1'>Intact</option>
@@ -281,7 +282,7 @@
 	</div >
 		<!-- is for asset inventory--> 
 		<div class="form-container">
-			<h2 id='assetheader'>Assets Data Entry</h2>
+			<h2 id='assetheader'>Assets Data Entry </h2>
 			
 			<label for="type"  id='single'>Type of Entry:*</label>
 						<select id="type" name="type">

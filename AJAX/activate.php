@@ -30,14 +30,14 @@
 
         }
         $today=date("Y-m-d");       
-       
-        $str="update login set `status`='change_pass', date_activated='".$today."', auth_level=".$auth_level.", auth_desc='". $auth_desc."', where official_id=". $staff_id;
-       
-       if($mydb->insert($str)=="New records created!"){
+        $staff_id=str_replace("<br>","",$staff_id);
+        $str="update login set `status`='change_pass', date_activated='".$today."', auth_level=".$auth_level.", auth_desc='". $auth_desc."' where official_id=". $staff_id;
+        echo $mydb->insert($str);
+     /*   if($mydb->insert($str)=="New records created!"){
            echo "<p id='activated'>Account(s) Activated!</p>";
        }else{
         echo "Error executing query!";
-       }
+       } */
        
     }
 

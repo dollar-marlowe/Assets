@@ -23,9 +23,10 @@
         $today=date("Y-m-d h:m:sa");
         $str="insert into officials (id,office_id,fname,mname,lname,position,contact,email,date_added)
         values(".$id.",".$office.",'".$fname."','".$mname."','".$lname."','".$position."','".$contact."','".$email."','".$today."')";
-
+        $username=strtolower($fname.$lname);
+   
        $msg= $mydb->insert($str);
-       $str="insert into login (official_id,username,  `password`,`status`) values(".$id.",'".$fname.$lname."','".encrypt(generate_password(8))."','activation')";
+       $str="insert into login (official_id,username,  `password`,`status`) values(".$id.",'". $username."','".encrypt(generate_password(8))."','activation')";
        $msg2= $mydb->insert($str);
       echo $msg;
 

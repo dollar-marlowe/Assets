@@ -275,6 +275,7 @@
 						
 						<div class="container" >
 								<?php 
+								  //echo $_SESSION["status"];
 									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='available' group by category";
 									$cols=  array("name","category","quantity");
 								

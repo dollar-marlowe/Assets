@@ -3,10 +3,8 @@
      
     include "ALGO/codes.php";
    
-    if(!isset($_SESSION["auth"]) && $_SESSION["auth"]!=true ){
-      header("Location:login.php");
-    }
-
+    include "COMPONENTS/reroute.php";
+    reroute(2,"home.php");//2 is fo rthe access level, and for the destination of reroute is level is 2 and below
     include "header.php";
     include "loginacc_form.php";
     include "about.php";

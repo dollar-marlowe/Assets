@@ -44,6 +44,16 @@ class Database{
         }
     }
 
+    function insert_no_linig($query){
+        $query=$query;
+        if(mysqli_query($this->con,$query)){
+                return "New record created!";
+        }
+        else{
+            return "Error: ".$query."<br>".mysqli_error($this->con);
+        }
+    }
+
     function insertmultiple($query){
         
         if(mysqli_multi_query($this->con,$query)){
@@ -627,7 +637,13 @@ function decrypt($data) {
         return $original_plaintext;
     }
 }
-//echo encrypt('test');
+function reroute($level,$destination){//$level is for the access level, 2nd paramenter is for the destination of reroute if $_SESSION["auth_level"]<=$elvel 
+   
+    if(intval($_SESSION["auth_level"])<=$level){
+        header("Location:".$destination);
+      }
+}
+//echo decrypt('8WsOdER/T177lWpY59V7WDRR6mtil8BXMc4WSUBMza8mOQy2Pcnsgc9xD4GRRs1DY3qSgdmL2gYLm7Aw8eMBiA==');
 //$db=new Database();
 //echo test();
 //echo $db->connect();
