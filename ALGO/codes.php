@@ -94,6 +94,15 @@ class Database{
                 return null;
             }     
     }
+    function select_one($query, $key){
+        $data=mysqli_query($this->con,$query);
+        $result=0;
+        if(mysqli_num_rows( $data)>0){
+            $row=mysqli_fetch_assoc($data);
+            $result=$row[$key];
+        }
+        return $result;
+    }
 
     function close(){
         mysqli_close($this->con);
@@ -599,17 +608,7 @@ function generate_password($len){
     }
     return $pass;
 }
-function test(){
-    $mydb = new Database();
-    $mydb->connect();
-    $id="1";
-   $str="select max(id) as id from officials";
-        $data=$mydb->selectrows($str,0);
-        if($data!=-null){
-            $id=$data[0]["id"];
-        }
-    return $id;
-}
+
 
 define("encryption_method", "AES-128-CBC");
 define("key", "nO2T0fp6D@*P_yd6cmVUw$0oC");
@@ -643,9 +642,24 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
         header("Location:".$destination);
       }
 }
-//echo decrypt('BoPCtJfdU04pA8CJODx8CK0aWduQiB8yJhilU/qmRVPpz1YijJ9inJoTimg9RcFgyNi3ofENxqryejKTz8CvoQ==');
+
+function test(){
+    $mydb = new Database();
+    $mydb->connect();
+   
+    $staff_id=8;
+
+    $data=$mydb->select_one("SELECT email FROM officials where id=". $staff_id,"email");
+    $email=(!$data==0) ? $data: "lowejames.mayores@gmail.com";
+
+    $data=$mydb->select_one("SELECT `password` FROM login where official_id=". $staff_id,"password");
+    $pass=(!$data==0) ? decrypt($data):"test3";
+       
+    echo $pass." ".$email;
+}
+//echo decrypt("UcQbccwv0YU8EXr85wQK9o+g9/Ht3XryyZVu4qpGiWhbsZKtqzmKTKBqQ+ndyY08xbwkJ75t+te4kqlEcVlmSQ==")."<br>";
 //$db=new Database();
-//echo test();
+test();
 //echo $db->connect();
  //$str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
 //echo abreviate("ACCESS POINT",2); 
@@ -658,6 +672,17 @@ function get_session($name){
     }
     else{
         return "false";
+    }
+}
+
+function send_email($to,$subject,$content){
+    $headers = "From: loue.mayores@dict.gov.ph\r\n";
+    $msg=mail($to,$subject,$content, $headers);
+    if( $msg){
+        return "sucess";
+    }
+    else{
+        return  $msg;
     }
 }
 ?>

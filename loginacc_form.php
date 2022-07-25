@@ -263,7 +263,7 @@
 			$.each($(".item:checked"),function(){
 			var elem=$(this).val();
 			
-				$.post("AJAX/activate.php",
+				$.post("AJAX/activate_account.php",
 					{
 						staff_id:elem,
 						auth_level:$("#auth_level").val()
