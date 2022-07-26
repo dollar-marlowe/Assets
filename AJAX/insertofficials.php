@@ -26,10 +26,9 @@
         $username=strtolower($fname.$lname);
    
        $msg= $mydb->insert($str);
-       $str="insert into login (official_id,username,  `password`,`status`) values(".$id.",'". $username."','".encrypt(generate_password(8))."','activation')";
-       $msg2= $mydb->insert($str);
-      echo $msg;
-
+       $str="insert into login (official_id, username,  `password`,`status`) values(".$id.",'". $username."','".encrypt(generate_password(8))."','activation')";
+       $msg2= $mydb->insert_no_linig($str);
+      echo $msg." ".$msg2;
     }
 
 ?>

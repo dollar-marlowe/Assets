@@ -5,12 +5,9 @@
         $mydb = new Database();//connects to database using the object from codes.php
         $mydb->connect(); //connects ot db
 
-        $staff_id=$_POST["staff_id"];//get teh value passd form jquery via ajax post, all variables passed will be trated as post variables
+        $staff_id=removepecialchars($_POST["staff_id"]);//get teh value passd form jquery via ajax post, all variables passed will be trated as post variables
         $auth_level=$_POST["auth_level"];
         $auth_desc="";
-
-        $data=$mydb->select_one("SELECT email FROM officials where id=". $staff_id,"email");
-        $email=(!$data==0) ? $data: "lowejames.mayores@gmail.com";//fallback email in case there is no email found 
 
         $data=$mydb->select_one("SELECT `password` FROM login where official_id=". $staff_id,"password");
         $pass=(!$data==0) ? decrypt($data):"test";//ternary operators, used like an if else
@@ -18,7 +15,18 @@
         
         $data=$mydb->select_one("SELECT `username` FROM login where official_id=". $staff_id,"username");
         $username=(!$data==0) ? $data:"";
-                  
+
+        $data=$mydb->selectrows("SELECT lname,gender,email FROM officials where id=". $staff_id,0);
+        $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
+        $gender=(!$data==0) ? $data[0]["gender"]: "MR./Ms.";
+        $email=(!$data==0) ? $data[0]["email"]: "lowejames.mayores@gmail.com";//fallback email in case there is no email found 
+
+        if($gender=="Male"){
+            $gender="Mr.";
+        }
+        if($gender=="Female"){
+            $gender="Ms.";
+        }      
         switch($auth_level){
             case 1:
                 $auth_desc="Regular User";
@@ -45,23 +53,42 @@
         $staff_id=str_replace("<br>","",$staff_id);
         $str="update login set `status`='change_pass', date_activated='".$today."', auth_level=".$auth_level.", auth_desc='". $auth_desc."' where official_id=". $staff_id;
         $msg= $mydb->insert($str);
-        
+
       if($msg=="New record created!"){
           
-           $content="This is a system generated email, plase change your password. Login to your AMIS account, username: ".$username. " and password: ".$pass;
-           $subject="DO NOT REPLY-AMIS ACCOUNT ACTIVATION";
-           $mail=send_email($email, $subject, $content);
-           if($mail=="sucess"){
+        $content= "<html><body>
+        Dear  <b>".$gender." ".$lname.":</b>
+        <br>
+        <br>
+        Good Day!<br>
+        <br>
+        This is a system generated email, please change your password.<br>
+        <br>
+        Login to your AMIS account using the provided username and password,<br>
+        <br>
+        username: ".$username." 
+        <br>
+        password: ".$pass."<br>
+        <br>
+        Thank you very much.<br>
+        <br>
+        Best regards,<br>
+        <br>
+        <br>
+        <b>Resilient Data Analytics Management Section<br>
+        Disaster Risk Reduction Management Division</b>
+        </body>
+        </html>";
+            $subject="ASSETS MANAGEMENT INFORMATION SYSTEM ACCOUNT ACTIVATION (DO NOT REPLY).";
+            $mail=send_email($email, $subject, $content);
+            if($mail=="sucess"){
             echo "Account activation email sent!";
-           }
-           else{
+            }
+            else{
             echo "An unknown error has occured plase contact the Administrator!".$mail;
-           }
-
+            }
        }else{
         echo "Error executing query!";
-       } 
-       
+       }   
     }
-
 ?>

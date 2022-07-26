@@ -7,7 +7,7 @@ function session(name,id){//the id is the id of input elemtn as this is the only
   //alert("test1");
     const xhttp= new XMLHttpRequest();//this is anothyer way of doing AJAX  
     //without using jquery
-    xhttp.open("GET","AJAX/mycodes.php?command=session&name="+name);
+    xhttp.open("GET","../AJAX/mycodes.php?command=session&name="+name);
     xhttp.send();
     xhttp.onload=function(){
      // alert(this.responseText+"1");

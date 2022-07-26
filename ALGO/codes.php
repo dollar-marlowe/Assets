@@ -71,7 +71,7 @@ class Database{
         return $result;
     }
 
-    function selectrows($query, $n){
+    function selectrows($query, $n){//0 will select all rows
         $query=linig($query);
         $data=array();
         
@@ -644,22 +644,73 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
 }
 
 function test(){
-    $mydb = new Database();
-    $mydb->connect();
-   
+
+    $mydb = new Database();//connects to database using the object from codes.php
+    $mydb->connect(); //connects ot db
     $staff_id=8;
+   
+    $data=$mydb->selectrows("SELECT lname,gender FROM officials where id=". $staff_id,0);
+    $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
+    $gender=(!$data==0) ? $data[0]["gender"]: "MR./Ms.";
 
-    $data=$mydb->select_one("SELECT email FROM officials where id=". $staff_id,"email");
-    $email=(!$data==0) ? $data: "lowejames.mayores@gmail.com";
+    if($gender=="Male"){
+        $gender="Mr.";
+    }
+    if($gender=="Female"){
+        $gender="Ms.";
+    }
 
-    $data=$mydb->select_one("SELECT `password` FROM login where official_id=". $staff_id,"password");
-    $pass=(!$data==0) ? decrypt($data):"test3";
-       
-    echo $pass." ".$email;
+    $email="lowejames.mayores@gmail.com";
+    $pass="pass";
+    $username="uname";
+    $content= "<html><body>
+    Dear  <b>".$gender." ".$lname.":</b>
+    <br>
+    <br>
+    Good Day!<br>
+    <br>
+    This is a system generated email, please change your password.<br>
+    <br>
+    Login to your AMIS account using the provided username and password,<br>
+    <br>
+    username: ".$username." 
+    <br>
+    password: ".$pass."
+    <br>
+    <br>
+    Thank you very much.<br>
+    <br>
+    Best regards,<br>
+    <br>
+    <br>
+    <b>Resilient Data Analytics Management Section<br>
+    Disaster Risk Reduction Management Division</b>
+    </body>
+    </html>";
+
+    $subject="ASSETS MANAGEMENT INFORMATION SYSTEM ACCOUNT ACTIVATION (DO NOT REPLY).";
+    $mail=send_email($email, $subject, $content);
+    if($mail=="sucess"){
+    echo "Account activation email sent!";
+    }
+    else{
+    echo "An unknown error has occured plase contact the Administrator!".$mail;
+    }
 }
-//echo decrypt("UcQbccwv0YU8EXr85wQK9o+g9/Ht3XryyZVu4qpGiWhbsZKtqzmKTKBqQ+ndyY08xbwkJ75t+te4kqlEcVlmSQ==")."<br>";
+
+
+/* echo "If you view the source of output frame \r\n you will find a newline in this string.";
+echo "<br>";
+echo nl2br("You will find the
+    
+newlines in this string 
+
+on the browser window."); */
+
+
+//echo decrypt("sXZK1v0HgbcQapwO8S+ZzyZxAibPKCsySxeDJgrj5sDnS7N/i2xvz4dMnBEt9Gs3Q2sxxc2wEzJlIGabJQ0kvA==")."<br>";
 //$db=new Database();
-test();
+//test();
 //echo $db->connect();
  //$str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
 //echo abreviate("ACCESS POINT",2); 
@@ -676,7 +727,9 @@ function get_session($name){
 }
 
 function send_email($to,$subject,$content){
-    $headers = "From: loue.mayores@dict.gov.ph\r\n";
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= 'From: <enquiries@it-doneright.co.uk>' . "\r\n";
     $msg=mail($to,$subject,$content, $headers);
     if( $msg){
         return "sucess";

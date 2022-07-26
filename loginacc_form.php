@@ -173,25 +173,31 @@
                         $str="SELECT * FROM office";
                         loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
                         ?>
-                </select>
-                    
+                </select>                    
                 <input type='submit' Value='Activate' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_account">
-                <input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear">
-            
+                <input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear">            
         </div>
       </div>
 	  <div id="pass_reset" class="pannel"><h2>Password Reset</23></div>
-      <div class="imgform-container " id="resets_form">
+      <div class="imgform-container " id="resets_form"> 
+		<label for="office">Office Designation: *</label>
+                <select id="office" name="office_search" >
+                        <?php
+                        $str="SELECT * FROM office";
+                        loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
+                        ?>
+                </select>     
 		
         <div class="imgform-img">
+			<input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="Firstname">
+			&nbsp <input type="text" id="search_lname" Placeholder="Lastname">
+			<table class="search_users">
 		
+		 </table>
 
-		<img src="images/personnellogo.png" alt="" />
         </div>
 
-        <div class="form-container">
-		<img src="images/personnellogo.png" alt="" />
-        </div>
+       
       </div>
     </section>
 
@@ -204,7 +210,7 @@
 			var status=$(this).val();
 			var str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where status='"+status+"'";
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
-			loadtable(str,headers,1,0);
+			loadtable(str,headers,1,0,".users");
 			if($(this).val()=="activation"){
 				$("#submit_account").val("Activate");
 			}
@@ -227,10 +233,10 @@
 		
 			}
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
-			loadtable(str,headers,1,0);
+			loadtable(str,headers,1,0,".users");
 		});
 
-		function loadtable(str,headers,chkbox,allchk){
+		function loadtable(str,headers,chkbox,allchk, target){
 			var elem="all%item"
 			$.post("AJAX/loadtable.php",{
 				sql:str,
@@ -239,11 +245,11 @@
 				all:allchk,
 				class:elem
 			},function(data){
-				$(".users").html(data);
+				$(target).html(data);
 			}
 			);
 		}
-      });
+     
 
 	  $("#accounts").click(function(){
 		$("#accounts_form").slideToggle("slow");
@@ -271,11 +277,13 @@
 					function(data){
 						alert(data);
 						
-						loadtable(str,headers,1,0);
+					
 					}
 				);
 			});
+			loadtable(str,headers,1,0,".users");
 		}
 		
 	  });
+	});
     </script>
