@@ -1,5 +1,6 @@
 <?php
     include "../ALGO/codes.php";
+    
     if(isset($_POST["sql"])){
      
         $sql=$_POST["sql"];
@@ -11,6 +12,9 @@
         $class=explode("%",$class);
        
         loadtable($sql,$headers,$check,$all,$class);
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
 
 ?>

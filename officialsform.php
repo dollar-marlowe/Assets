@@ -60,6 +60,20 @@
 			}
 			
 		}
+    .g, .gender{
+      display:inline-flex;
+      align-items:left;
+      padding:0px;
+      margin:0px;
+      margin-right:3px;
+      
+    }
+    .g{
+      margin-right:10px;
+    }
+    .gender{
+      margin-top:6px;
+    }
 		
 </style>
  <section id="imgform">
@@ -75,6 +89,10 @@
                 <input type="text" placeholder="First Name *" id="off_fname"/>
                 <input type="text" placeholder="Middle Initial *" id="off_mname"/>
                 <input type="text" placeholder="Last Name *" id="off_lname"/>
+                
+                <p class="g"><input type="radio" name="gender" class="gender" value="Male" > Male </p>
+                <p class="g"><input type="radio" name="gender" class="gender" value="Female"> Female </p>
+
                 <input type="text" placeholder="Contact Number" id="off_cnumber"/>
                 <input type="email" placeholder="E-mail Address *" id="off_email"/>
                 
@@ -110,7 +128,10 @@
 
     <script>
       $(document).ready(function(){
-       
+       /*  $(".gender").change(function(){
+          alert($("input[name='gender']:checked").val());
+        }); */
+        
           var okoff={
             "fname":false,
             "lname":false,
@@ -181,7 +202,8 @@
                 email:    $("#off_email").val(),
                 position: $("#position").val(),
                 office:   $("#off_designation").val(),
-                auth_level:   $("#auth_level").val()
+                auth_level:   $("#auth_level").val(),
+                gender: $("input[name='gender']:checked").val()
               },
               function(data){
                 $("#msgadded").remove();

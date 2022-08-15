@@ -1,5 +1,6 @@
 <?php
     include "../ALGO/codes.php";
+    
     if(isset($_POST["assetowned"])){
         $assetowned=$_POST["assetowned"];
       
@@ -34,6 +35,9 @@
         echo "Error executing query!";
        }
        
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
 
 ?>

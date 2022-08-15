@@ -1,6 +1,7 @@
 <?php
 
     include "../ALGO/codes.php";
+    
     if(isset($_POST["name"])){
         $cat=removepecialchars($_POST["cat"]);
         $name=removepecialchars($_POST["name"]);
@@ -14,6 +15,9 @@
        $mydb = new Database();
        $mydb->connect();
        echo "<h4 id='msg1' style='font:bold'>".$mydb->insert($str)."</h4>";
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
 
 ?>

@@ -20,6 +20,9 @@ function session(name,id){//the id is the id of input elemtn as this is the only
 function session1(){
   alert("test");
 }
+function session2(){
+  alert("session2");
+}
 //this is the Jquery version of adding function to an event click
 //this will work as long as there is a script src tag for jquery before the src for this file
 

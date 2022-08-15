@@ -1,5 +1,6 @@
 <?php
     include "../ALGO/codes.php";
+    
     if(isset($_POST["assetowned"])){
         $assetowned=$_POST["assetowned"];
         $regid=$_POST["regid"];
@@ -43,6 +44,9 @@
        }
        echo $msg;
        
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
 
 ?>

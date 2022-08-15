@@ -1,6 +1,7 @@
 <?php
 
     include "../ALGO/codes.php";
+    
     if(isset($_POST["sql"])){
      
         $sql=$_POST["sql"];
@@ -9,6 +10,9 @@
         $from=$_POST["from"];
        
         loadropdown($sql,$col1,$col2,$from);
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
 
 ?>

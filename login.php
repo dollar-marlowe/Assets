@@ -39,11 +39,11 @@
     <?php
   
     include "ALGO/codes.php";
-   
+   // $_SESSION["auth"]=false;
    
     if(isset($_SESSION["auth"])){
       if($_SESSION["auth"] &&   $_SESSION["status"]=="active" ){
-        header("Location:assets.php");
+        header("Location:home.php");
       }
     }
     

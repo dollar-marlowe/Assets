@@ -88,5 +88,8 @@
        echo $msg."%".$valids;
       
     }
+    else{
+        echo "<script>window.location='../login.php';</script>";
+    }
 
 ?>

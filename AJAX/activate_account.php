@@ -1,6 +1,9 @@
 <?php
 
     include "../ALGO/codes.php";
+
+    include "ajaxreroute.php";
+    
     if(isset($_POST["staff_id"])){//checks if the staff_id post vairable is created by the Jquery AJAX
         $mydb = new Database();//connects to database using the object from codes.php
         $mydb->connect(); //connects ot db
@@ -90,5 +93,8 @@
        }else{
         echo "Error executing query!";
        }   
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
 ?>

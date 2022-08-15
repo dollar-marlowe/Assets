@@ -3,11 +3,8 @@
 	 display:flex;background:fit-content;position:fixed;z-index:2;padding-bottom:150px;padding-top:150px;" >
       <div class="imgform-container container" style="width:fit-content;margin:auto;box-shadow:5px 5px 25px #3f4240;">
         
-
         <div class="form-container" style="width:300px;margin:auto;opacity:1" >
-          <h2 id="loginheader">Login</h2>
-		  
-        
+        <h2 id="loginheader">Login</h2>
 				<input type="text" placeholder="Username*" id="username"/>
 				<input type="password" placeholder="Password*" id="password"/>
         <input type="password" placeholder="Repeat Password*" id="repassword"/>
@@ -19,11 +16,11 @@
       </div>
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="JS/my.js"></script>
+    <script src="JS/mm.js"></script>
     <script>
 
       $(document).ready(function(){
-       // session();
+      
         var change_pass=false;
           $("#repassword").hide();
               var isoklogin={

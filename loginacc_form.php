@@ -127,6 +127,7 @@
 	}
 		
 </style>
+<?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
  <div id="accounts" class="pannel"><h2>Accounts Activation</23></div>
       <div class="imgform-container " id="accounts_form">
@@ -134,8 +135,7 @@
         <div class="imgform-img">
 		
 		<table class="users">
-			<?php
-
+			<?php //THIS IS THE PHP CODE FOR LOADING THE TABLE FROM FUNCTION CALL LOCATED IN CODES
 			$str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='activation'";
 			$headers=array("","First Name","Last Name","User Name","Position","Level","Status");
 			$classes=array("all","item");
@@ -180,34 +180,53 @@
       </div>
 	  <div id="pass_reset" class="pannel"><h2>Password Reset</23></div>
       <div class="imgform-container " id="resets_form"> 
-		<label for="office">Office Designation: *</label>
-                <select id="office" name="office_search" >
+			
+        <div class="imgform-img">
+			<input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="Firstname">
+			&nbsp <input type="text" id="search_lname" Placeholder="Lastname">
+			<label for="office">Office Designation: *</label>
+                <select id="office_search" name="office_search" >
                         <?php
                         $str="SELECT * FROM office";
                         loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
                         ?>
-                </select>     
+                </select>   
+				
+			<table class="table_search" style="margin-top:10px;margin-bottom:10px">
+			
 		
-        <div class="imgform-img">
-			<input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="Firstname">
-			&nbsp <input type="text" id="search_lname" Placeholder="Lastname">
-			<table class="search_users">
-		
-		 </table>
+		 	</table>
+			 <input type="Submit" id="reset_pass" value="Reset Password" style="margin-bottom:10px;color:white;" class="btn btn-primary">
 
         </div>
 
        
       </div>
+	  <?php //there was a plan to setup a connection between js file and php however there is a problm whenever a js file updated
+	  //is not reflecting  when being integrated in script tag, so the solution if to utilize the footer to 
+	  //contain all js functtions connecting to php commands to use php helper functions in javascript such as sessions, email filter and AES encryption
+	  //accessign wide PHP fucntions inside a javascript 
+	   ?>
+
+<?php //echo"alert('".encrypt("test2")."');";?>
     </section>
 
     <script>
 		
+		<?php echo"/*".encrypt("This command is to hide the button reset password under reset password pannel
+         This comment is ecnrypted")."*/";?>
+		$("#reset_pass").hide();
       $(document).ready(function(){
+	
+		//test_msg();
+		//eval("testing()");
+		//is_empty("","#officialheader");
+		//alert(encypt1("String String"));
 		$("#accounts_form").slideUp("slow");
 		$("#status").val("activation");
 		$("#status").change(function(){
 			var status=$(this).val();
+			
 			var str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where status='"+status+"'";
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
 			loadtable(str,headers,1,0,".users");
@@ -223,7 +242,10 @@
 
 		});
 		$("#office").change(function(){
-			var office_id=$(this).val();
+			office_change("#office",".users");
+		});
+		function office_change(office_id,target){
+			var office_id=$(office_id).val();
 			var str="";
 			if(office_id==0){
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
@@ -233,8 +255,8 @@
 		
 			}
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
-			loadtable(str,headers,1,0,".users");
-		});
+			loadtable(str,headers,1,0,target);
+		}
 
 		function loadtable(str,headers,chkbox,allchk, target){
 			var elem="all%item"
@@ -245,11 +267,15 @@
 				all:allchk,
 				class:elem
 			},function(data){
-				$(target).html(data);
+				if(data!=""){
+					$(target).html(data);
+				}else{
+					$(target).empty();
+				}
+				
 			}
 			);
 		}
-     
 
 	  $("#accounts").click(function(){
 		$("#accounts_form").slideToggle("slow");
@@ -275,15 +301,29 @@
 						auth_level:$("#auth_level").val()
 					},
 					function(data){
-						alert(data);
-						
-					
+						alert(data);		
 					}
 				);
 			});
 			loadtable(str,headers,1,0,".users");
 		}
 		
+	  });
+	  $("#office_search").change(function(){
+		var office_id=$(this).val();
+			var str="";
+			if(office_id==0){
+				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
+			
+			}else{
+				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id="+office_id;
+		
+			}
+			is_true_false(str,"elem_hide('#reset_pass')", "elem_show('#reset_pass')");
+			office_change("#office_search",".table_search");
+	  });
+	  $("#reset_pass").click(function(){
+
 	  });
 	});
     </script>

@@ -1,6 +1,7 @@
 <?php
 
     include "../ALGO/codes.php";
+    
     if(isset($_POST["asset"])){
         $mydb = new Database();
         $mydb->connect();
@@ -42,6 +43,9 @@
         '".$donor."','".$status."','".$remarks."','". $cat_code."','". $qrcode."')";
         echo $mydb->insert($str);
 
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
 
 ?>

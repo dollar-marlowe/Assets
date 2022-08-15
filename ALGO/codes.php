@@ -7,10 +7,22 @@ if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
 }
 $_SESSION['start'] = time();
 
+
 if( basename($_SERVER["SCRIPT_FILENAME"], '.php')=="codes" && !(isset($_SESSION["auth"]))){
    header("Location:../login.php");
 }
 
+$path= realpath(basename($_SERVER["SCRIPT_FILENAME"], '.php').".php");
+$arr_path= explode("\\",$path);
+$arr_size= count($arr_path);
+
+if($arr_path[$arr_size-2]=="AJAX" && !isset($_SESSION["auth"]) && basename($_SERVER["SCRIPT_FILENAME"], '.php')!="login"){
+  // echo "<script>window.location='login.php';</script>";
+
+}
+/* if( basename($_SERVER["SCRIPT_FILENAME"], '.php')!="codes" && basename($_SERVER["SCRIPT_FILENAME"], '.php')!="login" && $_SESSION["auth"]==false){
+    header("Location:../login.php");
+ } */
   
 
 //Class for databce connection for dynamically reusing of codes
@@ -70,7 +82,18 @@ class Database{
         //return $result."<br>";
         return $result;
     }
-
+    function is_empty($query){
+        $query=linig($query);
+        $result=mysqli_query($this->con,$query);
+        if(mysqli_num_rows($result)>0){
+            return "false";
+        }
+        else{
+            return "true";
+        }
+        //return $result."<br>";
+        
+    }
     function selectrows($query, $n){//0 will select all rows
         $query=linig($query);
         $data=array();
@@ -459,6 +482,9 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
             echo "</tr>";
         }
     }
+    else{
+        echo "";
+    }
 }
 function office_combobox(){
 	echo "<select id='office' name='office' >";
@@ -639,8 +665,13 @@ function decrypt($data) {
 function reroute($level,$destination){//$level is for the access level, 2nd paramenter is for the destination of reroute if $_SESSION["auth_level"]<=$elvel 
    
     if(intval($_SESSION["auth_level"])<=$level){
-        header("Location:".$destination);
+      
+        header('Location: ' . $destination, true, $statusCode);
+        die();
       }
+}
+function test2(){
+    return "test2";
 }
 
 function test(){
@@ -738,4 +769,6 @@ function send_email($to,$subject,$content){
         return  $msg;
     }
 }
+
+
 ?>

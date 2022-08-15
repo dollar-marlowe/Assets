@@ -1,5 +1,6 @@
 <?php
     include "../ALGO/codes.php";
+
     if(isset($_POST["uname"])){
         $uname=removepecialchars($_POST["uname"]);
         $pass=removepecialchars($_POST["pass"]);
@@ -13,7 +14,7 @@
       if(mysqli_num_rows($data)>0){
         $row=mysqli_fetch_assoc($data);
           if($pass==decrypt($row["password"])){
-              $_SESSION["auth"]=true;
+            
               $_SESSION["uname"]=$row["username"];
               $_SESSION["officename"]=$row["office_name"];
               $_SESSION["officeid"]=$row["office_id"];
@@ -28,6 +29,7 @@
               $_SESSION["auth_level"]=$row["auth_level"]; 
               $_SESSION["status"]=$row["status"]; 
               echo $row["status"];
+              $_SESSION["auth"]=true;
           }
           else{
             echo "false";
@@ -40,5 +42,8 @@
       }
     
     }
+    else{
+      echo "<script>window.location='../login.php';</script>";
+  }
 
 ?>

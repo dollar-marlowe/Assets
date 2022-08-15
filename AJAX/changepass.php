@@ -1,6 +1,7 @@
 <?php
 
     include "../ALGO/codes.php";
+    
     $mydb1 = new Database();
     $mydb1->connect();
     if(isset($_POST["staffid"])){
@@ -17,6 +18,9 @@
         echo  $msg;
        }
        //echo  $msg;
+    }
+    else{
+        echo "<script>window.location='../login.php';</script>";
     }
     //echo  "test";
 ?>
