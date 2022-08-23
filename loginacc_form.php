@@ -182,8 +182,8 @@
       <div class="imgform-container " id="resets_form"> 
 			
         <div class="imgform-img">
-			<input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="Firstname">
-			&nbsp <input type="text" id="search_lname" Placeholder="Lastname">
+			<input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="First Name">
+			&nbsp <input type="text" id="search_lname" Placeholder="Last Name">
 			<label for="office">Office Designation: *</label>
                 <select id="office_search" name="office_search" >
                         <?php
@@ -206,6 +206,7 @@
 	  //is not reflecting  when being integrated in script tag, so the solution if to utilize the footer to 
 	  //contain all js functtions connecting to php commands to use php helper functions in javascript such as sessions, email filter and AES encryption
 	  //accessign wide PHP fucntions inside a javascript 
+	  //the is_true_false function is located in footer a fucntion which allows you to invoke anothe rfunction inside depending weather the query will return trie or false
 	   ?>
 
 <?php //echo"alert('".encrypt("test2")."');";?>
@@ -213,11 +214,24 @@
 
     <script>
 		
+		//var t1="sdjfhskdkjhkjasd";
+		//alert(t1.includes("|"));
+		
 		<?php echo"/*".encrypt("This command is to hide the button reset password under reset password pannel
-         This comment is ecnrypted")."*/";?>
+         This comment is ecnrypted")."*/
+		 var acc_mgt_str='".encrypt("SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo")."';
+		 var acc_mgt_str_where='".encrypt('where office_id=')."';
+		 var acc_mgt_str_complete='".encrypt("SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id=")."';
+		 var acc_headers='".encrypt("%First Name%Last Name%User Name%Position%Level%Status")."';
+		 
+		 ";?>
 		$("#reset_pass").hide();
       $(document).ready(function(){
-	
+		
+		//check_url(window.location.href);
+		//alert(window.location.href);
+		//call_php_code("check_url",window.location.href,"reroute()","do_nothing()");
+	//alert(acc_mgt_str_complete);
 		//test_msg();
 		//eval("testing()");
 		//is_empty("","#officialheader");
@@ -226,10 +240,9 @@
 		$("#status").val("activation");
 		$("#status").change(function(){
 			var status=$(this).val();
-			
 			var str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where status='"+status+"'";
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
-			loadtable(str,headers,1,0,".users");
+			loadtable(str,headers,1,0,".users",".item",1,"all%item");
 			if($(this).val()=="activation"){
 				$("#submit_account").val("Activate");
 			}
@@ -242,24 +255,26 @@
 
 		});
 		$("#office").change(function(){
-			office_change("#office",".users");
+		
+			office_change("#office",".users",".item","all%item");
 		});
-		function office_change(office_id,target){
-			var office_id=$(office_id).val();
+		function office_change(office_id,target,chkid, elem){
+
+			var id=$(office_id).val();
 			var str="";
-			if(office_id==0){
+			if(id==0){
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
 			
 			}else{
-				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id="+office_id;
+				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id="+id;
 		
 			}
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
-			loadtable(str,headers,1,0,target);
+			loadtable(str,headers,1,0,target,chkid,1,elem);
 		}
 
-		function loadtable(str,headers,chkbox,allchk, target){
-			var elem="all%item"
+		function loadtable(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem){
+			
 			$.post("AJAX/loadtable.php",{
 				sql:str,
 				hdr:headers,
@@ -268,11 +283,17 @@
 				class:elem
 			},function(data){
 				if(data!=""){
+					//alert(chkbox);
 					$(target).html(data);
+					if(with_chkbox==1){
+						//alert(chkbox_name+" "+target);
+					enrycpt_each(chkbox_name);		
+				}
+					
 				}else{
 					$(target).empty();
-				}
-				
+				}				
+					
 			}
 			);
 		}
@@ -302,28 +323,94 @@
 					},
 					function(data){
 						alert(data);		
-					}
+					} 
 				);
 			});
-			loadtable(str,headers,1,0,".users");
+			loadtable(str,headers,1,0,".users",".item",1,"all%item");
 		}
 		
 	  });
-	  $("#office_search").change(function(){
-		var office_id=$(this).val();
+
+	  function password_change_office(){
+			var office_id=$("").val();
 			var str="";
 			if(office_id==0){
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
-			
 			}else{
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id="+office_id;
-		
 			}
 			is_true_false(str,"elem_hide('#reset_pass')", "elem_show('#reset_pass')");
-			office_change("#office_search",".table_search");
+			office_change("#office_search",".table_search",".item_pass_res","all_res%item_pass_res");
+
+	  }
+	  function look_up_name(str2){
+		var office_id=$("").val();
+			var str="";
+			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
+		
+		
+				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo "+str2;
+			
+			is_true_false(str,"elem_hide('#reset_pass')", "elem_show('#reset_pass')");
+			loadtable(str,headers,1,0,".table_search",".item_pass_res",1,"all_res%item_pass_res");
+	  }
+
+	  $("#office_search").change(function(){
+		
+		password_change_office();
+			
+	  });
+	  
+	  $("#search_uname").on("keyup", function(){
+		look_up_name("where username LIKE '%"+$(this).val()+"%'");
+
+	  });
+
+	  $("#search_fname").on("keyup", function(){
+		look_up_name("where fname LIKE '%"+$(this).val()+"%'");
+
+	  });
+
+	  $("#search_lname").on("keyup", function(){
+		look_up_name("where lname LIKE '%"+$(this).val()+"%'");
+
 	  });
 	  $("#reset_pass").click(function(){
 
+			$.each($(".item_pass_res:checked"), function(){
+				//alert("click");
+				
+				var id=$(this).val();
+				//alert(data);
+				var office=$("#office_search").val();
+				//var str=acc_mgt_str_complete+"|"+$("#office_search").val();
+				//alert(str);
+				//call_php_code("update",data+"|"+str+"|"+office+"|"+acc_headers+"|1","assign_html|.table_search","do_nothig()");
+				//call to this function must follow rule,
+				//1st parameter specifies what command to execute
+				//for the 2nd data parameter it should be composed of 5 data if not 3 separated by |, data are as follows: the employee_id|string command for the table|office_id|table headers|1(means the table has checkbox on each row)
+				//this allows the code to break down the data into an array
+				//the 3rd parameter is the next function to be called if there are more paramenters inside it shoule be in a pattern of fucntion_name|parameters|param...
+				//the 4th parameter is to be executed if the query fails, for this instance it will just do nothing.
+				if($($(this).parent().parent()).find("td.last").text()=="Active"){
+					$("#reset_pass").hide();
+						$.post("AJAX/resetpassword.php",{
+						staff_id: id
+
+						}, function(data){
+							
+							alert(data);
+							password_change_office();
+							$("#reset_pass").show();
+
+						});  
+				}
+				else{
+					alert("Invalid command, password reset already been requested!");
+				}
+			
+			});
 	  });
+	  	
 	});
     </script>

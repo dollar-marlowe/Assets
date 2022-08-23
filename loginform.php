@@ -129,7 +129,7 @@
                               $("#loginmsg").remove();
                                 $("#loginheader").after("<p  id='loginmsg'>Please create new password.</p>");
                               
-                                 session("uname","username");
+                                 //session("uname","username");
                                 $("#repassword").show();
                                 change_pass=true;
                                 $("#password").val("");

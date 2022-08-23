@@ -38,6 +38,7 @@
             });
         }
         function call_php_code(command_func,data_val,eval_func_true,eval_func_false){
+           
             $.post("AJAX/mycodes.php",
             {
                 command:command_func,
@@ -45,21 +46,79 @@
 
             },
             function(data){
-                if(data!=""){           
-                    
-                    eval(eval_func_true);                  
-
+                if(data!=""){  
+                    alert(data);
+                      if(eval_func_true.includes("|")){
+                        alert("called");
+                        var elem = eval_func_true.split("|");
+                        eval(elem[0]+"('"+elem[1]+"','"+data+"')");     
+                      }   else{
+                        eval(eval_func_true);
+                
+                      }  
                 }else{
+                    
                     eval(eval_func_false);
                 }
               
             });
         }
-        function enrycpt_each(target,data){
-            $.each($(target),function(){
-                call_php_code("encrypt",$(this).val(),"assign('"+ +"',target_elem)",eval_func_false);
-            });
+        function check_url(url){
+            if(url.includes("%3Cscript%3E")){
+                reroute() 
+            }
         }
+
+        function reroute(){
+            windows.location("logout.php");
+        }
+        function enrycpt_each(target){
+        
+         /*    $(target).each(function(){
+               
+            }); */
+            
+         $.each($(target),function(){
+            var chk_obj=$(this);
+           // alert(target+" "+chk_obj.val());
+                   $.post("AJAX/mycodes.php",
+                   {
+                    command:"encrypt",
+                    values:$(chk_obj).val()
+                   },
+                   function(data){
+                 
+                    $(chk_obj).val(data);
+                  
+                    
+                   });    
+            }); 
+        }
+       
+
+        function loadtable_decrypt(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem_chk){
+			//var elem="all%item_pass_res"
+			$.post("AJAX/loadtable_decryptstr.php",{
+				sql:str,
+				hdr:headers,
+				check:chkbox,	
+				all:allchk,
+				class:elem
+			},function(data){
+				if(data!=""){
+					//alert(chkbox);
+					$(target).html(data);
+					if(with_chkbox==1){
+					enrycpt_each(chkbox_name);		
+				}
+					
+				}else{
+					$(target).empty();
+				}				
+					
+			}
+			);
+		}
         function ajax(values){
             var params=to_array(values);
             $.post(params[0],{
@@ -74,6 +133,9 @@
 		}
         function assign(target_elem,data){
             $(target_elem).val(data);
+        }
+        function assign_html(target_elem,data){
+            $(target_elem).html(data);
         }
         function do_nothig(){
             //do nothing
@@ -91,16 +153,18 @@
         function data_value(data){
             return data;
         }
-        <?php    
-
-        echo "function encypt1(str){
+        <?php 
+        echo "
+        function encypt1(str){
             return '".encrypt("SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='active'")."';
             //alert(str);
         }
-
         function decypt1(str){
             return '".decrypt("SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='active'")."';
             //alert(str);
+        }
+        function get_session_username(){
+            return '".encrypt($_SESSION["uname"])."';
         }
         ";
         ?>
