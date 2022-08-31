@@ -29,8 +29,8 @@ if($arr_path[$arr_size-2]=="AJAX" && !isset($_SESSION["auth"]) && basename($_SER
 class Database{
 
     public $servername="localhost";
-    public $username="lowe";
-    public $pass="admin123";
+    public $username="root";
+    public $pass="";
     public $db="assets";
     public $con;
 
