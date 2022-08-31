@@ -26,7 +26,7 @@
             command:    "is_empty"  
             },
             function(data){
-              
+              //alert(str);
                 if(data=="true"){
                    
                     eval(eval_func_true);
@@ -36,6 +36,7 @@
                 }
                
             });
+            
         }
         function call_php_code(command_func,data_val,eval_func_true,eval_func_false){
            
@@ -72,15 +73,12 @@
         function reroute(){
             windows.location("logout.php");
         }
+
         function enrycpt_each(target){
-        
-         /*    $(target).each(function(){
-               
-            }); */
-            
+
          $.each($(target),function(){
             var chk_obj=$(this);
-           // alert(target+" "+chk_obj.val());
+      
                    $.post("AJAX/mycodes.php",
                    {
                     command:"encrypt",

@@ -78,15 +78,49 @@
 			border:solid 1px #ddd;
 			padding:10px 0px 10px 0px;
 		}
+		.pannel h2{
+			display:inline;
+			padding-left:20px;
+			padding-right:20px;
+			font-size:18px;		
 		
+		}
+		.pannel h2#accounts{
+			border-right:solid 2px #ddd;
+			
+		}
+		.pannel h2 img{
+			width:30px;
+			margin-bottom:-6px;
+		}
+		.header2{
+			font-size: 2.7rem;
+			font-weight: 500;
+			color: #444;
+			margin-bottom: 1rem;
+			margin-top: -1.2rem;
+			text-align:center;
+		}
+		.align_center{
+			margin:auto;
+			
+			width:fit-content;
+			
+			
+		}
 		@media (max-width:1267px){
 			.imgform-container{
 				display:block;
 				
 			}
-			.imgform-img{
-				padding-top:40px;
-			}
+			.align_center{
+			margin:auto;
+			
+			width:fit-content;
+			
+			
+		}
+			
 			
 		}
 		@media (max-width:820px){
@@ -106,9 +140,30 @@
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:15px;
 			}
+			.pannel h2{
+			
+			font-size:13px;		
+			}
+			.pannel h2 img{
+				width:20px;
+				margin-bottom:-4px;
+			}
+		}
 		@media(max-width:400px){
 			th:nth-child(5),td:nth-child(5){
 				display:none;
+			}
+			.pannel h2{
+			display:block;	
+			}
+			.pannel h2#accounts{
+			border-right:solid 1px white;
+			margin-bottom:5px;
+			
+			}
+			.pannel h2#pass_reset{
+			border-top:solid 1px #ddd;
+			
 			}
 		}
 
@@ -124,12 +179,12 @@
 		}
 		
 			
-	}
+	
 		
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
- <div id="accounts" class="pannel"><h2>Accounts Activation</23></div>
+ <div class="pannel"><h2  id="accounts" ><img src="images\activate.png">Accounts Activation</h2><h2 id="pass_reset"><img src="images\reset.png">Password Reset</h2></div>
       <div class="imgform-container " id="accounts_form">
 		
         <div class="imgform-img">
@@ -145,7 +200,7 @@
         </div>
 
         <div class="form-container">
-          <h2 id='officialheader'>Accounts and Login</h2>
+          <h2 id='officialheader'>Accounts Activation and Deactivation</h2>
 				<label for="status">Status</label>
 					<select id="status">
 						<option value="active">Active</option>
@@ -153,7 +208,7 @@
 						<option value="deactivated">Deactivated</option>
 						<option value="change_pass">For password changing</option>
 					</select>
-				<label for="auth_level">User Access Level</label>
+				<label for="auth_level" id="lbllevel">User Access Level</label>
 					<select id="auth_level">
 						<option value="1">Regular User</option>
 						<option value="2">Technical Operator</option>
@@ -178,11 +233,12 @@
                 <input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear">            
         </div>
       </div>
-	  <div id="pass_reset" class="pannel"><h2>Password Reset</23></div>
+	 
       <div class="imgform-container " id="resets_form"> 
 			
         <div class="imgform-img">
-			<input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="First Name">
+		<h2 id='officialheader' class="header2">Password Reset</h2>
+			<div  class="align_center"><input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="First Name">
 			&nbsp <input type="text" id="search_lname" Placeholder="Last Name">
 			<label for="office">Office Designation: *</label>
                 <select id="office_search" name="office_search" >
@@ -191,7 +247,7 @@
                         loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
                         ?>
                 </select>   
-				
+					</div>	
 			<table class="table_search" style="margin-top:10px;margin-bottom:10px">
 			
 		
@@ -226,7 +282,10 @@
 		 
 		 ";?>
 		$("#reset_pass").hide();
-      $(document).ready(function(){
+		
+		
+
+$(document).ready(function(){
 		
 		//check_url(window.location.href);
 		//alert(window.location.href);
@@ -236,8 +295,23 @@
 		//eval("testing()");
 		//is_empty("","#officialheader");
 		//alert(encypt1("String String"));
+	
 		$("#accounts_form").slideUp("slow");
 		$("#status").val("activation");
+
+		
+		$("#accounts").click(function(){
+			$("#accounts_form").slideToggle("slow");
+			$("#resets_form").slideUp("slow");
+		
+	  	});
+
+	  $("#pass_reset").click(function(){
+		$("#accounts_form").slideUp("slow");
+		$("#resets_form").slideToggle("slow");
+
+	  });
+
 		$("#status").change(function(){
 			var status=$(this).val();
 			var str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where status='"+status+"'";
@@ -252,6 +326,7 @@
 			else if($(this).val()=="deactivated"){
 				$("#submit_account").val("Reactivate");
 			}
+			is_true_false(str,"elem_hide('#auth_level, #lbllevel')", "elem_show('#auth_level, #lbllevel')");
 
 		});
 		$("#office").change(function(){
@@ -270,7 +345,10 @@
 		
 			}
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
+
 			loadtable(str,headers,1,0,target,chkid,1,elem);
+			is_true_false(str,"elem_hide('#auth_level')", "elem_show('#auth_level')");
+
 		}
 
 		function loadtable(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem){
@@ -298,41 +376,38 @@
 			);
 		}
 
-	  $("#accounts").click(function(){
-		$("#accounts_form").slideToggle("slow");
-		$("#resets_form").slideUp("slow");
-
-	  });
-
-	  $("#pass_reset").click(function(){
-		$("#accounts_form").slideUp("slow");
-		$("#resets_form").slideToggle("slow");
-
-	  });
 	  $("#submit_account").click(function(){
 		var  str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='active'";
 		var headers=" %First Name%Last Name%User Name%Position%Level%Status";
+		var ajaxsrc="";
 		if($("#status").val()=="activation"){
+			ajaxsrc="AJAX/activate_account.php";
+		}else{
+			ajaxsrc="AJAX/deactivate_account.php";
+		}
+
 			$.each($(".item:checked"),function(){
+
 			var elem=$(this).val();
-			
-				$.post("AJAX/activate_account.php",
+			 $("#submit_account").hide();
+				$.post(ajaxsrc,
 					{
 						staff_id:elem,
 						auth_level:$("#auth_level").val()
 					},
 					function(data){
-						alert(data);		
+						alert(data);	
+						$("#submit_account").show();	
 					} 
 				);
 			});
 			loadtable(str,headers,1,0,".users",".item",1,"all%item");
-		}
+		
 		
 	  });
 
 	  function password_change_office(){
-			var office_id=$("").val();
+			var office_id=$("#office_search").val();
 			var str="";
 			if(office_id==0){
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
@@ -344,7 +419,7 @@
 
 	  }
 	  function look_up_name(str2){
-		var office_id=$("").val();
+	
 			var str="";
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
 		
@@ -362,17 +437,38 @@
 	  });
 	  
 	  $("#search_uname").on("keyup", function(){
-		look_up_name("where username LIKE '%"+$(this).val()+"%'");
+		if($.trim($(this).val())!=""){
+			look_up_name("where username LIKE '%"+$(this).val()+"%'");
+		}
+		else{
+			$(".table_search").html("");
+			$("#reset_pass").hide();
+		}
+		
 
 	  });
 
 	  $("#search_fname").on("keyup", function(){
-		look_up_name("where fname LIKE '%"+$(this).val()+"%'");
+		if($.trim($(this).val())!=""){
+			look_up_name("where fname LIKE '%"+$(this).val()+"%'");
+		}else{
+			$(".table_search").html("");
+			$("#reset_pass").hide();
+		
+		}
+		
 
 	  });
 
 	  $("#search_lname").on("keyup", function(){
-		look_up_name("where lname LIKE '%"+$(this).val()+"%'");
+		if($.trim($(this).val())!=""){
+			look_up_name("where lname LIKE '%"+$(this).val()+"%'");
+		}else{
+			$(".table_search").html("");
+			$("#reset_pass").hide();
+		
+		}
+		
 
 	  });
 	  $("#reset_pass").click(function(){
@@ -392,7 +488,8 @@
 				//this allows the code to break down the data into an array
 				//the 3rd parameter is the next function to be called if there are more paramenters inside it shoule be in a pattern of fucntion_name|parameters|param...
 				//the 4th parameter is to be executed if the query fails, for this instance it will just do nothing.
-				if($($(this).parent().parent()).find("td.last").text()=="Active"){
+				var status=$($(this).parent().parent()).find("td.last").text();
+				if(status=="active"){
 					$("#reset_pass").hide();
 						$.post("AJAX/resetpassword.php",{
 						staff_id: id
@@ -406,11 +503,16 @@
 						});  
 				}
 				else{
-					alert("Invalid command, password reset already been requested!");
+					if(status=="deactivated"){
+						alert("Invalid command, account has already been deactivated!");
+					}else{
+						alert("Invalid command, password reset already been requested!");
+					}
+				
 				}
 			
 			});
 	  });
 	  	
-	});
+ });
     </script>

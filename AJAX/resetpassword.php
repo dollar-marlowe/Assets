@@ -25,11 +25,12 @@
             $gender="Ms.";
         }      
      
-
+        $pass=encrypt(generate_password(8));
         $today=date("Y-m-d");       
         $staff_id=str_replace("<br>","",$staff_id);
-        $str="update login set `status`='change_pass' where official_id=". $staff_id;
+        $str="update login set `status`='change_pass', `password`='".$pass."' where official_id=". $staff_id;
         $msg= $mydb->insert($str);
+        $pass=decrypt($pass);
 
       if($msg=="New record created!"){
           
@@ -41,7 +42,8 @@
         <br>
         This is a system generated email.<br>
         <br> 
-        We received a request to change your password for user name ".$username.", please visit the link: http://localhost/assets/login
+        We received your request to change your password for user name ".$username.", please visit the link: http://localhost/assets/login.
+        You may login using this temporary password: ".$pass."
         <br>
         <br>
         Thank you very much.<br>
@@ -49,17 +51,17 @@
         Best regards,<br>
         <br>
         <br>
-        <b>Resilient Data Analytics Management Section<br>
-        Disaster Risk Reduction Management Division</b>
+        <b></i>Resilient Data Analytics Management Section<br>
+        Disaster Risk Reduction and Management Division</i></b>
         </body>
         </html>";
-            $subject="ASSETS MANAGEMENT INFORMATION SYSTEM ACCOUNT REQUEST FOR PASSWORD RESET (DO NOT REPLY).";
+            $subject="(DO NOT REPLY)ASSETS MANAGEMENT INFORMATION SYSTEM PASSWORD RESET.";
             $mail=send_email($email, $subject, $content);
             if($mail=="sucess"){
             echo "Password reset email sent!";
             }
             else{
-            echo "An unknown error has occured plase contact the Administrator!".$mail;
+            echo "An unknown error has occured please contact the Administrator!".$mail;
             }
        }else{
         echo "Error executing query!";

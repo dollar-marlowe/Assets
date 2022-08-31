@@ -7,13 +7,8 @@
         $mydb = new Database();//connects to database using the object from codes.php
         $mydb->connect(); //connects ot db
 
-        $staff_id=decrypt(removepecialchars($_POST["staff_id"]));//get teh value passd form jquery via ajax post, all variables passed will be trated as post variables
-        $auth_level=$_POST["auth_level"];
-        $auth_desc="";
-
-        $data=$mydb->select_one("SELECT `password` FROM login where official_id=". $staff_id,"password");
-        $pass=(!$data==0) ? decrypt($data):"test";//ternary operators, used like an if else
-        //the value of $pass will be $data if the condition is true otherwise the value will be 'test'
+        $staff_id=decrypt($_POST["staff_id"]);//get the  value passd form jquery via ajax post, all variables passed will be trated as post variables
+      
         
         $data=$mydb->select_one("SELECT `username` FROM login where official_id=". $staff_id,"username");
         $username=(!$data==0) ? $data:"";
@@ -22,38 +17,18 @@
         $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
         $gender=(!$data==0) ? $data[0]["gender"]: "MR./Ms.";
         $email=(!$data==0) ? $data[0]["email"]: "lowejames.mayores@gmail.com";//fallback email in case there is no email found 
-
+        $email="lowejames.mayores@gmail.com";
         if($gender=="Male"){
             $gender="Mr.";
         }
         if($gender=="Female"){
             $gender="Ms.";
         }      
-        switch($auth_level){
-            case 1:
-                $auth_desc="Regular User";
-            break;
-            
-            case 2:
-                $auth_desc="Technical Operator";
-            break;
-
-            case 3:
-                $auth_desc="Admin";
-            break;
-
-            case 4:
-                $auth_desc="Super Admin";
-            break;
-
-            default:
-                $auth_desc="Regular User";
-            break;
-        }
+     
 
         $today=date("Y-m-d");       
         $staff_id=str_replace("<br>","",$staff_id);
-        $str="update login set `status`='change_pass', date_activated='".$today."', auth_level=".$auth_level.", auth_desc='". $auth_desc."' where official_id=". $staff_id;
+        $str="update login set `status`='deactivated' where official_id=". $staff_id;
         $msg= $mydb->insert($str);
 
       if($msg=="New record created!"){
@@ -65,14 +40,9 @@
         Good Day!<br>
         <br>
         This is a system generated email.<br>
+        <br> 
+        Please be advised that your account has been deactivated!
         <br>
-        We are glad to inform you that your AMIS account has been successfully created, please change your password.<br>
-        <br>
-        Please go to this link http://localhost/assets/login and login to your AMIS account using the provided username and password:<br>
-        <br>
-        username: ".$username." 
-        <br>
-        password: ".$pass."<br>
         <br>
         Thank you very much.<br>
         <br>
@@ -83,10 +53,10 @@
         Disaster Risk Reduction and Management Division</i></b>
         </body>
         </html>";
-            $subject="(DO NOT REPLY)ASSETS MANAGEMENT INFORMATION SYSTEM ACCOUNT ACTIVATION.";
+            $subject="(DO NOT REPLY)ASSETS MANAGEMENT INFORMATION SYSTEM ACCOUNT ACCOUNT DEACTIVATION.";
             $mail=send_email($email, $subject, $content);
             if($mail=="sucess"){
-            echo "Account activation email sent!";
+            echo "Account deactivated!";
             }
             else{
             echo "An unknown error has occured plase contact the Administrator!".$mail;
