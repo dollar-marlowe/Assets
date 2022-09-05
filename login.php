@@ -13,7 +13,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"          
     />
-    <link rel="stylesheet" href="CSS/avocado.css" />
+    <link rel="stylesheet" href="CSS/jade.css" />
 	
   </head>
   <style>

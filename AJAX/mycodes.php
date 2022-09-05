@@ -47,6 +47,7 @@ $command=$_REQUEST["command"];
        // echo dercypt($data);
 
     } 
+   
 }
 if($command=="check_url"){
     $data=$_REQUEST["values"];

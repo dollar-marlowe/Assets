@@ -413,16 +413,16 @@ $(document).ready(function(){
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id="+office_id;
 			}
 			is_true_false(str,"elem_hide('#reset_pass')", "elem_show('#reset_pass')");
-			office_change("#office_search",".table_search",".item_pass_res","all_res%item_pass_res");
+			office_change("#office_search",".table_sefarch",".item_pass_res","all_res%item_pass_res");
 
 	  }
-	  function look_up_name(str2){
+	  function look_up_name(str2){//this fucntion is being used to look up for whatever related name inputed in the username, lastname, firstname field
 	
 			var str="";
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
 		
 		
-				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo "+str2;
+				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo "+str2;//this string command if for table 
 			
 			is_true_false(str,"elem_hide('#reset_pass')", "elem_show('#reset_pass')");
 			loadtable(str,headers,1,0,".table_search",".item_pass_res",1,"all_res%item_pass_res");

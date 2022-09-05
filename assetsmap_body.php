@@ -8,6 +8,7 @@
 		#single{
 			font-weight:700;
 		}
+		
 	
 		.imgform-img p{
 			margin-left:10px;
@@ -142,6 +143,7 @@ position:absolute;
 	  margin:auto;
 	  margin-top:25px;
 	  margin-left:-9px;
+	  z-index:2900;
 
 }
 #hide_show:hover{
@@ -152,6 +154,7 @@ position:absolute;
 </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+	<!-- <script sr="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.js"></script> -->
    
  <section id="imgform"><div class="imgform-container ">
 
@@ -197,7 +200,6 @@ position:absolute;
 						</p>
 				</div>
 			</div>
-
     
         <div class="imgform-img" style='border:none;'>
               <div class="imgform-img " id="map">
@@ -212,9 +214,9 @@ position:absolute;
 
     <script>
 		loadmap();
-		function test(target,from){
+		function test(target,from){//this function if for hiding and showing the contecnt of the pannel 
 			var l=$(window).width();
-			if(from=="pannel"){
+			if(from=="pannel"){//
 				if(l<=1467 && l>820){
 			
 					$(".pannel").slideToggle("slow");
@@ -228,9 +230,22 @@ position:absolute;
 			
 			
 		}
+		/* function get_loc(place){
+			var geocoder= new maptiler.Geocoder({
+				input: place,
+				key: "wDVBx6Hikcs1TqkSLwqF"
+			});
+			geocoder.on('select',function(item){
+				alert("Selected ", item);
+			});
+		}
+		get_loc("manila"); */
 
 		function loadmap(){
-			var map = L.map('map').setView([14.6527491, 121.0563724], 6);
+
+			$.post("");
+
+			var map = L.map('map').setView([13.1433, 123.751998], 6);
 				L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=wDVBx6Hikcs1TqkSLwqF',{
 					tileSize: 512,
 					zoomOffset: -1,
@@ -238,35 +253,35 @@ position:absolute;
 					crossOrigin: true
 				}).addTo(map);
 
-			/*     var pinicon =L.icon({
-					iconUrl:"vsatavailablemarker.png",
-					iconSize: [38,50],
-					iconAnchor:[14.6515,121.0588600],
-				
-				});
+				/*     var pinicon =L.icon({
+						iconUrl:"vsatavailablemarker.png",
+						iconSize: [38,50],
+						iconAnchor:[14.6515,121.0588600],
+					
+					});
 
 
-				const myCustomColour = '#D8700F'; */
+					const myCustomColour = '#D8700F'; */
 
-			/* const markerHtmlStyles = `
-			background-color: ${myCustomColour};
-			width: 3rem;
-			height: 3rem;
-			display: block;
-			left: -1.5rem;
-			top: -1.5rem;
-			position: relative;
-			border-radius: 3rem 3rem 0;
-			transform: rotate(45deg);
-			border: 1px solid #FFFFFF`;
+				/* const markerHtmlStyles = `
+				background-color: ${myCustomColour};
+				width: 3rem;
+				height: 3rem;
+				display: block;
+				left: -1.5rem;
+				top: -1.5rem;
+				position: relative;
+				border-radius: 3rem 3rem 0;
+				transform: rotate(45deg);
+				border: 1px solid #FFFFFF`;
 
-			const myicon = L.divIcon({
-			className: "my-custom-pin",
-			iconAnchor: [0, 24],
-			labelAnchor: [-6, 0],
-			popupAnchor: [0, -36],
-			html: `<span style="${markerHtmlStyles}" />`
-			}); */
+				const myicon = L.divIcon({
+				className: "my-custom-pin",
+				iconAnchor: [0, 24],
+				labelAnchor: [-6, 0],
+				popupAnchor: [0, -36],
+				html: `<span style="${markerHtmlStyles}" />`
+				}); */
 				 var marker= L.marker([14.6515, 121.0493]).addTo(map);
 				marker.bindPopup(" <b>QC CIRCLE</b><br>Pres. Quezon Memorial Circle").openPopup();
 				
