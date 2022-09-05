@@ -402,11 +402,9 @@ $(document).ready(function(){
 				);
 			});
 			loadtable(str,headers,1,0,".users",".item",1,"all%item");
-		
-		
 	  });
 
-	  function password_change_office(){
+	  function password_change_office(){//this fucntion is for password reset pannel when office dropdown changed it's value
 			var office_id=$("#office_search").val();
 			var str="";
 			if(office_id==0){

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+   
     <title>DICT-ETC</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
    
@@ -16,6 +18,7 @@
     />
     <link rel="icon" href="images/DICT.png">
     <link rel="stylesheet" href="CSS/avocado.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
 	  <style>
       .navbar .ac-container label,  
       .navbar .ac-container label a,  
@@ -80,7 +83,7 @@
          echo       "<article class='ac-medium'>";
          echo           "<a href='assets'>Assets Data Entry</a>";
          echo           "<a href='assets_mgt'>Assets Management</a>"; 
-         echo           "<a href=''>Assets Map</a>";
+         echo           "<a href='assetsmap'>Assets Map</a>";
          echo       "</article>";
          echo   "</div>";
          echo   "<div>";
