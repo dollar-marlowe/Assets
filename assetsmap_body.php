@@ -24,7 +24,7 @@
 			width:100%;
 		padding:10px;
       border:1px solid #ddd;
-      border-radius:20px;
+      
 
 		}
 		
@@ -60,7 +60,16 @@
 		margin-top:0px;
 			}
 		
-			
+			.pannel{
+				height:300px;
+			}
+			.pannel-input{
+				margin:0px;
+				margin:auto;
+				font-size:11px;
+				text-align:center;
+
+			}
 		@media (max-width:1467px){
 			.side{
 				display:inline-flex;
@@ -124,6 +133,7 @@
 			.pannel{
 				
 				border-top:solid 1px #ddd;
+				height:300px;
 
 			}
 			.sidehead{
@@ -132,24 +142,24 @@
 				
 			}
 			#hide_show {
-    border: 1px solid #ddd;
-	background-color:white;
-    padding: .5em;
-  width:fit-content;
+			border: 1px solid #ddd;
+			background-color:white;
+			padding: .5em;
+			width:fit-content;
 
-position:absolute;
-	  transform: rotate(90deg);
-	  
-	  margin:auto;
-	  margin-top:25px;
-	  margin-left:-9px;
-	  z-index:2900;
+			position:absolute;
+			transform: rotate(90deg);
+			
+			margin:auto;
+			margin-top:25px;
+			margin-left:-9px;
+			z-index:2900;
 
-}
-#hide_show:hover{
-	background-color:#ddd;
-}
-	
+					}
+			#hide_show:hover{
+				background-color:#ddd;
+			}
+				
 
 </style>
 
@@ -159,19 +169,20 @@ position:absolute;
  <section id="imgform"><div class="imgform-container ">
 
       <div class="imgform-container ">
-	  <p id="hide_show" class="top">Hide</p>
+	 <!--  <p id="hide_show" class="top">Hide</p> -->
 	  	<div class="sidebar">
 		 
 				<div class="imgform-img radiusnone top pannel_con" >
-					<h3 onclick="test('#panel1','pannel')" class="sidehead">Lorem ipsum1</h3>
+					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT OFFICES</h3>
 						<p id="panel1" class="pannel">
-						&nbsp &nbsp Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-						  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						    culpa qui officia deserunt mollit anim id est laborum.
+							<select id="dict_offices" class="pannel-input">
+								<?php 
+									$cols1=array("id","lat","long");
+									$str="SELECT * FROM offices_latlong";
+									loadropdown_encrypt($str,$cols1,"office_name","below");
+
+								?>
+							</select>	
 						</p>
 				</div>
 				
@@ -243,9 +254,15 @@ position:absolute;
 
 		function loadmap(){
 
-			$.post("");
+			$.post("AJAX/get_geoloc_assets.php",{
+				level:1,
+				avail:1
+			},
+			function(data){
 
-			var map = L.map('map').setView([13.1433, 123.751998], 6);
+			});
+			//deafult regional view 10, national view 6
+			var map = L.map('map').setView([13.1433, 123.751998],10);
 				L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=wDVBx6Hikcs1TqkSLwqF',{
 					tileSize: 512,
 					zoomOffset: -1,
@@ -258,15 +275,16 @@ position:absolute;
 						iconSize: [38,50],
 						iconAnchor:[14.6515,121.0588600],
 					
-					});
+					});*/
 
+					
 
-					const myCustomColour = '#D8700F'; */
+					const myCustomColour = '#D8700F'; 
 
-				/* const markerHtmlStyles = `
+				 const markerHtmlStyles = `
 				background-color: ${myCustomColour};
-				width: 3rem;
-				height: 3rem;
+				width: 1.5rem;
+				height: 1.5rem;
 				display: block;
 				left: -1.5rem;
 				top: -1.5rem;
@@ -277,20 +295,20 @@ position:absolute;
 
 				const myicon = L.divIcon({
 				className: "my-custom-pin",
-				iconAnchor: [0, 24],
-				labelAnchor: [-6, 0],
-				popupAnchor: [0, -36],
+				iconAnchor: [-10, 2],
+				labelAnchor: [0, 2],
+				popupAnchor: [0, -20],
 				html: `<span style="${markerHtmlStyles}" />`
-				}); */
-				 var marker= L.marker([14.6515, 121.0493]).addTo(map);
-				marker.bindPopup(" <b>QC CIRCLE</b><br>Pres. Quezon Memorial Circle").openPopup();
+				}); 
+				// var marker= L.marker([14.6515, 121.0493],{icon:myicon }).addTo(map);
+				//marker.bindPopup(" <b>QC CIRCLE</b><br>Pres. Quezon Memorial Circle").openPopup();
 				
 
-				var marker1= L.marker([14.6527491, 121.0588600]).addTo(map);
+				//var marker1= L.marker([14.6527491, 121.0588600],{icon:myicon }).addTo(map);
 				
 				//marker.valueOf()._icon.style.backgroundColor = 'green';
 				
-				marker1.bindPopup(" <b>DICT CENTRAL OFFICE</b><br> C.P Garcia Ave., Diliman, Q.C").openPopup(); 
+				//marker1.bindPopup(" <b>DICT CENTRAL OFFICE</b><br> C.P Garcia Ave., Diliman, Q.C").openPopup(); 
 				/* var circle= L.circle([14.6515, 121.0493],
 				{
 					color: 'red',

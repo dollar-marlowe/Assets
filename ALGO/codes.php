@@ -529,6 +529,26 @@ function loadropdown($str,$col1,$col2,$from){
         echo"<option value='0'>Select from ".$from."</option>";
     }
 }
+function loadropdown_encrypt($str,$col1,$col2,$from){//$from is the deafult value of the combo box if data is null
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+   
+    if($data!=null){
+        echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            $val="";
+            foreach($col1 as $c){
+                $val=$val."%".$d[$c];
+            }
+            echo "<option value='".encrypt($val)."'>".$d[$col2]."</option>";
+        }
+    }
+    else{
+        echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
 function loadintodb(){
     require_once "PHPExcel/Classes/PHPExcel.php";
     $tmpfname = "RESOURCES/geo_map.xlsx";

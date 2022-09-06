@@ -17,7 +17,7 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/jade.css" />
+    <link rel="stylesheet" href="CSS/saphire.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>

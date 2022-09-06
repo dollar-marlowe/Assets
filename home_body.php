@@ -147,6 +147,37 @@ position:absolute;
 #hide_show:hover{
 	background-color:#ddd;
 }
+div.item{
+	display:inline-block;
+	width:fit-content;
+	padding-bottom:10px;
+	margin-top:10px;
+	margin-left:10px;
+	
+	margin-right:10px;
+}
+div.item  p{
+	display:block;
+	font-size:10px;
+	width:fit-content;
+	margin:auto;
+	margin-top:0px;
+}
+div.item p img{
+	width:30px;
+	height:30px;
+}
+.pannel{
+	height:300px;
+	margin:auto;
+	width:auto;
+	padding:20px;
+	
+}
+.center{
+	margin:auto;
+}
+
 		
 </style>
  <section id="imgform"><div class="imgform-container ">
@@ -156,16 +187,30 @@ position:absolute;
 	  	<div class="sidebar">
 		 
 				<div class="imgform-img radiusnone top pannel_con" >
-					<h3 onclick="test('#panel1','pannel')" class="sidehead">Lorem ipsum1</h3>
-						<p id="panel1" class="pannel">
-						&nbsp &nbsp Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-						  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						    culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+					<h3 onclick="test('#panel1','pannel')" class="sidehead">Tracker Pannels</h3>
+					<div id="panel1" class="pannel">
+						
+							<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
+								<p ><img src="images/windy.png" ></p>
+								<p>Windy Pannel</p>
+							</div>
+							<div class="item" id="btnphil" onclick="hide_show('#georiskpannel')">
+								<p><img src="images/philvolcs.png"></p>
+								<p>Georisk Pannel</p>
+							</div>
+
+							<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
+								<p><img src="images/covid.png"></p>
+								<p>Covid Pannel</p>
+							</div>
+							<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
+								<p><img src="images/pagasa.png"></p>
+								<p>Flood Pannel</p>
+							
+						</div>
+					</div>		
+						
+					
 				</div>
 				
 				<div class="imgform-img radiusnone marginleft pannel_con">
@@ -196,7 +241,7 @@ position:absolute;
 
       <div class="imgform-img " style='border:none;'>
 	  
-              <div class="imgform-img block">
+              <div class="imgform-img block" id="windypannel">
                 <p onclick="test('#windy','iframe')" class="iframhead">&nbsp &nbsp WINDY.COM LIVE MONITORING</p>
 			
                 <iframe style="border:none;width:100%; " src="https://embed.windy.com/embed2.html?lat=9.709&lon=123.750&
@@ -208,7 +253,7 @@ position:absolute;
 
               </div>
 
-              <div class="imgform-img block">
+              <div class="imgform-img block" id="floodpannel">
               <p onclick="test('#flood','iframe')">DOST FLOOD DAM INFROMATION LIVE MONITORING</p>
 			  
                 <iframe id="flood"style="border:none;width:100%; " src="https://bagong.pagasa.dost.gov.ph/flood#dam-information" ></iframe>
@@ -219,14 +264,14 @@ position:absolute;
         </div>
 
         <div class="imgform-img" style='border:none;'>
-              <div class="imgform-img">
+              <div class="imgform-img" id="georiskpannel">
               <p onclick="test('#georisk','iframe')">PHIVOLCS GOERISK LIVE MONITORING</p>
                 <iframe id="georisk" style="border:none;width:100%; " src="https://hazardhunter.georisk.gov.ph/map#" ></iframe>
                 
               </iframe>
 
               </div>
-              <div class="imgform-img">
+              <div class="imgform-img" id="covidpannel">
               <p onclick="test('#covid','iframe')">DOH-COVID19 LIVE MONITORING</p>
                 <iframe id="covid"style="border:none;width:100%;"
                 src="https://public.tableau.com/views/COVID-19CasesandDeathsinthePhilippines_15866705872710/Home?
@@ -258,6 +303,10 @@ position:absolute;
 			
 			
 		}
+		function hide_show(id){
+			$(id).toggle(400);
+			
+		}
 
 
       $(document).ready(function(){
@@ -284,5 +333,6 @@ position:absolute;
 				$(".pannel").css("display","block");
 			}
 		});
+		
       });
     </script>

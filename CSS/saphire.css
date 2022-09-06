@@ -226,7 +226,7 @@ body {
 .navbar {
   position:fixed;
   display:flex;
-  z-index:29;
+  z-index:2900;
   width:100%;
   opacity: 0.95;
   box-shadow: 3px 15px 60px 20px white;
@@ -331,7 +331,7 @@ body {
 
   right: 15px;
   font-size: 2rem;
-  z-index:30;
+  z-index:3000;
 
 }
 
