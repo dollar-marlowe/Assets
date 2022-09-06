@@ -149,12 +149,16 @@ position:absolute;
 }
 div.item{
 	display:inline-block;
-	width:fit-content;
+	width:80px;
 	padding-bottom:10px;
 	margin-top:10px;
 	margin-left:10px;
-	
+	border: solid 1px #ddd;
 	margin-right:10px;
+	transition: transform .2s;
+}
+div.item:hover{
+	transform: scale(1.1);
 }
 div.item  p{
 	display:block;
@@ -199,15 +203,17 @@ div.item p img{
 								<p>Georisk Pannel</p>
 							</div>
 
-							<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
-								<p><img src="images/covid.png"></p>
-								<p>Covid Pannel</p>
-							</div>
 							<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
 								<p><img src="images/pagasa.png"></p>
 								<p>Flood Pannel</p>
 							
-						</div>
+							</div>
+							
+							<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
+								<p><img src="images/covid.png"></p>
+								<p>Covid Pannel</p>
+							</div>
+							
 					</div>		
 						
 					
@@ -239,7 +245,7 @@ div.item p img{
 				</div>
 			</div>
 
-      <div class="imgform-img " style='border:none;'>
+      <div class="imgform-img " id="group1" style='border:none;'>
 	  
               <div class="imgform-img block" id="windypannel">
                 <p onclick="test('#windy','iframe')" class="iframhead">&nbsp &nbsp WINDY.COM LIVE MONITORING</p>
@@ -263,7 +269,7 @@ div.item p img{
               </div>
         </div>
 
-        <div class="imgform-img" style='border:none;'>
+        <div class="imgform-img" id="group2"style='border:none;'>
               <div class="imgform-img" id="georiskpannel">
               <p onclick="test('#georisk','iframe')">PHIVOLCS GOERISK LIVE MONITORING</p>
                 <iframe id="georisk" style="border:none;width:100%; " src="https://hazardhunter.georisk.gov.ph/map#" ></iframe>
@@ -301,10 +307,74 @@ div.item p img{
 				$(target).slideToggle("slow");
 			}
 			
-			
 		}
 		function hide_show(id){
-			$(id).toggle(400);
+			//alert($(id).is(":hidden"));
+				if(id=="#windypannel" || id=="#floodpannel"){
+					if($("#group1").is(":hidden")){
+						$("#group1").show(400);
+					}
+				}
+
+				if(id=="#covidpannel" || id=="#georiskpannel"){
+					if($("#group2").is(":hidden")){
+						$("#group2").show(400);
+					}
+				}
+
+					$(id).toggle(400, function(){
+						
+						if(id=="#windypannel" || id=="#floodpannel"){
+							//alert($("#floodpannel").is(":hidden")+" "+$("#windypannel").is(":hidden"));
+							if($("#floodpannel").is(":hidden") ==true && 	$("#windypannel").is(":hidden")==true){
+							$("#group1").hide(400);
+							//alert("hide");
+							}
+							
+						}
+
+						if(id=="#covidpannel" || id=="#georiskpannel"){
+							//alert($("#floodpannel").is(":hidden")+" "+$("#windypannel").is(":hidden"));
+							if($("#covidpannel").is(":hidden") ==true && 	$("#georiskpannel").is(":hidden")==true){
+							$("#group2").hide(400);
+							//alert("hide");
+							}
+							
+						}
+						//un-border windy button if pannel is hidden
+						if(	$("#windypannel").is(":hidden")){
+							$("#btnwindy").css("border","none");
+						}
+						else{
+							$("#btnwindy").css("border","solid 1px #ddd");
+						}
+						//un-border flood dam button if pannel is hidden
+
+						if(	$("#floodpannel").is(":hidden")){
+							$("#btpagasa").css("border","none");
+						}
+						else{
+							$("#btpagasa").css("border","solid 1px #ddd");
+						}
+						//un-border georisk philvocs button if pannel is hidden
+						if(	$("#georiskpannel").is(":hidden")){
+							$("#btnphil").css("border","none");
+						}
+						else{
+							$("#btnphil").css("border","solid 1px #ddd");
+						}
+						//un-border covid button if pannel is hidden
+						if(	$("#covidpannel").is(":hidden")){
+							$("#btncovid").css("border","none");
+						}
+						else{
+							$("#btncovid").css("border","solid 1px #ddd");
+						}
+						
+					
+					});
+					
+
 			
 		}
 

@@ -22,9 +22,9 @@ $command=$_REQUEST["command"];
         echo encrypt(removepecialchars($data));
 
     }
-    if($command=="dercypt"){
+    if($command=="decrypt"){
         $data=$_REQUEST["values"];
-        echo dercypt($data);
+        echo decrypt($data);
 
     }
    if($command=="update"){

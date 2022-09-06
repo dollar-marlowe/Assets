@@ -539,10 +539,18 @@ function loadropdown_encrypt($str,$col1,$col2,$from){//$from is the deafult valu
         echo"<option value=0>Select from Options Below</option>";
         foreach($data as $d){
             $val="";
+            $c1=0;
             foreach($col1 as $c){
-                $val=$val."%".$d[$c];
+                if($c1==0){
+                    $val=$d[$c];
+                }
+                else{
+                    $val=$val."%".$d[$c];
+                }
+              
+                $c1++;
             }
-            echo "<option value='".encrypt($val)."'>".$d[$col2]."</option>";
+            echo "<option value='".encrypt($val."%".$d[$col2])."'>".$d[$col2]."</option>";
         }
     }
     else{

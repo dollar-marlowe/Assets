@@ -224,7 +224,7 @@
     </section>
 
     <script>
-		loadmap();
+		
 		function test(target,from){//this function if for hiding and showing the contecnt of the pannel 
 			var l=$(window).width();
 			if(from=="pannel"){//
@@ -252,17 +252,34 @@
 		}
 		get_loc("manila"); */
 
-		function loadmap(){
-
-			$.post("AJAX/get_geoloc_assets.php",{
-				level:1,
-				avail:1
-			},
-			function(data){
-
-			});
-			//deafult regional view 10, national view 6
-			var map = L.map('map').setView([13.1433, 123.751998],10);
+      $(document).ready(function(){
+		var map = L.map('map');
+		var marker;
+		loadmap("13.1433%123.751998%6");
+		function change_map(info){
+			//alert(info);
+			var arr_info=to_array(info,"%");
+			var lat=Number(arr_info[0]);
+			var long=Number(arr_info[1]);
+			var focus=Number(arr_info[2]);
+			
+		
+    		map.setView(new L.LatLng(lat,long), focus );
+			if (marker != undefined) {
+              map.removeLayer(marker);
+       			 }
+			 	marker= L.marker([lat, long]).addTo(map);
+				marker.bindPopup(" <b>"+arr_info[3]+"</b>").openPopup();
+				
+			//var map = new L.map('map').setView([lat, long],focus);
+		}	
+		function loadmap(info){
+			var arr_info=to_array(info,"%");
+			var lat=parseFloat(arr_info[0]);
+			var long=parseFloat(arr_info[1]);
+			var focus=Number(arr_info[2]);
+			
+			map.setView([lat, long],focus);
 				L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=wDVBx6Hikcs1TqkSLwqF',{
 					tileSize: 512,
 					zoomOffset: -1,
@@ -318,7 +335,6 @@
 				}).addTo(map);
 				circle.bindPopup(" <b>QC CIRCLE BOMBING INCIDENT</b><br>100 Casualties, 30 person dead, 70 person wounded").openPopup(); */
 		}
-      $(document).ready(function(){
 		var hidden=false;
 		$("#hide_show").click(function(){
 			if(hidden){
@@ -340,6 +356,29 @@
 			}
 			if(l>1467){
 				$(".pannel").css("display","block");
+			}
+		});
+		$("#dict_offices").change(function(){
+			//alert($("#dict_offices").val());
+			if($(this).val()!=0){
+				
+			
+				$.post("AJAX/mycodes.php",
+				{
+					command:"decrypt",
+					values:$("#dict_offices").val()
+				},
+				function(data){
+					//alert(data);
+					var arrval=to_array(data,"%");
+					//alert(data);
+					change_map(arrval[1]+"%"+arrval[2]+"%10%"+arrval[3]);
+
+
+				});
+			}
+			else{
+				change_map("14.654%121.065002%6%DICT CENTRAL");
 			}
 		});
       });

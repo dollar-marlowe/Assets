@@ -38,6 +38,11 @@
             });
             
         }
+
+        function to_array(values,delimeter){
+				return values.split(delimeter);
+
+			}
         function call_php_code(command_func,data_val,eval_func_true,eval_func_false){
            
             $.post("AJAX/mycodes.php",
@@ -50,7 +55,7 @@
                 if(data!=""){  
                     alert(data);
                       if(eval_func_true.includes("|")){
-                        alert("called");
+                       
                         var elem = eval_func_true.split("|");
                         eval(elem[0]+"('"+elem[1]+"','"+data+"')");     
                       }   else{
