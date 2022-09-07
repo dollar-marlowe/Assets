@@ -43,6 +43,13 @@
        
        
       }
+.navbar {
+  height:9vh;
+}
+.navbar-container{
+  margin:0;
+  margin-top:13px;
+}
      
     </style>
   </head>

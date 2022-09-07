@@ -67,7 +67,7 @@
 				margin:0px;
 				margin:auto;
 				font-size:11px;
-				text-align:center;
+				
 
 			}
 		@media (max-width:1467px){
@@ -134,6 +134,7 @@
 				
 				border-top:solid 1px #ddd;
 				height:300px;
+				padding-top:15px;
 
 			}
 			.sidehead{
@@ -159,6 +160,9 @@
 			#hide_show:hover{
 				background-color:#ddd;
 			}
+			#assetslbl{
+				margin-top:10px;
+			}
 				
 
 </style>
@@ -175,6 +179,8 @@
 				<div class="imgform-img radiusnone top pannel_con" >
 					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT OFFICES</h3>
 						<p id="panel1" class="pannel">
+							
+							<label for="dict_offices">DICT Offices</label>&nbsp &nbsp 
 							<select id="dict_offices" class="pannel-input">
 								<?php 
 									$cols1=array("id","lat","long");
@@ -183,6 +189,29 @@
 
 								?>
 							</select>	
+						
+							<br>
+							<br>
+						
+							<label id="assetslbl" for="assets">Show Assets</label>&nbsp &nbsp 
+							<select id="assets" class="pannel-input">
+								<option value="Available">Available</option>
+								<option value="Deployed">Deployed</option>
+								<option value="All">All</option>
+							</select>
+
+							<br>
+							<br>
+						
+							<label id="categorylbl" for="assets">Category</label>&nbsp &nbsp &nbsp &nbsp  &nbsp
+							<select id="category" class="pannel-input">
+							<?php 
+								$str="SELECT distinct category, category FROM assets";
+								loadropdown($str,"category","category","Category");
+								?>
+							</select>
+						
+						
 						</p>
 				</div>
 				
@@ -280,7 +309,7 @@
 			var focus=Number(arr_info[2]);
 			
 			map.setView([lat, long],focus);
-				L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=wDVBx6Hikcs1TqkSLwqF',{
+				L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}@2x.png?key=wDVBx6Hikcs1TqkSLwqF',{
 					tileSize: 512,
 					zoomOffset: -1,
 					minZoom: 1,

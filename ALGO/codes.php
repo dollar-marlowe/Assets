@@ -132,6 +132,42 @@ class Database{
         return "Closed!";
     }
 }
+function get_rows_string_delimeter($str,$item_delimeter,$row_delimeter){//this is to make the result form a query in a form of an array to be converted to string
+    //examle Sat Phone|23246|11.169799|125.372001|1%UHF Radio|20471|9.837039|124.219001|7%VHF Handheld Radio|13007|13.277299|123.362998|5%VSAT SET|27492|11.621|124.433998|4
+    //each item is separated by | ($item_delimeter)and the mark of the end of the row is % ($row_delimeter)
+    //the purpose fo this is to pass this valeu to javascript and later on split in again to array 
+    //as php array cannot be passed back to javascript
+    $db = new Database();
+    $db->connect();
+     $result=$db->selectrows($str,0);// 0 is to select all rows
+    $string_data="";
+    $c1=1;
+    foreach($result as $data){
+        $c2=1;
+        if($c1>1){
+            $fil2=$row_delimeter;
+        }else{
+            $fil2="";
+        }
+       
+        $string_data= $string_data.$fil2;
+        $c1++;
+        foreach($data as $item){
+            if($c2>1){
+                $fil=$item_delimeter;
+            }
+            else{
+                $fil="";
+            }
+           
+            $string_data= $string_data.$fil.$item;
+            $c2++;
+        }
+       
+    } 
+return   $string_data;
+
+}
 
 //useful functions 
 function isnull($var){
@@ -316,7 +352,7 @@ function region_decode($val){
     }
     return $code;
 }
-function get_string_at($str,$at){
+function get_string_at($str,$at){// useful function in getting a character specific place in a string
     $word=explode("-",$str);
     $result="";
     $size=sizeof($word);
@@ -420,11 +456,11 @@ function total($str, $col){
     }
 }
 function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
-    //$str id thhe sql command, 
+    //$str is the sql command, 
     //$headers(array): are the header that shows on the table column head 
     //$chkbox is a boolean to add checkboxes at the begiining of each row
       //$all is a  boolean variable if true will add check all at the very first table header cell
-    //the class is an array: 
+    //the $class is an array with 2 elements: 
     //1st elem is the class header of checkbox for check all and the second elem 
     //is the class name for each checkbox in the table rows
    $db =new Database();
@@ -797,6 +833,6 @@ function send_email($to,$subject,$content){
         return  $msg;
     }
 }
-
+//echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
 
 ?>

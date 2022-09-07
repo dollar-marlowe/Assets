@@ -151,6 +151,7 @@ div.item{
 	display:inline-block;
 	width:80px;
 	padding-bottom:10px;
+	padding-top:10px;
 	margin-top:10px;
 	margin-left:10px;
 	border: solid 1px #ddd;
