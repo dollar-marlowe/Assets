@@ -195,8 +195,8 @@
 						
 							<label id="assetslbl" for="assets">Show Assets</label>&nbsp &nbsp 
 							<select id="assets" class="pannel-input">
-								<option value="Available">Available</option>
-								<option value="Deployed">Deployed</option>
+								<option value="available">Available</option>
+								<option value="deployed">Deployed</option>
 								<option value="All">All</option>
 							</select>
 
@@ -284,7 +284,26 @@
       $(document).ready(function(){
 		var map = L.map('map');
 		var marker;
+		var markeravail;
+		var markerdeployed;
 		loadmap("13.1433%123.751998%6");
+
+		function add_markers(data,status){
+			
+			if(status=="available"){
+				if (markeravail != undefined) {
+              		map.removeLayer(markeravail);
+       			 }
+			}
+			else{
+				if (markerdeployed != undefined) {
+              		map.removeLayer(markerdeployed);
+       			 }
+
+			}
+		}
+		
+
 		function change_map(info){
 			//alert(info);
 			var arr_info=to_array(info,"%");
@@ -410,5 +429,25 @@
 				change_map("14.654%121.065002%6%DICT CENTRAL");
 			}
 		});
+		$("#assets").change(function(){
+			if($("#dict_offices").val()!=0){
+				if($(this).val()=="deployed"){
+				get_markers($(this).val(),$("#dict_offices").val(),6);
+				}
+			}
+			
+		});
+
+		function get_markers(status,office_val,zoom){
+			$.post("AJAX/get_geoloc_assets.php",{
+				stat:status,
+				office:office_val
+			}, 
+			function(data){
+				//add_markers(data,status);
+				alert(data);
+			});
+		}
+
       });
     </script>

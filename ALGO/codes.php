@@ -132,6 +132,25 @@ class Database{
         return "Closed!";
     }
 }
+function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){
+    $db= new Database();
+    $db->connect();
+    $result=$db->selectrows($str,0);// 0 is to select all rows
+    $brgy_id=0;
+    $string_data="";
+    $c=1;
+    foreach($result as $rows){
+        if($c>1){
+            $string_data.="%";
+        }
+        if($brgy_id!=$rows[$cols[0]]){
+            $brgy_id=$rows[$cols[0]];
+            $c++;
+        }
+
+    }
+
+}
 function get_rows_string_delimeter($str,$item_delimeter,$row_delimeter){//this is to make the result form a query in a form of an array to be converted to string
     //examle Sat Phone|23246|11.169799|125.372001|1%UHF Radio|20471|9.837039|124.219001|7%VHF Handheld Radio|13007|13.277299|123.362998|5%VSAT SET|27492|11.621|124.433998|4
     //each item is separated by | ($item_delimeter)and the mark of the end of the row is % ($row_delimeter)

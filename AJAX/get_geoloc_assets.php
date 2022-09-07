@@ -1,28 +1,20 @@
 <?php
     include "../ALGO/codes.php";
     
-    if(isset($_POST["level"])){
-        $level=$_POST["level"];//level if for either regional or national
-      
+    if(isset($_POST["stat"])){
+        $stat=$_POST["stat"];//level if for either regional or national
+        $office=decrypt($_POST["office"]);
+        $arr_data=explode("%",$office);
         $mydb = new Database();
         $mydb->connect();
-        
         $str="";
 
-        switch($level){
-            case 1:
-            break;
-
+        if($stat=="available"){
+            $str="";
+        }else{
+            $str="SELECT category,brgy_id,lat,`long`, COUNT(*) FROM deployed_assets_loc where id=".$arr_data[0]." group by  category";
+            echo get_rows_string_delimeter($str,"|","%");
         }
-        $str="update assetowner set status='Available' where id=".$assetowned.";update assets set `status`='Available' where id=".$assetid.";".
-        "update transferhistory set status='Received', datereceived='".$today."' where id=".$transferid;
-       
-       if($mydb->insertmultiple($str)=="New records created!"){
-           echo "<p id='tblmsg'>Inventory item(s) is/are now received and tagged available  </p>";
-       }else{
-        echo "Error executing query!";
-       }
-       
     }
     else{
         echo "<script>window.location='../login.php';</script>";
