@@ -22,6 +22,38 @@ CREATE DATABASE IF NOT EXISTS assets;
 USE assets;
 
 --
+-- Temporary table structure for view `avail_assets_loc`
+--
+DROP TABLE IF EXISTS `avail_assets_loc`;
+DROP VIEW IF EXISTS `avail_assets_loc`;
+CREATE TABLE `avail_assets_loc` (
+  `id` int(10) unsigned,
+  `asset_id` int(10) unsigned,
+  `name` varchar(45),
+  `serial` varchar(45),
+  `category` varchar(45),
+  `brgy_id` int(10) unsigned,
+  `lat` varchar(45),
+  `long` varchar(45)
+);
+
+--
+-- Temporary table structure for view `deployed_assets_loc`
+--
+DROP TABLE IF EXISTS `deployed_assets_loc`;
+DROP VIEW IF EXISTS `deployed_assets_loc`;
+CREATE TABLE `deployed_assets_loc` (
+  `id` int(10) unsigned,
+  `asset_id` int(10) unsigned,
+  `name` varchar(45),
+  `serial` varchar(45),
+  `category` varchar(45),
+  `brgy_id` int(10) unsigned,
+  `lat` varchar(45),
+  `long` varchar(45)
+);
+
+--
 -- Temporary table structure for view `geo_add`
 --
 DROP TABLE IF EXISTS `geo_add`;
@@ -42,6 +74,19 @@ CREATE TABLE `geo_add` (
   `brgy_code` varchar(45),
   `brgy_lat` varchar(45),
   `brgy_long` varchar(45)
+);
+
+--
+-- Temporary table structure for view `offices_latlong`
+--
+DROP TABLE IF EXISTS `offices_latlong`;
+DROP VIEW IF EXISTS `offices_latlong`;
+CREATE TABLE `offices_latlong` (
+  `id` int(10) unsigned,
+  `office_name` varchar(100),
+  `category` varchar(45),
+  `lat` varchar(45),
+  `long` varchar(45)
 );
 
 --
@@ -69,6 +114,30 @@ CREATE TABLE `owned_assets` (
 DROP TABLE IF EXISTS `personnelogiinfo`;
 DROP VIEW IF EXISTS `personnelogiinfo`;
 CREATE TABLE `personnelogiinfo` (
+  `office_id` int(10) unsigned,
+  `office_name` varchar(100),
+  `category` varchar(45),
+  `official_id` int(10) unsigned,
+  `fname` varchar(45),
+  `mname` varchar(45),
+  `lname` varchar(45),
+  `position` varchar(45),
+  `username` varchar(45),
+  `password` varchar(300),
+  `auth_level` int(10) unsigned,
+  `status` varchar(45),
+  `region_id` int(10) unsigned,
+  `province_id` int(10) unsigned,
+  `muni_id` int(10) unsigned,
+  `brgy_id` int(10) unsigned
+);
+
+--
+-- Temporary table structure for view `test`
+--
+DROP TABLE IF EXISTS `test`;
+DROP VIEW IF EXISTS `test`;
+CREATE TABLE `test` (
   `office_id` int(10) unsigned,
   `office_name` varchar(100),
   `category` varchar(45),
@@ -126,39 +195,39 @@ INSERT INTO `assetowner` (`id`,`office_id`,`assets_id`,`date_aquired`,`date_tran
  (9,2,1,'2022-06-01 09:06:05',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (10,2,12,'2022-06-01 10:06:17',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (11,2,13,'2022-06-01 10:06:43',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (12,2,14,'2022-06-01 11:06:40',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (12,2,14,'2022-06-01 11:06:40',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (13,2,15,'2022-06-02 09:06:12',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (14,2,16,'2022-06-02 09:06:02',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (15,2,17,'2022-06-06 09:06:47',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (14,2,16,'2022-06-02 09:06:02',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (15,2,17,'2022-06-06 09:06:47',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (16,2,18,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (17,2,19,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (18,2,20,'2022-06-07 08:06:01',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (19,2,21,'2022-06-07 08:06:01',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (19,2,21,'2022-06-07 08:06:01',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (20,2,22,'2022-06-07 08:06:01',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (21,2,23,'2022-06-07 08:06:01',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (22,2,24,'2022-06-07 08:06:02',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (23,2,25,'2022-06-07 08:06:02',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (24,2,26,'2022-06-07 08:06:02',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (25,2,27,'2022-06-07 08:06:02',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (26,2,28,'2022-06-07 08:06:59',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (27,2,29,'2022-06-07 08:06:59',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (28,2,30,'2022-06-07 08:06:59',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (22,2,24,'2022-06-07 08:06:02',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (23,2,25,'2022-06-07 08:06:02',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (24,2,26,'2022-06-07 08:06:02',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (25,2,27,'2022-06-07 08:06:02',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (26,2,28,'2022-06-07 08:06:59',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (27,2,29,'2022-06-07 08:06:59',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (28,2,30,'2022-06-07 08:06:59',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (29,2,31,'2022-06-07 08:06:59',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (30,2,32,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (31,2,33,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (30,2,32,'2022-06-07 08:06:00',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (31,2,33,'2022-06-07 08:06:00',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (32,2,34,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (33,2,35,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (34,2,36,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (35,2,37,'2022-06-07 08:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (35,2,37,'2022-06-07 08:06:00',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (36,2,38,'2022-06-08 05:06:02',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (38,2,39,'2022-06-08 05:06:00',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (73,2,40,'2022-06-08 10:06:18',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (73,2,40,'2022-06-08 10:06:18',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (74,2,41,'2022-06-08 10:06:18',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
  (75,2,42,'2022-06-08 10:06:18',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (76,2,43,'2022-06-14 05:06:05',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
+ (76,2,43,'2022-06-14 05:06:05',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
  (77,2,44,'2022-06-14 05:06:05',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (78,2,45,'2022-06-14 05:06:05',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,NULL),
- (79,2,46,'2022-06-15 08:06:41',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,'D-GE-A-00000000001'),
+ (78,2,45,'2022-06-14 05:06:05',NULL,NULL,'Deployed',13,64,1293,34997,NULL,NULL,NULL),
+ (79,2,46,'2022-06-15 08:06:41',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,'D-GE-A-00000000001'),
  (83,2,47,'2022-06-16 04:06:32',NULL,NULL,'Available',13,64,1293,34997,NULL,NULL,'D-MS-A-00000000002');
 /*!40000 ALTER TABLE `assetowner` ENABLE KEYS */;
 
@@ -205,39 +274,39 @@ INSERT INTO `assets` (`id`,`assetid`,`category`,`name`,`serial`,`IMEI`,`brand`,`
  (11,'May-24','MOVE Hub','Move Hub','','','World Food Program','','World Food Program','World Food Program','World Food Program','Available','','2022-05-24 10:05:27',NULL,''),
  (12,'220601-HYS TG-G25W','Manpack Radio','Manpack Backpack HYS TG-G25W','HYS TG-G25W','','Weird Ham Radios','','World Food Program','World Food Program','World Food Program','Available','SPECIFICATION:\nBuilt-in 6A Li-ion battery for 10W radio\n12A Li-ion battery for 25W radio\nRadioator Fan\nMini size:210*152*44mm\nFrequency Range: 136-174/400-480MHz\nChannel Capacity: 199\nOutput Power: 25 W\nBattery capacity: 12000 mAh\ncan continuously working hour for: Approx 4 Hour\nThe Standby Time：Approx 8 Hours\nOperation Mode: Simplex\nModulation Limitation: ≤±5KHz\nSpurious Radation: 60dB\nTX Current: 1A/1.8A\nFrequency Stability: ±2.5PPM\nRX Sensitivity: ＜0.18μV\nModulation Type: F3E\nAudio Power: ≥400mW\nStandby Current: 78mA(Power saving mode is 30mA)\nRated Voltage: 13.8V','2022-06-01 10:06:17',NULL,''),
  (13,'220601-65464225','Manpack Radio','Weird Ham Radios: Manpack Backpack HYS TG-G25','65464225','','Weird Ham Radios','HYS TG-G25W','WFP','WFP','WFP','Available','SPECIFICATION:\nBuilt-in 6A Li-ion battery for 10W radio\n12A Li-ion battery for 25W radio\nRadioator Fan\nMini size:210*152*44mm\nFrequency Range: 136-174/400-480MHz\nChannel Capacity: 199\nOutput Power: 25 W\nBattery capacity: 12000 mAh\ncan continuously working hour for: Approx 4 Hour\nThe Standby Time：Approx 8 Hours\nOperation Mode: Simplex\nModulation Limitation: ≤±5KHz\nSpurious Radation: 60dB\nTX Current: 1A/1.8A\nFrequency Stability: ±2.5PPM\nRX Sensitivity: ＜0.18μV\nModulation Type: F3E\nAudio Power: ≥400mW\nStandby Current: 78mA(Power saving mode is 30mA)\nRated Voltage: 13.8V','2022-06-01 10:06:43',NULL,''),
- (14,'220601-CLS1110 54255','UHF Radio','Motorola CLS1110 Two Way Radio,UHF,1 Watt,450','CLS1110 54255','','Motorola','CLS1110','','WFP','WFP','Available','Includes one Motorola CLS-1110 two way radio, 3 hour drop-in charger, lithium rechargeable battery, swivel belt holster, and user guide.\nKey Features.\n3 Selectable call tones.','2022-06-01 11:06:40',NULL,''),
+ (14,'220601-CLS1110 54255','UHF Radio','Motorola CLS1110 Two Way Radio,UHF,1 Watt,450','CLS1110 54255','','Motorola','CLS1110','','WFP','WFP','Deployed','Includes one Motorola CLS-1110 two way radio, 3 hour drop-in charger, lithium rechargeable battery, swivel belt holster, and user guide.\nKey Features.\n3 Selectable call tones.','2022-06-01 11:06:40',NULL,''),
  (15,'220602-65464225','Manpack Radio','Midland 75-822 Handheld 40-Channel CB Radio','65464225','65464225','Weird Ham Radios','HYS TG-G25W','World Food Program','World Food Program','World Food Program','Available','','2022-06-02 09:06:12',NULL,''),
- (16,'220602','VSAT SET','VSAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-02 09:06:02',NULL,''),
- (17,'220606-12312312/123123','Sat Phone','qwerqwer','12312312/123123','','qwerqwer','','','','','Available','','2022-06-06 09:06:47',NULL,''),
+ (16,'220602','VSAT SET','VSAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Deployed','','2022-06-02 09:06:02',NULL,''),
+ (17,'220606-12312312/123123','Sat Phone','qwerqwer','12312312/123123','','qwerqwer','','','','','Deployed','','2022-06-06 09:06:47',NULL,''),
  (18,'220607-678901','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','678901','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:00',NULL,''),
  (19,'220607-567890','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','567890','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:00',NULL,''),
  (20,'220607-456789','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','456789','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:01',NULL,''),
- (21,'220607-234567','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','234567','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:01',NULL,''),
+ (21,'220607-234567','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','234567','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Deployed','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:01',NULL,''),
  (22,'220607-345678','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','345678','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:01',NULL,''),
  (23,'220607-123456','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','123456','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:01',NULL,''),
- (24,'220607-789012','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','789012','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
- (25,'220607-890123','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','890123','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
- (26,'220607-901234','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','901234','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
- (27,'220607-012345','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','012345','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Available','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
- (28,'220607-a12312313','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','a12312313','A234235','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:59',NULL,''),
- (29,'220607-b1231231','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','b1231231','B1231231','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:59',NULL,''),
- (30,'220607-c123131','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','c123131','C123131','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:59',NULL,''),
+ (24,'220607-789012','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','789012','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Deployed','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
+ (25,'220607-890123','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','890123','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Deployed','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
+ (26,'220607-901234','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','901234','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Deployed','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
+ (27,'220607-012345','VHF Handheld Radio','MOTOROLA SMP468 VHF Portable Two Way Radio','012345','n/a','MOTOROLA','SMP468','MOTOROLA','World Food Program','World Food Program','Deployed','Description\nFrequency: VHF 136-174MHz\nStorage Channel : 128\nCTCSS - CDCSS : 50-106\nChannel Space : 12.5KHz - 25KHz\nOperation Temp. Range : -25ᵒC--55ᵒC\nDimension (HxWxT) : 113x55x32mm\nWeight (Include Battery And Antenna) : 240g\nPower: 4 watts\nRange: Line of sight up to 40km','2022-06-07 08:06:02',NULL,''),
+ (28,'220607-a12312313','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','a12312313','A234235','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Deployed','','2022-06-07 08:06:59',NULL,''),
+ (29,'220607-b1231231','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','b1231231','B1231231','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Deployed','','2022-06-07 08:06:59',NULL,''),
+ (30,'220607-c123131','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','c123131','C123131','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Deployed','','2022-06-07 08:06:59',NULL,''),
  (31,'220607-d567567','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','d567567','D567567','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:59',NULL,''),
- (32,'220607-f34566','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','f34566','F34566','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:00',NULL,''),
- (33,'220607-e679678','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','e679678','E679678','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:00',NULL,''),
+ (32,'220607-f34566','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','f34566','F34566','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Deployed','','2022-06-07 08:06:00',NULL,''),
+ (33,'220607-e679678','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','e679678','E679678','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Deployed','','2022-06-07 08:06:00',NULL,''),
  (34,'220607-g4772324','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','g4772324','G4772324','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:00',NULL,''),
  (35,'220607-h745634','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','h745634','H745634','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:00',NULL,''),
  (36,'220607-i9857645','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','i9857645','I9857645','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:00',NULL,''),
- (37,'220607-j345665','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','j345665','J93756375','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Available','','2022-06-07 08:06:00',NULL,''),
+ (37,'220607-j345665','UHF Radio','UHF CP185  AAH03RDF8AA7AN Original Motorola 4','j345665','J93756375','Motorola','CP185  AAH03RDF8AA7AN','Motorola','World Food Program','World Food Program','Deployed','','2022-06-07 08:06:00',NULL,''),
  (38,'220608','VSAT SET','VSAT SKYNET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','Donated by World Food Program','2022-06-08 05:06:55',NULL,''),
  (39,'220608','VSAT SET','VSAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-08 05:06:00',NULL,''),
- (40,'220608','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-08 10:06:18',NULL,'D-VS-A-0003'),
+ (40,'220608','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Deployed','','2022-06-08 10:06:18',NULL,'D-VS-A-0003'),
  (41,'220608','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-08 10:06:18',NULL,'D-VS-A-0002'),
  (42,'220608','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-08 10:06:18',NULL,'D-VS-A-0001'),
- (43,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0004'),
+ (43,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Deployed','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0004'),
  (44,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0005'),
- (45,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0006'),
- (46,'2-GE-','GENSET','GENSET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Deployed','','2022-06-15 08:06:41','GE',NULL),
+ (45,'2-VS-','VSAT SET','VSAT SET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Deployed','From WFP','2022-06-14 05:06:05','VS','DMO-VS-A-0006'),
+ (46,'2-GE-','GENSET','GENSET',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-15 08:06:41','GE',NULL),
  (47,'2-MS-','MOVE SET','MOVE HUB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Available','','2022-06-16 04:06:32','MS',NULL);
 /*!40000 ALTER TABLE `assets` ENABLE KEYS */;
 
@@ -42388,7 +42457,7 @@ CREATE TABLE `deployment` (
   `remarks` varchar(200) DEFAULT NULL,
   `deployment_stat` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `deployment`
@@ -42510,7 +42579,24 @@ INSERT INTO `deployment` (`id`,`asset_owner_id`,`reg_id`,`prov_id`,`muni_id`,`br
  (113,73,17,83,1576,40673,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized'),
  (114,74,17,83,1576,40673,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized'),
  (115,75,17,83,1576,40673,'deployed under normal circumstances','2022-06-08 00:00:00','2022-06-27 00:00:00',0,'','Demobilized'),
- (116,79,5,22,500,13130,'deployed under normal circumstances','2022-07-20 00:00:00',NULL,0,'','Active');
+ (116,79,5,22,500,13130,'deployed under normal circumstances','2022-07-20 00:00:00','2022-08-30 00:00:00',0,'','Demobilized'),
+ (117,24,5,22,497,13007,'deployed under normal circumstances','2022-08-30 00:00:00',NULL,0,'Not disaster related','Active'),
+ (118,25,5,22,497,13007,'deployed under normal circumstances','2022-08-30 00:00:00',NULL,0,'Not disaster related','Active'),
+ (119,23,5,22,497,13007,'deployed under normal circumstances','2022-08-30 00:00:00',NULL,0,'Not disaster related','Active'),
+ (120,14,8,43,1005,27492,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (121,76,10,49,1106,29985,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (122,78,10,49,1106,29985,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (123,73,6,28,618,16432,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (124,19,1,1,3,59,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (125,22,1,1,3,59,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (126,12,7,34,749,20471,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (127,27,7,34,749,20471,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (128,31,7,34,749,20471,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (129,26,4,17,358,9024,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (130,28,4,17,358,9024,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (131,30,4,17,358,9024,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (132,35,4,17,358,9024,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active'),
+ (133,15,8,38,871,23246,'deployed under normal circumstances','2022-09-06 00:00:00',NULL,0,'','Active');
 /*!40000 ALTER TABLE `deployment` ENABLE KEYS */;
 
 
@@ -42626,7 +42712,7 @@ CREATE TABLE `login` (
   `date_activated` datetime DEFAULT NULL,
   `failed_attemps` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `login`
@@ -42634,15 +42720,16 @@ CREATE TABLE `login` (
 
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
 INSERT INTO `login` (`id`,`official_id`,`username`,`password`,`auth_level`,`auth_desc`,`status`,`date_activated`,`failed_attemps`) VALUES 
- (1,8,'ronibethcastamado','UcQbccwv0YU8EXr85wQK9o+g9/Ht3XryyZVu4qpGiWhbsZKtqzmKTKBqQ+ndyY08xbwkJ75t+te4kqlEcVlmSQ==',1,'Regular User','active','2022-07-21 00:00:00',0),
- (2,2,'lowe_mayores','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active','2022-06-18 00:00:00',0),
- (12,3,'lowe','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active','2022-06-18 00:00:00',0),
- (13,3,'james','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',3,'Super Admin','active','2022-06-18 00:00:00',0),
- (15,7,'jamessmith','KOhr8/Er/6Fzxbom6CEfyPKLrLYGkoTGUZcMazeMMlpfyalMyDckFFKUX5xtReI8803BWyHgPh8v1uBQkiS26A==',2,'Technical Operator','active','2022-07-20 00:00:00',0),
- (16,9,'bebangdimagiba','EEUXxutB657qkc08evdxTu2NTu+PLf53937jjqD2l2AnaJlDTDe2lM1lhd/s6ruO7b0KI1/Zow6eiT6fp7W02A==',2,'Technical Operator','active','2022-07-25 00:00:00',0),
- (17,10,'paulomacabuhay','p98voWMA5nyl0nQ2I+r+3uUFlUbhSdzbyzFjoVIqZYhmtm5LbWCXAdQOi0keenN7vixgMiwiHBvWj4p8GU19qg==',2,'Technical Operator','active','2022-07-25 00:00:00',0),
- (18,11,'pedrocalungsod','yiOhYpTJ+O+MofdEAXYOjj3DhU2ZhMVt25ZLTgKbKVSUE683vaFTO9P3CFMUwNYLxVhKmnsm3ijzbhFMPcDujA==',3,'Admin','active','2022-07-25 00:00:00',0),
- (19,12,'indaybadiday','S2+cyoXxHM3VG/IkX3dDP3RmFebCuOWWDY4NsEnVbxV+jFnEvh6H2bRGj8N6pOOELyGzFYMR7epolU+g4/LGzA==',2,'Technical Operator','active','2022-07-26 00:00:00',0);
+ (1,8,'ronibethcastamado','e6nGNgT76Tqzr9vDDq/L7+IPwDUm1E598Sbmy5YXgB+gGCP0qUdDnef8HvWKQnyP0ONRnFnKaZDDHZvjYZEnxQ==',1,'Regular User','change_pass','2022-07-21 00:00:00',0),
+ (2,2,'lowe_mayores','4OWba0/3jAKDpe9xbJqZ12R0JTxs5jT/5j9cJNedJr8ghUyCr5xMFGCjjN5iGP70v2rGE8oDFNfQcxypcDRupw==',4,'Super Admin','active','2022-06-18 00:00:00',0),
+ (12,3,'lowe','DiavnWvN62Mupmldzkr+G8NbJqmD0cRc9GfB/J+nvgEFAJuvEUYM33KV08GyX1imv2rwU6zKyhFu3A2DdduLoQ==',4,'Super Admin','active','2022-06-18 00:00:00',0),
+ (13,3,'james','78EqdcPbgJq7c+VQnls4t2QVa6kC2Id+4TST6nOyQjwtrfUuTAk/VIoJPF016L8aOIwXR2JCuqt+wv2fUlaxgw==',3,'Super Admin','active','2022-06-18 00:00:00',0),
+ (15,7,'jamessmith','KOhr8/Er/6Fzxbom6CEfyPKLrLYGkoTGUZcMazeMMlpfyalMyDckFFKUX5xtReI8803BWyHgPh8v1uBQkiS26A==',2,'Technical Operator','change_pass','2022-07-20 00:00:00',0),
+ (16,9,'bebangdimagiba','EEUXxutB657qkc08evdxTu2NTu+PLf53937jjqD2l2AnaJlDTDe2lM1lhd/s6ruO7b0KI1/Zow6eiT6fp7W02A==',2,'Technical Operator','change_pass','2022-07-25 00:00:00',0),
+ (17,10,'paulomacabuhay','p98voWMA5nyl0nQ2I+r+3uUFlUbhSdzbyzFjoVIqZYhmtm5LbWCXAdQOi0keenN7vixgMiwiHBvWj4p8GU19qg==',2,'Technical Operator','deactivated','2022-07-25 00:00:00',0),
+ (18,11,'pedrocalungsod','yiOhYpTJ+O+MofdEAXYOjj3DhU2ZhMVt25ZLTgKbKVSUE683vaFTO9P3CFMUwNYLxVhKmnsm3ijzbhFMPcDujA==',3,'Admin','change_pass','2022-07-25 00:00:00',0),
+ (19,12,'indaybadiday','S2+cyoXxHM3VG/IkX3dDP3RmFebCuOWWDY4NsEnVbxV+jFnEvh6H2bRGj8N6pOOELyGzFYMR7epolU+g4/LGzA==',2,'Technical Operator','change_pass','2022-07-26 00:00:00',0),
+ (20,13,'alingbagang','g6R+QLfdjWG04ZJNfhfQvRPosAS4PjXjTYJnbS7lz8C8V3rb3+IT1RgBtw1CFzCnsF0ZN6O4wOKCbsoauoUyUg==',3,'Admin','active','2022-08-30 00:00:00',0);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 
 
@@ -44392,7 +44479,8 @@ INSERT INTO `officials` (`id`,`office_id`,`fname`,`mname`,`lname`,`position`,`co
  (9,7,'Bebang','C','Dimagiba','Engineer II','09396787363','lowejames.mayores@gmail.com','2022-07-25 04:07:10',NULL,NULL,NULL,'Female'),
  (10,14,'Paulo','B','Macabuhay','ISA II','09396787363','lowejames.mayores@gmail.com','2022-07-25 06:07:57',NULL,NULL,NULL,'Male'),
  (11,7,'Pedro','C','Calungsod','ISA II','09396787363','lowejames.mayores@gmail.com','2022-07-25 06:07:28',NULL,NULL,NULL,'Male'),
- (12,7,'Inday','B','Badiday','Executive Assistant III','09912371464','lowejames.mayores@gmail.com','2022-07-26 09:07:44',NULL,NULL,NULL,'Female');
+ (12,7,'Inday','B','Badiday','Executive Assistant III','09912371464','lowejames.mayores@gmail.com','2022-07-26 09:07:44',NULL,NULL,NULL,'Female'),
+ (13,6,'Aling','B','Bagang','Executive Assistant III','09996777888','lowejames.mayores@gmail.com','2022-08-30 03:08:12',NULL,NULL,NULL,'Female');
 /*!40000 ALTER TABLE `officials` ENABLE KEYS */;
 
 
@@ -44635,12 +44723,77 @@ INSERT INTO `transferhistory` (`id`,`asset_owner_id`,`from`,`to`,`datetransfered
 
 
 --
+-- Definition of procedure `get_loc_avail_assets`
+--
+
+DROP PROCEDURE IF EXISTS `get_loc_avail_assets`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`lowe`@`%` PROCEDURE `get_loc_avail_assets`(office int)
+BEGIN
+SELECT office.id, `assets`.`id` as `asset_id`, owned_assets.name,  `assets`.`serial`, assets.category, `barangay`.`lat`, `barangay`.`long` from owned_assets, assets, office,barangay where
+assets.id=owned_assets.asset_id and owned_assets.office_id=office.id and office.brgy_id=barangay.id and office_id=office and `assets`.`status`='available' ;
+
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `get_loc_deployed_assets`
+--
+
+DROP PROCEDURE IF EXISTS `get_loc_deployed_assets`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`lowe`@`%` PROCEDURE `get_loc_deployed_assets`(office int)
+BEGIN
+
+SELECT office.id,  `assets`.`id` as `asset_id`, owned_assets.name,  `assets`.`serial`, assets.category, `barangay`.`lat`, `barangay`.`long` from owned_assets, assets, office,barangay,deployment where
+assets.id=owned_assets.asset_id  and owned_assets.office_id=office.id and deployment.asset_owner_id=owned_assets.ownerid and deployment.brgy_id=barangay.id and office_id=office  and deployment.deployment_stat='Active';
+
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of view `avail_assets_loc`
+--
+
+DROP TABLE IF EXISTS `avail_assets_loc`;
+DROP VIEW IF EXISTS `avail_assets_loc`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `avail_assets_loc` AS select `office`.`id` AS `id`,`assets`.`id` AS `asset_id`,`owned_assets`.`name` AS `name`,`assets`.`serial` AS `serial`,`assets`.`category` AS `category`,`barangay`.`id` AS `brgy_id`,`barangay`.`lat` AS `lat`,`barangay`.`long` AS `long` from (((`owned_assets` join `assets`) join `office`) join `barangay`) where `assets`.`id` = `owned_assets`.`asset_id` and `owned_assets`.`office_id` = `office`.`id` and `office`.`brgy_id` = `barangay`.`id` and `assets`.`status` = 'available';
+
+--
+-- Definition of view `deployed_assets_loc`
+--
+
+DROP TABLE IF EXISTS `deployed_assets_loc`;
+DROP VIEW IF EXISTS `deployed_assets_loc`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `deployed_assets_loc` AS select `office`.`id` AS `id`,`assets`.`id` AS `asset_id`,`owned_assets`.`name` AS `name`,`assets`.`serial` AS `serial`,`assets`.`category` AS `category`,`barangay`.`id` AS `brgy_id`,`barangay`.`lat` AS `lat`,`barangay`.`long` AS `long` from ((((`owned_assets` join `assets`) join `office`) join `barangay`) join `deployment`) where `assets`.`id` = `owned_assets`.`asset_id` and `owned_assets`.`office_id` = `office`.`id` and `deployment`.`asset_owner_id` = `owned_assets`.`ownerid` and `deployment`.`brgy_id` = `barangay`.`id` and `deployment`.`deployment_stat` = 'Active';
+
+--
 -- Definition of view `geo_add`
 --
 
 DROP TABLE IF EXISTS `geo_add`;
 DROP VIEW IF EXISTS `geo_add`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `geo_add` AS select `region`.`id` AS `reg_id`,`region`.`reg_code` AS `reg_code`,`region`.`name` AS `reg_name`,`province`.`id` AS `prov_id`,`province`.`prov_code` AS `prov_code`,`province`.`name` AS `prov_name`,`municipality`.`id` AS `muni_id`,`municipality`.`muni_code` AS `muni_code`,`municipality`.`name` AS `muni_name`,`barangay`.`id` AS `brgy_id`,`barangay`.`name` AS `brgy_name`,`barangay`.`geocode` AS `brgy_geocode`,`barangay`.`brgy_code` AS `brgy_code`,`barangay`.`lat` AS `brgy_lat`,`barangay`.`long` AS `brgy_long` from (((`region` join `province`) join `municipality`) join `barangay`) where `barangay`.`muni_id` = `municipality`.`id` and `municipality`.`province_id` = `province`.`id` and `province`.`reg_id` = `region`.`id`;
+
+--
+-- Definition of view `offices_latlong`
+--
+
+DROP TABLE IF EXISTS `offices_latlong`;
+DROP VIEW IF EXISTS `offices_latlong`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `offices_latlong` AS select `office`.`id` AS `id`,`office`.`office_name` AS `office_name`,`office`.`category` AS `category`,`barangay`.`lat` AS `lat`,`barangay`.`long` AS `long` from (`office` join `barangay`) where `office`.`brgy_id` = `barangay`.`id`;
 
 --
 -- Definition of view `owned_assets`
@@ -44657,6 +44810,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `owned_a
 DROP TABLE IF EXISTS `personnelogiinfo`;
 DROP VIEW IF EXISTS `personnelogiinfo`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `personnelogiinfo` AS select `office`.`id` AS `office_id`,`office`.`office_name` AS `office_name`,`office`.`category` AS `category`,`officials`.`id` AS `official_id`,`officials`.`fname` AS `fname`,`officials`.`mname` AS `mname`,`officials`.`lname` AS `lname`,`officials`.`position` AS `position`,`login`.`username` AS `username`,`login`.`password` AS `password`,`login`.`auth_level` AS `auth_level`,`login`.`status` AS `status`,`office`.`region_id` AS `region_id`,`office`.`province_id` AS `province_id`,`office`.`muni_id` AS `muni_id`,`office`.`brgy_id` AS `brgy_id` from ((`office` join `officials`) join `login`) where `office`.`id` = `officials`.`office_id` and `officials`.`id` = `login`.`official_id`;
+
+--
+-- Definition of view `test`
+--
+
+DROP TABLE IF EXISTS `test`;
+DROP VIEW IF EXISTS `test`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `test` AS select `office`.`id` AS `office_id`,`office`.`office_name` AS `office_name`,`office`.`category` AS `category`,`officials`.`id` AS `official_id`,`officials`.`fname` AS `fname`,`officials`.`mname` AS `mname`,`officials`.`lname` AS `lname`,`officials`.`position` AS `position`,`login`.`username` AS `username`,`login`.`password` AS `password`,`login`.`auth_level` AS `auth_level`,`login`.`status` AS `status`,`office`.`region_id` AS `region_id`,`office`.`province_id` AS `province_id`,`office`.`muni_id` AS `muni_id`,`office`.`brgy_id` AS `brgy_id` from ((`office` join `officials`) join `login`) where `office`.`id` = `officials`.`office_id` and `officials`.`id` = `login`.`official_id` WITH CASCADED CHECK OPTION;
 
 
 

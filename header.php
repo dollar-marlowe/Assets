@@ -25,31 +25,25 @@
       .navbar .ac-container label a,  
       .navbar .ac-container article a{
         transition: 0.1s ease;
-        
-        
       }
        .navbar .ac-container label:after,   
        .navbar .ac-container label a:after,  
        .navbar .ac-container article a{
-    
-        padding-bottom:10px;
-     
+        padding-bottom:10px;     
       }
        .navbar .ac-container label:hover,
        .navbar .ac-container article a:hover{
         border-top: 2px solid rgb(45, 44, 46);
         border-bottom: 2px solid rgb(45, 44, 46);
         padding-bottom:5px;
-       
-       
       }
-.navbar {
-  height:9vh;
-}
-.navbar-container{
-  margin:0;
-  margin-top:13px;
-}
+      .navbar {
+        height:9vh;
+      }
+      .navbar-container{
+        margin:0;
+        margin-top:13px;
+      }
      
     </style>
   </head>
