@@ -29,8 +29,8 @@ if($arr_path[$arr_size-2]=="AJAX" && !isset($_SESSION["auth"]) && basename($_SER
 class Database{
 
     public $servername="localhost";
-    public $username="root";
-    public $pass="";
+    public $username="lowe";
+    public $pass="admin123";
     public $db="assets";
     public $con;
 
@@ -54,6 +54,10 @@ class Database{
         else{
             return "Error: ".$query."<br>".mysqli_error($this->con);
         }
+    }
+
+    function get_profile_image($query){
+        
     }
 
     function insert_no_linig($query){
@@ -666,7 +670,7 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
    
     if(intval($_SESSION["auth_level"])<=$level){
       
-        header('Location: ' . $destination, true, $statusCode);
+        header('Location: ' . $destination);
         die();
       }
 }

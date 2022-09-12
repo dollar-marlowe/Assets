@@ -5,12 +5,11 @@
         $uname=removepecialchars($_POST["uname"]);
         $pass=removepecialchars($_POST["pass"]);
        
-        $str="SELECT * FROM personnelogiinfo  where BINARY username='".$uname."'";
-       $mydb = new Database();
-       $mydb->connect();
+      $str="SELECT * FROM personnelogiinfo  where BINARY username='".$uname."'";
+      $mydb = new Database();
+      $mydb->connect();
       $data=$mydb->select($str);
       
-     
       if(mysqli_num_rows($data)>0){
         $row=mysqli_fetch_assoc($data);
           if($pass==decrypt($row["password"])){
@@ -20,14 +19,17 @@
               $_SESSION["officeid"]=$row["office_id"];
               $_SESSION["officialid"]=$row["official_id"];
               $_SESSION["fname"]=$row["fname"];
-              $_SESSION["lname"]=$row["lname"]; 
+              $_SESSION["lname"]=$row["lname"];
+              $_SESSION["login_email"]=$row["email"];
+              $_SESSION["user_mobile"]=$row["mobile"];
               $_SESSION["region_id"]=$row["region_id"]; 
               $_SESSION["province_id"]=$row["province_id"]; 
               $_SESSION["muni_id"]=$row["muni_id"]; 
-              $_SESSION["brgy_id"]=$row["brgy_id"]; 
-              $_SESSION["office_cat"]=$row["category"]; 
-              $_SESSION["auth_level"]=$row["auth_level"]; 
-              $_SESSION["status"]=$row["status"]; 
+              $_SESSION["brgy_id"]=$row["brgy_id"];
+              $_SESSION["office_cat"]=$row["category"];
+              $_SESSION["position"]=$row["position"];
+              $_SESSION["auth_level"]=$row["auth_level"];
+              $_SESSION["status"]=$row["status"];
               echo $row["status"];
               $_SESSION["auth"]=true;
           }

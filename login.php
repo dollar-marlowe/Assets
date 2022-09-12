@@ -39,7 +39,7 @@
     <?php
   
     include "ALGO/codes.php";
-   // $_SESSION["auth"]=false;
+   $_SESSION["auth"]=false;
    
     if(isset($_SESSION["auth"])){
       if($_SESSION["auth"] &&   $_SESSION["status"]=="active" ){
@@ -60,4 +60,4 @@
 
   <script src="JS/flexi.js"></script>
 </html>
-</html>
+

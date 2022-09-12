@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+   
     <title>DICT-ETC</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
    
@@ -16,6 +18,7 @@
     />
     <link rel="icon" href="images/DICT.png">
     <link rel="stylesheet" href="CSS/avocado.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
 	  <style>
       .navbar .ac-container label,  
       .navbar .ac-container label a,  
@@ -36,21 +39,28 @@
         border-top: 2px solid rgb(45, 44, 46);
         border-bottom: 2px solid rgb(45, 44, 46);
         padding-bottom:5px;
-       
-       
+      }
+
+      .navbar {
+        height:9vh;
+      }
+      .navbar-container{
+        margin:0;
+        margin-top:13px;
       }
      
     </style>
   </head>
   <body>
-  <img class="logo lg1" src="images/drrmd1.png" >
-          <img class="logo" src="images/dictlogo1.png">
+      <!-- <img class="logo lg1" src="images/drrmd1.png" >
+      <img class="logo" src="images/dictlogo1.png"> -->
+      <img src="images/DICT.png" class="logo">
 <nav class="navbar">
       
         <?php
        $P="";//this is for the page name
         if(isset($_SESSION["auth"])){
-          echo "<div class='navbar-container'>";
+        echo "<div class='navbar-container'>";
          echo " <input type='checkbox' name='' id='nbrger'>";
          echo " <div class='hamburger-lines'>";
          echo "      <span class='line line1'></span>";
@@ -72,30 +82,34 @@
          echo "<section class='ac-container'>";
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1' id='home'><a href=''>Home</a></label>";
+         echo       "<label for='ac-1' id='home'><a href='home.php'>Home</a></label>";
          echo  "</div>";
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-2'>Assets</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='assets'>Assets Data Entry</a>";
-         echo           "<a href='assets_mgt'>Assets Management</a>"; 
-         echo           "<a href=''>Assets Map</a>";
+         echo           "<a href='assets.php'>Assets Data Entry</a>";
+         echo           "<a href='assets_mgt.php'>Assets Management</a>"; 
+         echo           "<a href='assetsmap.php'>Assets Map</a>";
          echo       "</article>";
          echo   "</div>";
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-3'>Office Management</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='officesentry'>Office Data Entry</a>";
-         echo           "<a href='officialsentry'>Personnel Data Entry</a>"; 
+         echo           "<a href='officesentry.php'>Office Data Entry</a>";
+         echo           "<a href='officialsentry.php'>Personnel Data Entry</a>"; 
           if($_SESSION["auth_level"]>2){
-            echo           "<a href='loginaccount'>Personnel's User Account</a>"; 
+            echo           "<a href='loginaccount.php'>Personnel's User Account</a>"; 
           }
      
 
          echo       "</article>";
          echo   "</div>";
+         echo       "<div>";
+         echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
+         echo       "<label for='ac-1' id='userprofile'><a href='userprofile.php'>User Profile</a></label>";
+         echo  "</div>";
          echo   "<div>";
          echo       "<input id='ac-4' name='accordion-1' type='checkbox' />";
          echo       "<label for='ac-4'><a href='Logout'>Logout</a></label>";

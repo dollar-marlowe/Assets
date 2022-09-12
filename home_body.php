@@ -1,5 +1,4 @@
 <style>
-
 		#type{
 		font-weight:500;
 		font-size:17px;	
@@ -24,7 +23,6 @@
 		padding:10px;
       border:1px solid #ddd;
       border-radius:20px;
-
 		}
 		
     .imgform-img iframe{
@@ -123,7 +121,6 @@
 			.pannel{
 				
 				border-top:solid 1px #ddd;
-
 			}
 			.sidehead{
 				width:100%;
@@ -135,37 +132,83 @@
 	background-color:white;
     padding: .5em;
   width:fit-content;
-
 position:absolute;
 	  transform: rotate(90deg);
 	  
 	  margin:auto;
 	  margin-top:25px;
 	  margin-left:-9px;
-
 }
 #hide_show:hover{
 	background-color:#ddd;
 }
+div.item{
+	display:inline-block;
+	width:80px;
+	padding-bottom:10px;
+	margin-top:10px;
+	margin-left:10px;
+	border: solid 1px #ddd;
+	margin-right:10px;
+	transition: transform .2s;
+}
+div.item:hover{
+	transform: scale(1.1);
+}
+div.item  p{
+	display:block;
+	font-size:10px;
+	width:fit-content;
+	margin:auto;
+	margin-top:0px;
+}
+div.item p img{
+	width:30px;
+	height:30px;
+}
+.pannel{
+	height:300px;
+	margin:auto;
+	width:auto;
+	padding:20px;
+	
+}
+.center{
+	margin:auto;
+}
 		
 </style>
  <section id="imgform"><div class="imgform-container ">
-
       <div class="imgform-container ">
 	  <p id="hide_show" class="top">Hide</p>
 	  	<div class="sidebar">
 		 
 				<div class="imgform-img radiusnone top pannel_con" >
-					<h3 onclick="test('#panel1','pannel')" class="sidehead">Lorem ipsum1</h3>
-						<p id="panel1" class="pannel">
-						&nbsp &nbsp Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-						  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						    culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+					<h3 onclick="test('#panel1','pannel')" class="sidehead">Tracker Pannels</h3>
+					<div id="panel1" class="pannel">
+						
+							<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
+								<p ><img src="images/windy.png" ></p>
+								<p>Windy Pannel</p>
+							</div>
+							<div class="item" id="btnphil" onclick="hide_show('#georiskpannel')">
+								<p><img src="images/philvolcs.png"></p>
+								<p>Georisk Pannel</p>
+							</div>
+							<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
+								<p><img src="images/pagasa.png"></p>
+								<p>Flood Pannel</p>
+							
+							</div>
+							
+							<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
+								<p><img src="images/covid.png"></p>
+								<p>Covid Pannel</p>
+							</div>
+							
+					</div>		
+						
+					
 				</div>
 				
 				<div class="imgform-img radiusnone marginleft pannel_con">
@@ -193,10 +236,9 @@ position:absolute;
 						</p>
 				</div>
 			</div>
-
-      <div class="imgform-img " style='border:none;'>
+      <div class="imgform-img " id="group1" style='border:none;'>
 	  
-              <div class="imgform-img block">
+              <div class="imgform-img block" id="windypannel">
                 <p onclick="test('#windy','iframe')" class="iframhead">&nbsp &nbsp WINDY.COM LIVE MONITORING</p>
 			
                 <iframe style="border:none;width:100%; " src="https://embed.windy.com/embed2.html?lat=9.709&lon=123.750&
@@ -205,42 +247,34 @@ position:absolute;
                   Wind=default&metricTemp=default&radarRange=-1" id="windy"></iframe>
                 
               </iframe>
-
               </div>
-
-              <div class="imgform-img block">
+              <div class="imgform-img block" id="floodpannel">
               <p onclick="test('#flood','iframe')">DOST FLOOD DAM INFROMATION LIVE MONITORING</p>
 			  
                 <iframe id="flood"style="border:none;width:100%; " src="https://bagong.pagasa.dost.gov.ph/flood#dam-information" ></iframe>
                 
               </iframe>
-
               </div>
         </div>
-
-        <div class="imgform-img" style='border:none;'>
-              <div class="imgform-img">
+        <div class="imgform-img" id="group2"style='border:none;'>
+              <div class="imgform-img" id="georiskpannel">
               <p onclick="test('#georisk','iframe')">PHIVOLCS GOERISK LIVE MONITORING</p>
                 <iframe id="georisk" style="border:none;width:100%; " src="https://hazardhunter.georisk.gov.ph/map#" ></iframe>
                 
               </iframe>
-
               </div>
-              <div class="imgform-img">
+              <div class="imgform-img" id="covidpannel">
               <p onclick="test('#covid','iframe')">DOH-COVID19 LIVE MONITORING</p>
                 <iframe id="covid"style="border:none;width:100%;"
                 src="https://public.tableau.com/views/COVID-19CasesandDeathsinthePhilippines_15866705872710/Home?
                 :embed=y&:embed_code_version=3&:loadOrderID=0&:display_count=y&publish=yes&:origin=viz_share_link" ></iframe>
                 
               </iframe>
-
               </div>
         </div>
-
        		
       </div>
     </section>
-
     <script>
 		function test(target,from){
 			var l=$(window).width();
@@ -256,10 +290,71 @@ position:absolute;
 				$(target).slideToggle("slow");
 			}
 			
+		}
+		function hide_show(id){
+			//alert($(id).is(":hidden"));
+				if(id=="#windypannel" || id=="#floodpannel"){
+					if($("#group1").is(":hidden")){
+						$("#group1").show(400);
+					}
+				}
+				if(id=="#covidpannel" || id=="#georiskpannel"){
+					if($("#group2").is(":hidden")){
+						$("#group2").show(400);
+					}
+				}
+					$(id).toggle(400, function(){
+						
+						if(id=="#windypannel" || id=="#floodpannel"){
+							//alert($("#floodpannel").is(":hidden")+" "+$("#windypannel").is(":hidden"));
+							if($("#floodpannel").is(":hidden") ==true && 	$("#windypannel").is(":hidden")==true){
+							$("#group1").hide(400);
+							//alert("hide");
+							}
+							
+						}
+						if(id=="#covidpannel" || id=="#georiskpannel"){
+							//alert($("#floodpannel").is(":hidden")+" "+$("#windypannel").is(":hidden"));
+							if($("#covidpannel").is(":hidden") ==true && 	$("#georiskpannel").is(":hidden")==true){
+							$("#group2").hide(400);
+							//alert("hide");
+							}
+							
+						}
+						//un-border windy button if pannel is hidden
+						if(	$("#windypannel").is(":hidden")){
+							$("#btnwindy").css("border","none");
+						}
+						else{
+							$("#btnwindy").css("border","solid 1px #ddd");
+						}
+						//un-border flood dam button if pannel is hidden
+						if(	$("#floodpannel").is(":hidden")){
+							$("#btpagasa").css("border","none");
+						}
+						else{
+							$("#btpagasa").css("border","solid 1px #ddd");
+						}
+						//un-border georisk philvocs button if pannel is hidden
+						if(	$("#georiskpannel").is(":hidden")){
+							$("#btnphil").css("border","none");
+						}
+						else{
+							$("#btnphil").css("border","solid 1px #ddd");
+						}
+						//un-border covid button if pannel is hidden
+						if(	$("#covidpannel").is(":hidden")){
+							$("#btncovid").css("border","none");
+						}
+						else{
+							$("#btncovid").css("border","solid 1px #ddd");
+						}
+						
+					
+					});
+					
 			
 		}
-
-
       $(document).ready(function(){
 		var hidden=false;
 		$("#hide_show").click(function(){
@@ -284,5 +379,6 @@ position:absolute;
 				$(".pannel").css("display","block");
 			}
 		});
+		
       });
     </script>
