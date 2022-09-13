@@ -38,6 +38,15 @@
             });
             
         }
+            function sizeof(array){
+
+            var c = 0;
+            for(i in array) // in returns key, not object
+                if(array[i] != undefined)
+                    c++;
+
+            return c;
+        }
 
         function to_array(values,delimeter){
 				return values.split(delimeter);
@@ -131,9 +140,7 @@
 
             });
         }
-        function to_array(values){
-				return values.split("%");
-		}
+   
         function assign(target_elem,data){
             $(target_elem).val(data);
         }

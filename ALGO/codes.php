@@ -1,13 +1,19 @@
 <?php
+//YOUR CREATIVITY IS THE KEY
+
+//these are all session creation
+//placed here as this php file is always present in all modules of the system
 session_start();
 if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
+    //this is the condition that makes the session expire if in active for 1 hour
+    
     session_unset(); 
     session_destroy(); 
    
 }
 $_SESSION['start'] = time();
 
-
+//this si the condition which reroute the php view if an outsider tries to acces this file htoruhg the browser
 if( basename($_SERVER["SCRIPT_FILENAME"], '.php')=="codes" && !(isset($_SESSION["auth"]))){
    header("Location:../login.php");
 }
@@ -27,7 +33,14 @@ if($arr_path[$arr_size-2]=="AJAX" && !isset($_SESSION["auth"]) && basename($_SER
 
 //Class for databce connection for dynamically reusing of codes
 class Database{
-
+    //I USED A CLASS FOR THE DATABASE
+    //THIS SERVES AS THE MODEL PART OF THE SYSTEM
+    //ALL QUERY COMMAND INSERT EDIT ADN DELETE ARE ALL HERE
+    //IT USES THE SQL COMMAND AS PARAMETER TO EXECUTE IT INSIDE EACH OF THE RESPECTIVE FUNCTIONS
+    //THE CLASS IS VERY DYNAMIC, USING THE SAME CODES ALL THORUGHT THE SYSTEM
+    //WITHOUT HAVING TO REPEAT ANY OF INSERT ALGO IN THIS SYSTEM
+    //WHEN MIGRATING TO POSTGRE THIS IS THE CLASS THAT NEEDS TO BE CHANGED
+    
     public $servername="localhost";
     public $username="lowe";
     public $pass="admin123";
@@ -132,30 +145,111 @@ class Database{
         return "Closed!";
     }
 }
-function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){
+function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){//brg_id[0], lat[1], long[2], category[3], serial[4], count[5]
     $db= new Database();
     $db->connect();
     $result=$db->selectrows($str,0);// 0 is to select all rows
-    $brgy_id=0;
     $string_data="";
-    $c=1;
+    $size=0;
     foreach($result as $rows){
-        if($c>1){
-            $string_data.="%";
+     
+        $data=summarize_list($rows[$cols[3]],$rows[$cols[4]],$rows[$cols[5]]);//calling the function to sumirize the list of items 
+        //with corresponding serials 
+        $string_data.=$data.$item_delimeter.$rows[$cols[1]].$item_delimeter.$rows[$cols[2]];
+      
+        if($size < sizeof($result)-1){
+            $string_data.=$row_delimeter;
         }
-        if($brgy_id!=$rows[$cols[0]]){
-            $brgy_id=$rows[$cols[0]];
-            $c++;
-        }
-
+        $size++;
+       
     }
+    return $string_data;
 
+}
+
+
+function summarize_list($cat_name, $serials, $count){
+    //this function is only useful for this type of sql command 
+    //SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  , GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`, brgy_id,lat,`long`, count(*) as `count` FROM deployed_assets_loc i where id=2 group by  brgy_id order by brgy_id
+    //where $cat_name is in a form of imploded array separated by , this is done using the GROUP_CONCAT command in sql
+    //and the same for $serials
+    //these imploded values where later on exploded as an array inside this function and one by one will count 
+    //each item and compute the sum of silimar items belonging to the same location 
+    //thus the result would look like this 2 VHF Handheld Radio: 789012, 234567
+    //original values were like this: VHF Handheld Radio, VHF Handheld Radio (stored in $cat_name)
+    //789012, 234567 (sored in $serials)
+    $arr_values=explode(",",$cat_name);
+    $arr_serials=explode(",",$serials);
+    $size=intval($count);
+    $counter=1;
+    
+    $c=0;
+    $result="";
+    $start=1;
+    $asset=$arr_values[0];
+    for($i=1;$i<$size;$i++){
+        $plural="";
+        if($counter>1){
+            $plural="s";
+        }
+        if(trim($arr_values[$i])!= trim($asset)){
+            $serial="";
+            $result.= $counter." ".$asset.$plural.": ";
+            for($j=$start-1;$j<$i;$j++){
+                $serial.=$arr_serials[$j];
+                if($j!=$i-1){
+                    $serial.=", ";
+                }else{
+                    $serial.="; ";
+                }
+            }
+            
+            $result.=$serial;
+               
+            $start=$i+1;
+            $counter=1;
+            $asset=$arr_values[$i];
+           if($i==$size-1){
+            $result.=$counter." ". $asset.$plural.": ".$arr_serials[$i];
+           }
+        }
+        else{
+            $counter++;
+          //  echo " i:".$i." Size: ".$size." ";
+                if($i==$size-1){
+                            $serial="";
+                            $result.= $counter." ".$arr_values[$i].$plural.": ";
+                            for($j=$start-1;$j<=$i;$j++){
+                                $serial.=$arr_serials[$j];
+                                    if($j<$i){
+                                        $serial.=",";
+                                    }
+                           
+                        }
+                        $result.=$serial;
+                       
+                 }
+                 
+        }
+      // echo $arr_values[$i]." ";
+        //$c++;
+    }
+    if($size==1){
+        $result=$count." ".$cat_name.": ".$serials;
+    }
+    return  $result;
 }
 function get_rows_string_delimeter($str,$item_delimeter,$row_delimeter){//this is to make the result form a query in a form of an array to be converted to string
     //examle Sat Phone|23246|11.169799|125.372001|1%UHF Radio|20471|9.837039|124.219001|7%VHF Handheld Radio|13007|13.277299|123.362998|5%VSAT SET|27492|11.621|124.433998|4
     //each item is separated by | ($item_delimeter)and the mark of the end of the row is % ($row_delimeter)
     //the purpose fo this is to pass this valeu to javascript and later on split in again to array 
     //as php array cannot be passed back to javascript
+    //THIS FUCNTION IS A TEST FUNCTION SEPARATING EACH ITEM AS AN ARRAY ELEMENT:
+    //UHF Radio|20471|9.837039|124.219001|7 LIKE THIS
+    //CATEGORY NAME|LAT|LONG|ITEM COUNT
+    //THIS IS VERY HUSLE TO USE WITHOUT USING ANY DATA SUMMARIZATION 
+    // RECOMMENDED TO USE get_rows_implode INSTEAD OF THIS WHEN SUMMARIZING ASSETS
+    //THIS FUNCTION MUGHT STILL BE USEFUL FOR OTHER DATA QUERIES
     $db = new Database();
     $db->connect();
      $result=$db->selectrows($str,0);// 0 is to select all rows
@@ -198,7 +292,7 @@ function isnull($var){
     }
 }
 
-function linig($str){
+function linig($str){//USED FOR REMOVING SQL INJECTIONS
     $rows=explode(" ",$str);
     $size=sizeof($rows);
     for($i=0;$i<$size;$i++){
@@ -388,7 +482,15 @@ function officecode(){
     return region_to_letter($regid);
 
 }
-function abreviate($str,$num_char){
+function abreviate($str,$num_char){//THIS IS USED FOR ABREVIATING WORDS $NUM_CHAR SPECIFIES HOW MAY LETTERS
+    //IF BY MISTAKE YOU PUT ONE WORD YET 3 NUMBER OF LETTERS FOR THE ABREVIATION EXAMPLAE:
+    //Aperture result would be APE
+    //if by mistake you put just one letter yet you specified 3 letters for the abreviation
+    //exmaple 'A' result would be 'A' 
+    //the normal output of this function would be like this
+    //'Very Small Aperture Termninal' then you specified 4 letters abreviation
+    // result would be like this 'VSAT'
+    //pretty brilliant haha
     $word= explode(" ",$str);
     $size=sizeof($word);
     $abreviate="";
@@ -424,6 +526,11 @@ function abreviate($str,$num_char){
     return strtoupper($abreviate);
 }
 function shorten($txt){
+    //this function will shorten names which are more than 2 words 
+    //reducing the name into just 2 words,
+    //the first 2 words are the most siginificant in the name
+    //do not modify this fucntion as this will affect the assets_mgt_form module()Assets managment 
+    //this function is being used in the assets summary pannel
     $arr=explode(" ",$txt);
     $size=sizeof($arr);
     $str="";
@@ -435,7 +542,9 @@ function shorten($txt){
     }
     return $str;
 }
-function replace($chars,$orig){
+function replace($chars,$orig){//
+    //this function is used to combine dta frm different column into a one string 
+    //the value came form a jquery that is why you cannto use implode fucntion here
     $elems=explode("%",$chars);
     $val=$orig;
     foreach($elems as $elem){
@@ -613,6 +722,10 @@ function loadropdown_encrypt($str,$col1,$col2,$from){//$from is the deafult valu
     }
 }
 function loadintodb(){
+    //this is a function which was used to upload the 42k lines of data from excell to the database
+    //this was only used once 
+    //function wont work in higher version of php
+    //keeping this fucntion here for reference
     require_once "PHPExcel/Classes/PHPExcel.php";
     $tmpfname = "RESOURCES/geo_map.xlsx";
     $excelReader = PHPExcel_IOFactory::createReaderForFile($tmpfname);
@@ -639,11 +752,21 @@ function loadintodb(){
    $queries=array();
    
   //echo $lastRow."<br>";
+  //the idea is to scan each line of data in excel
+  //first it checks if the regional id in the next row is not the same
+  //takes teh value of the next row 
+  //then it creates an sql command inerting a data into the region table
+  //it does the same for the province, municipality and barangay
+  //for creating such algorithms
+  //you can use your imagination and creativity
+  //it works all the time for me
+
     for ($row = 1; $row < 42059; $row++) {
+
         
         /*012801001 -0- 01 -2- REGION I (ILOCOS REGION) -4- 28 -6- ILOCOS NORTE -7- PH012801000 -8- 01 -11- 
         ADAMS -12- PH012801001 -13- 001 -14 Adams (Pob.) -15 18.453399 -16 0 -17-*/
-      
+        //below is an assosiative array
         $data=array("geocode"=>$excel_arr[$row][0],"regcode"=>$excel_arr[$row][2],"regname"=>$excel_arr[$row][4],
                     "provcode"=>$excel_arr[$row][6],"provname"=>$excel_arr[$row][7],"municode"=>$excel_arr[$row][11],
                     "muniname"=>$excel_arr[$row][12],"brgycode"=>$excel_arr[$row][14],"brgyname"=>$excel_arr[$row][15],
@@ -654,6 +777,8 @@ function loadintodb(){
         $excel_arr[$row][11]." -11- ".$excel_arr[$row][12]." -12- ".
         $excel_arr[$row][13]." -13- ".        $excel_arr[$row][14]." -14- ".$excel_arr[$row][15]." -15- ".
         $excel_arr[$row][16]." -16- ".$excel_arr[$row][17]." -17-<br>";*/
+       //this is the condition of the regional code or regional id
+       //checks if the current line of data is not equel t the next 
         if($reg!=$data["regcode"]){
             $query="insert into region (id,reg_code,name,geocode)
             values (".$regid.",'".$data["regcode"]."','".$data["regname"]."','".$data["regcode"]."0000000')";
@@ -665,6 +790,7 @@ function loadintodb(){
               $num++;
             
         }
+        //this is for the province
        if($prov!=$data["provcode"]){
         $query="insert into province (id,reg_id,prov_code,name, geocode)
         values (".$provid.",".($regid-1).",'".$data["provcode"]."',
@@ -676,6 +802,7 @@ function loadintodb(){
         $provid++;
         $num++;
        }
+       //this is fo rthe minicipality
        if($muni!=$data["municode"]){
        $query="insert into municipality (id,province_id, muni_code, name, geocode)
        values (".$munid.",".($provid-1).",'".$data["municode"]."',
@@ -687,6 +814,8 @@ function loadintodb(){
        $munid++;
        $num++;
        }
+       //except for the branagay since each row in excell that contains unique brgy id and name
+
         $query="insert into barangay (id,muni_id,brgy_code, name, `long`,lat,geocode)
         values (".$brgyid.",".($munid-1).",'".$data["brgycode"]."',
         '".$data["brgyname"]."','".$data["long"]."','".$data["lat"]."','"
@@ -705,7 +834,11 @@ function loadintodb(){
 }
 
 
-function generate_password($len){
+function generate_password($len){//this is a useful funciton for generating password
+    //using aplhanumeric randomizer with upper and lower case
+    //$len specifies how many characters
+    //this is used in personnel data entry
+    //still useful for generating random letters aside form password generation
     $pass="";
     $aplhabet="abcdefghijklmnopqrstuvwxyz";
     
@@ -718,7 +851,15 @@ function generate_password($len){
     return $pass;
 }
 
-
+//the following commands are the encrypt and decrypt 
+//using my own unique key or salt
+//this function uses the AES-128-CBC encryption
+//it cannot be decrypted withiout using my unique key which i generated
+//do not change it yet, otherwise it will fail to decrypt the encrypted passwords
+//in the database using this current key
+//i used it to decrypt the id of personnel in the Peronnel's user account module
+//so if they inspected the web all they will see is an encyrpted data
+//this fucntion is being used also in several modules
 define("encryption_method", "AES-128-CBC");
 define("key", "nO2T0fp6D@*P_yd6cmVUw$0oC");
 function encrypt($data) {
@@ -822,7 +963,7 @@ newlines in this string
 on the browser window."); */
 
 
-//echo decrypt("sXZK1v0HgbcQapwO8S+ZzyZxAibPKCsySxeDJgrj5sDnS7N/i2xvz4dMnBEt9Gs3Q2sxxc2wEzJlIGabJQ0kvA==")."<br>";
+//echo decrypt("IzzYcW3O16TLVoxIAikIt8ElpGo2JXqXhpuKIjZZ4Am8i7K4YFZTH4u0FKJKUa9emnzTN4q/BjYdnVxXEYR2lFkys0jTXEvuGNaQfvx4TOqH/fI+yOAw07APWenBA647OthH3n3Nge84epglNsgusQ==");
 //$db=new Database();
 //test();
 //echo $db->connect();
@@ -841,6 +982,8 @@ function get_session($name){
 }
 
 function send_email($to,$subject,$content){
+    //this is the function for sending mail
+    //the variable names are very self explanatory
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= 'From: <enquiries@it-doneright.co.uk>' . "\r\n";
@@ -853,5 +996,9 @@ function send_email($to,$subject,$content){
     }
 }
 //echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
-
+ echo summarize_list("VHF Handheld Radio, VHF Handheld Radio",
+  "789012, 234567", 2);
+ /*($str="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  , GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`, brgy_id,lat,`long`, count(*) as `count` FROM deployed_assets_loc i where id=2 group by  brgy_id order by brgy_id";
+ $cols=array("brgy_id", "lat", "long", "category", "serial", "count");
+ echo "<br>"."<br>".get_rows_implode($str,"@","%",$cols);*/
 ?>

@@ -29,7 +29,7 @@
 		}
 		
     .imgform-img #map{
-      height:700px;
+      height:800px;
     }
 		.imgform-img img{
 			width:90%;
@@ -195,6 +195,7 @@
 						
 							<label id="assetslbl" for="assets">Show Assets</label>&nbsp &nbsp 
 							<select id="assets" class="pannel-input">
+								<option value=0>Select</option>
 								<option value="available">Available</option>
 								<option value="deployed">Deployed</option>
 								<option value="All">All</option>
@@ -286,9 +287,14 @@
 		var marker;
 		var markeravail;
 		var markerdeployed;
-		loadmap("13.1433%123.751998%6");
-
-		function add_markers(data,status){
+		var viewdep=false;
+		var cleararr=[];
+		var arrdepmarkers=[];
+		var currentlat, currentlong;
+		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
+		$("#assets").attr("disabled","disabled");
+	
+		/* function add_markers(data,status){
 			
 			if(status=="available"){
 				if (markeravail != undefined) {
@@ -300,8 +306,8 @@
               		map.removeLayer(markerdeployed);
        			 }
 
-			}
-		}
+			} 
+		}*/
 		
 
 		function change_map(info){
@@ -310,12 +316,21 @@
 			var lat=Number(arr_info[0]);
 			var long=Number(arr_info[1]);
 			var focus=Number(arr_info[2]);
+			currentlong=long;
+			currentlat=lat;
 			
-		
     		map.setView(new L.LatLng(lat,long), focus );
 			if (marker != undefined) {
               map.removeLayer(marker);
        			 }
+
+				if (viewdep) {
+					for(let i=0;i<sizeof(arrdepmarkers);i++){
+						map.removeLayer(arrdepmarkers[i]);
+					}
+					arrdepmarkers=cleararr;
+             	
+       			 } 
 			 	marker= L.marker([lat, long]).addTo(map);
 				marker.bindPopup(" <b>"+arr_info[3]+"</b>").openPopup();
 				
@@ -408,8 +423,9 @@
 		});
 		$("#dict_offices").change(function(){
 			//alert($("#dict_offices").val());
+			$("#assets").val(0);
 			if($(this).val()!=0){
-				
+			
 			
 				$.post("AJAX/mycodes.php",
 				{
@@ -418,15 +434,19 @@
 				},
 				function(data){
 					//alert(data);
-					var arrval=to_array(data,"%");
+					var arrval=to_array(data,"%");//arrval[0] is the office id
 					//alert(data);
-					change_map(arrval[1]+"%"+arrval[2]+"%10%"+arrval[3]);
-
+					change_map(arrval[1]+"%"+arrval[2]+"%10%"+arrval[3]);//the values are(lat,long,focus,Office name)
+					$("#assets").removeAttr("disabled");
 
 				});
 			}
 			else{
 				change_map("14.654%121.065002%6%DICT CENTRAL");
+				$("#assets").val(0);
+				$("#assets").attr("disabled","disabled");
+				//9%10.659%124.486999%REGION VII (CENTRAL VISAYAS)
+				map.setView(new L.LatLng(10.659,124.486999), 6 );
 			}
 		});
 		$("#assets").change(function(){
@@ -439,13 +459,60 @@
 		});
 
 		function get_markers(status,office_val,zoom){
+			
 			$.post("AJAX/get_geoloc_assets.php",{
 				stat:status,
 				office:office_val
 			}, 
 			function(data){
-				//add_markers(data,status);
-				alert(data);
+					//add_markers(data,status);
+					/* var depicon=L.icon({
+						iconUrl: "images/deployed.png",
+						iconAnchor: [-10, 2],
+					labelAnchor: [0, 2],
+					popupAnchor: [0, -20] 
+
+
+
+					});*/
+
+					const myCustomColour = '#D8700F'; 
+
+					const markerHtmlStyles = `
+					background-color: ${myCustomColour};
+					width: 1.5rem;
+					height: 1.5rem;
+					display: block;
+					left: -1.5rem;
+					top: -1.5rem;
+					position: relative;
+					border-radius: 3rem 3rem 0;
+					transform: rotate(45deg);
+					border: 1px solid #FFFFFF`;
+
+					const myicon = L.divIcon({
+					className: "my-custom-pin",
+					iconAnchor: [-10, 2],
+					labelAnchor: [0, 2],
+					popupAnchor: [0, -20],
+					html: `<span style="${markerHtmlStyles}" />`
+					}); 
+					var rows=to_array(data,"%");
+					map.setView(new L.LatLng(10.659,124.486999), 6 );
+					//map.setView(new L.LatLng(currentlat,currentlong), 6 );
+				for(let i=0;i<sizeof(rows);i++){
+						var item=to_array (rows[i],"@");
+						//alert(item[0]+" "+item[1]+" "+item[2]);
+					markerdeployed= L.marker([item[1], item[2]],{icon:myicon}).addTo(map);
+					arrdepmarkers.push(markerdeployed);
+					var asset_name=to_array(item[0],":");
+					markerdeployed.bindTooltip(asset_name[0]+"...", {permanent: true, offset: [0, 0] });
+					
+					markerdeployed.bindPopup(" <b>"+item[0]+"</b>");
+					marker.openPopup();
+					viewdep=true;
+					
+					}
 			});
 		}
 
