@@ -135,6 +135,42 @@ class Database{
         mysqli_close($this->con);
         return "Closed!";
     }
+
+    function uploadProfile(){
+        $targetDir = "assets/";
+        $fileName = basename($_FILES['file']['name']);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+    
+        if(isset($_POST['submit']) && !empty($_FILES['file']['name'])){
+            // Allow certain file formats
+            $allowTypes = array('jpg','png','jpeg','gif','pdf');
+            if(in_array($fileType, $allowTypes)){
+                // Upload file to server
+                if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
+                    // Insert image file name into database
+                    $db = new mysqli("localhost", "lowe", "admin123", "assets");
+    
+                    $insert = $db->query("INSERT into images (file_name, uploaded_on) VALUES ('".$fileName."', NOW())");
+                    if($insert){
+                        $statusMsg = "The file ".$fileName. " has been uploaded successfully.";
+                        echo($statusMsg);
+                    }else{
+                        $statusMsg = "File upload failed, please try again.";
+                    } 
+                }else{
+                    $statusMsg = "Sorry, there was an error uploading your file.";
+                }
+            }else{
+                $statusMsg = 'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
+            }
+        }else{
+            $statusMsg = 'Please select a file to upload.';
+        }
+    
+        echo $statusMsg;
+    }
+    
 }
 
 //useful functions 
@@ -163,7 +199,7 @@ function linig($str){
                 $rows[$i-2]="";
             }
         }
-            
+        
          elseif(strpos($rows[$i],"=")>=1){
                 $row=explode("=",$rows[$i]);
                

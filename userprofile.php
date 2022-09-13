@@ -8,7 +8,7 @@
         <title>User Profile Page</title>
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <style>
         body{
             color: #1a202c;
@@ -68,7 +68,6 @@
         }
         </style>
 
-
     </head>
 
 <body>
@@ -96,7 +95,15 @@
           <div class="card-body text-center">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3" name="name" method="POST"><?php
+              
+              <form action="/ALGO/codes.php" method="post" enctype="multipart/form-data">
+   
+                  <input type="file" name="file">
+                  <input type="submit" name="submit" value="Upload">
+              </form>
+              
+    
+            <h5 class="my-3" name="name"><?php
             //For nickname
             echo $_SESSION["uname"];
             ?></h5>
@@ -123,7 +130,7 @@
                 <p class="mb-0">Full Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0"><?php echo $_SESSION["fname"]?> <?php echo $_SESSION["lname"]?> </p>
+                <p class="text-muted mb-0"><?php echo($_SESSION["fname"] . " " . $_SESSION["lname"])?></p>
               </div>
             </div>
             <hr>
