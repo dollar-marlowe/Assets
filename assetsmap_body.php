@@ -17,7 +17,7 @@
 			font-size:18px;
 		}
 		.imgform-img  select, select{
-			font-size:18px;
+			font-size:14px;
 		}
 		
 		.imgform-img,.imgform-img1{
@@ -60,9 +60,7 @@
 		margin-top:0px;
 			}
 		
-			.pannel{
-				height:300px;
-			}
+			
 			.pannel-input{
 				margin:0px;
 				margin:auto;
@@ -114,13 +112,19 @@
 				margin-left:0px;
 				
 			}
+			.pannel{
+				height:200px;
+			}
 		
 		}
 		@media (max-width:600px){
 			
-			.imgform-img p, .imgform-img  select, input[type=text]{
+			.imgform-img p{
 			font-size:15px;
 			}
+			.imgform-img  select, select{
+			font-size:10px;
+		}
 		
 		}
 		
@@ -133,7 +137,7 @@
 			.pannel{
 				
 				border-top:solid 1px #ddd;
-				height:300px;
+				height:200px;
 				padding-top:15px;
 
 			}
@@ -163,6 +167,11 @@
 			#assetslbl{
 				margin-top:10px;
 			}
+			.table{
+				margin:auto;
+				width:fit-content;
+				margin-bottom:20px;
+			}
 				
 
 </style>
@@ -178,10 +187,11 @@
 		 
 				<div class="imgform-img radiusnone top pannel_con" >
 					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT OFFICES</h3>
-						<p id="panel1" class="pannel">
-							
-							<label for="dict_offices">DICT Offices</label>&nbsp &nbsp 
-							<select id="dict_offices" class="pannel-input">
+						<DIV id="panel1" class="pannel">
+							<table class="table" >
+							<tr><td>
+							<label for="dict_offices" id="dict_officeslbl1" class="table_lbl1">DICT Offices</label>
+							<td><label for="dict_offices"  class="table_lbl2">DICT Offices</label><select id="dict_offices" class="pannel-input">
 								<?php 
 									$cols1=array("id","lat","long");
 									$str="SELECT * FROM offices_latlong";
@@ -190,30 +200,28 @@
 								?>
 							</select>	
 						
-							<br>
-							<br>
+							
 						
-							<label id="assetslbl" for="assets">Show Assets</label>&nbsp &nbsp 
-							<select id="assets" class="pannel-input">
+							<tr><td><label id="assetslbl1" for="assets" class="table_lbl1">Show Assets</label>
+							<td><label id="assetslbl1" for="assets" class="table_lbl2">Show Assets</label><select id="assets" class="pannel-input">
 								<option value=0>Select</option>
 								<option value="available">Available</option>
 								<option value="deployed">Deployed</option>
 								<option value="All">All</option>
 							</select>
 
-							<br>
-							<br>
-						
-							<label id="categorylbl" for="assets">Category</label>&nbsp &nbsp &nbsp &nbsp  &nbsp
-							<select id="category" class="pannel-input">
+							
+							<tr><td>
+							<label id="categorylbl1`" for="assets" class="table_lbl1">Category</label>
+							<td><label id="categorylbl1`" for="assets" class="table_lbl2">Category</label><select id="category" class="pannel-input">
 							<?php 
 								$str="SELECT distinct category, category FROM assets";
 								loadropdown($str,"category","category","Category");
 								?>
 							</select>
+						</table>
 						
-						
-						</p>
+					</DIV>
 				</div>
 				
 				<div class="imgform-img radiusnone marginleft pannel_con">
@@ -283,6 +291,7 @@
 		get_loc("manila"); */
 
       $(document).ready(function(){
+		$(".table_lbl2").hide();
 		var map = L.map('map');
 		var marker;
 		var markeravail;
@@ -293,7 +302,31 @@
 		var currentlat, currentlong;
 		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
 		$("#assets").attr("disabled","disabled");
-	
+
+		$(window).resize(function(){// this is the even for windows resize calling the function 
+			var l=$(window).width();
+				if(l<1267 && l>792){
+					$(".br").remove();
+				
+					$(".table_lbl1").hide();
+					$(".table_lbl2").show().after("<br class='br'>");
+				}
+				
+				if(l>1267){
+					$(".table_lbl1").show();
+					$(".table_lbl2").hide()
+					$(".br").remove();
+				}
+				if(l<792 && l>478){
+					$(".br").remove();
+				
+					$(".table_lbl1").hide();
+					$(".table_lbl2").show().after("<br class='br'>");
+				}
+				
+
+				
+			});
 		/* function add_markers(data,status){
 			
 			if(status=="available"){
