@@ -22,7 +22,8 @@
         $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
         $gender=(!$data==0) ? $data[0]["gender"]: "MR./Ms.";
         $email=(!$data==0) ? $data[0]["email"]: "lowejames.mayores@gmail.com";//fallback email in case there is no email found 
-
+        $email="lowejames.mayores@gmail.com";//CHNAGE THE VALUE OF THIS EMAIL FOR TEST MAIL DO NOT GET DATA FROM DATABASE AS OF YET 
+        //AS SOME OF THEM CONTAINS ORIGINAL EMAIL
         if($gender=="Male"){
             $gender="Mr.";
         }
