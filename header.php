@@ -124,8 +124,8 @@
         $(document).ready(function(){
           $("body").click(function(e){
 			    var target = $(e.target), article;
-            if(target.is(".navbar-container") || target.is("#nbrger") || target.is(".hamburger-lines") || target.is(".navbar-container .ac-container") || target.is(".navbar-container .ac-container div > * ")  ){
-              alert("clicked");          
+            if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div > * ")  ){
+                      $("#nbrger").removeAttr("")
               }
 		  });
 
