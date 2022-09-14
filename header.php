@@ -56,7 +56,7 @@
        $P="";//this is for the page name
         if(isset($_SESSION["auth"])){
           echo "<div class='navbar-container'>";
-         echo " <input type='checkbox' name='' id='nbrger'>";
+         echo " <input type='checkbox' name='' id='nbrger' >";
          echo " <div class='hamburger-lines'>";
          echo "      <span class='line line1'></span>";
          echo "      <span class='line line2'></span>";
@@ -122,12 +122,31 @@
       <script>
      
         $(document).ready(function(){
+
           $("body").click(function(e){
 			    var target = $(e.target), article;
-            if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div > * ")  ){
-                      $("#nbrger").removeAttr("")
+            if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div") && !target.is(".navbar-container .ac-container div label ") && !target.is(".navbar-container .ac-container div article")&& !target.is(".navbar-container .ac-container div article a") &&  !target.is(".navbar-container .ac-container div input ")  &&  !target.is(".navbar-container .ac-container div label a") ){
+            // alert( $("#nbrger").is(":checked"));
+             $("#nbrger").prop("checked",false);
+                      
               }
-		  });
+		      });
+            $(document).keyup(function(e) {
+            if (e.key === "Escape") { // escape key maps to keycode `27`
+                // <DO YOUR WORK HERE>
+                $("#nbrger").prop("checked",false);
+            }
+           
+          });
+
+         /*  $(window).keypress(function(event){
+                var keycode =(event.keyCode ? event.keyCode: event.which);
+                alert(keycode);
+                if(keycode=='27'){
+                  $("#nbrger").prop("checked",false);
+                 
+                } 
+              });*/
 
           function hidelogo(){
             var lenght=$(window).width();
