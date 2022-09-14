@@ -2,10 +2,10 @@
 //YOUR CREATIVITY IS THE KEY
 
 //these are all session creation
-//placed here as this php file is always present in all modules of the system
+//It is placed here as this php file is always present in all modules of the system
 session_start();
 if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
-    //this is the condition that makes the session expire if in active for 1 hour
+    //this is the condition that makes the session expire if inactive for 1 hour
     
     session_unset(); 
     session_destroy(); 
@@ -13,7 +13,7 @@ if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
 }
 $_SESSION['start'] = time();
 
-//this si the condition which reroute the php view if an outsider tries to acces this file htoruhg the browser
+//this is the condition which reroute the php view if an outsider tries to acces this file htoruhg the browser
 if( basename($_SERVER["SCRIPT_FILENAME"], '.php')=="codes" && !(isset($_SESSION["auth"]))){
    header("Location:../login.php");
 }
@@ -31,10 +31,10 @@ if($arr_path[$arr_size-2]=="AJAX" && !isset($_SESSION["auth"]) && basename($_SER
  } */
   
 
-//Class for databce connection for dynamically reusing of codes
+//Class for databce connection for dynamically re-using of codes
 class Database{
     //I USED A CLASS FOR THE DATABASE
-    //THIS SERVES AS THE MODEL PART OF THE SYSTEM
+    //THIS SERVES AS THE MODEL PART OF TdsfgdfHE SYSTEM
     //ALL QUERY COMMAND INSERT EDIT ADN DELETE ARE ALL HERE
     //IT USES THE SQL COMMAND AS PARAMETER TO EXECUTE IT INSIDE EACH OF THE RESPECTIVE FUNCTIONS
     //THE CLASS IS VERY DYNAMIC, USING THE SAME CODES ALL THORUGHT THE SYSTEM
@@ -996,8 +996,8 @@ function send_email($to,$subject,$content){
     }
 }
 //echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
- echo summarize_list("VHF Handheld Radio, VHF Handheld Radio",
-  "789012, 234567", 2);
+ //echo summarize_list("VHF Handheld Radio, VHF Handheld Radio",
+  //"789012, 234567", 2);
  /*($str="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  , GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`, brgy_id,lat,`long`, count(*) as `count` FROM deployed_assets_loc i where id=2 group by  brgy_id order by brgy_id";
  $cols=array("brgy_id", "lat", "long", "category", "serial", "count");
  echo "<br>"."<br>".get_rows_implode($str,"@","%",$cols);*/
