@@ -63,7 +63,7 @@
          echo "      <span class='line line3'></span>";
          echo " </div>";
        /*   echo " <ul class='menu-items'>";
-         echo "     <li><a href='#'>Home</a></li>";
+         echo "     <li><a href='home'>Home</a></li>";
          echo "     <li><a href='officesentry'>Office Data Entry</a></li>";
          echo "     <li><a href='officialsentry'>Officials</a></li>";
          echo "     <li><hr style='width:80%; margin-bot  tom:1px'></li>";
@@ -122,6 +122,13 @@
       <script>
      
         $(document).ready(function(){
+          $("body").click(function(e){
+			    var target = $(e.target), article;
+            if(target.is(".navbar-container") || target.is("#nbrger") || target.is(".hamburger-lines") || target.is(".navbar-container .ac-container") || target.is(".navbar-container .ac-container div > * ")  ){
+              alert("clicked");          
+              }
+		  });
+
           function hidelogo(){
             var lenght=$(window).width();
            if(lenght<570){

@@ -302,7 +302,7 @@
 		var currentlat, currentlong;
 		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
 		$("#assets").attr("disabled","disabled");
-
+		
 		$(window).resize(function(){// this is the even for windows resize calling the function 
 			var l=$(window).width();
 				if(l<1267 && l>792){
@@ -317,7 +317,7 @@
 					$(".table_lbl2").hide()
 					$(".br").remove();
 				}
-				if(l<792 && l>478){
+				if(l<792 ){
 					$(".br").remove();
 				
 					$(".table_lbl1").hide();
