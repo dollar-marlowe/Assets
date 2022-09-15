@@ -197,22 +197,22 @@ div.item p img{
 						
 							<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
 								<p ><img src="images/windy.png" ></p>
-								<p>Windy Pannel</p>
+								<p><u>Wi</u>ndy Pannel></p>
 							</div>
 							<div class="item" id="btnphil" onclick="hide_show('#georiskpannel')">
 								<p><img src="images/philvolcs.png"></p>
-								<p>Georisk Pannel</p>
+								<p><u>Ge</u>orisk Pannel</p>
 							</div>
 
 							<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
 								<p><img src="images/pagasa.png"></p>
-								<p>Flood Pannel</p>
+								<p><u>Fl</u>ood Pannel</p>
 							
 							</div>
 							
 							<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
 								<p><img src="images/covid.png"></p>
-								<p>Covid Pannel</p>
+								<p><u>Co</u>vid Pannel</p>
 							</div>
 							
 					</div>		
@@ -381,8 +381,32 @@ div.item p img{
 
 
       $(document).ready(function(){
+		var kk="";
+		/* $(document).keydown(function(e) {
+			alert(e.key);
+		}); */
+			$(window).keyup(function(e) {
+                if (e.key === ">") { // escape key maps to keycode `27`
+                    // <DO YOUR WORK HERE>
+                    hidepannel();
+                }
+				if((kk=="w" || kk=="W") && (e.key=="i" || e.key =="I")){
+					hide_show('#windypannel');
+				}
+				if((kk=="g" || kk=="G") && (e.key=="e" || e.key =="E")){
+					hide_show('#georiskpannel');
+				}
+				if((kk=="f" || kk=="F") && (e.key=="l" || e.key =="L")){
+					hide_show('#floodpannel');
+				}
+				if((kk=="c" || kk=="C") && (e.key=="o" || e.key =="O")){
+					hide_show('#covidpannel');
+				}
+               kk=e.key;
+            });
+
 		var hidden=false;
-		$("#hide_show").click(function(){
+		function hidepannel(){
 			if(hidden){
 				$(".sidebar").show(400);
 				$("#hide_show").text("Hide");
@@ -393,7 +417,10 @@ div.item p img{
 				$("#hide_show").text("Show");
 				hidden=true;
 			}
+		}
+		$("#hide_show").click(function(){
 			
+			hidepannel();
 		});
 		$(window).resize(function(){
 			var l=$(window).width();

@@ -77,11 +77,11 @@
          echo "<section class='ac-container'>";
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1' id='home'><a href=''>Home</a></label>";
+         echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
          echo  "</div>";
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
-         echo       "<label for='ac-2'>Assets</label>";
+         echo       "<label for='ac-2'><u>A</u>ssets</label>";
          echo       "<article class='ac-medium'>";
          echo           "<a href='assets'>Assets Data Entry</a>";
          echo           "<a href='assets_mgt'>Assets Management</a>"; 
@@ -90,7 +90,7 @@
          echo   "</div>";
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
-         echo       "<label for='ac-3'>Office Management</label>";
+         echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
          echo           "<a href='officesentry'>Office Data Entry</a>";
          echo           "<a href='officialsentry'>Personnel Data Entry</a>"; 
@@ -103,7 +103,7 @@
          echo   "</div>";
          echo   "<div>";
          echo       "<input id='ac-4' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-4'><a href='Logout'>Logout</a></label>";
+         echo       "<label for='ac-4'><a href='Logout'><u>L</u>ogout</a></label>";
          echo  "</div>";
          echo "</section>";
         }
@@ -123,21 +123,67 @@
      
         $(document).ready(function(){
 
-          $("body").click(function(e){
-			    var target = $(e.target), article;
-            if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div") && !target.is(".navbar-container .ac-container div label ") && !target.is(".navbar-container .ac-container div article")&& !target.is(".navbar-container .ac-container div article a") &&  !target.is(".navbar-container .ac-container div input ")  &&  !target.is(".navbar-container .ac-container div label a") ){
-            // alert( $("#nbrger").is(":checked"));
-             $("#nbrger").prop("checked",false);
-                      
-              }
-		      });
+            $("body").click(function(e){
+            var target = $(e.target), article;
+              if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div") && !target.is(".navbar-container .ac-container div label ") && !target.is(".navbar-container .ac-container div article")&& !target.is(".navbar-container .ac-container div article a") &&  !target.is(".navbar-container .ac-container div input ")  &&  !target.is(".navbar-container .ac-container div label a") ){
+              // alert( $("#nbrger").is(":checked"));
+              $("#nbrger").prop("checked",false);
+                        
+                }
+            });
+
             $(document).keyup(function(e) {
-            if (e.key === "Escape") { // escape key maps to keycode `27`
-                // <DO YOUR WORK HERE>
-                $("#nbrger").prop("checked",false);
-            }
-           
-          });
+                if (e.key === "Escape") { // escape key maps to keycode `27`
+                    // <DO YOUR WORK HERE>
+                    $("#nbrger").prop("checked",false);
+                }
+                //alert(e.key);
+                if (e.key === "Home") { // escape key maps to keycode `27`
+                    // <DO YOUR WORK HERE>
+                    if($("#nbrger").is(":checked")){
+                      $("#nbrger").prop("checked",false);
+                    }else{
+                      $("#nbrger").prop("checked",true);
+                    }
+                
+                }
+                if($("#nbrger").is(":checked")){
+
+                    if (e.key === "h" || e.key === "H"){
+                      window.location="home.php";
+                    }
+
+                    if (e.key === "A" || e.key === "a"){
+                      var id=".navbar-container .ac-container div #ac-2";
+                        if($(id).is(":checked")){
+                          $(id).prop("checked",false);
+                        }else{
+                          $(id).prop("checked",true);
+                        }
+                    }
+                    else{
+                      $(".navbar-container .ac-container div #ac-2").prop("checked",false);
+                    }
+
+                    if (e.key === "O" || e.key === "o"){
+                      var id=".navbar-container .ac-container div #ac-3";
+                        if($(id).is(":checked")){
+                          $(id).prop("checked",false);
+                        }else{
+                          $(id).prop("checked",true);
+                        }
+                    }
+                    else{
+                      $(".navbar-container .ac-container div #ac-3").prop("checked",false);
+                    }
+                    if (e.key === "l" || e.key === "L"){
+                      window.location="logout.php";
+                    }
+
+
+                }
+
+            });
 
          /*  $(window).keypress(function(event){
                 var keycode =(event.keyCode ? event.keyCode: event.which);
