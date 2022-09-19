@@ -382,27 +382,52 @@ div.item p img{
 
       $(document).ready(function(){
 		var kk="";
+		 var alt=false;
+		 var ctrl=false;
 		/* $(document).keydown(function(e) {
 			alert(e.key);
 		}); */
-			$(window).keyup(function(e) {
-                if (e.key === ">") { // escape key maps to keycode `27`
-                    // <DO YOUR WORK HERE>
-                    hidepannel();
-                }
-				if((kk=="w" || kk=="W") && (e.key=="i" || e.key =="I")){
-					hide_show('#windypannel');
+		$(window).keyup(function(e) {
+			if (e.key === "Control"){
+				ctrl=false;
+				//alert("Ctrl false");
+			}
+			if (e.key === "Alt"){
+				alt=false;
+				//alert("alt false");
+			}
+		});
+			$(document).keydown(function(e) {
+				if (e.key === "Control"){
+				ctrl=true;
+				//alert("Ctrl");
 				}
-				if((kk=="g" || kk=="G") && (e.key=="e" || e.key =="E")){
-					hide_show('#georiskpannel');
+				if (e.key === "Alt"){
+					alt=true;
+					//alert("ALT");
 				}
-				if((kk=="f" || kk=="F") && (e.key=="l" || e.key =="L")){
-					hide_show('#floodpannel');
+				if(alt){
+					//alert("true "+e.key);
+					
+					if (e.key === ">") { // escape key maps to keycode `27`
+						// <DO YOUR WORK HERE>
+						hidepannel();
+					}
+					if((e.key=="w" || e.key=="W")){
+						hide_show('#windypannel');
+					}
+					if((e.key=="g" || e.key=="G") ){
+						hide_show('#georiskpannel');
+					}
+					if((e.key=="L" || e.key=="l") ){
+						hide_show('#floodpannel');
+					}
+					if((e.key=="c" || e.key=="C") ){
+						hide_show('#covidpannel');
+					}
 				}
-				if((kk=="c" || kk=="C") && (e.key=="o" || e.key =="O")){
-					hide_show('#covidpannel');
-				}
-               kk=e.key;
+               //kk=e.key;
+			  // alert(e.key);
             });
 
 		var hidden=false;

@@ -207,7 +207,7 @@
 								<option value=0>Select</option>
 								<option value="available">Available</option>
 								<option value="deployed">Deployed</option>
-								<option value="All">All</option>
+								<option value="all">All</option>
 							</select>
 
 							
@@ -297,8 +297,10 @@
 		var markeravail;
 		var markerdeployed;
 		var viewdep=false;
+		var viewavail=false;
 		var cleararr=[];
 		var arrdepmarkers=[];
+		var arravailpmarkers=[];
 		var currentlat, currentlong;
 		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
 		$("#assets").attr("disabled","disabled");
@@ -342,7 +344,7 @@
 			} 
 		}*/
 		
-
+		
 		function change_map(info){
 			//alert(info);
 			var arr_info=to_array(info,"%");
@@ -356,14 +358,8 @@
 			if (marker != undefined) {
               map.removeLayer(marker);
        			 }
+					remove_deployed_markers();
 
-				if (viewdep) {
-					for(let i=0;i<sizeof(arrdepmarkers);i++){
-						map.removeLayer(arrdepmarkers[i]);
-					}
-					arrdepmarkers=cleararr;
-             	
-       			 } 
 			 	marker= L.marker([lat, long]).addTo(map);
 				marker.bindPopup(" <b>"+arr_info[3]+"</b>").openPopup();
 				
@@ -484,32 +480,14 @@
 		});
 		$("#assets").change(function(){
 			if($("#dict_offices").val()!=0){
-				if($(this).val()=="deployed"){
+				remove_deployed_markers();
 				get_markers($(this).val(),$("#dict_offices").val(),6);
-				}
+				
 			}
 			
 		});
-
-		function get_markers(status,office_val,zoom){
-			
-			$.post("AJAX/get_geoloc_assets.php",{
-				stat:status,
-				office:office_val
-			}, 
-			function(data){
-					//add_markers(data,status);
-					/* var depicon=L.icon({
-						iconUrl: "images/deployed.png",
-						iconAnchor: [-10, 2],
-					labelAnchor: [0, 2],
-					popupAnchor: [0, -20] 
-
-
-
-					});*/
-
-					const myCustomColour = '#D8700F'; 
+		function get_marker_style(color){
+			const myCustomColour = color; 
 
 					const markerHtmlStyles = `
 					background-color: ${myCustomColour};
@@ -530,22 +508,120 @@
 					popupAnchor: [0, -20],
 					html: `<span style="${markerHtmlStyles}" />`
 					}); 
-					var rows=to_array(data,"%");
-					map.setView(new L.LatLng(10.659,124.486999), 6 );
-					//map.setView(new L.LatLng(currentlat,currentlong), 6 );
-				for(let i=0;i<sizeof(rows);i++){
+					return myicon;
+		}
+		function plot_markers_deployed(rows,myicon){
+			for(let i=0;i<sizeof(rows);i++){
 						var item=to_array (rows[i],"@");
 						//alert(item[0]+" "+item[1]+" "+item[2]);
-					markerdeployed= L.marker([item[1], item[2]],{icon:myicon}).addTo(map);
-					arrdepmarkers.push(markerdeployed);
-					var asset_name=to_array(item[0],":");
-					markerdeployed.bindTooltip(asset_name[0]+"...", {permanent: true, offset: [0, 0] });
-					
-					markerdeployed.bindPopup(" <b>"+item[0]+"</b>");
-					marker.openPopup();
-					viewdep=true;
+						markerdeployed= L.marker([item[1], item[2]],{icon:myicon}).addTo(map);
+						arrdepmarkers.push(markerdeployed);
+						var asset_name=to_array(item[0],":");
+						markerdeployed.bindTooltip(asset_name[0]+"...", {permanent: true, offset: [0, 0] });
+						
+						markerdeployed.bindPopup(" <b>"+item[0]+"</b>");
+						marker.openPopup();
+						viewdep=true;
 					
 					}
+		}
+		function plot_markers_available(rows,myicon){
+			for(let i=0;i<sizeof(rows);i++){
+						var item=to_array (rows[i],"@");
+						//alert(item[0]+" "+item[1]+" "+item[2]);
+						markeravail= L.marker([item[1], item[2]],{icon:myicon}).addTo(map);
+						arravailpmarkers.push(markeravail);
+						var asset_name=to_array(item[0],":");
+						markeravail.bindTooltip(asset_name[0]+"...", {permanent: true, offset: [0, 0] });
+						
+						markeravail.bindPopup(" <b>"+item[0]+"</b>");
+						marker.openPopup();
+						viewavail=true;
+					
+					}
+		}
+
+		function remove_deployed_markers(){
+			
+			if (viewdep) {//public variable
+				for(let i=0;i<sizeof(arrdepmarkers);i++){//arrdepmarkers is also a public variable
+					map.removeLayer(arrdepmarkers[i]);
+				}
+				arrdepmarkers=cleararr;
+				viewdep=false;
+			 
+				} 
+			if (viewavail) {//public variable
+				
+				for(let j=0;j<sizeof(arravailpmarkers);j++){//arrdepmarkers is also a public variable
+					map.removeLayer(arravailpmarkers[j]);
+					//alert("remove avail");
+				}
+				arravailpmarkers=cleararr;
+				viewavail=false;
+			 
+				} 
+	}
+		function get_markers(assets_status,office_val,zoom){
+			
+			$.post("AJAX/get_geoloc_assets.php",{
+				stat:assets_status,
+				office:office_val
+			}, 
+			function(data){
+				
+				if(data.trim()!="false" && data.trim()!="false$false"){
+					//alert(data);
+					var myicon;
+					var color="";
+					var view=6;
+					var lat=10.659;
+					var long=124.486999;
+					if(assets_status=="available"){
+						color="#00cc66";
+						view=12;
+						lat=currentlat;
+						long=currentlong;
+
+					}
+					if(assets_status=="deployed"){
+						color="#D8700F";
+					}
+					
+
+					 map.setView(new L.LatLng(lat,long), view );
+					 if(assets_status=="all"){
+						 
+						var all=to_array(data,"$");
+								myicon=get_marker_style("#D8700F");
+								var rows=to_array(all[0],"%");
+								//var type=to_array(rows,"@");
+								if(rows!="false"){
+									plot_markers_deployed(rows,myicon);
+								}
+								
+								myicon=get_marker_style("#00cc66");
+								rows=to_array(all[1],"%");
+								//alert(typeof(rows));
+								if(rows!="false"){
+								plot_markers_available(rows,myicon);
+								}
+					 }
+					 else{
+						myicon=get_marker_style(color);
+							var rows=to_array(data,"%");
+														
+							if(assets_status=="deployed"){
+								plot_markers_deployed(rows,myicon);
+							}
+							
+							if(assets_status=="available"){
+								plot_markers_available(rows,myicon);
+							}
+					 }
+					
+				}
+					
 			});
 		}
 

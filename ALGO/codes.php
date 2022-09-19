@@ -149,20 +149,24 @@ function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){//brg_id[0]
     $db= new Database();
     $db->connect();
     $result=$db->selectrows($str,0);// 0 is to select all rows
-    $string_data="";
+    $string_data="false";
     $size=0;
-    foreach($result as $rows){
+    if($result!=null){
+        $string_data="";
+        foreach($result as $rows){
      
-        $data=summarize_list($rows[$cols[3]],$rows[$cols[4]],$rows[$cols[5]]);//calling the function to sumirize the list of items 
-        //with corresponding serials 
-        $string_data.=$data.$item_delimeter.$rows[$cols[1]].$item_delimeter.$rows[$cols[2]];
-      
-        if($size < sizeof($result)-1){
-            $string_data.=$row_delimeter;
+            $data=summarize_list($rows[$cols[3]],$rows[$cols[4]],$rows[$cols[5]]);//calling the function to sumirize the list of items 
+            //with corresponding serials 
+            $string_data.=$data.$item_delimeter.$rows[$cols[1]].$item_delimeter.$rows[$cols[2]];
+          
+            if($size < sizeof($result)-1){
+                $string_data.=$row_delimeter;
+            }
+            $size++;
+           
         }
-        $size++;
-       
     }
+    
     return $string_data;
 
 }
@@ -895,8 +899,32 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
       }
 }
 function test2(){
-    return "test2";
+    $mydb = new Database();
+    $mydb->connect();
+    $str="SELECT id, count(*) as `count`, category, GROUP_CONCAT( `serial` SEPARATOR ', ') as serial, lat, `long`  FROM avail_assets_loc where id=2 group by category";
+    $data=$mydb->selectrows($str,0);
+    $string_data="";
+    if($data!=null){
+
+        $lat= $data[0]["lat"];
+        $long= $data[0]["long"];
+        $size=sizeof($data);
+        $i=1;
+        foreach($data as $rows){
+            $plural=(intval($rows["count"])>1)?"s":"";
+        
+            $string_data.= $rows["count"]." ".$rows["category"].$plural.": ".$rows["serial"];
+            if($i<$size){
+                $string_data.="; ";
+            }
+            $i++;
+
+        }
+        $string_data.="@".$lat."@".$long;
+    }
+    echo $string_data;
 }
+//test2();
 
 function test(){
 
