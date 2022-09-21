@@ -197,22 +197,22 @@ div.item p img{
 						
 							<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
 								<p ><img src="images/windy.png" ></p>
-								<p><u>Wi</u>ndy Pannel></p>
+								<p><u>W</u>indy Pannel></p>
 							</div>
 							<div class="item" id="btnphil" onclick="hide_show('#georiskpannel')">
 								<p><img src="images/philvolcs.png"></p>
-								<p><u>Ge</u>orisk Pannel</p>
+								<p><u>G</u>eorisk Pannel</p>
 							</div>
 
 							<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
 								<p><img src="images/pagasa.png"></p>
-								<p><u>Fl</u>ood Pannel</p>
+								<p>F<u>l</u>ood Pannel</p>
 							
 							</div>
 							
 							<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
 								<p><img src="images/covid.png"></p>
-								<p><u>Co</u>vid Pannel</p>
+								<p><u>C</u>ovid Pannel</p>
 							</div>
 							
 					</div>		
@@ -409,7 +409,7 @@ div.item p img{
 				if(alt){
 					//alert("true "+e.key);
 					
-					if (e.key === ">") { // escape key maps to keycode `27`
+					if (e.key == ">") { // escape key maps to keycode `27`
 						// <DO YOUR WORK HERE>
 						hidepannel();
 					}

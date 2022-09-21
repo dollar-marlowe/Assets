@@ -83,19 +83,19 @@
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-2'><u>A</u>ssets</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='assets'>Assets Data Entry</a>";
-         echo           "<a href='assets_mgt'>Assets Management</a>"; 
-         echo           "<a href='assetsmap'>Assets Map</a>";
+         echo           "<a href='assets'>Assets <u>D</u>ata Entry</a>";
+         echo           "<a href='assets_mgt'>A<u>s</u>sets Management</a>"; 
+         echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='officesentry'>Office Data Entry</a>";
-         echo           "<a href='officialsentry'>Personnel Data Entry</a>"; 
+         echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
+         echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
           if($_SESSION["auth_level"]>2){
-            echo           "<a href='loginaccount'>Personnel's User Account</a>"; 
+            echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>"; 
           }
      
 
@@ -132,6 +132,18 @@
                 }
             });
 
+            $(".navbar-container .ac-container div #ac-3").click(function(){
+              if($(".navbar-container .ac-container div #ac-3").is(":checked")){
+                $(".navbar-container .ac-container div #ac-2").prop("checked",false);
+              }
+            });
+
+            $(".navbar-container .ac-container div #ac-2").click(function(){
+              if($(".navbar-container .ac-container div #ac-2").is(":checked")){
+                $(".navbar-container .ac-container div #ac-3").prop("checked",false);
+              }
+            });
+
             $(document).keyup(function(e) {
                 if (e.key === "Escape") { // escape key maps to keycode `27`
                     // <DO YOUR WORK HERE>
@@ -148,39 +160,60 @@
                 
                 }
                 if($("#nbrger").is(":checked")){
-
+                  var id_office=".navbar-container .ac-container div #ac-3";
+                  var id_assets=".navbar-container .ac-container div #ac-2";
                     if (e.key === "h" || e.key === "H"){
                       window.location="home.php";
                     }
 
                     if (e.key === "A" || e.key === "a"){
-                      var id=".navbar-container .ac-container div #ac-2";
-                        if($(id).is(":checked")){
-                          $(id).prop("checked",false);
+                     $(id_office).prop("checked",false);
+                        if($(id_assets).is(":checked")){
+                          $(id_assets).prop("checked",false);
                         }else{
-                          $(id).prop("checked",true);
+                          $(id_assets).prop("checked",true);
                         }
                     }
-                    else{
-                      $(".navbar-container .ac-container div #ac-2").prop("checked",false);
-                    }
-
+                   
                     if (e.key === "O" || e.key === "o"){
-                      var id=".navbar-container .ac-container div #ac-3";
-                        if($(id).is(":checked")){
-                          $(id).prop("checked",false);
+                      $(id_assets).prop("checked",false);
+                        if($(id_office).is(":checked")){
+                          $(id_office).prop("checked",false);
                         }else{
-                          $(id).prop("checked",true);
+                          $(id_office).prop("checked",true);
                         }
                     }
-                    else{
-                      $(".navbar-container .ac-container div #ac-3").prop("checked",false);
-                    }
+                 
                     if (e.key === "l" || e.key === "L"){
                       window.location="logout.php";
                     }
+                    
+                    if($(id_assets).is(":checked")){
+                      
+                        if (e.key === "D" || e.key === "d"){
+                        window.location="assets.php";
+                        }
+                        if (e.key === "s" || e.key === "S"){
+                        window.location="assets_mgt.php";
+                        }
+                        if (e.key === "m" || e.key === "M"){
+                        window.location="assetsmap.php";
+                        }
+                    }
 
-
+                
+                    if($(id_office).is(":checked")){
+                      
+                        if (e.key === "E" || e.key === "e"){
+                        window.location="officesentry.php";
+                        }
+                        if (e.key === "p" || e.key === "P"){
+                        window.location="officialsentry.php";
+                        }
+                        if (e.key === "u" || e.key === "U"){
+                        window.location="loginaccount.php";
+                        }
+                    }
                 }
 
             });

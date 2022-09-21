@@ -32,8 +32,12 @@
       height:800px;
     }
 		.imgform-img img{
-			width:90%;
-			margin:auto;
+			width:15px;
+			height:25px;
+			margin:0;
+			display:inline;
+			margin-right:10px;
+			margin-bottom:-5px;
 		}
 		.form-container{
 			width:60%;
@@ -68,66 +72,10 @@
 				
 
 			}
-		@media (max-width:1467px){
-			.side{
-				display:inline-flex;
-			}
-			.imgform-container{
-				display:block;
-				
-			}
-			.block{
-				display:block;
-			}
-			
-			.sidebar{
-				width:100%;
-				display:inline-flex;
-				
-				
-			}
-			.marginleft{
-				margin-left:10px;
-			}
-			
-			.top{
-				margin-top:10px;
-			}
-			.block{
-				display:block;
-			}
-		}
-		@media (max-width:820px){
-			
-			.imgform-img p, .imgform-img  select, input[type=text]{
-			font-size:95%;
-					}
-			.imgform-img iframe{
-			height:400;
-			}
-			.sidebar{
-				display:block;
-			}
-			.marginleft{
-				margin-left:0px;
-				
-			}
 			.pannel{
-				height:200px;
+				height:290px;
 			}
-		
-		}
-		@media (max-width:600px){
-			
-			.imgform-img p{
-			font-size:15px;
-			}
-			.imgform-img  select, select{
-			font-size:10px;
-		}
-		
-		}
-		
+
 			.marginleft{
 				margin-top:10px;
 			}
@@ -137,7 +85,7 @@
 			.pannel{
 				
 				border-top:solid 1px #ddd;
-				height:200px;
+				
 				padding-top:15px;
 
 			}
@@ -172,6 +120,117 @@
 				width:fit-content;
 				margin-bottom:20px;
 			}
+			#summary{
+				width:90%;
+				margin:auto;
+				border: solid 1px #ddd;
+				padding:20px;
+			
+				
+			
+			}
+			#summary #lbl_sum{
+				width:fit-content;
+			
+				margin:auto;
+				margin-bottom:10px;
+				font-weight:bold;
+				font-size:19px;	
+			}
+			.p_row{
+				display:block;
+				
+				width:fit-content;
+			
+				margin:auto;
+				
+			}
+			#total_all, #lbl_total_all, #lbl_office_tag, #office_tag, #total_avail, #total_deloyed, #lbl_total_avail, #lbl_total_deployed{
+				display:inline;
+				
+				width:fit-content;
+			}
+			.lbl_img{
+				width:25px;
+			}
+
+		@media (max-width:1467px){
+			.side{
+				display:inline-flex;
+			}
+			.imgform-container{
+				display:block;
+				
+			}
+			.block{
+				display:block;
+			}
+			
+			.sidebar{
+				width:100%;
+				display:inline-flex;
+				
+				
+			}
+			.marginleft{
+				margin-left:10px;
+			}
+			
+			.top{
+				margin-top:10px;
+			}
+			.block{
+				display:block;
+			}
+			.pannel{
+				height:330px;
+			}
+		}
+		@media (max-width:820px){
+			
+			.imgform-img p, .imgform-img  select, input[type=text]{
+			font-size:95%;
+					}
+			.imgform-img iframe{
+			height:400;
+			}
+			.sidebar{
+				display:block;
+			}
+			.marginleft{
+				margin-left:0px;
+				
+			}
+			
+			
+		
+		}
+		@media (max-width:600px){
+			
+				.imgform-img p, #summary #lbl_sum{
+				font-size:15px;
+				}
+				.imgform-img  select, select{
+				font-size:10px;
+			}
+			
+		}
+		@media (max-width:290px){
+			#total_all, #lbl_total_all, #lbl_office_tag, #office_tag, #total_avail, #total_deloyed, #lbl_total_avail, #lbl_total_deployed{
+			
+				font-size:10px;
+						
+			
+			}
+			#summary #lbl_sum{
+				font-size:13px;
+			}
+			
+		
+	}
+		
+			
+
 				
 
 </style>
@@ -186,7 +245,7 @@
 	  	<div class="sidebar">
 		 
 				<div class="imgform-img radiusnone top pannel_con" >
-					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT OFFICES</h3>
+					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT ASSETS MAP<?php echo  "-".date("Y/m/d");?></h3>
 						<DIV id="panel1" class="pannel">
 							<table class="table" >
 							<tr><td>
@@ -211,21 +270,21 @@
 							</select>
 
 							
-							<tr><td>
-							<label id="categorylbl1`" for="assets" class="table_lbl1">Category</label>
-							<td><label id="categorylbl1`" for="assets" class="table_lbl2">Category</label><select id="category" class="pannel-input">
-							<?php 
-								$str="SELECT distinct category, category FROM assets";
-								loadropdown($str,"category","category","Category");
-								?>
-							</select>
 						</table>
 						
+						<div id="summary">							
+							<p id="lbl_sum">Map Legend</p>
+							<div class="p_row"><p id="lbl_office_tag">&nbsp<img src="images/office.PNG" >DICT Office</p></div>
+							<div class="p_row"><p id="lbl_total_avail"><img src="images/avail.PNG" style="width:20px;height:20px;margin-bottom:-3px;">Available:</p><p id="total_avail">####</p></div>
+							<div class="p_row"><p id="lbl_total_deployed"><img src="images/deplopyed.PNG" style="width:20px;height:20px;margin-bottom:-3px;">Deployed:</p><p id="total_deloyed">#### </p></div>
+							<div class="p_row"><p id="lbl_total_all"><img src="images/avail.PNG" style="width:20px;height:20px;margin-bottom:-3px;"><img src="images/deplopyed.PNG" style="width:20px;height:20px;margin-bottom:-3px;">&nbsp Total:</p><p id="total_all">#### </p></div>
+						
+						</div>
 					</DIV>
 				</div>
 				
 				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel2','pannel')" class="sidehead">Lorem ipsum</h3>
+					<h3  onclick="test('#panel2','pannel')" class="sidehead">AVAILABLE ASSETS SUMMARY</h3>
 						<p id="panel2" class="pannel">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -237,7 +296,7 @@
 						</p>
 				</div>
 				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel3','pannel')" class="sidehead">Lorem ipsum</h3>
+					<h3  onclick="test('#panel3','pannel')" class="sidehead">DEPLOYED ASSETS SUMMARY</h3>
 						<p id="panel3" class="pannel">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -302,11 +361,14 @@
 		var arrdepmarkers=[];
 		var arravailpmarkers=[];
 		var currentlat, currentlong;
+		var mobile_map_minus=0;
+		var mobile_map_plus_reg=0;
 		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
 		$("#assets").attr("disabled","disabled");
 		
 		$(window).resize(function(){// this is the even for windows resize calling the function 
 			var l=$(window).width();
+			var h=$(window).height();
 				if(l<1267 && l>792){
 					$(".br").remove();
 				
@@ -326,6 +388,16 @@
 					$(".table_lbl2").show().after("<br class='br'>");
 				}
 				
+				if(h<=914){
+					$("#map").css("height","500px");
+					mobile_map_minus=1;
+					mobile_map_plus_reg=1;
+				}
+				else{
+					$("#map").css("height","800px");
+					mobile_map_minus=0;
+					mobile_map_minus=0;
+				}
 
 				
 			});
@@ -347,10 +419,22 @@
 		
 		function change_map(info){
 			//alert(info);
+			var h=$(window).height();
+			if(h<=914){
+				
+						mobile_map_minus=1;
+						mobile_map_plus_reg=2;
+						
+			}else{
+				mobile_map_minus=0;
+				mobile_map_plus_reg=0;
+			}
 			var arr_info=to_array(info,"%");
 			var lat=Number(arr_info[0]);
 			var long=Number(arr_info[1]);
-			var focus=Number(arr_info[2]);
+			
+			var focus=Number(arr_info[2])-Number(mobile_map_plus_reg);
+			//alert(focus);
 			currentlong=long;
 			currentlat=lat;
 			
@@ -366,11 +450,26 @@
 			//var map = new L.map('map').setView([lat, long],focus);
 		}	
 		function loadmap(info){
+			var h=$(window).height();
+			
+
 			var arr_info=to_array(info,"%");
 			var lat=parseFloat(arr_info[0]);
 			var long=parseFloat(arr_info[1]);
-			var focus=Number(arr_info[2]);
+			if(h<=914){
+				//alert("samall");
+						$("#map").css("height","500px");
+						mobile_map_minus=1;
+						mobile_map_plus_reg=2;
+						lat=11.038;
+						long=122.583;
+			}else{
+				mobile_map_minus=0;
+				mobile_map_plus_reg=0;
+			}
 			
+			var focus=Number(arr_info[2])-Number(mobile_map_minus);
+			//alert(focus);
 			map.setView([lat, long],focus);
 				L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}@2x.png?key=wDVBx6Hikcs1TqkSLwqF',{
 					tileSize: 512,
@@ -378,7 +477,41 @@
 					minZoom: 1,
 					crossOrigin: true
 				}).addTo(map);
+				L.control.scale({
+					metric: true,
+					imperial: false,
+					position: 'bottomright'
+				}).addTo(map);
 
+				L.Control.Watermark=L.Control.extend({
+					onAdd:function(map){
+						var img =L.DomUtil.create('img');
+						img.src='images/test_dict.png';
+						img.style.width='120px';
+						img.style.height='120px';
+						return img;
+					},
+					onRemove:function(map){},
+				});
+				L.control.watermark=function(opts){
+					return new L.Control.Watermark(opts);
+				}
+				L.control.watermark({position:'bottomleft'}).addTo(map);
+
+				L.Control.Watermark=L.Control.extend({
+					onAdd:function(map){
+						var img =L.DomUtil.create('img');
+						img.src='images/compass4.png';
+						img.style.width='90px';
+						img.style.height='90px';
+						return img;
+					},
+					onRemove:function(map){},
+				});
+				L.control.watermark=function(opts){
+					return new L.Control.Watermark(opts);
+				}
+				L.control.watermark({position:'topright'}).addTo(map);
 				/*     var pinicon =L.icon({
 						iconUrl:"vsatavailablemarker.png",
 						iconSize: [38,50],
@@ -454,7 +587,7 @@
 			//alert($("#dict_offices").val());
 			$("#assets").val(0);
 			if($(this).val()!=0){
-			
+				
 			
 				$.post("AJAX/mycodes.php",
 				{
@@ -467,16 +600,20 @@
 					//alert(data);
 					change_map(arrval[1]+"%"+arrval[2]+"%10%"+arrval[3]);//the values are(lat,long,focus,Office name)
 					$("#assets").removeAttr("disabled");
+					//$("#office_tag").text(arrval[3]);
 
 				});
+				get_total_assets($(this).val());
 			}
 			else{
 				change_map("14.654%121.065002%6%DICT CENTRAL");
 				$("#assets").val(0);
 				$("#assets").attr("disabled","disabled");
 				//9%10.659%124.486999%REGION VII (CENTRAL VISAYAS)
-				map.setView(new L.LatLng(10.659,124.486999), 6 );
+				map.setView(new L.LatLng(10.659,124.486999), 6-mobile_map_minus );
 			}
+
+			
 		});
 		$("#assets").change(function(){
 			if($("#dict_offices").val()!=0){
@@ -574,21 +711,29 @@
 					//alert(data);
 					var myicon;
 					var color="";
-					var view=6;
-					var lat=10.659;
-					var long=124.486999;
+					var view=view=6-Number(mobile_map_minus);;
+					var lat=13.023799;
+					var long=124.060997;
 					if(assets_status=="available"){
 						color="#00cc66";
-						view=12;
+						view=12-Number(mobile_map_plus_reg);
 						lat=currentlat;
 						long=currentlong;
 
 					}
 					if(assets_status=="deployed"){
 						color="#D8700F";
+						
+					}
+					var h=$(window).height();
+					if(h<=914 && (assets_status=="all" || assets_status=="deployed")){
+				//alert("samall");
+						
+						lat=11.038;
+						long=122.583;
 					}
 					
-
+					//alert(view);
 					 map.setView(new L.LatLng(lat,long), view );
 					 if(assets_status=="all"){
 						 
@@ -622,6 +767,20 @@
 					
 				}
 					
+			});
+		}
+
+		function get_total_assets(office_val){
+			$.post("AJAX/get_assets_total.php",
+			{
+				office:office_val
+			},
+			function(data){
+				var arr_data=to_array(data,"%");
+				$("#total_avail").text(arr_data[0]);
+				$("#total_deloyed").text(arr_data[1]);
+				$("#total_all").text(arr_data[2]);
+				
 			});
 		}
 

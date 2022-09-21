@@ -901,28 +901,12 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
 function test2(){
     $mydb = new Database();
     $mydb->connect();
-    $str="SELECT id, count(*) as `count`, category, GROUP_CONCAT( `serial` SEPARATOR ', ') as serial, lat, `long`  FROM avail_assets_loc where id=2 group by category";
-    $data=$mydb->selectrows($str,0);
-    $string_data="";
-    if($data!=null){
-
-        $lat= $data[0]["lat"];
-        $long= $data[0]["long"];
-        $size=sizeof($data);
-        $i=1;
-        foreach($data as $rows){
-            $plural=(intval($rows["count"])>1)?"s":"";
-        
-            $string_data.= $rows["count"]." ".$rows["category"].$plural.": ".$rows["serial"];
-            if($i<$size){
-                $string_data.="; ";
-            }
-            $i++;
-
-        }
-        $string_data.="@".$lat."@".$long;
-    }
-    echo $string_data;
+    $sql="SELECT count(category) as category FROM assets.avail_assets_loc where id=2";
+        $avail=$mydb->select_one($sql,"category");
+        $sql="SELECT  count(category) as category FROM assets.deployed_assets_loc where id=2";
+        $deployed=$mydb->select_one($sql,"category");
+        $total=intval($avail)+intval($deployed);
+        echo $avail."%".$deployed."%".$total;
 }
 //test2();
 
