@@ -40,7 +40,6 @@
         border-bottom: 2px solid rgb(45, 44, 46);
         padding-bottom:5px;
       }
-
       .navbar {
         height:9vh;
       }
@@ -48,7 +47,7 @@
         margin:0;
         margin-top:13px;
       }
-     
+
     </style>
   </head>
   <body>
