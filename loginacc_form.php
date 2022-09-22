@@ -286,7 +286,7 @@
 		
 
 $(document).ready(function(){
-		
+	enrycpt_each(".item");	
 		//check_url(window.location.href);
 		//alert(window.location.href);
 		//call_php_code("check_url",window.location.href,"reroute()","do_nothing()");

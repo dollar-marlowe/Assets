@@ -363,6 +363,7 @@
 		var currentlat, currentlong;
 		var mobile_map_minus=0;
 		var mobile_map_plus_reg=0;
+		var screen_height=800;
 		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
 		$("#assets").attr("disabled","disabled");
 		
@@ -388,7 +389,7 @@
 					$(".table_lbl2").show().after("<br class='br'>");
 				}
 				
-				if(h<=914){
+				if(h<=screen_height){
 					$("#map").css("height","500px");
 					mobile_map_minus=1;
 					mobile_map_plus_reg=1;
@@ -420,7 +421,7 @@
 		function change_map(info){
 			//alert(info);
 			var h=$(window).height();
-			if(h<=914){
+			if(h<=screen_height){
 				
 						mobile_map_minus=1;
 						mobile_map_plus_reg=2;
@@ -456,7 +457,7 @@
 			var arr_info=to_array(info,"%");
 			var lat=parseFloat(arr_info[0]);
 			var long=parseFloat(arr_info[1]);
-			if(h<=914){
+			if(h<=screen_height){
 				//alert("samall");
 						$("#map").css("height","500px");
 						mobile_map_minus=1;
@@ -726,7 +727,7 @@
 						
 					}
 					var h=$(window).height();
-					if(h<=914 && (assets_status=="all" || assets_status=="deployed")){
+					if(h<=screen_height && (assets_status=="all" || assets_status=="deployed")){
 				//alert("samall");
 						
 						lat=11.038;
