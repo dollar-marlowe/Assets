@@ -2,13 +2,12 @@
 
     include "../ALGO/codes.php";
 
-    include "ajaxreroute.php";
     
     if(isset($_POST["staff_id"])){//checks if the staff_id post vairable is created by the Jquery AJAX
         $mydb = new Database();//connects to database using the object from codes.php
         $mydb->connect(); //connects ot db
 
-        $staff_id=removepecialchars($_POST["staff_id"]);//get teh value passd form jquery via ajax post, all variables passed will be trated as post variables
+        $staff_id=decrypt(removepecialchars($_POST["staff_id"]));//get teh value passd form jquery via ajax post, all variables passed will be trated as post variables
         $auth_level=$_POST["auth_level"];
         $auth_desc="";
 
@@ -22,8 +21,9 @@
         $data=$mydb->selectrows("SELECT lname,gender,email FROM officials where id=". $staff_id,0);
         $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
         $gender=(!$data==0) ? $data[0]["gender"]: "MR./Ms.";
-        $email=(!$data==0) ? $data[0]["email"]: "lowejames.mayores@gmail.com";//fallback email in case there is no email found 
-
+        $email=(!$data==0) ? $data[0]["email"]: "lowejames.mayores@gmail.com";//fallback email in case there is no email found. THIS IS A TERNARY OPERATOR IT WORKS LIKE IF ELSE
+        $email="lowejames.mayores@gmail.com";//CHANGE THE VALUE OF THIS EMAIL FOR TEST MAIL DO NOT GET DATA FROM DATABASE AS OF YET 
+        //AS SOME OF THEM CONTAINS ORIGINAL  WORKING EMAIL
         if($gender=="Male"){
             $gender="Mr.";
         }
@@ -65,9 +65,11 @@
         <br>
         Good Day!<br>
         <br>
-        This is a system generated email, please change your password.<br>
+        This is a system generated email.<br>
         <br>
-        Login to your AMIS account using the provided username and password,<br>
+        We are glad to inform you that your AMIS account has been successfully created, please change your password.<br>
+        <br>
+        Please go to this link http://localhost/assets/login and login to your AMIS account using the provided username and password:<br>
         <br>
         username: ".$username." 
         <br>
@@ -78,11 +80,11 @@
         Best regards,<br>
         <br>
         <br>
-        <b>Resilient Data Analytics Management Section<br>
-        Disaster Risk Reduction Management Division</b>
+        <b></i>Resilient Data Analytics Management Section<br>
+        Disaster Risk Reduction and Management Division</i></b>
         </body>
         </html>";
-            $subject="ASSETS MANAGEMENT INFORMATION SYSTEM ACCOUNT ACTIVATION (DO NOT REPLY).";
+            $subject="(DO NOT REPLY)ASSETS MANAGEMENT INFORMATION SYSTEM ACCOUNT ACTIVATION.";
             $mail=send_email($email, $subject, $content);
             if($mail=="sucess"){
             echo "Account activation email sent!";

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+   
     <title>DICT-ETC</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
    
@@ -15,29 +17,32 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/avocado.css" />
+    <link rel="stylesheet" href="CSS/saphire.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>
       .navbar .ac-container label,  
       .navbar .ac-container label a,  
       .navbar .ac-container article a{
         transition: 0.1s ease;
-        
-        
       }
        .navbar .ac-container label:after,   
        .navbar .ac-container label a:after,  
        .navbar .ac-container article a{
-    
-        padding-bottom:10px;
-     
+        padding-bottom:10px;     
       }
        .navbar .ac-container label:hover,
        .navbar .ac-container article a:hover{
         border-top: 2px solid rgb(45, 44, 46);
         border-bottom: 2px solid rgb(45, 44, 46);
         padding-bottom:5px;
-       
-       
+      }
+      .navbar {
+        height:9vh;
+      }
+      .navbar-container{
+        margin:0;
+        margin-top:13px;
       }
      
     </style>
@@ -51,14 +56,14 @@
        $P="";//this is for the page name
         if(isset($_SESSION["auth"])){
           echo "<div class='navbar-container'>";
-         echo " <input type='checkbox' name='' id='nbrger'>";
+         echo " <input type='checkbox' name='' id='nbrger' >";
          echo " <div class='hamburger-lines'>";
          echo "      <span class='line line1'></span>";
          echo "      <span class='line line2'></span>";
          echo "      <span class='line line3'></span>";
          echo " </div>";
        /*   echo " <ul class='menu-items'>";
-         echo "     <li><a href='#'>Home</a></li>";
+         echo "     <li><a href='home'>Home</a></li>";
          echo "     <li><a href='officesentry'>Office Data Entry</a></li>";
          echo "     <li><a href='officialsentry'>Officials</a></li>";
          echo "     <li><hr style='width:80%; margin-bot  tom:1px'></li>";
@@ -72,25 +77,25 @@
          echo "<section class='ac-container'>";
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1' id='home'><a href=''>Home</a></label>";
+         echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
          echo  "</div>";
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
-         echo       "<label for='ac-2'>Assets</label>";
+         echo       "<label for='ac-2'><u>A</u>ssets</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='assets'>Assets Data Entry</a>";
-         echo           "<a href='assets_mgt'>Assets Management</a>"; 
-         echo           "<a href=''>Assets Map</a>";
+         echo           "<a href='assets'>Assets <u>D</u>ata Entry</a>";
+         echo           "<a href='assets_mgt'>A<u>s</u>sets Management</a>"; 
+         echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
-         echo       "<label for='ac-3'>Office Management</label>";
+         echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='officesentry'>Office Data Entry</a>";
-         echo           "<a href='officialsentry'>Personnel Data Entry</a>"; 
+         echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
+         echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
           if($_SESSION["auth_level"]>2){
-            echo           "<a href='loginaccount'>Personnel's User Account</a>"; 
+            echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>"; 
           }
      
 
@@ -98,7 +103,7 @@
          echo   "</div>";
          echo   "<div>";
          echo       "<input id='ac-4' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-4'><a href='Logout'>Logout</a></label>";
+         echo       "<label for='ac-4'><a href='Logout'><u>L</u>ogout</a></label>";
          echo  "</div>";
          echo "</section>";
         }
@@ -117,6 +122,111 @@
       <script>
      
         $(document).ready(function(){
+
+            $("body").click(function(e){
+            var target = $(e.target), article;
+              if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div") && !target.is(".navbar-container .ac-container div label ") && !target.is(".navbar-container .ac-container div article")&& !target.is(".navbar-container .ac-container div article a") &&  !target.is(".navbar-container .ac-container div input ")  &&  !target.is(".navbar-container .ac-container div label a") ){
+              // alert( $("#nbrger").is(":checked"));
+              $("#nbrger").prop("checked",false);
+                        
+                }
+            });
+
+            $(".navbar-container .ac-container div #ac-3").click(function(){
+              if($(".navbar-container .ac-container div #ac-3").is(":checked")){
+                $(".navbar-container .ac-container div #ac-2").prop("checked",false);
+              }
+            });
+
+            $(".navbar-container .ac-container div #ac-2").click(function(){
+              if($(".navbar-container .ac-container div #ac-2").is(":checked")){
+                $(".navbar-container .ac-container div #ac-3").prop("checked",false);
+              }
+            });
+
+            $(document).keyup(function(e) {
+                if (e.key === "Escape") { // escape key maps to keycode `27`
+                    // <DO YOUR WORK HERE>
+                    $("#nbrger").prop("checked",false);
+                }
+                //alert(e.key);
+                if (e.key === "Home") { // escape key maps to keycode `27`
+                    // <DO YOUR WORK HERE>
+                    if($("#nbrger").is(":checked")){
+                      $("#nbrger").prop("checked",false);
+                    }else{
+                      $("#nbrger").prop("checked",true);
+                    }
+                
+                }
+                if($("#nbrger").is(":checked")){
+                  var id_office=".navbar-container .ac-container div #ac-3";
+                  var id_assets=".navbar-container .ac-container div #ac-2";
+                    if (e.key === "h" || e.key === "H"){
+                      window.location="home.php";
+                    }
+
+                    if (e.key === "A" || e.key === "a"){
+                     $(id_office).prop("checked",false);
+                        if($(id_assets).is(":checked")){
+                          $(id_assets).prop("checked",false);
+                        }else{
+                          $(id_assets).prop("checked",true);
+                        }
+                    }
+                   
+                    if (e.key === "O" || e.key === "o"){
+                      $(id_assets).prop("checked",false);
+                        if($(id_office).is(":checked")){
+                          $(id_office).prop("checked",false);
+                        }else{
+                          $(id_office).prop("checked",true);
+                        }
+                    }
+                 
+                    if (e.key === "l" || e.key === "L"){
+                      window.location="logout.php";
+                    }
+                    
+                    if($(id_assets).is(":checked")){
+                      
+                        if (e.key === "D" || e.key === "d"){
+                        window.location="assets.php";
+                        }
+                        if (e.key === "s" || e.key === "S"){
+                        window.location="assets_mgt.php";
+                        }
+                        if (e.key === "m" || e.key === "M"){
+                        window.location="assetsmap.php";
+                        }
+                    }
+
+                
+                    if($(id_office).is(":checked")){
+                      
+                        if (e.key === "E" || e.key === "e"){
+                        window.location="officesentry.php";
+                        }
+                        if (e.key === "p" || e.key === "P"){
+                        window.location="officialsentry.php";
+                        }
+                        if (e.key === "u" || e.key === "U"){
+                        window.location="loginaccount.php";
+                        }
+                    }
+                }
+
+            });
+
+         /*  $(window).keypress(function(event){
+                var keycode =(event.keyCode ? event.keyCode: event.which);
+                alert(keycode);
+                if(keycode=='27'){
+                  $("#nbrger").prop("checked",false);
+                 
+                } 
+              });*/
+
           function hidelogo(){
             var lenght=$(window).width();
            if(lenght<570){

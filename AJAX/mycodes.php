@@ -17,19 +17,51 @@ $command=$_REQUEST["command"];
       echo   $mydb->is_empty($str);
 
     }
-    if($command=="enrcypt"){
+    if($command=="encrypt"){
         $data=$_REQUEST["values"];
-        echo encrypt($data);
+        echo encrypt(removepecialchars($data));
 
     }
-    if($command=="dercypt"){
+    if($command=="decrypt"){
         $data=$_REQUEST["values"];
-        echo dercypt($data);
+        echo decrypt($data);
 
     }
-}/* 
+   if($command=="update"){
+        $mydb = new Database();
+        $mydb->connect();
+
+        $data=$_REQUEST["values"];
+        $each_data=explode("|",$data);
+        $str="update login set status='change_pass' where official_id=".each-data[0];
+        if($mydb->insert($str)=="New record created!"){
+            if(sizeof($each_data)>2){
+                $new_str=decrypt($each_data[1]).$each_data[2];
+            }
+        
+         
+
+        }else{
+            echo "";
+        }
+       // echo dercypt($data);
+
+    } 
+   
+}
+if($command=="check_url"){
+    $data=$_REQUEST["values"];
+    $pattern="/<script>/i";
+    if(preg_match($pattern,$data)){
+      echo "true";
+    }else{
+        echo "";
+    }
+}
+
+/* 
 else{
     echo "<script>window.location='../login.php';</script>";
 } */
-
+//echo "2";
 ?>
