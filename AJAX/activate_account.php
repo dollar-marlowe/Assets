@@ -7,7 +7,7 @@
         $mydb = new Database();//connects to database using the object from codes.php
         $mydb->connect(); //connects ot db
 
-        $staff_id=decrypt(removepecialchars($_POST["staff_id"]));//get teh value passd form jquery via ajax post, all variables passed will be trated as post variables
+        $staff_id=decrypt($_POST["staff_id"]);//get teh value passd form jquery via ajax post, all variables passed will be trated as post variables
         $auth_level=$_POST["auth_level"];
         $auth_desc="";
 
