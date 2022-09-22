@@ -22,18 +22,6 @@ CREATE DATABASE IF NOT EXISTS assets;
 USE assets;
 
 --
--- Temporary table structure for view `current_etc`
---
-DROP TABLE IF EXISTS `current_etc`;
-DROP VIEW IF EXISTS `current_etc`;
-
---
--- Temporary table structure for view `etc_disater_consolidated`
---
-DROP TABLE IF EXISTS `etc_disater_consolidated`;
-DROP VIEW IF EXISTS `etc_disater_consolidated`;
-
---
 -- Temporary table structure for view `geo_add`
 --
 DROP TABLE IF EXISTS `geo_add`;
@@ -42628,7 +42616,7 @@ CREATE TABLE `etc_disaster` (
 
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `official_id` int(10) unsigned NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(300) NOT NULL,
@@ -42638,7 +42626,7 @@ CREATE TABLE `login` (
   `date_activated` datetime DEFAULT NULL,
   `failed_attemps` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `login`
@@ -42646,11 +42634,15 @@ CREATE TABLE `login` (
 
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
 INSERT INTO `login` (`id`,`official_id`,`username`,`password`,`auth_level`,`auth_desc`,`status`,`date_activated`,`failed_attemps`) VALUES 
- (0,8,'ronibethcastamado','BoPCtJfdU04pA8CJODx8CK0aWduQiB8yJhilU/qmRVPpz1YijJ9inJoTimg9RcFgyNi3ofENxqryejKTz8CvoQ==',1,'Regular User','change_pass','2022-07-21 00:00:00',0),
+ (1,8,'ronibethcastamado','UcQbccwv0YU8EXr85wQK9o+g9/Ht3XryyZVu4qpGiWhbsZKtqzmKTKBqQ+ndyY08xbwkJ75t+te4kqlEcVlmSQ==',1,'Regular User','active','2022-07-21 00:00:00',0),
  (2,2,'lowe_mayores','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active','2022-06-18 00:00:00',0),
  (12,3,'lowe','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',4,'Super Admin','active','2022-06-18 00:00:00',0),
  (13,3,'james','D4xuJPkQj2ONSbAXDrsRImq5xwKd6v5iUGZriuAVuvmyX7Im9WXKDKj9byxU5XXi2SL0SOnz9gTDt5/4pPew9Q==',3,'Super Admin','active','2022-06-18 00:00:00',0),
- (15,7,'jamessmith','KOhr8/Er/6Fzxbom6CEfyPKLrLYGkoTGUZcMazeMMlpfyalMyDckFFKUX5xtReI8803BWyHgPh8v1uBQkiS26A==',2,'Technical Operator','active','2022-07-20 00:00:00',0);
+ (15,7,'jamessmith','KOhr8/Er/6Fzxbom6CEfyPKLrLYGkoTGUZcMazeMMlpfyalMyDckFFKUX5xtReI8803BWyHgPh8v1uBQkiS26A==',2,'Technical Operator','active','2022-07-20 00:00:00',0),
+ (16,9,'bebangdimagiba','EEUXxutB657qkc08evdxTu2NTu+PLf53937jjqD2l2AnaJlDTDe2lM1lhd/s6ruO7b0KI1/Zow6eiT6fp7W02A==',2,'Technical Operator','active','2022-07-25 00:00:00',0),
+ (17,10,'paulomacabuhay','p98voWMA5nyl0nQ2I+r+3uUFlUbhSdzbyzFjoVIqZYhmtm5LbWCXAdQOi0keenN7vixgMiwiHBvWj4p8GU19qg==',2,'Technical Operator','active','2022-07-25 00:00:00',0),
+ (18,11,'pedrocalungsod','yiOhYpTJ+O+MofdEAXYOjj3DhU2ZhMVt25ZLTgKbKVSUE683vaFTO9P3CFMUwNYLxVhKmnsm3ijzbhFMPcDujA==',3,'Admin','active','2022-07-25 00:00:00',0),
+ (19,12,'indaybadiday','S2+cyoXxHM3VG/IkX3dDP3RmFebCuOWWDY4NsEnVbxV+jFnEvh6H2bRGj8N6pOOELyGzFYMR7epolU+g4/LGzA==',2,'Technical Operator','active','2022-07-26 00:00:00',0);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 
 
@@ -44382,6 +44374,7 @@ CREATE TABLE `officials` (
   `date_started` datetime DEFAULT NULL,
   `date_terminated` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
+  `gender` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -44390,12 +44383,16 @@ CREATE TABLE `officials` (
 --
 
 /*!40000 ALTER TABLE `officials` DISABLE KEYS */;
-INSERT INTO `officials` (`id`,`office_id`,`fname`,`mname`,`lname`,`position`,`contact`,`email`,`date_added`,`date_started`,`date_terminated`,`status`) VALUES 
- (1,3,'Rey','','Parnacio','Regional Director','','rey.parnacio@dict.gov.ph',NULL,NULL,NULL,NULL),
- (2,3,'Marry Jane','B','Nerona','TECHNICAL OPERATIONS DIVISION','','jane.nerona@dict.gov.ph',NULL,NULL,NULL,NULL),
- (3,2,'Lowe James','V','Forescal','DRRMD WEB ADMIN','','loue.mayores@dict.gov.ph',NULL,NULL,NULL,NULL),
- (7,7,'James','Potter','Bond','Regional Director','(02)7684654','james@edotco.uk.com','2022-03-30 08:03:25',NULL,NULL,NULL),
- (8,2,'Ronibeth','M','Castamado','ESET I','68768768768','ronibeth.castamado@dict.gov.ph','2022-07-21 10:07:44',NULL,NULL,NULL);
+INSERT INTO `officials` (`id`,`office_id`,`fname`,`mname`,`lname`,`position`,`contact`,`email`,`date_added`,`date_started`,`date_terminated`,`status`,`gender`) VALUES 
+ (1,3,'Rey','','Parnacio','Regional Director','','rey.parnacio@dict.gov.ph',NULL,NULL,NULL,NULL,'Male'),
+ (2,3,'Marry Jane','B','Nerona','TECHNICAL OPERATIONS DIVISION','','jane.nerona@dict.gov.ph',NULL,NULL,NULL,NULL,'Female'),
+ (3,2,'Lowe James','V','Forescal','DRRMD WEB ADMIN','','loue.mayores@dict.gov.ph',NULL,NULL,NULL,NULL,'Male'),
+ (7,7,'James','Potter','Bond','Regional Director','(02)7684654','james@edotco.uk.com','2022-03-30 08:03:25',NULL,NULL,NULL,'Male'),
+ (8,2,'Ronibeth','M','Castamado','ESET I','68768768768','ronibeth.castamado@dict.gov.ph','2022-07-21 10:07:44',NULL,NULL,NULL,'Female'),
+ (9,7,'Bebang','C','Dimagiba','Engineer II','09396787363','lowejames.mayores@gmail.com','2022-07-25 04:07:10',NULL,NULL,NULL,'Female'),
+ (10,14,'Paulo','B','Macabuhay','ISA II','09396787363','lowejames.mayores@gmail.com','2022-07-25 06:07:57',NULL,NULL,NULL,'Male'),
+ (11,7,'Pedro','C','Calungsod','ISA II','09396787363','lowejames.mayores@gmail.com','2022-07-25 06:07:28',NULL,NULL,NULL,'Male'),
+ (12,7,'Inday','B','Badiday','Executive Assistant III','09912371464','lowejames.mayores@gmail.com','2022-07-26 09:07:44',NULL,NULL,NULL,'Female');
 /*!40000 ALTER TABLE `officials` ENABLE KEYS */;
 
 
@@ -44636,22 +44633,6 @@ INSERT INTO `transferhistory` (`id`,`asset_owner_id`,`from`,`to`,`datetransfered
  (8,10,2,5,'2022-05-02 00:00:00','',0,NULL,NULL);
 /*!40000 ALTER TABLE `transferhistory` ENABLE KEYS */;
 
-
---
--- Definition of view `current_etc`
---
-
-DROP TABLE IF EXISTS `current_etc`;
-DROP VIEW IF EXISTS `current_etc`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `current_etc` AS select `assets`.`etc_disater_consolidated`.`id` AS `id`,`assets`.`etc_disater_consolidated`.`etc_id` AS `etc_id`,`assets`.`etc_disater_consolidated`.`disaster_id` AS `disaster_id`,`assets`.`etc_disater_consolidated`.`etc_act_name` AS `etc_act_name`,`assets`.`etc_disater_consolidated`.`disasterlevel` AS `disasterlevel`,`assets`.`etc_disater_consolidated`.`disatercategory` AS `disatercategory`,`assets`.`etc_disater_consolidated`.`natureofdisaster` AS `natureofdisaster`,`assets`.`etc_disater_consolidated`.`disasterdate` AS `disasterdate`,`assets`.`etc_disater_consolidated`.`disasterend` AS `disasterend`,`assets`.`etc_disater_consolidated`.`disater_status` AS `disater_status`,`assets`.`etc_disater_consolidated`.`etcstart` AS `etcstart`,`assets`.`etc_disater_consolidated`.`etcend` AS `etcend`,`assets`.`etc_disater_consolidated`.`resoactivate` AS `resoactivate`,`assets`.`etc_disater_consolidated`.`resodeact` AS `resodeact`,`assets`.`etc_disater_consolidated`.`etcstatus` AS `etcstatus`,`assets`.`etc_disater_consolidated`.`etclevel` AS `etclevel` from `etc_disater_consolidated` where `assets`.`etc_disater_consolidated`.`etcstatus` = 'active';
-
---
--- Definition of view `etc_disater_consolidated`
---
-
-DROP TABLE IF EXISTS `etc_disater_consolidated`;
-DROP VIEW IF EXISTS `etc_disater_consolidated`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `etc_disater_consolidated` AS select `etc_disaster`.`id` AS `id`,`etc`.`id` AS `etc_id`,`disaster`.`id` AS `disaster_id`,concat(`etc`.`activation_no`,`disaster`.`name`) AS `etc_act_name`,`assets`.`disaster`.`alertlevel` AS `disasterlevel`,`assets`.`disaster`.`category` AS `disatercategory`,`assets`.`disaster`.`natureofdisaster` AS `natureofdisaster`,`assets`.`disaster`.`datestarted` AS `disasterdate`,`assets`.`disaster`.`dateended` AS `disasterend`,`assets`.`disaster`.`status` AS `disater_status`,`assets`.`etc`.`datestarted` AS `etcstart`,`assets`.`etc`.`dateended` AS `etcend`,`assets`.`etc`.`resoactivation` AS `resoactivate`,`assets`.`etc`.`resodeactivation` AS `resodeact`,`assets`.`etc`.`status` AS `etcstatus`,`assets`.`etc`.`level` AS `etclevel` from ((`etc_disaster` join `etc`) join `disaster`) where `assets`.`etc_disaster`.`etc_id` = `assets`.`etc`.`id` and `assets`.`etc_disaster`.`disaster_id` = `assets`.`disaster`.`id`;
 
 --
 -- Definition of view `geo_add`
