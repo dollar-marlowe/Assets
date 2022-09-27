@@ -72,9 +72,7 @@
 				
 
 			}
-			.pannel{
-				height:290px;
-			}
+			
 
 			.marginleft{
 				margin-top:10px;
@@ -284,28 +282,16 @@
 				</div>
 				
 				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel2','pannel')" class="sidehead">AVAILABLE ASSETS SUMMARY</h3>
-						<p id="panel2" class="pannel">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-						  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						    culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+					<h3  onclick="test('#panel2','pannel')" class="sidehead">SUMMARY OF DEPLOYED ASSETS</h3>
+						<div id="panel2" class="pannel">
+						<p style="font-size:30px;">Select from DICT Offices drop down to view summary of deployed assets</p>
+						</div>
 				</div>
 				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel3','pannel')" class="sidehead">DEPLOYED ASSETS SUMMARY</h3>
-						<p id="panel3" class="pannel">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-						  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						    culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+					<h3  onclick="test('#panel3','pannel')" class="sidehead">SUMMARY OF AVAILABLE ASSETS</h3>
+						<DIV id="panel3" class="pannel">
+						<p style="font-size:30px;">Select from DICT Offices drop down to view summary of available assets</p>
+						</DIV>
 				</div>
 			</div>
     
@@ -584,6 +570,31 @@
 				$(".pannel").css("display","block");
 			}
 		});
+
+		function get_details_summary(ajax,offc,class_name,heads,target,stat){
+			$.post(ajax,
+			{
+				office:offc,
+				class:class_name,
+				headers:heads
+
+			},function(data){
+				// alert(data);
+				if(stat=="available"){
+					$("#office_owner").remove();
+					$("#avail_total").remove();
+					var content=to_array(data,"%");
+					$(target).html(content[0]);
+					$("."+class_name).before("<p id='office_owner'>Location: <b>"+content[2]+"</b></p>");
+					$("."+class_name).before("<p id='avail_total'>Grand Total: <b>"+content[1]+"</b></p>");
+				}
+				if(stat=="deployed"){
+					$(target).html(data);
+				}
+				
+			});
+		}
+
 		$("#dict_offices").change(function(){
 			//alert($("#dict_offices").val());
 			$("#assets").val(0);
@@ -605,6 +616,9 @@
 
 				});
 				get_total_assets($(this).val());
+				get_details_summary("AJAX/deployed_assets_table.php",$(this).val(),"dep_sum","Assets%Location%Total","#panel2","deployed");
+				
+				get_details_summary("AJAX/avail_assets_table.php",$(this).val(),"avail_sum","Assets%Serials%Total","#panel3","available");
 			}
 			else{
 				change_map("14.654%121.065002%6%DICT CENTRAL");

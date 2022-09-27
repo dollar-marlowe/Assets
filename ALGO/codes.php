@@ -175,13 +175,13 @@ function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){//brg_id[0]
 function summarize_list($cat_name, $serials, $count){
     //this function is only useful for this type of sql command 
     //SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  , GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`, brgy_id,lat,`long`, count(*) as `count` FROM deployed_assets_loc i where id=2 group by  brgy_id order by brgy_id
-    //where $cat_name is in a form of imploded array separated by , this is done using the GROUP_CONCAT command in sql
+    //where $cat_name is in a form of imploded array separated by a ,(comma) this is done using the GROUP_CONCAT command in sql
     //and the same for $serials
-    //these imploded values where later on exploded as an array inside this function and one by one will count 
-    //each item and compute the sum of silimar items belonging to the same location 
+    //these imploded values were later on exploded as an array inside this function and count each item inside the category
+    //Afterward will compute the sum of silimar items belonging to the same location 
     //thus the result would look like this 2 VHF Handheld Radio: 789012, 234567
     //original values were like this: VHF Handheld Radio, VHF Handheld Radio (stored in $cat_name)
-    //789012, 234567 (sored in $serials)
+    //789012, 234567 (stored in $serials)
     $arr_values=explode(",",$cat_name);
     $arr_serials=explode(",",$serials);
     $size=intval($count);
@@ -198,7 +198,7 @@ function summarize_list($cat_name, $serials, $count){
         }
         if(trim($arr_values[$i])!= trim($asset)){
             $serial="";
-            $result.= $counter." ".$asset.$plural.": ";
+            $result.= "<b>".$counter." ".$asset.$plural."</b>: ";
             for($j=$start-1;$j<$i;$j++){
                 $serial.=$arr_serials[$j];
                 if($j!=$i-1){
@@ -214,7 +214,7 @@ function summarize_list($cat_name, $serials, $count){
             $counter=1;
             $asset=$arr_values[$i];
            if($i==$size-1){
-            $result.=$counter." ". $asset.$plural.": ".$arr_serials[$i];
+            $result.="<b>".$counter." ". $asset.$plural."</b>: ".$arr_serials[$i];
            }
         }
         else{
@@ -222,7 +222,7 @@ function summarize_list($cat_name, $serials, $count){
           //  echo " i:".$i." Size: ".$size." ";
                 if($i==$size-1){
                             $serial="";
-                            $result.= $counter." ".$arr_values[$i].$plural.": ";
+                            $result.= "<b>".$counter." ".$arr_values[$i].$plural."</b>: ";
                             for($j=$start-1;$j<=$i;$j++){
                                 $serial.=$arr_serials[$j];
                                     if($j<$i){
@@ -899,14 +899,36 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
       }
 }
 function test2(){
-    $mydb = new Database();
-    $mydb->connect();
-    $sql="SELECT count(category) as category FROM assets.avail_assets_loc where id=2";
-        $avail=$mydb->select_one($sql,"category");
-        $sql="SELECT  count(category) as category FROM assets.deployed_assets_loc where id=2";
-        $deployed=$mydb->select_one($sql,"category");
-        $total=intval($avail)+intval($deployed);
-        echo $avail."%".$deployed."%".$total;
+    //$office=decrypt($_POST["office"]);
+        $headers=explode("%","Assets%Location%Total");
+        $class="assets_dep";
+        $arr_data=array("2","DICT Central");//office_id and  officename in an array
+        $mydb = new Database();
+        $mydb->connect();
+        $sql="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  ,
+        GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`,
+       
+       
+         (Select barangay.name from barangay where id=i.brgy_id) as barangay,
+       (Select municipality.name from municipality where municipality.id=i.muni_id) as municipality,
+        (Select province.name from province where province.id=i.prov_id) as province,
+       
+        count(*) as `count` FROM deployed_assets_loc i where id=". $arr_data[0]." group by  brgy_id order by province asc";
+       $data=$mydb->selectrows($sql,0);
+       echo "<table class='".$class."'><tr>";
+       foreach($headers as $content){
+        echo "<th>".$content;
+       }
+       if($data!=null){
+            foreach($data as $row){
+                echo "<tr><td>".str_replace(";",";<br>",summarize_list($row["category"], $row["serial"],intval($row["count"])));
+                echo"<td>".$row["province"].", ".$row["municipality"].", ".$row["barangay"]."<td>".$row["count"];
+            }
+       }
+       else{
+        echo "";
+       }
+       echo "</table>";
 }
 //test2();
 
@@ -1008,8 +1030,8 @@ function send_email($to,$subject,$content){
     }
 }
 //echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
- //echo summarize_list("VHF Handheld Radio, VHF Handheld Radio",
-  //"789012, 234567", 2);
+// echo summarize_list("Manpack Radio, Sat Phone, UHF Radio, Manpack Radio",
+  //"65464225, 356065065478581, a12312313, 65464225", 4);
  /*($str="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  , GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`, brgy_id,lat,`long`, count(*) as `count` FROM deployed_assets_loc i where id=2 group by  brgy_id order by brgy_id";
  $cols=array("brgy_id", "lat", "long", "category", "serial", "count");
  echo "<br>"."<br>".get_rows_implode($str,"@","%",$cols);*/
