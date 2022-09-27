@@ -29,6 +29,7 @@
 		
     .imgform-img iframe{
       height:600px;
+	  display:inline-block;
     }
 		.imgform-img img{
 			width:90%;
@@ -60,6 +61,81 @@
 			}
 		
 			
+
+			.marginleft{
+				margin-top:10px;
+			}
+			.radiusnone{
+				border-radius:0px;
+			}
+			.pannel{
+				
+				border-top:solid 1px #ddd;
+
+			}
+			.sidehead{
+				width:100%;
+				text-align:center;
+				
+			}
+			#hide_show {
+    border: 1px solid #ddd;
+	background-color:white;
+    padding: .5em;
+  width:fit-content;
+
+position:absolute;
+	  transform: rotate(90deg);
+	  
+	  margin:auto;
+	  margin-top:25px;
+	  margin-left:-9px;
+
+}
+#hide_show:hover{
+	background-color:#ddd;
+}
+div.item{
+	display:inline-block;
+	width:80px;
+	padding-bottom:10px;
+	padding-top:10px;
+	margin:auto;
+	margin-top:5px;
+	border: solid 1px #ddd;
+	text-align:center;
+	transition: transform .2s;
+}
+div.item:hover{
+	transform: scale(1.1);
+}
+div.item  p{
+	display:block;
+	font-size:10px;
+	width:fit-content;
+	margin:auto;
+	margin-top:0px;
+}
+div.item p img{
+	width:30px;
+	height:30px;
+}
+.pannel{
+	height:300px;
+	margin:auto;
+	width:auto;
+	padding:20px;
+	
+}
+.center{
+	margin:auto;
+}
+.item_container{
+	margin:auto;
+	width:fit-content;
+	
+}
+		
 		@media (max-width:1467px){
 			.side{
 				display:inline-flex;
@@ -114,75 +190,7 @@
 		
 		}
 		
-			.marginleft{
-				margin-top:10px;
-			}
-			.radiusnone{
-				border-radius:0px;
-			}
-			.pannel{
-				
-				border-top:solid 1px #ddd;
-
-			}
-			.sidehead{
-				width:100%;
-				text-align:center;
-				
-			}
-			#hide_show {
-    border: 1px solid #ddd;
-	background-color:white;
-    padding: .5em;
-  width:fit-content;
-
-position:absolute;
-	  transform: rotate(90deg);
-	  
-	  margin:auto;
-	  margin-top:25px;
-	  margin-left:-9px;
-
-}
-#hide_show:hover{
-	background-color:#ddd;
-}
-div.item{
-	display:inline-block;
-	width:80px;
-	padding-bottom:10px;
-	padding-top:10px;
-	margin-top:10px;
-	margin-left:10px;
-	border: solid 1px #ddd;
-	margin-right:10px;
-	transition: transform .2s;
-}
-div.item:hover{
-	transform: scale(1.1);
-}
-div.item  p{
-	display:block;
-	font-size:10px;
-	width:fit-content;
-	margin:auto;
-	margin-top:0px;
-}
-div.item p img{
-	width:30px;
-	height:30px;
-}
-.pannel{
-	height:300px;
-	margin:auto;
-	width:auto;
-	padding:20px;
-	
-}
-.center{
-	margin:auto;
-}
-
+		
 		
 </style>
  <section id="imgform"><div class="imgform-container ">
@@ -194,26 +202,27 @@ div.item p img{
 				<div class="imgform-img radiusnone top pannel_con" >
 					<h3 onclick="test('#panel1','pannel')" class="sidehead">Tracker Pannels</h3>
 					<div id="panel1" class="pannel">
-						
-							<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
-								<p ><img src="images/windy.png" ></p>
-								<p><u>W</u>indy Pannel></p>
-							</div>
-							<div class="item" id="btnphil" onclick="hide_show('#georiskpannel')">
-								<p><img src="images/philvolcs.png"></p>
-								<p><u>G</u>eorisk Pannel</p>
-							</div>
+							<div class="item_container">
+								<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
+									<p ><img src="images/windy.png" ></p>
+									<p><u>W</u>indy Pannel></p>
+								</div>
+								<div class="item" id="btnphil" onclick="hide_show('#georiskpannel')">
+									<p><img src="images/philvolcs.png"></p>
+									<p><u>G</u>eorisk Pannel</p>
+								</div>
 
-							<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
-								<p><img src="images/pagasa.png"></p>
-								<p>F<u>l</u>ood Pannel</p>
-							
-							</div>
-							
-							<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
-								<p><img src="images/covid.png"></p>
-								<p><u>C</u>ovid Pannel</p>
-							</div>
+								<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
+									<p><img src="images/pagasa.png"></p>
+									<p>F<u>l</u>ood Pannel</p>
+								
+								</div>
+								
+								<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
+									<p><img src="images/covid.png"></p>
+									<p><u>C</u>ovid Pannel</p>
+								</div>
+							</div>	
 							
 					</div>		
 						
@@ -375,8 +384,6 @@ div.item p img{
 					
 					});
 					
-
-			
 		}
 
 
