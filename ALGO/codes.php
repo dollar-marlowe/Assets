@@ -239,7 +239,7 @@ function summarize_list($cat_name, $serials, $count){
         //$c++;
     }
     if($size==1){
-        $result=$count." ".$cat_name.": ".$serials;
+        $result="<b>".$count." ".$cat_name."</b>: ".$serials;
     }
     return  $result;
 }
@@ -529,6 +529,82 @@ function abreviate($str,$num_char){//THIS IS USED FOR ABREVIATING WORDS $NUM_CHA
     }
     return strtoupper($abreviate);
 }
+
+
+function abreviate_except($str,$num_char,$exp){//THIS IS USED FOR ABREVIATING WORDS $NUM_CHAR SPECIFIES HOW MAY LETTERS
+    //the difference of this function is that in can except helping words such as in and for of to be excluded form abreviation
+    //the exception is definced in a variable $exp each word in this string is separated by white space
+    //it is then exploded into array and will check one by one if a word in $str variable matched a word in $exp
+    //once a match is detected that word will be skipped 
+    //example BANGSAMORO AUTONOMOUS REGION IN MUSLIM MINDANAO, the it ius deined in $exp to skip the `in`
+    //word "IN AND OF" so the result would be BARMM instead of BARIMM
+    //IF BY MISTAKE YOU PUT ONE WORD YET 3 NUMBER OF LETTERS FOR THE ABREVIATION EXAMPLAE:
+    //Aperture result would be APE
+    //if by mistake you put just one letter yet you specified 3 letters for the abreviation
+    //exmaple 'A' result would be 'A' 
+    //the normal output of this function would be like this
+    //'Very Small Aperture Termninal' then you specified 4 letters abreviation
+    // result would be like this 'VSAT'
+    //pretty brilliant haha
+    $word= explode(" ",$str);
+    $size=sizeof($word);
+    $abreviate="";
+    $arr_exp=explode(" ",$exp);
+    $exp_size=sizeof($arr_exp);
+    
+    if($size>1){
+        
+        if($size>=$num_char){
+            for($i=0;$i<$num_char;$i++){
+                $go=true;
+                
+                foreach($arr_exp as $ex){
+                    if(strtolower($ex)==strtolower($word[$i])){
+                        $go=false;
+                    }
+                   
+                }
+                if($go){
+                    $chars=str_split($word[$i]);
+                    $abreviate=$abreviate.$chars[0];
+                }
+                
+            }
+        }
+        else{
+            for($i=0;$i<$size;$i++){
+                $go=true;
+                
+                foreach($arr_exp as $ex){
+                    if($ex==$word[$i]){
+                        $go=false;
+                    }
+                   
+                }
+                if($go){
+                    $chars=str_split($word[$i]);
+                    $abreviate=$abreviate.$chars[0];
+                }
+            }
+        }
+        
+       
+    }
+    else{
+        $chars=str_split($word[0]);
+        $n=sizeof($chars);
+        if($n>=1){
+            for($i=0;$i<1;$i++){
+                $abreviate=$abreviate.$chars[$i];
+            }
+        }else{
+            $abreviate=$chars[0];
+        }
+       
+      
+    }
+    return strtoupper($abreviate);
+}
 function shorten($txt){
     //this function will shorten names which are more than 2 words 
     //reducing the name into just 2 words,
@@ -697,7 +773,9 @@ function loadropdown($str,$col1,$col2,$from){
         echo"<option value='0'>Select from ".$from."</option>";
     }
 }
-function loadropdown_encrypt($str,$col1,$col2,$from){//$from is the deafult value of the combo box if data is null
+function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deafult value of the combo box if data is null, $col1 ar ethe column names form the db 
+    //these column names depends on the table examle regions table and i selected id and name, the id and name data will be encypted however it needs
+    // a data in option tag that is not encrypted so that is why there is $col2 variable so it couls show like this <option>Region 1</option>
     
     $db = new Database();
     $db->connect();
@@ -718,7 +796,14 @@ function loadropdown_encrypt($str,$col1,$col2,$from){//$from is the deafult valu
               
                 $c1++;
             }
-            echo "<option value='".encrypt($val."%".$d[$col2])."'>".$d[$col2]."</option>";
+            $go=false;
+
+            $abr=$d[$col2];
+            $words=str_word_count($d[$col2]);
+            $abr= ($words>4) ? abreviate_except($abr, $words,"IN AND OF") : $d[$col2];
+            $abr= (strlen($abr)>31) ? abreviate_except($abr, $words,"IN AND OF (CAR)") :  $abr;
+            $abr =($abrv==1)?  $abr: $d[$col2];
+            echo "<option value='".encrypt($val."%".$d[$col2])."'>". $abr."</option>";
         }
     }
     else{

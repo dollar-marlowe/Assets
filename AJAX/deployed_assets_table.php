@@ -33,7 +33,7 @@
             echo "</table>";
        }
        else{
-        echo "<p style='font-size:30px;'>NO DATA AVAIALABLE</p>";
+        echo "<p style='font-size:30px;'>NO DATA AVAILABLE</p>";
        }
       
 

@@ -30,6 +30,7 @@
 		
     .imgform-img #map{
       height:800px;
+	  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     }
 		.imgform-img img{
 			width:15px;
@@ -151,6 +152,13 @@
 			.lbl_img{
 				width:25px;
 			}
+			.avail_sum tr td, .dep_sum tr td{
+				border: 1px solid #ddd;
+				padding:5px;
+			}
+			.avail_sum, .dep_sum{
+				width:100%;
+			}
 
 		@media (max-width:1467px){
 			.side{
@@ -247,12 +255,23 @@
 						<DIV id="panel1" class="pannel">
 							<table class="table" >
 							<tr><td>
+							<label for="regions" id="regionslbl" class="table_lbl1">Regions</label>
+							<td><label for="regionslbl"  class="table_lbl2">Regions</label><select id="regions" class="pannel-input">
+								<?php 
+									$cols1=array("id");
+									$str="SELECT * FROM region r order by reg_code asc";
+									loadropdown_encrypt($str,$cols1,"name","below",1);
+
+								?>
+							</select>	
+							<tr><td>
 							<label for="dict_offices" id="dict_officeslbl1" class="table_lbl1">DICT Offices</label>
 							<td><label for="dict_offices"  class="table_lbl2">DICT Offices</label><select id="dict_offices" class="pannel-input">
 								<?php 
 									$cols1=array("id","lat","long");
 									$str="SELECT * FROM offices_latlong";
-									loadropdown_encrypt($str,$cols1,"office_name","below");
+									loadropdown_encrypt($str,$cols1,"office_name","below",0);//sql command,colunmn id to be enryptyed in values
+									//the value to show in option, default text top show onload, then if values are abreviated or not
 
 								?>
 							</select>	
@@ -686,7 +705,7 @@
 						var asset_name=to_array(item[0],":");
 						markeravail.bindTooltip(asset_name[0]+"...", {permanent: true, offset: [0, 0] });
 						
-						markeravail.bindPopup(" <b>"+item[0]+"</b>");
+						markeravail.bindPopup	(" <b>"+item[0]+"</b>");
 						marker.openPopup();
 						viewavail=true;
 					
