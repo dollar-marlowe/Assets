@@ -782,7 +782,7 @@ function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deaful
     $data=$db->selectrows($str,0);
    
     if($data!=null){
-        echo"<option value=0>Select from Options Below</option>";
+        echo"<option value=0>Select Below</option>";
         foreach($data as $d){
             $val="";
             $c1=0;
@@ -796,18 +796,24 @@ function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deaful
               
                 $c1++;
             }
-            $go=false;
-
+          
             $abr=$d[$col2];
+            $start=strpos($abr,"(");
+            $end=strpos($abr,")");
+            $go= ($start!=null && $end!=null)? true:false;
+            
             $words=str_word_count($d[$col2]);
+        
             $abr= ($words>4) ? abreviate_except($abr, $words,"IN AND OF") : $d[$col2];
+            
+            //$abr=($go)? substr($abr,0,$start): $abr;
             $abr= (strlen($abr)>31) ? abreviate_except($abr, $words,"IN AND OF (CAR)") :  $abr;
             $abr =($abrv==1)?  $abr: $d[$col2];
-            echo "<option value='".encrypt($val."%".$d[$col2])."'>". $abr."</option>";
+            echo "<option value='".encrypt($val."%".$d[$col2])."'>".strtoupper( $abr)."</option>";
         }
     }
     else{
-        echo"<option value='0'>Select from ".$from."</option>";
+        echo"<option value='0'>Select ".$from."</option>";
     }
 }
 function loadintodb(){

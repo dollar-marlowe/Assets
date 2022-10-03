@@ -70,6 +70,8 @@
 				margin:0px;
 				margin:auto;
 				font-size:11px;
+				width:230px;
+				margin-left:10px;
 				
 
 			}
@@ -174,12 +176,12 @@
 			
 			.sidebar{
 				width:100%;
-				display:inline-flex;
+				display:block;
 				
 				
 			}
 			.marginleft{
-				margin-left:10px;
+				margin-left:0px;
 			}
 			
 			.top{
@@ -188,8 +190,10 @@
 			.block{
 				display:block;
 			}
-			.pannel{
-				height:330px;
+			
+			.pannel-input{
+				
+				margin:0px;
 			}
 		}
 		@media (max-width:820px){
@@ -207,6 +211,10 @@
 				margin-left:0px;
 				
 			}
+			.pannel-input{
+				
+				margin:0px;
+			}
 			
 			
 		
@@ -218,6 +226,10 @@
 				}
 				.imgform-img  select, select{
 				font-size:10px;
+			}
+			.pannel-input{
+				width:180px;
+				margin:0px;
 			}
 			
 		}
@@ -250,15 +262,15 @@
 	 <!--  <p id="hide_show" class="top">Hide</p> -->
 	  	<div class="sidebar">
 		 
-				<div class="imgform-img radiusnone top pannel_con" >
-					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT ASSETS MAP<?php echo  "-".date("Y/m/d");?></h3>
+				<div class="imgform-img radiusnone top pannel_con" id="select_pannel" >
+					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT <u>A</u>SSETS MAP<?php echo  "-".date("Y/m/d");?></h3>
 						<DIV id="panel1" class="pannel">
 							<table class="table" >
 							<tr><td>
 							<label for="regions" id="regionslbl" class="table_lbl1">Regions</label>
 							<td><label for="regionslbl"  class="table_lbl2">Regions</label><select id="regions" class="pannel-input">
 								<?php 
-									$cols1=array("id");
+									$cols1=array("id","lat","long");
 									$str="SELECT * FROM region r order by reg_code asc";
 									loadropdown_encrypt($str,$cols1,"name","below",1);
 
@@ -267,13 +279,7 @@
 							<tr><td>
 							<label for="dict_offices" id="dict_officeslbl1" class="table_lbl1">DICT Offices</label>
 							<td><label for="dict_offices"  class="table_lbl2">DICT Offices</label><select id="dict_offices" class="pannel-input">
-								<?php 
-									$cols1=array("id","lat","long");
-									$str="SELECT * FROM offices_latlong";
-									loadropdown_encrypt($str,$cols1,"office_name","below",0);//sql command,colunmn id to be enryptyed in values
-									//the value to show in option, default text top show onload, then if values are abreviated or not
-
-								?>
+								<option value="0">Select a Region</option>
 							</select>	
 						
 							
@@ -286,8 +292,9 @@
 								<option value="all">All</option>
 							</select>
 
-							
+							<tr><td><td><input type="submit" id="print" value="Print">
 						</table>
+						
 						
 						<div id="summary">							
 							<p id="lbl_sum">Map Legend</p>
@@ -300,14 +307,14 @@
 					</DIV>
 				</div>
 				
-				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel2','pannel')" class="sidehead">SUMMARY OF DEPLOYED ASSETS</h3>
+				<div class="imgform-img radiusnone marginleft pannel_con" id="pannel_dep">
+					<h3  onclick="test('#panel2','pannel')" class="sidehead">SUMMARY OF DE<u>P</u>LOYED ASSETS</h3>
 						<div id="panel2" class="pannel">
 						<p style="font-size:30px;">Select from DICT Offices drop down to view summary of deployed assets</p>
 						</div>
 				</div>
-				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel3','pannel')" class="sidehead">SUMMARY OF AVAILABLE ASSETS</h3>
+				<div class="imgform-img radiusnone marginleft pannel_con" id="pannel_avail">
+					<h3  onclick="test('#panel3','pannel')" class="sidehead">SUMMARY OF A<u>V</u>AILABLE ASSETS</h3>
 						<DIV id="panel3" class="pannel">
 						<p style="font-size:30px;">Select from DICT Offices drop down to view summary of available assets</p>
 						</DIV>
@@ -330,12 +337,9 @@
 		function test(target,from){//this function if for hiding and showing the contecnt of the pannel 
 			var l=$(window).width();
 			if(from=="pannel"){//
-				if(l<=1467 && l>820){
-			
-					$(".pannel").slideToggle("slow");
-				}else{
+				
 					$(target).slideToggle("slow");
-				}
+				
 			}
 			if(from=="iframe"){
 				$(target).slideToggle("slow");
@@ -369,8 +373,11 @@
 		var mobile_map_minus=0;
 		var mobile_map_plus_reg=0;
 		var screen_height=800;
+		var alt=false;
+		$("#print").attr("disabled","disabled");
 		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
 		$("#assets").attr("disabled","disabled");
+		$("#dict_offices").attr("disabled","disabled");
 		
 		$(window).resize(function(){// this is the even for windows resize calling the function 
 			var l=$(window).width();
@@ -407,6 +414,32 @@
 
 				
 			});
+			$(document).keyup(function(e){
+					if (e.key === "Alt"){
+					alt=false;
+					//alert("alt false");
+				}
+			});
+			$(document).keydown(function(e){
+				if (e.key === "Alt"){
+					alt=true;
+					//alert("ALT");
+				}
+				if(alt){
+					if((e.key=="p" || e.key=="P")){
+						$("#pannel_dep").toggle(400);
+					}
+					if((e.key=="a" || e.key=="A")){
+						$("#select_pannel").toggle(400);
+					}
+					if((e.key=="v" || e.key=="V")){
+						$("#pannel_avail").toggle(400);
+					}
+				}
+			});
+			function hide_show(id){
+			
+			}
 		/* function add_markers(data,status){
 			
 			if(status=="available"){
@@ -613,6 +646,117 @@
 				
 			});
 		}
+		$("#print").click(function(){
+			$(".logo").hide();
+			$(".navbar").hide();
+			$(".showcase-area").hide();
+			$("#about").hide();
+			$("#select_pannel").hide();
+			$("#footer").hide();
+			$(".leaflet-tooltip").hide();
+			var final_w=0;
+			//$("#filler").remove();
+			var map_height=$(".imgform-img #map").css("height");
+			var width=1000;
+			var after="";
+			//alert($("#panel2").is(":visible"));
+			var total_width=0;
+			if($("#panel2").is(":visible")){
+				total_width+=Number($("#panel2").css("height").replace("px",""));
+				after="#pannel_dep";
+				
+				
+			}
+			if($("#panel3").is(":visible")){
+
+				after="#pannel_avail";
+				var w2=Number($("#panel3").css("height").replace("px",""));
+					if((total_width+w2)>900){
+						
+						final_w=width-total_width-100;
+						$("#pannel_dep").after("<div class='filler' style='width:100%;height:"+final_w+"px;'></div>");
+			
+
+					}
+					if(w2>300){
+						final_w=width-w2-100;
+						$("#pannel_avail").after("<div class='filler' style='width:100%;height:"+final_w+"px;'></div>");
+			
+					}
+			}else{
+
+				if(total_width>300){
+						final_w=width-total_width-100;
+						$(after).after("<div class='filler' style='width:100%;height:"+final_w+"px;'>Test</div>");
+			
+
+					}
+
+			}
+			
+			//final_w=width-total_width-100;
+			//$(after).after("<div class='filler' style='width:100%;height:"+final_w+"px;'>Test</div>");
+			//alert(Number($("#panel2").css("height").replace("px","")));
+			$(".imgform-img #map").css("height","600px");
+			//alert(map_height);
+			//map.setView(new L.LatLng(10.659,124.486999), 5.5 ); 
+					
+					
+			window.print();
+			$(".leaflet-tooltip").show();
+			$(".imgform-img #map").css("height",map_height);
+			$(".logo").show();
+			$(".navbar").show();
+			$(".showcase-area").show();
+			$("#about").show();
+			$("#select_pannel").show();
+			$("#footer").show();
+			$(".filler").remove();
+
+		});
+
+		$("#regions").change(function(){
+			var reg_id=$(this).val();
+			if(reg_id!="0"){
+					$.post("AJAX/region_offices.php",
+				{
+					reg_data:reg_id
+				},
+				function(data){
+					
+					if(data!=null){
+						$("#dict_offices").removeAttr("disabled");
+						//$("#assets").removeAttr("disabled");
+						var arr_data=to_array(data,"%");
+						//alert(arr_data[0]);
+						$("#dict_offices").html(arr_data[0]);
+						//alert(arr_data[1]+" "+arr_data[2]+" "+arr_data[3]);
+						 change_map(arr_data[1]+"%"+arr_data[2]+"%6%"+arr_data[3]);
+						$("#assets").val(0);
+						$("#assets").attr("disabled","disabled");
+						//9%10.659%124.486999%REGION VII (CENTRAL VISAYAS)
+						map.setView(new L.LatLng(10.659,124.486999), 6-mobile_map_minus ); 
+					}else{
+						$("#dict_offices").val("0");
+						$("#dict_offices").attr("disabled","disabled");
+						$("#assets").attr("disabled","disabled");
+						
+					}
+					
+				});
+			}else{
+				$("#dict_offices").val("0");
+				$("#assets").val("0");
+				$("#dict_offices").attr("disabled","disabled");
+				$("#assets").attr("disabled","disabled");
+				change_map("14.654%121.065002%6%DICT CENTRAL");
+				$("#assets").val(0);
+				$("#assets").attr("disabled","disabled");
+				//9%10.659%124.486999%REGION VII (CENTRAL VISAYAS)
+				map.setView(new L.LatLng(10.659,124.486999), 6-mobile_map_minus );
+			}
+			
+		});
 
 		$("#dict_offices").change(function(){
 			//alert($("#dict_offices").val());
@@ -631,6 +775,7 @@
 					//alert(data);
 					change_map(arrval[1]+"%"+arrval[2]+"%10%"+arrval[3]);//the values are(lat,long,focus,Office name)
 					$("#assets").removeAttr("disabled");
+					$("#print").removeAttr("disabled");
 					//$("#office_tag").text(arrval[3]);
 
 				});
