@@ -43,10 +43,7 @@
 			background-color:rgb(45, 44, 46);
 			color:white;	
 		}
-		tr:nth-child(even){
-			background-color:	rgb(128,128,128);
-			color:white;
-		}
+		
 		tr:nth-child(odd){
 			background-color:rgb(232,232,232);
 			color:black;
@@ -249,7 +246,13 @@
                 </select>   
 					</div>	
 			<table class="table_search" style="margin-top:10px;margin-bottom:10px">
-			
+			<?php //THIS IS THE PHP CODE FOR LOADING THE TABLE FROM FUNCTION CALL LOCATED IN CODES
+				$str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='active'";
+				
+				$headers=array("","First Name","Last Name","User Name","Position","Level","Status");
+				$classes=array("all_res","item_pass_res");
+				loadtable($str,$headers,true,false,$classes);
+				?>
 		
 		 	</table>
 			 <input type="Submit" id="reset_pass" value="Reset Password" style="margin-bottom:10px;color:white;" class="btn btn-primary">
@@ -281,12 +284,13 @@
 		 var acc_headers='".encrypt("%First Name%Last Name%User Name%Position%Level%Status")."';
 		 
 		 ";?>
-		$("#reset_pass").hide();
+		//$("#reset_pass").hide();
 		
 		
 
 $(document).ready(function(){
 	enrycpt_each(".item");	
+	enrycpt_each(".item_pass_res");	
 		//check_url(window.location.href);
 		//alert(window.location.href);
 		//call_php_code("check_url",window.location.href,"reroute()","do_nothing()");
@@ -405,15 +409,18 @@ $(document).ready(function(){
 	  });
 
 	  function password_change_office(){//this fucntion is for password reset pannel when office dropdown changed it's value
+			//alert("called");
 			var office_id=$("#office_search").val();
 			var str="";
-			if(office_id==0){
+			
+			if(office_id=="0"){
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo";
 			}else{
 				str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id="+office_id;
+				
 			}
 			is_true_false(str,"elem_hide('#reset_pass')", "elem_show('#reset_pass')");
-			office_change("#office_search",".table_sefarch",".item_pass_res","all_res%item_pass_res");
+			office_change("#office_search",".table_search",".item_pass_res","all_res%item_pass_res");
 
 	  }
 	  function look_up_name(str2){//this fucntion is being used to look up for whatever related name inputed in the username, lastname, firstname field

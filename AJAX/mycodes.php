@@ -47,16 +47,17 @@ $command=$_REQUEST["command"];
        // echo dercypt($data);
 
     } 
-   
-}
-if($command=="check_url"){
-    $data=$_REQUEST["values"];
-    $pattern="/<script>/i";
-    if(preg_match($pattern,$data)){
-      echo "true";
-    }else{
-        echo "";
+    if($command=="check_url"){
+        $data=$_REQUEST["values"];
+        $pattern="/<script>/i";
+        if(preg_match($pattern,$data)){
+          echo "true";
+        }else{
+            echo "";
+        }
     }
+    
+   
 }
 
 /* 
