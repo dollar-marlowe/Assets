@@ -55,10 +55,7 @@
 			background-color:rgb(45, 44, 46);
 			color:white;	
 		}
-		tr:nth-child(even){
-			background-color:	rgb(128,128,128);
-			color:white;
-		}
+		
 		tr:nth-child(odd){
 			background-color:rgb(232,232,232);
 			color:black;
@@ -72,6 +69,7 @@
 			border-collapse: collapse;
 			width:fit-content;
 			margin-left:10px;
+			margin-right:10px;
 			border-style:none;
 			font-size:16px;		
 		

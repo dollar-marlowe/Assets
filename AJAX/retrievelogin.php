@@ -14,7 +14,7 @@
       if(mysqli_num_rows($data)>0){
         $row=mysqli_fetch_assoc($data);
           if($pass==decrypt($row["password"])){
-            
+               $_SESSION["id"]=encrypt($row["official_id"]);
               $_SESSION["uname"]=$row["username"];
               $_SESSION["officename"]=$row["office_name"];
               $_SESSION["officeid"]=$row["office_id"];
