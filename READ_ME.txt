@@ -7,4 +7,4 @@ Then please follow the instruction on SMTP_CONFIG.TXT
 
 Download the Mysql Administrator form this file https://drive.google.com/file/d/1ey3umOSIeIAoervk_QUwGAS_0L7zjZL_/view?usp=sharing
 
-leaflet: https://www.youtube.com/c/goharburki/search?query=leaflet
+leaflet: https://www.youtube.com/c/goharburki/search?query=leaflet  
