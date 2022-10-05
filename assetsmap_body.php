@@ -700,9 +700,22 @@
 			$(".imgform-img #map").css("height","600px");
 			//alert(map_height);
 			//map.setView(new L.LatLng(10.659,124.486999), 5.5 ); 
-					
-					
+		/* 	var marker_s= document.getElementsByClassName("leaflet-marker-icon").length;	
+			var cc=1; */
+			//$("#map").css("background-color","red");
+			
+			//$(".leaflet-marker-icon").hide();
 			window.print();
+			/* $.each($(".leaflet-marker-icon"), function(){
+				if(cc==marker_s){
+					//alert("color: green");
+					$(this).find("span").css("background-color","#00cc66");
+				}else{
+					//alert("color: orange");
+					$(this).find("span").css("background-color","#D8700F");
+				}
+				cc++;
+			}); */
 			$(".leaflet-tooltip").show();
 			$(".imgform-img #map").css("height",map_height);
 			$(".logo").show();
@@ -779,8 +792,9 @@
 					//$("#office_tag").text(arrval[3]);
 
 				});
-				get_total_assets($(this).val());
-				get_details_summary("AJAX/deployed_assets_table.php",$(this).val(),"dep_sum","Assets%Location%Total","#panel2","deployed");
+				var arr_id=["#total_avail","#total_deloyed","#total_all"];
+				get_total_assets($(this).val(),arr_id);
+				get_details_summary("AJAX/deployed_assets_table.php",$(this).val(),"dep_sum","Assets:(Serials)%Location%Total","#panel2","deployed");
 				
 				get_details_summary("AJAX/avail_assets_table.php",$(this).val(),"avail_sum","Assets%Serials%Total","#panel3","available");
 			}
@@ -822,7 +836,7 @@
 					iconAnchor: [-10, 2],
 					labelAnchor: [0, 2],
 					popupAnchor: [0, -20],
-					html: `<span style="${markerHtmlStyles}" />`
+					html: `<span class='mm' style="${markerHtmlStyles}" />`
 					}); 
 					return myicon;
 		}
@@ -949,19 +963,6 @@
 			});
 		}
 
-		function get_total_assets(office_val){
-			$.post("AJAX/get_assets_total.php",
-			{
-				office:office_val
-			},
-			function(data){
-				var arr_data=to_array(data,"%");
-				$("#total_avail").text(arr_data[0]);
-				$("#total_deloyed").text(arr_data[1]);
-				$("#total_all").text(arr_data[2]);
-				
-			});
-		}
-
+		
       });
     </script>

@@ -18,6 +18,7 @@
               $_SESSION["uname"]=$row["username"];
               $_SESSION["officename"]=$row["office_name"];
               $_SESSION["officeid"]=$row["office_id"];
+              $_SESSION["office_en"]=encrypt($row["office_id"]);
               $_SESSION["officialid"]=$row["official_id"];
               $_SESSION["fname"]=$row["fname"];
               $_SESSION["lname"]=$row["lname"]; 

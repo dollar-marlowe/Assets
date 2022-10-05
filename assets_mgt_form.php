@@ -254,7 +254,10 @@
 			display:inline-block;
 			overflow:hidden;
 		}	
-		
+		#listdep, #listavail, #listreceive{
+			background-color:white;
+			color:black;
+		}
 
 </style>
 	
@@ -337,7 +340,7 @@
 							<table class="asset">
 											
 										<?php
-											$str="select `assetowner`.`id` as id,`assets`.`qrcode` as `assetid`, 
+											$str="select `assetowner`.`id` as id,`assets`.`assetid` as `assetid`, 
 											`assets`.`serial` as `serial`, assets.name as name, assets.category as category, 
 											assets.brand as brand, assetowner.date_aquired as `date`, 
 											`assets`.`status` as `status` from assets, assetowner 
@@ -520,11 +523,16 @@
 				$("#errlbl").remove();
 				$("#errtbl").remove();
 				var headers=" %ASSET NUMBER%SERIAL%ITEM NAME%CATEGORY%BRAND%DATE AQUIRED%STATUS";
-				var str="select `assetowner`.`id` as id,`assets`.`assetid` as `assetid`, `assets`.`serial` as `serial`, assets.name as name, assets.category as category, assets.brand as brand, assetowner.date_aquired as `date`, `assets`.`status` as `status` from assets, assetowner where assetowner.assets_id=assets.id and assetowner.office_id ="+$("#office").val();				
+				var str="select `assetowner`.`id` as id,`assets`.`assetid` as  `assetid`, \
+				`assets`.`serial` as `serial`, assets.name as name, assets.category as category,\
+				 assets.brand as brand, assetowner.date_aquired as `date`, \
+				 `assets`.`status` as `status` from assets, assetowner \
+				 where assetowner.assets_id=assets.id and `assets`.`status`='Available' and assetowner.office_id ="+$("#office").val();				
 				$("#category").val(0);
 				$("#category").attr("disabled","disabled");
-				$("#status").val("all");
+				$("#status").val("available");
 				loadtable(str,headers,1,0);
+				
 			}
 			function itemselected(){
 				if($(".item").is(":checked")==false){// this checks if one of them is selected no need to use each
@@ -614,15 +622,16 @@
 					}
 				}
 				if(status=="deployed"){
-						headers=" %Asset id%Assets%Province%Municipality%Brgy.%Date deployed%Deployment Status";	
-						str="SELECT deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name, \
+					//alert($("#office").val());
+						headers=" %Asset id%Assets%Category%Province%Municipality%Brgy.%Date deployed%Deployment Status";	
+						str="SELECT deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name,  assets.category as `category`, \
 						 province.name as province, municipality.name as muni, barangay.name as brgy,deployment.datemobilized\
 						  as `datedep`, deployment.deployment_stat as depstat FROM deployment,region,province,municipality,\
 						  barangay,assetowner,assets where deployment.reg_id=region.id and \
 						  deployment.prov_id=province.id and deployment.muni_id=municipality.id \
 						  and deployment.brgy_id=barangay.id and assetowner.id=deployment.asset_owner_id \
-						  and assets.id=assetowner.assets_id and deployment.deployment_stat='Active' order by assets.category \
-						  and assetowner.office_id="+$("#office").val();
+						  and assets.id=assetowner.assets_id and deployment.deployment_stat='Active'  \
+						  and assetowner.office_id="+$("#office").val()+" order by `assets`.`category`";
 						$("#sbdemove").css("display","inline-block");
 					}
 					else{
@@ -739,13 +748,15 @@
 					}
 				}
 				if($("#action").val()=='2'){
-					validate_mgt_elem("#mgtoffice",0);
+					validate_mgt_elem("#mgtoffice","0");
 					if(validate_mgt()){
 						if(hasunavailable() && $("#status").val()!="deployed"){
 							alert('The selected item is either damaged or unavailable!');
 						}
 						else{
 							var c=1;
+							var chk_size=$(".item:checked").length;
+							//alert(chk_size);
 							$.each($(".item:checked"), function(){
 							var elem=$(this).val();
 								$.post("AJAX/transfer.php",
@@ -755,14 +766,24 @@
 									to:$("#mgtoffice").val(),
 									remarks:$("#remarks").val()
 									},function(data){
+										//alert($("#mgtoffice").val()+ " "+$("#office").val())
 										$("#msg1").remove();
-  										$("#assetmgt").after("<h4 id='msg1' style='font:bold'>"+c+" "+data+"</h4>");
-										  c++;
+  										
+										c++;
+										 
+										  if(c==chk_size+1){
+											updatealllistandtables();
+											$("#assetmgt").after("<h4 id='msg1' style='font:bold'>"+c+" "+data+"</h4>");
+											alert("Item(s) tarnsfered");
+										  }
+										  
+										 
 								});
 							});
-							alert("Item(s) tarnsfered");
+						
+						
 						}						
-						updatealllistandtables();
+						
 					}
 				}	
 			});
@@ -793,6 +814,8 @@
 			});
 			$("#receive").click(function(){
 				if(itemselected()){
+					var chk_size=$(".item:checked").length;
+					var l=1;
 					var msg="";
 					$.each($(".item:checked"), function(){
 							var elem=$(this).val();
@@ -800,13 +823,19 @@
 								{
 								id:elem
 								},function(data){
-								msg+=data;	
-								$("#tblmsg").remove();
-  								$("#category").after(data);
+							
+								l++;
+								if(l==chk_size+1){
+									msg+=data;	
+									$("#tblmsg").remove();
+  									$("#category").after(data);
+								  	alert($("#tblmsg").text());
+									updatealllistandtables();	
+								}
+								  
 							});
 						});
-						alert($("#tblmsg").text());
-						updatealllistandtables();	
+						
 				}
 			});
 		});

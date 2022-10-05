@@ -1088,7 +1088,7 @@ newlines in this string
 on the browser window."); */
 
 
-//echo decrypt("IzzYcW3O16TLVoxIAikIt8ElpGo2JXqXhpuKIjZZ4Am8i7K4YFZTH4u0FKJKUa9emnzTN4q/BjYdnVxXEYR2lFkys0jTXEvuGNaQfvx4TOqH/fI+yOAw07APWenBA647OthH3n3Nge84epglNsgusQ==");
+//echo decrypt("EEUXxutB657qkc08evdxTu2NTu+PLf53937jjqD2l2AnaJlDTDe2lM1lhd/s6ruO7b0KI1/Zow6eiT6fp7W02A==");
 //$db=new Database();
 //test();
 //echo $db->connect();

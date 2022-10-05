@@ -9,7 +9,7 @@
 			font-weight:700;
 		}
 	
-		.imgform-img p{
+		.imgform-img p.iframhead{
 			margin-left:10px;
 			margin-bottom:10px;
 		
@@ -135,8 +135,37 @@ div.item p img{
 	width:fit-content;
 	
 }
+			.p_row{
+				display:block;
+				
+				width:fit-content;
+			
+				margin:auto;
+				margin-bottom:10px;
+				
+			}
+
+			.p_row > *{
+				display:inline;
+				
+				width:fit-content;
+				font-size:15px;
+			}
+			.lbls{
+				margin-right:15px;
+				
+			}
+			#summary{
+				margin:auto;
+				margin-top:20px;
+			}
+			#summary p  {
+			
+				margin-bottom:10px;
+			}
+			
 		
-		@media (max-width:1467px){
+@media (max-width:1467px){
 			.side{
 				display:inline-flex;
 			}
@@ -167,7 +196,7 @@ div.item p img{
 		}
 		@media (max-width:820px){
 			
-			.imgform-img p, .imgform-img  select, input[type=text]{
+			.imgform-img p.iframhead, .imgform-img  select, input[type=text]{
 			font-size:95%;
 					}
 			.imgform-img iframe{
@@ -184,7 +213,7 @@ div.item p img{
 		}
 		@media (max-width:600px){
 			
-			.imgform-img p, .imgform-img  select, input[type=text]{
+			.imgform-img p.iframhead, .imgform-img  select, input[type=text]{
 			font-size:15px;
 			}
 		
@@ -230,16 +259,19 @@ div.item p img{
 				</div>
 				
 				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel2','pannel')" class="sidehead">Lorem ipsum</h3>
-						<p id="panel2" class="pannel">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-						  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						    culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+					<h3  onclick="test('#panel2','pannel')" class="sidehead">Assets Overview</h3>
+						<div id="panel2" class="pannel">
+							<?php echo "<input id='office_en' type='hidden' value='".$_SESSION["office_en"]."'>";?>
+							<div class="p_row"><p id="lbl_office_tag"><b><?php echo  $_SESSION["officename"];?></b></p></div>
+							<table id="summary">
+							
+								<tr><td><p class="lbls" id="lbl_total_avail">Available:</p><td><p id="total_avail">####</p>
+								<tr><td><p class="lbls"  id="lbl_total_deployed">Deployed:</p><td><p id="total_deloyed">#### </p>
+								<tr><td><p class="lbls"  id="lbl_total_receive">To be Received:</p><td><p id="total_receive">#### </p>
+								<tr><td><p class="lbls"  id="lbl_total_all"><b>Total:</b></p><td><b><p id="total_all">#### </p></b>
+							</table>
+						
+						</div>
 				</div>
 				<div class="imgform-img radiusnone marginleft pannel_con">
 					<h3  onclick="test('#panel3','pannel')" class="sidehead">Lorem ipsum</h3>
@@ -270,7 +302,7 @@ div.item p img{
               </div>
 
               <div class="imgform-img block" id="floodpannel">
-              <p onclick="test('#flood','iframe')">DOST FLOOD DAM INFROMATION LIVE MONITORING</p>
+              <p onclick="test('#flood','iframe')"  class="iframhead">DOST FLOOD DAM INFROMATION LIVE MONITORING</p>
 			  
                 <iframe id="flood"style="border:none;width:100%; " src="https://bagong.pagasa.dost.gov.ph/flood#dam-information" ></iframe>
                 
@@ -281,14 +313,14 @@ div.item p img{
 
         <div class="imgform-img" id="group2"style='border:none;'>
               <div class="imgform-img" id="georiskpannel">
-              <p onclick="test('#georisk','iframe')">PHIVOLCS GOERISK LIVE MONITORING</p>
+              <p onclick="test('#georisk','iframe')"  class="iframhead">PHIVOLCS GOERISK LIVE MONITORING</p>
                 <iframe id="georisk" style="border:none;width:100%; " src="https://hazardhunter.georisk.gov.ph/map#" ></iframe>
                 
               </iframe>
 
               </div>
               <div class="imgform-img" id="covidpannel">
-              <p onclick="test('#covid','iframe')">DOH-COVID19 LIVE MONITORING</p>
+              <p onclick="test('#covid','iframe')"  class="iframhead">DOH-COVID19 LIVE MONITORING</p>
                 <iframe id="covid"style="border:none;width:100%;"
                 src="https://public.tableau.com/views/COVID-19CasesandDeathsinthePhilippines_15866705872710/Home?
                 :embed=y&:embed_code_version=3&:loadOrderID=0&:display_count=y&publish=yes&:origin=viz_share_link" ></iframe>
@@ -394,6 +426,9 @@ div.item p img{
 		/* $(document).keydown(function(e) {
 			alert(e.key);
 		}); */
+		var arr_id=["#total_avail","#total_deloyed","#total_all","#total_receive"];
+				get_total_assets($("#office_en").val(),arr_id);
+
 		$(window).keyup(function(e) {
 			if (e.key === "Control"){
 				ctrl=false;

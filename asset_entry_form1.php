@@ -903,10 +903,11 @@
 										$("#sub_msg_success, #msgaddasset, #err_open").remove();
 										$("#assetsub").after("<p id='sub_msg_success'>"+data+"</p>");
 								});
-								subitem=(String.fromCharCode(subitem.charCodeAt() + 1));
+								subitem=(String.fromCharCode(subitem.charCodeAt() + 1));//this for character increment used in qr code sub item
 							}
 						}
 						
+
 						$("#new_asset").val("0");
 						clear_sub();
 						clearassetform();

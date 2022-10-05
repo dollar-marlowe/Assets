@@ -107,6 +107,24 @@
             }); 
         }
        
+        function get_total_assets(office_val,arr_id){
+			$.post("AJAX/get_assets_total.php",
+			{
+				office:office_val
+			},
+			function(data){
+				var arr_data=to_array(data,"%");
+				//alert(arr_id.lenght);
+                for(var key in arr_id){
+                  
+                    
+                        $(arr_id[key]).text(arr_data[key]);
+                 
+                }
+				
+			});
+		}
+
 
         function loadtable_decrypt(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem_chk){
 			//var elem="all%item_pass_res"

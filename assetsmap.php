@@ -19,4 +19,3 @@
 
   <script src="JS/flexi.js"></script>
 </html>
-</html>
