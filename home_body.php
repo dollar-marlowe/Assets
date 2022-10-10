@@ -261,7 +261,7 @@ div.item p img{
 				<div class="imgform-img radiusnone marginleft pannel_con">
 					<h3  onclick="test('#panel2','pannel')" class="sidehead">Assets Overview</h3>
 						<div id="panel2" class="pannel">
-							<?php echo "<input id='office_en' type='hidden' value='".$_SESSION["office_en"]."'>";?>
+							<?php echo "<input id='office_en' type='hidden' value='".encrypt($_SESSION["officeid"])."'>";?>
 							<div class="p_row"><p id="lbl_office_tag"><b><?php echo  $_SESSION["officename"];?></b></p></div>
 							<table id="summary">
 							
