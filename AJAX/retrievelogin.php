@@ -27,7 +27,7 @@
               $_SESSION["muni_id"]=$row["muni_id"]; 
               $_SESSION["brgy_id"]=$row["brgy_id"]; 
               $_SESSION["office_cat"]=$row["category"]; 
-              $_SESSION["auth_level"]=$row["auth_level"]; 
+              $_SESSION["auth_level"]=intval($row["auth_level"]); 
               $_SESSION["status"]=$row["status"]; 
               echo $row["status"];
               $_SESSION["auth"]=true;

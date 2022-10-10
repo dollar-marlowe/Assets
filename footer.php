@@ -107,7 +107,7 @@
             }); 
         }
        
-        function get_total_assets(office_val,arr_id){
+        function get_total_assets(office_val,arr_id,call_from){
 			$.post("AJAX/get_assets_total.php",
 			{
 				office:office_val
@@ -115,15 +115,36 @@
 			function(data){
 				var arr_data=to_array(data,"%");
 				//alert(arr_id.lenght);
+                var size=sizeof(arr_data);
+                
                 for(var key in arr_id){
                   
                     
                         $(arr_id[key]).text(arr_data[key]);
                  
                 }
+                if(call_from=="home"){
+                    var receive=parseInt(arr_data[size-1]);
+                    var plural="";
+                    if(receive>1){
+                        plural="s";
+                    }
+                    if(receive!=0){
+                        Popup_modal_show("You have <b>"+receive+"</b> new item"+plural+" to be received. \
+                        Plase go to <a href='assets_mgt.php'>Assets management module</a> to receive these item"+plural+". Thank you.");
+                        //$(".modal").css("display","block");
+                    }
+                }
 				
 			});
 		}
+        $(".close").click(function(){
+			$(".modal").delay(100).fadeOut();
+		}); 
+        function Popup_modal_show(msg){
+            $("#popmsg").html(msg);
+            $(".modal").delay(600).fadeIn();
+        }
 
 
         function loadtable_decrypt(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem_chk){

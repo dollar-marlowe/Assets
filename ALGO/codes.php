@@ -146,6 +146,9 @@ class Database{
     }
 }
 function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){//brg_id[0], lat[1], long[2], category[3], serial[4], count[5]
+    //this is a function to turn array into a string which will be later on exploded back to array when 
+    //passed back to jquery, it uses a delimeter to identify the start of next item or next row in a 2d array
+    
     $db= new Database();
     $db->connect();
     $result=$db->selectrows($str,0);// 0 is to select all rows

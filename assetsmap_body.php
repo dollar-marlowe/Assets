@@ -793,7 +793,7 @@
 
 				});
 				var arr_id=["#total_avail","#total_deloyed","#total_all"];
-				get_total_assets($(this).val(),arr_id);
+				get_total_assets($(this).val(),arr_id,"maps");
 				get_details_summary("AJAX/deployed_assets_table.php",$(this).val(),"dep_sum","Assets:(Serials)%Location%Total","#panel2","deployed");
 				
 				get_details_summary("AJAX/avail_assets_table.php",$(this).val(),"avail_sum","Assets%Serials%Total","#panel3","available");

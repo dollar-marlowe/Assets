@@ -121,7 +121,7 @@ div.item p img{
 	height:30px;
 }
 .pannel{
-	height:300px;
+	height:200px;
 	margin:auto;
 	width:auto;
 	padding:20px;
@@ -157,14 +157,24 @@ div.item p img{
 			}
 			#summary{
 				margin:auto;
-				margin-top:20px;
+				margin-top:10px;
 			}
 			#summary p  {
 			
-				margin-bottom:10px;
+				margin-bottom:5px;
 			}
-			
+
+
+
 		
+#user{
+	margin:auto;
+	text-align:center;
+}
+			
+.modal {
+  display: none;
+      }
 @media (max-width:1467px){
 			.side{
 				display:inline-flex;
@@ -222,13 +232,49 @@ div.item p img{
 		
 		
 </style>
+
  <section id="imgform"><div class="imgform-container ">
 
       <div class="imgform-container ">
 	  <p id="hide_show" class="top">Hide</p>
 	  	<div class="sidebar">
-		 
-				<div class="imgform-img radiusnone top pannel_con" >
+		  		<div class="imgform-img radiusnone top  pannel_con">
+					<h3  onclick="test('#panel3','pannel')" class="sidehead">
+					<?php 
+					$offc_name=$_SESSION["officename"];
+					$words_size=strlen($offc_name); 
+					$start=strpos($offc_name,"(");
+					$end=strpos($offc_name,")");
+					$go= ($start!=null && $end!=null)? true:false;
+					$dict=substr($offc_name,0,$start-1);
+					$abreviate=substr($offc_name,$start+1,($words_size-$start-1));
+					$abr_size=strlen($abreviate);
+					$abreviate=(str_word_count($abreviate)>2)? abreviate_except($abreviate, $abr_size,"IN AND OF (CAR)"):"";
+					$final_name= (($words_size>30)&& $go) ? $dict." ".$abreviate:$offc_name;
+					echo $final_name;
+					?>
+					</h3>
+						<div id="panel3" class="pannel">
+						<h4 id="user"><?php echo "Welcome back ".$_SESSION["fname"]." ".$_SESSION["lname"]."!";  ?></h4>
+						</div>
+				</div>
+
+				<div class="imgform-img radiusnone marginleft pannel_con">
+					<h3  onclick="test('#panel2','pannel')" class="sidehead">Assets Overview</h3>
+						<div id="panel2" class="pannel">
+							<?php echo "<input id='office_en' type='hidden' value='".encrypt($_SESSION["officeid"])."'>";?>
+							<table id="summary">
+							
+								<tr><td><p class="lbls" id="lbl_total_avail">Available:</p><td><p id="total_avail">####</p>
+								<tr><td><p class="lbls"  id="lbl_total_deployed">Deployed:</p><td><p id="total_deloyed">#### </p>
+								<tr><td><p class="lbls"  id="lbl_total_receive">To be Received:</p><td><p id="total_receive">#### </p>
+								<tr><td><p class="lbls"  id="lbl_total_all"><b>Total:</b></p><td><b><p id="total_all">#### </p></b>
+							</table>
+						
+						</div>
+				</div>
+
+				<div class="imgform-img radiusnone  marginleft pannel_con" >
 					<h3 onclick="test('#panel1','pannel')" class="sidehead">Tracker Pannels</h3>
 					<div id="panel1" class="pannel">
 							<div class="item_container">
@@ -258,33 +304,8 @@ div.item p img{
 					
 				</div>
 				
-				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel2','pannel')" class="sidehead">Assets Overview</h3>
-						<div id="panel2" class="pannel">
-							<?php echo "<input id='office_en' type='hidden' value='".encrypt($_SESSION["officeid"])."'>";?>
-							<div class="p_row"><p id="lbl_office_tag"><b><?php echo  $_SESSION["officename"];?></b></p></div>
-							<table id="summary">
-							
-								<tr><td><p class="lbls" id="lbl_total_avail">Available:</p><td><p id="total_avail">####</p>
-								<tr><td><p class="lbls"  id="lbl_total_deployed">Deployed:</p><td><p id="total_deloyed">#### </p>
-								<tr><td><p class="lbls"  id="lbl_total_receive">To be Received:</p><td><p id="total_receive">#### </p>
-								<tr><td><p class="lbls"  id="lbl_total_all"><b>Total:</b></p><td><b><p id="total_all">#### </p></b>
-							</table>
-						
-						</div>
-				</div>
-				<div class="imgform-img radiusnone marginleft pannel_con">
-					<h3  onclick="test('#panel3','pannel')" class="sidehead">Lorem ipsum</h3>
-						<p id="panel3" class="pannel">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-						 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-						  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-						   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-						    culpa qui officia deserunt mollit anim id est laborum.
-						</p>
-				</div>
+				
+				
 			</div>
 
       <div class="imgform-img " id="group1" style='border:none;'>
@@ -420,14 +441,20 @@ div.item p img{
 
 
       $(document).ready(function(){
+	
 		var kk="";
 		 var alt=false;
 		 var ctrl=false;
+		 
 		/* $(document).keydown(function(e) {
 			alert(e.key);
 		}); */
+		
 		var arr_id=["#total_avail","#total_deloyed","#total_all","#total_receive"];
-				get_total_assets($("#office_en").val(),arr_id);
+				get_total_assets($("#office_en").val(),arr_id,"home");
+				//alert($("#total_receive").text());
+		/* $(".modal").css("display","block");	*/	
+		
 
 		$(window).keyup(function(e) {
 			if (e.key === "Control"){

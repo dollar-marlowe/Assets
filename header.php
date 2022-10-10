@@ -17,7 +17,7 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/saphire.css" />
+    <link rel="stylesheet" href="CSS/safiro.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>
@@ -43,6 +43,9 @@
       .navbar-container{
         margin:0;
         margin-top:13px;
+      }
+      .modal {
+  display: none;
       }
      
     </style>
@@ -88,15 +91,20 @@
          echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
+        
+
+        
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
+         if( $_SESSION["auth_level"]>2){
          echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
          echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
-          if($_SESSION["auth_level"]>2){
+        
             echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>"; 
-          }
+          
+        }
      
 
          echo       "</article>";
@@ -119,10 +127,19 @@
         <p class='header'>Shared Assets Management Portal.</p>
       </div>
     </section>
+    <div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+   <br> <p id="popmsg"></p>
+  </div>
+
+</div>
       <script>
      
         $(document).ready(function(){
-
+          $(".modal").hide();
             $("body").click(function(e){
             var target = $(e.target), article;
               if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div") && !target.is(".navbar-container .ac-container div label ") && !target.is(".navbar-container .ac-container div article")&& !target.is(".navbar-container .ac-container div article a") &&  !target.is(".navbar-container .ac-container div input ")  &&  !target.is(".navbar-container .ac-container div label a") ){
