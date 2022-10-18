@@ -382,14 +382,16 @@ function validate_date(input){
 		}
 	}
 	function validate_all(){
+
 		var keys ={
 			"#disaster":"",
 			"#category":"0",
 			"#myFile":"",
 			"#description":""
-
 		};
+
 		var go=true;
+
 		for(var key in keys){
 			if(validate(key,keys[key])){
 				go=false;
@@ -403,9 +405,20 @@ function validate_date(input){
 			return false;
 		}
 	}
+
 	$("#submit").click(function(){
 		if(validate_all()){
 			$("#err_lbl").remove();
+			
+			$.post("AJAX/insert_disaster.php",{
+				disaster: $("#disaster").val(),
+				category: $("#category").val(),
+				myFile: $("#myFile".val(),
+				description: $("#description").val()
+			},
+			function(data){
+
+			});
 		}
 		else{
 			$("#err_lbl").remove();
@@ -413,14 +426,15 @@ function validate_date(input){
 	
 		}
 	});
+
 	$("#clear").click(function(){
 		var keys ={
 			"#disaster":"",
 			"#category":"0",
 			"#myFile":"",
 			"#description":""
-
 		};
+
 		for(var key in keys){
 			$(key).val(keys[key]);
 			$(key).css({"border":"solid 1px rgb(118, 118, 118)"});
@@ -429,6 +443,8 @@ function validate_date(input){
 		$("#date_added").css({"border":"solid 1px rgb(118, 118, 118)"});
 		$('#date_added').val(new Date());
 		$("#err_lbl").remove();
+
 	});
+
  });
     </script>
