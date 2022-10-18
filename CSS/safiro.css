@@ -136,7 +136,7 @@ body {
   margin-top:10px;
 }
 /*This si for the pop-up modal*/
-.modal {
+.modal,.modal2 {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 9000; /* Sit on top */
@@ -170,7 +170,7 @@ box-shadow: -1px -1px 9px 6px rgba(0,0,0,0.34);
 }
 
 /* The Close Button */
-.close {
+.close, .logout {
   color: #aaa;
   float: right;
   font-size: 28px;

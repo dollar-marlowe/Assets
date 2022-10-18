@@ -9,8 +9,7 @@
 		}
 	
 		.imgform-img p{
-			margin-left:10px;
-			margin-bottom:10px;
+			
 			display:inline-block;
 			font-size:18px;
 		}
@@ -82,16 +81,13 @@
 			font-size:18px;		
 		
 		}
-		.pannel h2#accounts{
-			border-right:solid 2px #ddd;
-			
-		}
+		
 		.pannel h2 img{
-			width:30px;
+			width:25px;
 			margin-bottom:-6px;
 		}
 		.header2{
-			font-size: 2.7rem;
+			font-size: 1.7rem;
 			font-weight: 500;
 			color: #444;
 			margin-bottom: 1rem;
@@ -104,6 +100,28 @@
 			width:fit-content;
 			
 			
+		}
+		.input_wrapper{
+			
+			width:fit-content;
+			margin-top:5px;
+		}
+
+		.input_wrapper input, .input_wrapper textarea, .input_wrapper select{
+			width:300px;
+		}
+		.input_wrapper .label{
+			width:200px;
+			margin-top:0px;
+		}
+		.inner-wrapper{
+			
+			width:fit-content;
+			margin:auto;
+			
+		}
+		.btn{
+			margin-bottom:15px;
 		}
 		@media (max-width:1267px){
 			.imgform-container{
@@ -145,6 +163,19 @@
 				width:20px;
 				margin-bottom:-4px;
 			}
+			.input_wrapper, .inner-wrapper{
+				width:fit-content;
+			}
+			.input_wrapper{
+				margin:auto;
+				margin-top:10px;
+			}
+			.input_wrapper >*{
+				display:block;
+			}
+			.input_wrapper input, .input_wrapper textarea, .input_wrapper select{
+			width:200px;
+			}
 		}
 		@media(max-width:400px){
 			th:nth-child(5),td:nth-child(5){
@@ -162,6 +193,13 @@
 			border-top:solid 1px #ddd;
 			
 			}
+			.input_wrapper, .inner-wrapper{
+				width:fit-content;
+			}
+			.input_wrapper{
+				margin:auto;
+				margin-top:10px;
+			}
 		}
 
 		@media(max-width:320px){
@@ -174,107 +212,91 @@
 				display:none;
 			}
 		}
-		
+		input[type=submit]{
+			width:200px;
+			
+		}
 			
 	
 		
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
- <div class="pannel"><h2  id="accounts" ><img src="images\activate.png">Hazard Data Log</h2><h2 id="pass_reset">Incident Logs<img src="images\reset.png"></h2></div>
-      <div class="imgform-container " id="accounts_form">
-		
-        <div class="imgform-img">
-		
+		<div class="pannel" onclick="slide('#hazard_form')" ><h2  id="accounts" ><img src="images\hazard.png"> <u>H</u>azard Data Log</h2></div>
+      
+      <div class="imgform-container " id="hazard_form">
+	   <div class="imgform-img">
+					<div class="inner-wrapper">
 					
-						<label for="disaster">Name</label>
-					<input type="text" placeholder="Disaster's Name*" id="aname" />
+					<div class="input_wrapper entry"><p class="label"><label for="disaster">Name</label></p>
+					<input type="text" placeholder="Disaster's Name*" id="disaster" /></div>
 					
 					
-			<label for="naturedisaster">Nature of Disaster</label>
-					<select id="Nature of Disaster">
-							<option value="Select nature of disaster">Select Nature of Disaster</option>
-							<option value="Typhoon">Typhoon</option>
-							<option value="Earthquake">Earthquake</option>
-							<option value="Tsunami">Tsunami</option>
-							<option value="Volcanic Eruption">Volcanic Eruption</option>
-							<option value="Landslide">Landslide</option>
-							<option value="Flash Flood">Flash Flood</option>
-							<option value="Epidemic">Epidemic</option>
-							<option value="Pandemic">Pandemic</option>
-							<option value="El-Niño">El-Niño</option>
-							<option value="La-Niña">La-Niña</option>
-							<option value="Fires/Wildfires">Fires/Wildfires"</option>
-							<option value="Insect/Animal Plagues">Insect/Animal Plagues</option>
-							<option value="Human Induced">Human Induced</option>
+					<div class="input_wrapper"><p class="label"><label for="naturedisaster">Nature of Disaster</label></p>
+					<select id="category">
+							<option value="0">Select from below</option>
+							<option value="Typhoon%Meteorological">Typhoon</option>
+							<option value="Earthquake%Geophysical">Earthquake</option>
+							<option value="Volcanic Eruption%Geophysical">Volcanic Eruption</option>
+							<option value="Landslide%Geophysical">Landslide</option>
+							<option value="Tsunami%Hydrological">Tsunami</option>
+							<option value="La-Niña%Hydrological">La-Niña</option>
+							<option value="Flash Flood%Hydrological">Flash Flood</option>
+							<option value="Epidemic%Biological">Epidemic</option>
+							<option value="Pandemic%Biological">Pandemic</option>
+							<option value="Insect/Animal Plagues%Biological">Insect/Animal Plagues</option>
+							<option value="El-Niño%Climatological">El-Niño</option>
+							<option value="Wildfires%Climatological">Fires/Wildfires"</option>
+							<option value="Fires%Man-made">Fires"</option>										
+							<option value="Human Induced%Man-made">Human Induced</option>
 					</select>
+					</div>
 
-			<label for="category">Category</label>
-					<select id="Category for Typhoon">
-							<option value="TY">Typhoon (TY)</option>
-							<option value="STS">Severe tropical storm (STS)</option>
-							<option	value="TS">Tropical storm (TS)</option>
-							<option value="TD">Tropical depression (TD)</option>
-					</select> 
-			<label for="description">Description</label>
+					
+
+					
+
+					<div class="input_wrapper"><p class="label">
+					<label for="datestarted ">Date Started:</label></p>
+					<input type="date" name="admission_date" id="date_added" class="form-control">
+					</div>
+							
+				
+						
+					<div class="input_wrapper"><p class="label">
+					<label for="status">Attachment</label></p>
+					<input type="file" id="myFile" name="filename">
+					</div>
+					<div class="input_wrapper"><p class="label">
+					<label for="description">Description</label></p>
 					<textarea
 							cols='25'
-							rows='2'
-							placeholder='Description/Remarks'
-							id='remarks1'
-							class=' pp'
-					></textarea>
-
-			<label for="date started ">Date Started:</label>
-					<!--<span class="error">*</span><br> -->
-							<input type="date" name="admission_date" id="admission date" class="form-control">
-							<!--<span class="error"><?php echo $admission_dateErr;?></span>		-->
-			<label for="date started ">Date Ended:</label>
-					<!--<span class="error">*</span><br> -->
-							<input type="date" name="admission_date" id="admission date" class="form-control">
-							<!--<span class="error"><?php echo $admission_dateErr;?></span>		-->
-					<label for="status">Status</label>
-
-					<select id="Status">
-							<option value="green">Green Alert (ALPHA)</option>
-							<option value="yellow"> Yellow Alert (BRAVO)</option>
-							<option	value="red"> Red Alert (CHARLIE)</option>
-							<option	value="Blue"> Blue Alert (DELTA)</option>
-					</select> 
-					<!--sample template lang ng category once nature of disaster value: Earthquake is selected
-						<select id="Category for Earthquake">
-							<option value="TE">Tectonic Earthquake</option>
-							<option value="VE">Volcanic Earthquake</option>
-					</select> 
-					-->
-					<!--
-					<label for="auth_level" id="lbllevel">User Access Level</label>
-						<select id="auth_level">
-							<option value="1">Regular User</option>
-							<option value="2">Technical Operator</option>
-							<option value="3">Admin</option>	
-						</select>	
-					</lable>	
-
-					<label for="office">Office Designation: *</label>
-					<select id="office" name="off_designation" >
-						
-					</select>      
-					-->	              
-					<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_account">
-					<input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear">                    
+							rows='7'
+							placeholder='Description/Remarks/Links'
+							id='description'
+							class='pp'
+					></textarea></div>
+					          
+					<div class="input_wrapper" style="margin:auto">
+					<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
+					<input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear"> 
+					</div>                   
         </div>
       </div>
-	 
-      <div class="imgform-container " id="resets_form"> 
+	</div>
+	<div class="pannel" style="margin-top:10px;" onclick="slide('#incident_log')"><h2 id="pass_reset" ><img src="images\logs.png"> <u>I</u>ncident Logs</h2></div>
+    
+      <div class="imgform-container " id="incident_log"> 
 			
         <div class="imgform-img">
-		<h2 id='officialheader' class="header2">Incident Logs</h2>
+		<h3 id='officialheader' class="header2">Incident Logs</h3>
+		<div style="width:100%;height:400px;">Template</div>
 			
         </div>
 
        
-      </div>
+   
+	  </div>
 	  <?php //there was a plan to setup a connection between js file and php however there is a problm whenever a js file updated
 	  //is not reflecting  when being integrated in script tag, so the solution if to utilize the footer to 
 	  //contain all js functtions connecting to php commands to use php helper functions in javascript such as sessions, email filter and AES encryption
@@ -287,10 +309,126 @@
 
     <script>
 		
-		
+		function slide(target){
+			$(target).slideToggle("slow");
+		}
 		
 
 $(document).ready(function(){
+	var alt=false;
+	$(document).keyup(function(e) {
+		if(e.key === "Alt"){
+		alt=false;
+		}
+	});
 
+	$(document).keydown(function(e) {
+		//alert("key");
+		if(e.key === "Alt"){
+		alt=true;
+		}
+		if(alt){
+			if(e.key === "H" || e.key === "h" ){
+				$("#hazard_form").slideToggle("slow");
+			}
+			if(e.key === "i" || e.key === "I" ){
+				$("#incident_log").slideToggle("slow");
+			}
+		}
+	});
+	$("#disaster").keyup(function(){
+		validate("#disaster","")
+	});
+	$("#category").change(function(){
+		validate("#category","0")
+	});
+	$("#date_added").change(function(){
+		validate_date("#date_added");
+		
+	});
+	
+function validate_date(input){
+	var date = new Date($(input).val());
+		//alert(date.getDate());
+		if(isNaN(date.getDate())){
+			$(input).css({"border":"solid 1px red"}); 
+			return true;
+		}
+		else{
+			$(input).css({"border":"solid 1px rgb(118, 118, 118)"}); 
+			return false;
+		}
+}
+
+	$("#myFile").change(function(){
+		
+		//alert($(this).val());
+		validate("#myFile","")
+	});
+
+	$("#description").keyup(function(){
+		
+		//alert($(this).val());
+		validate("#description","")
+	});
+	
+	function validate(target,value){
+		if($(target).val().trim()==value){
+			$(target).css({"border":"solid 1px red"}); 
+			return true;
+		}else{
+			$(target).css({"border":"solid 1px rgb(118, 118, 118)"});
+			return false;
+		}
+	}
+	function validate_all(){
+		var keys ={
+			"#disaster":"",
+			"#category":"0",
+			"#myFile":"",
+			"#description":""
+
+		};
+		var go=true;
+		for(var key in keys){
+			if(validate(key,keys[key])){
+				go=false;
+			}
+		}
+		validate_date("#date_added");
+		if(go && validate_date("#date_added")==false){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	$("#submit").click(function(){
+		if(validate_all()){
+			$("#err_lbl").remove();
+		}
+		else{
+			$("#err_lbl").remove();
+			$(".entry").before("<p style='color:red;text-align:right;font-size:1.1em;margin:auto;width:100%;' id='err_lbl'>Reqiured Fields Cannot be Empty!</p>");
+	
+		}
+	});
+	$("#clear").click(function(){
+		var keys ={
+			"#disaster":"",
+			"#category":"0",
+			"#myFile":"",
+			"#description":""
+
+		};
+		for(var key in keys){
+			$(key).val(keys[key]);
+			$(key).css({"border":"solid 1px rgb(118, 118, 118)"});
+		}
+		
+		$("#date_added").css({"border":"solid 1px rgb(118, 118, 118)"});
+		$('#date_added').val(new Date());
+		$("#err_lbl").remove();
+	});
  });
     </script>

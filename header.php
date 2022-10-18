@@ -44,9 +44,43 @@
         margin:0;
         margin-top:13px;
       }
+
+      
+/*This si for the pop-up modal*/
+.modal2 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 9500; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+
+/* The Close Button */
+ .logout {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.logout :hover,
+.logout :focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
       .modal {
   display: none;
       }
+    
      
     </style>
   </head>
@@ -143,11 +177,67 @@
     <span class="close">&times;</span>
    <br> <div id="popmsg"></div>
   </div>
+  </div>
+
+  <div id="myModal" class="modal2">
+
+  <div class="modal-content">
+    <span class="logout">&times;</span>
+   <br> <div id="popmsg1"></div>
+  </div>
 
 </div>
       <script>
+          var idleMax = 40; // Logout after 10 minutes of IDLE
+          var idleTime = 0;
+          setInterval(function(){
+            idleTime = idleTime + 1;
+           // 
+            if (idleTime == idleMax) { 
+              Popup_modal_show2("You have been automatically logged out due to inactivity. Thank you.",600);
+              $.post("AJAX/mycodes.php",{
+                command: "logout"
+              }, function(data){
+                
+              });
+            
+                       
+            }
+          }, 30000); 
      
         $(document).ready(function(){
+          $(".modal2").hide();
+        
+
+         $(".logout").click(function(){
+          $(".modal2").delay(100).fadeOut(function(){
+            window.location="logout.php";
+          });
+        
+         });
+         
+           // 1 minute interval    
+          $( document ).mousemove(function( event ) {
+              idleTime = 0; // reset to zero
+              //alert("Test");
+         });
+        
+         $( document ).scroll(function( event ) {
+          //alert("scroll");
+              idleTime = 0; // reset to zero
+              //alert("Test");
+         });
+         $( document ).click(function( event ) {
+          //alert("scroll");
+              idleTime = 0; // reset to zero
+              //alert("Test");
+         });
+
+        // count minutes
+         
+
+        
+
           $(".modal").hide();
             $("body").click(function(e){
             var target = $(e.target), article;
@@ -178,8 +268,12 @@
                 $(".navbar-container .ac-container div #ac-2").prop("checked",false);
               }
             });
+            $(document).keydown(function(e) {
+              idleTime = 0;
+            });
 
             $(document).keyup(function(e) {
+              idleTime = 0;
                 if (e.key === "Escape") { // escape key maps to keycode `27`
                     // <DO YOUR WORK HERE>
                     $("#nbrger").prop("checked",false);

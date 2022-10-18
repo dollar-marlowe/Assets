@@ -147,6 +147,13 @@
             $("#popmsg").html(msg);
             $(".modal").delay(speed).fadeIn();
         }
+        function Popup_modal_show2(msg,speed){
+            $(".modal2").css("display","block");
+            $(".modal2").hide();
+            $("#popmsg1").html(msg);
+            $(".modal2").delay(speed).fadeIn();
+        }
+      
 
 
         function loadtable_decrypt(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem_chk){

@@ -56,6 +56,11 @@ $command=$_REQUEST["command"];
             echo "";
         }
     }
+
+    if($command=="logout"){
+        session_unset(); 
+         session_destroy(); 
+    }
     
    
 }
