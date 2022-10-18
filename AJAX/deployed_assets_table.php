@@ -19,7 +19,7 @@
        
         count(*) as `count` FROM deployed_assets_loc i where id=". $arr_data[0]." group by  brgy_id order by province asc";
        $data=$mydb->selectrows($sql,0);
-     
+        $total=0;
        if($data!=null){
 
         echo "<table class='".$class."'><tr>";
@@ -29,8 +29,9 @@
             foreach($data as $row){
                 echo "<tr><td>".str_replace(";",";<br>",summarize_list($row["category"], $row["serial"],intval($row["count"])));
                 echo"<td>".$row["province"].", ".$row["municipality"].", ".$row["barangay"]."<td>".$row["count"];
+                $total+=intval($row["count"]);
             }
-            echo "</table>";
+            echo "<tr><td colspan='2'><b>GRAND TOTAL</b><td><b>". $total."</b></table>";
        }
        else{
         echo "<p style='font-size:30px;'>NO DATA AVAILABLE</p>";

@@ -30,7 +30,7 @@
                 echo"<td>".$row["serial"]."<td>".$row["count"];
                 $total+=intval($row["count"]);
             }
-            echo "</table>";
+            echo "<tr><td colspan='2'><b>GRAND TOTAL</b><td><b>". $total."</b></table>";
        }
        else{
         echo "<p style='font-size:30px;'>NO DATA AVAILABLE</p>";

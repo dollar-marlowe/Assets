@@ -16,7 +16,7 @@
         "update transferhistory set status='Received', datereceived='".$today."' where asset_owner_id=".$id;
        
        if($mydb->insertmultiple($str)=="New records created!"){
-           echo "<p id='tblmsg'>Inventory item(s) is/are now received and tagged available  </p>";
+           echo "Sucess";
        }else{
         echo "Error executing query!";
        }

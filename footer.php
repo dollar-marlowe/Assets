@@ -131,7 +131,7 @@
                     }
                     if(receive!=0){
                         Popup_modal_show("You have <b>"+receive+"</b> new item"+plural+" to be received. \
-                        Plase go to <a href='assets_mgt.php'>Assets management module</a> to receive these item"+plural+". Thank you.");
+                        Please go to <a href='assets_mgt.php'>Assets management module</a> to receive these item"+plural+". Thank you.",600);
                         //$(".modal").css("display","block");
                     }
                 }
@@ -141,9 +141,11 @@
         $(".close").click(function(){
 			$(".modal").delay(100).fadeOut();
 		}); 
-        function Popup_modal_show(msg){
+        function Popup_modal_show(msg,speed){
+            $(".modal").css("display","block");
+            $(".modal").hide();
             $("#popmsg").html(msg);
-            $(".modal").delay(600).fadeIn();
+            $(".modal").delay(speed).fadeIn();
         }
 
 

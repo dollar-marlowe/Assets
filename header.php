@@ -82,6 +82,7 @@
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
          echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
          echo  "</div>";
+
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-2'><u>A</u>ssets</label>";
@@ -89,6 +90,16 @@
          echo           "<a href='assets'>Assets <u>D</u>ata Entry</a>";
          echo           "<a href='assets_mgt'>A<u>s</u>sets Management</a>"; 
          echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
+         echo       "</article>";
+         echo   "</div>";
+
+         echo "<div>";
+         echo       "<input id='ac-5' name='accordion-1' type='checkbox' >";
+         echo       "<label for='ac-5'><u>E</u>TC</label>";
+         echo       "<article class='ac-medium'>";
+         echo           "<a href='disaster_edit'><u>H</u>azards Management</a>";
+         echo           "<a href=''><u>R</u>isk Management</a>
+                          <a href=''>ETC <u>D</u>eactivation</a>"; 
          echo       "</article>";
          echo   "</div>";
         
@@ -101,9 +112,7 @@
          if( $_SESSION["auth_level"]>2){
          echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
          echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
-        
-            echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>"; 
-          
+         echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
         }
      
 
@@ -132,7 +141,7 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-   <br> <p id="popmsg"></p>
+   <br> <div id="popmsg"></div>
   </div>
 
 </div>
@@ -142,7 +151,7 @@
           $(".modal").hide();
             $("body").click(function(e){
             var target = $(e.target), article;
-              if(!target.is(".navbar-container") && !target.is("#nbrger") && !target.is(".hamburger-lines") && !target.is(".navbar-container .ac-container") && !target.is(".navbar-container .ac-container div") && !target.is(".navbar-container .ac-container div label ") && !target.is(".navbar-container .ac-container div article")&& !target.is(".navbar-container .ac-container div article a") &&  !target.is(".navbar-container .ac-container div input ")  &&  !target.is(".navbar-container .ac-container div label a") ){
+              if(!target.is(".navbar-container") && !target.is("#nbrger")  && !target.is(".hamburger-lines")  && !target.is(".navbar-container .ac-container")  && !target.is(".navbar-container .ac-container div")  && !target.is(".navbar-container .ac-container div label ")   && !target.is(".navbar-container .ac-container div article")  && !target.is(".navbar-container .ac-container div article a") &&  !target.is(".navbar-container .ac-container div input ")  &&  !target.is(".navbar-container .ac-container div label a") ){
               // alert( $("#nbrger").is(":checked"));
               $("#nbrger").prop("checked",false);
                         
@@ -152,12 +161,21 @@
             $(".navbar-container .ac-container div #ac-3").click(function(){
               if($(".navbar-container .ac-container div #ac-3").is(":checked")){
                 $(".navbar-container .ac-container div #ac-2").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-5").prop("checked",false);
               }
             });
 
             $(".navbar-container .ac-container div #ac-2").click(function(){
               if($(".navbar-container .ac-container div #ac-2").is(":checked")){
                 $(".navbar-container .ac-container div #ac-3").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-5").prop("checked",false);
+              }
+            });
+
+            $(".navbar-container .ac-container div #ac-5").click(function(){
+              if($(".navbar-container .ac-container div #ac-5").is(":checked")){
+                $(".navbar-container .ac-container div #ac-3").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-2").prop("checked",false);
               }
             });
 
@@ -176,15 +194,18 @@
                     }
                 
                 }
-                if($("#nbrger").is(":checked")){
-                  var id_office=".navbar-container .ac-container div #ac-3";
+                var id_office=".navbar-container .ac-container div #ac-3";
                   var id_assets=".navbar-container .ac-container div #ac-2";
+                  var id_etc=".navbar-container .ac-container div #ac-5";
+                if($("#nbrger").is(":checked")){
+                 
                     if (e.key === "h" || e.key === "H"){
                       window.location="home.php";
                     }
 
                     if (e.key === "A" || e.key === "a"){
                      $(id_office).prop("checked",false);
+                     $(id_etc).prop("checked",false);
                         if($(id_assets).is(":checked")){
                           $(id_assets).prop("checked",false);
                         }else{
@@ -194,10 +215,20 @@
                    
                     if (e.key === "O" || e.key === "o"){
                       $(id_assets).prop("checked",false);
+                      $(id_etc).prop("checked",false);
                         if($(id_office).is(":checked")){
                           $(id_office).prop("checked",false);
                         }else{
                           $(id_office).prop("checked",true);
+                        }
+                    }
+                    if (e.key === "E" || e.key === "e"){
+                      $(id_assets).prop("checked",false);
+                      $(id_office).prop("checked",false);
+                        if($(id_etc).is(":checked")){
+                          $(id_etc).prop("checked",false);
+                        }else{
+                          $(id_etc).prop("checked",true);
                         }
                     }
                  
@@ -217,8 +248,7 @@
                         window.location="assetsmap.php";
                         }
                     }
-
-                
+               
                     if($(id_office).is(":checked")){
                       
                         if (e.key === "E" || e.key === "e"){
@@ -231,6 +261,19 @@
                         window.location="loginaccount.php";
                         }
                     }
+
+                    if($(id_etc).is(":checked")){
+                      
+                      if (e.key === "H" || e.key === "h"){
+                      window.location="disaster_edit.php";
+                      }
+                     
+                  }
+                }
+                else{
+                  $(id_assets).prop("checked",false);
+                  $(id_office).prop("checked",false);
+                  $(id_etc).prop("checked",false);
                 }
 
             });

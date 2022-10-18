@@ -161,8 +161,11 @@
 			.avail_sum, .dep_sum{
 				width:100%;
 			}
+			#print{
+				margin-left:10px;
+			}
 
-		@media (max-width:1467px){
+		@media (max-width:1200px){
 			.side{
 				display:inline-flex;
 			}
@@ -191,7 +194,7 @@
 				display:block;
 			}
 			
-			.pannel-input{
+			.pannel-input, #print{
 				
 				margin:0px;
 			}
@@ -211,7 +214,7 @@
 				margin-left:0px;
 				
 			}
-			.pannel-input{
+			.pannel-input, #print{
 				
 				margin:0px;
 			}
@@ -229,6 +232,9 @@
 			}
 			.pannel-input{
 				width:180px;
+				margin:0px;
+			}
+			#print{
 				margin:0px;
 			}
 			
@@ -292,7 +298,7 @@
 								<option value="all">All</option>
 							</select>
 
-							<tr><td><td><input type="submit" id="print" value="Print">
+							<tr><td><td><input type="submit" id="print" value="Print"> &nbsp <input type="checkbox" id="show_tool_tip"> Show tool tip
 						</table>
 						
 						
@@ -374,6 +380,12 @@
 		var mobile_map_plus_reg=0;
 		var screen_height=800;
 		var alt=false;
+
+		var l=$(window).width();
+			if(l<=1200){
+				$(".pannel").css("display","none");
+			}
+		$("#show_tool_tip").attr("disabled","disabled");
 		$("#print").attr("disabled","disabled");
 		loadmap("10.659%124.486999%6");// these are going to be converted into array with % as the splitter
 		$("#assets").attr("disabled","disabled");
@@ -382,14 +394,14 @@
 		$(window).resize(function(){// this is the even for windows resize calling the function 
 			var l=$(window).width();
 			var h=$(window).height();
-				if(l<1267 && l>792){
+				if(l<1200 && l>792){
 					$(".br").remove();
 				
 					$(".table_lbl1").hide();
 					$(".table_lbl2").show().after("<br class='br'>");
 				}
 				
-				if(l>1267){
+				if(l>1200){
 					$(".table_lbl1").show();
 					$(".table_lbl2").hide()
 					$(".br").remove();
@@ -615,10 +627,10 @@
 		});
 		$(window).resize(function(){
 			var l=$(window).width();
-			if(l<=1467 && l>820){
+			if(l<=1200){
 				$(".pannel").css("display","none");
 			}
-			if(l>1467){
+			if(l>1200){
 				$(".pannel").css("display","block");
 			}
 		});
@@ -634,11 +646,11 @@
 				// alert(data);
 				if(stat=="available"){
 					$("#office_owner").remove();
-					$("#avail_total").remove();
+					//$("#avail_total").remove();
 					var content=to_array(data,"%");
 					$(target).html(content[0]);
 					$("."+class_name).before("<p id='office_owner'>Location: <b>"+content[2]+"</b></p>");
-					$("."+class_name).before("<p id='avail_total'>Grand Total: <b>"+content[1]+"</b></p>");
+					//$("."+class_name).before("<p id='avail_total'>Grand Total: <b>"+content[1]+"</b></p>");
 				}
 				if(stat=="deployed"){
 					$(target).html(data);
@@ -646,6 +658,14 @@
 				
 			});
 		}
+		$("#show_tool_tip").change(function(){
+			if ($("#show_tool_tip").is(":checked")==true){
+				$(".leaflet-tooltip").show();
+              }
+			  else{
+				$(".leaflet-tooltip").hide();
+			  }
+		});
 		$("#print").click(function(){
 			$(".logo").hide();
 			$(".navbar").hide();
@@ -673,21 +693,21 @@
 				var w2=Number($("#panel3").css("height").replace("px",""));
 					if((total_width+w2)>900){
 						
-						final_w=width-total_width-100;
+						final_w=width-total_width+125;
 						$("#pannel_dep").after("<div class='filler' style='width:100%;height:"+final_w+"px;'></div>");
 			
 
 					}
-					if(w2>300){
-						final_w=width-w2-100;
+					if(w2>600){
+						final_w=width-25;
 						$("#pannel_avail").after("<div class='filler' style='width:100%;height:"+final_w+"px;'></div>");
 			
 					}
 			}else{
 
-				if(total_width>300){
-						final_w=width-total_width-100;
-						$(after).after("<div class='filler' style='width:100%;height:"+final_w+"px;'>Test</div>");
+				if(total_width>600){
+						final_w=width-total_width+125;
+						$(after).after("<div class='filler' style='width:100%;height:"+final_w+"px;'></div>");
 			
 
 					}
@@ -767,6 +787,10 @@
 				$("#assets").attr("disabled","disabled");
 				//9%10.659%124.486999%REGION VII (CENTRAL VISAYAS)
 				map.setView(new L.LatLng(10.659,124.486999), 6-mobile_map_minus );
+				$("#show_tool_tip").prop("checked",false);
+				$("#show_tool_tip").attr("disabled","disabled");
+				$("#print").attr("disabled","disabled");
+					$("#print").attr("disabled","disabled");
 			}
 			
 		});
@@ -804,6 +828,11 @@
 				$("#assets").attr("disabled","disabled");
 				//9%10.659%124.486999%REGION VII (CENTRAL VISAYAS)
 				map.setView(new L.LatLng(10.659,124.486999), 6-mobile_map_minus );
+				
+				$("#show_tool_tip").prop("checked",false);
+				$("#show_tool_tip").attr("disabled","disabled");
+				$("#print").attr("disabled","disabled");
+			
 			}
 
 			
@@ -811,8 +840,18 @@
 		$("#assets").change(function(){
 			if($("#dict_offices").val()!=0){
 				remove_deployed_markers();
+			
 				get_markers($(this).val(),$("#dict_offices").val(),6);
 				
+			}
+			
+			if($("#assets").val()!=0){
+				$("#show_tool_tip").removeAttr("disabled");
+				$("#show_tool_tip").prop("checked",true);
+			}else{
+				//alert("called");
+				$("#show_tool_tip").prop("checked",false);
+				$("#show_tool_tip").attr("disabled","disabled");
 			}
 			
 		});
@@ -873,7 +912,7 @@
 
 		function remove_deployed_markers(){
 			
-			if (viewdep) {//public variable
+			if (viewdep) {//public variable this is a bollean variable whose value is true if what is selected is 
 				for(let i=0;i<sizeof(arrdepmarkers);i++){//arrdepmarkers is also a public variable
 					map.removeLayer(arrdepmarkers[i]);
 				}

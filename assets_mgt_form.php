@@ -724,6 +724,7 @@
 							alert('You selected an item that is already deployed!');
 						}
 							else{
+								var chk_size=$(".item:checked").length;
 								var c=1;
 								$.each($(".item:checked"), function(){
 									var elem=$(this).val();
@@ -736,18 +737,29 @@
 										brgy:$("#brgy").val(),
 										remarks:$("#remarks").val()
 										},function(data){
-											$("#msg1").remove();
-											$("#assetmgt").after("<h4 id='msg1' style='font:bold'>"+c+" "+data+"</h4>");
+											if(c==chk_size){
+												var plural="";
+												var helping="is";
+												var helping1="has been";
+												if(c>1){
+													plural="s";
+													helping="are";
+													helping1="have been";
+												}
+												Popup_modal_show(c+" item"+plural+" "+helping1+" successfully deployed in "+$("#brgy option:selected").text()+", "+$("#municipality option:selected").text()+", "+$("#province option:selected").text()+".",600);
+												updatealllistandtables();
+												clear_mgt_forms();
+											}
+											
 											c++;
 									});
 								});
-								alert("Item(s) deployed");
-						}
-							updatealllistandtables();
-							clear_mgt_forms();
+							}
+						
 					}
 				}
 				if($("#action").val()=='2'){
+					
 					validate_mgt_elem("#mgtoffice","0");
 					if(validate_mgt()){
 						if(hasunavailable() && $("#status").val()!="deployed"){
@@ -767,15 +779,25 @@
 									remarks:$("#remarks").val()
 									},function(data){
 										//alert($("#mgtoffice").val()+ " "+$("#office").val())
-										$("#msg1").remove();
-  										
-										c++;
+									
+										//alert("called");
+										
 										 
-										  if(c==chk_size+1){
-											updatealllistandtables();
-											$("#assetmgt").after("<h4 id='msg1' style='font:bold'>"+c+" "+data+"</h4>");
-											alert("Item(s) tarnsfered");
-										  }
+											if(c==chk_size){
+												
+												var plural="";
+												var helping="is";
+												var helping1="has been";
+												if(c>1){
+													plural="s";
+													helping="are";
+													helping1="have been";
+												}
+												Popup_modal_show(c+" item"+plural+" "+helping1+" transfered to "+$("#mgtoffice option:selected").text()+"!",600);
+												updatealllistandtables();
+												//clear_mgt_forms();
+									}
+										  c++;
 										  
 										 
 								});
@@ -793,6 +815,7 @@
 			});
 			$("#sbdemove").click(function(){
 				if(itemselected()){
+					var chk_size=$(".item:checked").length;
 					var msg="";
 					var i=1;
 					$.each($(".item:checked"), function(){
@@ -801,15 +824,25 @@
 								{
 								assetowned:elem
 								},function(data){
-									$("#tblmsg").remove();
-  									$("#category").after(data);
-										msg+=data+" ";	
+									
+									if(i==chk_size){
+												var plural="";
+												var helping="is";
+												var helping1="has been";
+												if(i>1){
+													plural="s";
+													helping="are";
+													helping1="have been";
+												}
+												Popup_modal_show(i+" item"+plural+" "+helping1+" demobilized!",600);
+												updatealllistandtables();
+												clear_mgt_forms();
+									}
+											
 										i++;
 							});
 						});
-						alert("Inventory item(s) demobilized and tagged as available");
-						updatealllistandtables();
-						$("#sbdemove").css("display","none")
+						
 				}
 			});
 			$("#receive").click(function(){
@@ -824,15 +857,22 @@
 								id:elem
 								},function(data){
 							
-								l++;
-								if(l==chk_size+1){
-									msg+=data;	
-									$("#tblmsg").remove();
-  									$("#category").after(data);
-								  	alert($("#tblmsg").text());
-									updatealllistandtables();	
-								}
-								  
+								
+								if(l==chk_size){
+												var plural="";
+												var helping="is";
+												var helping1="has been";
+												if(l>1){
+													plural="s";
+													helping="are";
+													helping1="have been";
+												}
+												updatealllistandtables();
+												clear_mgt_forms();
+												Popup_modal_show(l+" item"+plural+" "+helping1+" received!",600);
+												
+									}
+									l++;
 							});
 						});
 						
