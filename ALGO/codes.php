@@ -931,7 +931,19 @@ function loadintodb(){
   $db->close();
 }
 
-
+//echo rand_aphanumeric(40);
+function rand_aphanumeric($len){
+    $str="";
+    $aplhabet="abcdefghijklmnopqrstuvwxyz";
+    
+    $chars="12345678901234567890".$aplhabet.strtoupper($aplhabet);
+    $char=str_split($chars);
+    $size=sizeof($char);
+    for($i=0;$i<$len;$i++){
+        $str.=$char[rand(0,$size-1)];
+    }
+    return $str;
+}
 function generate_password($len){//this is a useful funciton for generating password
     //using aplhanumeric randomizer with upper and lower case
     //$len specifies how many characters

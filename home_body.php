@@ -335,7 +335,7 @@ div.item p img{
         <div class="imgform-img" id="group2"style='border:none;'>
               <div class="imgform-img" id="georiskpannel">
               <p onclick="test('#georisk','iframe')"  class="iframhead">PHIVOLCS GOERISK LIVE MONITORING</p>
-                <iframe id="georisk" style="border:none;width:100%; " src="https://hazardhunter.georisk.gov.ph/map#" ></iframe>
+                <iframe id="georisk" style="border:none;width:100%; " src="https://www.pagasa.dost.gov.ph" ></iframe>
                 
               </iframe>
 

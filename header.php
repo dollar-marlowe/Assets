@@ -188,12 +188,12 @@
 
 </div>
       <script>
-          var idleMax = 40; // Logout after 10 minutes of IDLE
+          var idleMax = 20; // Logout after 10 minutes of IDLE
           var idleTime = 0;
           setInterval(function(){
             idleTime = idleTime + 1;
            // 
-            if (idleTime == idleMax) { 
+            if (idleTime >= idleMax) { 
               Popup_modal_show2("You have been automatically logged out due to inactivity. Thank you.",600);
               $.post("AJAX/mycodes.php",{
                 command: "logout"
@@ -203,7 +203,7 @@
             
                        
             }
-          }, 30000); 
+          }, 60000); 
      
         $(document).ready(function(){
           $(".modal2").hide();

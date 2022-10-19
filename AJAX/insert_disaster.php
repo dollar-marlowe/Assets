@@ -2,19 +2,27 @@
 
     include "../ALGO/codes.php";
     
-    if(isset($_POST["name"])){
-        $cat=removepecialchars($_POST["cat"]);
-        $name=removepecialchars($_POST["name"]);
-        $region=removepecialchars($_POST["reg"]);
-        $prov=removepecialchars($_POST["prov"]);
-        $muni=removepecialchars($_POST["muni"]);
-        $brgy=removepecialchars($_POST["brgy"]);
-        $today=date("Y-m-d");
-        $str="insert into office (office_name,category,region_id,province_id,muni_id,brgy_id,date) values (
-            '".$name."','".$cat."',".$region.",".$prov.",".$muni.",".$brgy.",'".$today."')";
-       $mydb = new Database();
-       $mydb->connect();
-       echo "<h4 id='msg1' style='font:bold'>".$mydb->insert($str)."</h4>";
+    if(isset($_POST["disaster"])){
+        $disaster=removepecialchars($_POST["disaster"]);
+        $category=$_POST["category"];
+        $category_array=explode("%", $category);
+        $myFile=$_POST["myFile"];
+        $description=removepecialchars($_POST["description"]);
+        $datestart=removepecialchars($_POST["datestart"]);
+        $db = new Database();
+        $db->connect();
+        $sql="Insert into disaster 
+         (name,category,natureofdisaster,description,datestarted,file_upload)
+          values('".$disaster."','".$category_array[1]."','".$category_array[0]."','".$description."','".$datestart."','". $myFile."')";
+          $msg=$db->insert($sql);
+          if( $msg=="New record created!"){
+            echo $msg;
+          }
+          else{
+            echo "Error";
+          }
+
+     
     }
     
     else{

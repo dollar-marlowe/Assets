@@ -265,7 +265,7 @@
 						
 					<div class="input_wrapper"><p class="label">
 					<label for="status">Attachment</label></p>
-					<input type="file" id="myFile" name="filename">
+					<input type="file" id="myFile" name="myFile" />
 					</div>
 					<div class="input_wrapper"><p class="label">
 					<label for="description">Description</label></p>
@@ -280,7 +280,8 @@
 					<div class="input_wrapper" style="margin:auto">
 					<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
 					<input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear"> 
-					</div>                   
+					</div>        
+        
         </div>
       </div>
 	</div>
@@ -313,6 +314,7 @@
 			$(target).slideToggle("slow");
 		}
 		
+		
 
 $(document).ready(function(){
 	var alt=false;
@@ -337,7 +339,7 @@ $(document).ready(function(){
 		}
 	});
 	$("#disaster").keyup(function(){
-		validate("#disaster","")
+		validate("#disaster","");
 	});
 	$("#category").change(function(){
 		validate("#category","0")
@@ -409,25 +411,58 @@ function validate_date(input){
 	$("#submit").click(function(){
 		if(validate_all()){
 			$("#err_lbl").remove();
+			var date= new Date($("#date_added").val());
+			var str_date=date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
+			var file =$("#myFile").prop("files")[0];
+		
+			var form= new FormData();
+			form.append("myFile",file);
+			//console.log(form);
 			
-			$.post("AJAX/insert_disaster.php",{
-				disaster: $("#disaster").val(),
-				category: $("#category").val(),
-				myFile: $("#myFile".val(),
-				description: $("#description").val()
-			},
-			function(data){
+			$.ajax({
+				url:"AJAX/file_upload.php",
+				type: "POST",
+				data:form,
+				contentType:false,
+				processData:false,
+				success: function(result){
+					//alert(result);
+					if(result!="error"){
+						$.post("AJAX/insert_disaster.php",{
+							disaster: $("#disaster").val(),
+							category: $("#category").val(),
+							myFile: result,
+							description: $("#description").val(),
+							datestart: str_date							
+						},
+						function(data){
+							if(data=="New record created!"){
+								Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
+							}
+							else{
+								Popup_modal_show("Error with data entry. Please contact the administrator!",600);
+							}
+							clear();
+						}); 
+					}else{
+						alert("Error with file upload!");
+					}
+					
+				}
+
 
 			});
+				
 		}
 		else{
 			$("#err_lbl").remove();
-			$(".entry").before("<p style='color:red;text-align:right;font-size:1.1em;margin:auto;width:100%;' id='err_lbl'>Reqiured Fields Cannot be Empty!</p>");
+			$(".entry").before("<p style='color \
+			:red;text-align:right;font-size:1.1em;margin:auto;width:100%;' id='err_lbl'>Reqiured Fields Cannot be Empty!</p>");
 	
 		}
 	});
 
-	$("#clear").click(function(){
+	function clear(){
 		var keys ={
 			"#disaster":"",
 			"#category":"0",
@@ -443,6 +478,9 @@ function validate_date(input){
 		$("#date_added").css({"border":"solid 1px rgb(118, 118, 118)"});
 		$('#date_added').val(new Date());
 		$("#err_lbl").remove();
+	}
+	$("#clear").click(function(){
+		clear();
 
 	});
 

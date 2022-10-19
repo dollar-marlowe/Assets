@@ -18,7 +18,10 @@
               $_SESSION["uname"]=$row["username"];
               $_SESSION["officename"]=$row["office_name"];
               $_SESSION["officeid"]=$row["office_id"];
-             
+              $_SESSION["position"]=$row["position"];
+              $_SESSION["login_email"]=$row["email"];
+              $_SESSION["user_mobile"]=$row["contact"];
+              $_SESSION["user_address"]=" ";
               $_SESSION["officialid"]=$row["official_id"];
               $_SESSION["fname"]=$row["fname"];
               $_SESSION["lname"]=$row["lname"]; 
