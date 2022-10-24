@@ -87,6 +87,47 @@
         function reroute(){
             windows.location("logout.php");
         }
+        function href_each(target){
+           
+            $.each($(target),function(){
+                //alert("click");
+                var value=$(this).text();
+                $(this).html("<a href='"+value+"' target='_blank'>Attachment</a>");
+
+            });
+        }
+        function remove_next_word(target){
+            $.each($(target),function(){
+                //alert("click");
+                var value=$(this).text();
+                var arr_val=to_array(value," ");
+                $(this).html(arr_val[0]);
+
+            });
+        }
+        function global_load_table(str,headers,chkbox,allchk,classes,target,item,href,next_word){
+            $.post("AJAX/loadtable.php", 
+            {
+                sql:str,
+                hdr:headers,
+                class:classes,
+                check: chkbox,
+                all:allchk
+            },
+            function(data){
+                $(target).html(data);
+                if(item!=""){
+                    enrycpt_each(item);
+			
+                }
+                if(href!=""){
+                    href_each(href);	
+                }
+                if(next_word!=""){
+                    remove_next_word(next_word);	
+                }
+            });
+        }
 
         function enrycpt_each(target){
 
@@ -153,7 +194,7 @@
             $("#popmsg1").html(msg);
             $(".modal2").delay(speed).fadeIn();
         }
-      
+       
 
 
         function loadtable_decrypt(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem_chk){

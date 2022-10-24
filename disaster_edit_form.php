@@ -73,6 +73,7 @@
 			text-align:center;
 			border:solid 1px #ddd;
 			padding:10px 0px 10px 0px;
+			background-color:white;
 		}
 		.pannel h2{
 			display:inline;
@@ -123,6 +124,10 @@
 		.btn{
 			margin-bottom:15px;
 		}
+		/* #imgform{
+			background-color:#cfc9c9;
+		} */
+		
 		@media (max-width:1267px){
 			.imgform-container{
 				display:block;
@@ -176,9 +181,12 @@
 			.input_wrapper input, .input_wrapper textarea, .input_wrapper select{
 			width:200px;
 			}
+			th:nth-child(5),td:nth-child(5){
+				display:none;
+			}
 		}
 		@media(max-width:400px){
-			th:nth-child(5),td:nth-child(5){
+			th:nth-child(3),td:nth-child(3){
 				display:none;
 			}
 			.pannel h2{
@@ -203,7 +211,7 @@
 		}
 
 		@media(max-width:320px){
-			th:nth-child(2),td:nth-child(2){
+			th:nth-child(7),td:nth-child(7){
 				display:none;
 			}
 		}
@@ -290,9 +298,22 @@
       <div class="imgform-container " id="incident_log"> 
 			
         <div class="imgform-img">
-		<h3 id='officialheader' class="header2">Incident Logs</h3>
-		<div style="width:100%;height:400px;">Template</div>
-			
+			<div class="inner-wrapper">
+				<table class="disasters" style="margin-bottom:5px;">
+				<?php
+				$classes=array("all","item");
+				$sql="select id,name,category,natureofdisaster,description, datestarted, file_upload  from disaster";
+				$headers=array("","Name","Category","Nature","Description","Date logged","File");
+				loadtable($sql,$headers,true,false,$classes);
+				
+				?>
+				</table>
+				<div class="input_wrapper" style="margin:auto">
+					<input type="submit" value="Mofidy" id="modify" class="btn btn-primary" style="color:white;font-weight:800;">
+					<input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear2"> 
+				</div>
+					
+			</div>			
         </div>
 
        
@@ -317,6 +338,11 @@
 		
 
 $(document).ready(function(){
+	var edit=false;
+	var item_id="";
+	enrycpt_each(".item");
+	href_each(".disasters td:nth-child(7)");
+	remove_next_word(".disasters td:nth-child(6)");	
 	var alt=false;
 	$(document).keyup(function(e) {
 		if(e.key === "Alt"){
@@ -363,7 +389,6 @@ function validate_date(input){
 }
 
 	$("#myFile").change(function(){
-		
 		//alert($(this).val());
 		validate("#myFile","")
 	});
@@ -409,10 +434,12 @@ function validate_date(input){
 	}
 
 	$("#submit").click(function(){
+		
 		if(validate_all()){
 			$("#err_lbl").remove();
 			var date= new Date($("#date_added").val());
-			var str_date=date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
+			var str_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+				
 			var file =$("#myFile").prop("files")[0];
 		
 			var form= new FormData();
@@ -426,32 +453,60 @@ function validate_date(input){
 				contentType:false,
 				processData:false,
 				success: function(result){
-					//alert(result);
-					if(result!="error"){
-						$.post("AJAX/insert_disaster.php",{
-							disaster: $("#disaster").val(),
-							category: $("#category").val(),
-							myFile: result,
-							description: $("#description").val(),
-							datestart: str_date							
-						},
-						function(data){
-							if(data=="New record created!"){
-								Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
-							}
-							else{
-								Popup_modal_show("Error with data entry. Please contact the administrator!",600);
-							}
-							clear();
-						}); 
-					}else{
-						alert("Error with file upload!");
+					var ajax_src="";
+					if(edit==false){
+						ajax_src="AJAX/insert_disaster.php";
 					}
+					else{
+						ajax_src="AJAX/edit_disaster.php";
+					}
+
+					//alert(result);
+						if(result!="error"){
+							$.post(ajax_src,{
+								disaster_id:item_id,
+								disaster: $("#disaster").val(),
+								category: $("#category").val(),
+								myFile: result,
+								description: $("#description").val(),
+								datestart: str_date							
+							},
+							function(data){
+								if(data=="New record created!"){
+									if(edit==false){
+										Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
+									
+									}else{
+										Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
+									
+									}
+									edit=false;
+									$("#submit").val("Submit");
+									$('#msg').remove();
+									clear();
+									item_id="";
+									var str="select id,name,category,natureofdisaster,description, datestarted, file_upload  from disaster";
+									var headers="%Name%Category%Nature%Description%Date logged%File";
+									var classes ="all%item";
+									global_load_table(str,headers,true,false,classes,".disasters",".item",".disasters td:nth-child(7)",".disasters td:nth-child(6)");
+									
+
+								}
+								else{
+									Popup_modal_show("Error with data entry. Please contact the administrator! "+data,600);
+								}
+							
+							}); 
+						}else{
+							alert("Error with file upload!");
+						}
+					
 					
 				}
 
 
 			});
+			
 				
 		}
 		else{
@@ -478,10 +533,68 @@ function validate_date(input){
 		$("#date_added").css({"border":"solid 1px rgb(118, 118, 118)"});
 		$('#date_added').val(new Date());
 		$("#err_lbl").remove();
+		
+			$("#submit").val("Submit");
+			$('#msg').remove();
+			
+			eidt=false;
 	}
 	$("#clear").click(function(){
+		if(edit){
+				$(".item:checked").prop("checked",false);
+				$("#err_2").remove();
+			}
 		clear();
+		
 
+	});
+	$("#clear2").click(function(){
+		$(".item").prop("checked",false);
+		$("#err_2").remove();
+	});
+	$("#modify").click(function(){
+		var chk_size=$(".item:checked").length;
+		if(chk_size>1){
+			$("#err_2").remove();
+			$(".disasters").before("<p id='err_2' style='color:red;width:100%;text-align:center;'>You can only select one record to be mofied!</p>");
+		}
+		else if(chk_size==1){
+			$("#err_2").remove();
+			Popup_modal_show("<b>WARNING!</b><br><br><p>Modifications will also reflect accross all etc records, please ensure that data entegrity is preserved!</p>",300);
+			
+			$("#submit").val("Save");
+			$('#msg').remove();
+			$(".entry").before("<p id='msg' style='width:100%;text-align:center;'><b>Edit Module</b></p>");
+			//$("#disaster").val();
+			/* $.each($(".item:checked").parent().siblings(),function(){
+				alert($(this).text());
+			}); */
+			item_id =$(".item:checked").val();
+			var name=$(".item:checked").parent().next();
+			//alert(item_id);
+			edit=true;
+			var category=$(name).next();
+			//alert($(category).text());
+			var nature=$(category).next();
+			var desc=$(nature).next();
+			var date_log=$(desc).next().text();
+			var date_arr=to_array(date_log," ");
+			var attch=$(date_log).next().find("a").attr("href");
+			//alert(attch);
+			$("#disaster").val($(name).text());
+			$("#category").val($(nature).text()+"%"+$(category).text());
+			$("#myFile").text(attch);
+			//$('#date_added').datepicker({ dateFormat: 'yy-mm/dd' });
+			$('#date_added').val(date_arr[0]);
+			$("#description").val($(desc).text());
+
+		}
+		else{
+			$("#err_2").remove();
+			$(".disasters").before("<p id='err_2' style='color:red;width:100%;text-align:center;'>You must select 1 record to be modified!</p>");
+			
+		
+		}
 	});
 
  });

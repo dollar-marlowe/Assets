@@ -173,7 +173,7 @@
     <div id="myModal" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content">
+  <div class="modal-content big">
     <span class="close">&times;</span>
    <br> <div id="popmsg"></div>
   </div>
@@ -181,7 +181,7 @@
 
   <div id="myModal" class="modal2">
 
-  <div class="modal-content">
+  <div class="modal-content ">
     <span class="logout">&times;</span>
    <br> <div id="popmsg1"></div>
   </div>
