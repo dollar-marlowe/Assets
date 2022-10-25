@@ -132,7 +132,7 @@
          echo       "<label for='ac-5'><u>E</u>TC</label>";
          echo       "<article class='ac-medium'>";
          echo           "<a href='disaster_edit'><u>H</u>azards Management</a>";
-         echo           "<a href=''><u>R</u>isk Management</a>
+         echo           "<a href='risk_management'><u>R</u>isk Management</a>
                           <a href=''>ETC <u>D</u>eactivation</a>"; 
          echo       "</article>";
          echo   "</div>";
@@ -360,6 +360,9 @@
                       
                       if (e.key === "H" || e.key === "h"){
                       window.location="disaster_edit.php";
+                      }
+                      if (e.key === "R" || e.key === "r"){
+                      window.location="risk_management.php";
                       }
                      
                   }

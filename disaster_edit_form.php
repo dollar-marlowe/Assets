@@ -18,7 +18,8 @@
 		}
 		
 		.imgform-img{
-			width:100%;
+			width:fit-content;
+			margin:auto;
 			margin-top:20px;
 			padding-left:10px;
 			padding-right:10px;
@@ -32,7 +33,7 @@
 			width:60%;
 		}
 		.imgform-container{
-			width:90%;
+			
 			margin:auto;
 		}
 		/*table*/
@@ -66,7 +67,7 @@
 			padding-top:10px;
 		}
 		.pannel{
-			width:90%;
+			
 			margin:auto;
 			margin-top:0px;
 			margin-bottom:0px;
@@ -82,8 +83,17 @@
 			font-size:18px;		
 		
 		}
+		.lbl_wrap{
+			margin-left: 10px;
+			margin-bottom: 10px;
+			font-size: 18px;
+			transition: transform .2s; 
+		}
+		.lbl_wrap:hover{
+			transform: scale(1.05); 
+		}
 		
-		.pannel h2 img{
+		.pannel .lbl_wrap img{
 			width:25px;
 			margin-bottom:-6px;
 		}
@@ -127,6 +137,15 @@
 		/* #imgform{
 			background-color:#cfc9c9;
 		} */
+
+		.pannel_con{
+			-webkit-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
+			-moz-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
+			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
+			width:80%;
+			margin:auto;
+			margin-bottom:30px;				
+		}
 		
 		@media (max-width:1267px){
 			.imgform-container{
@@ -230,7 +249,8 @@
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
-		<div class="pannel" onclick="slide('#hazard_form')" ><h2  id="accounts" ><img src="images\hazard.png"> <u>H</u>azard Data Log</h2></div>
+ <div class="pannel_con">
+		<div class="pannel" onclick="slide('#hazard_form')" ><p class="lbl_wrap" id="accounts" ><img src="images\hazard.png"> <u>H</u>azard Data Log</p></div>
       
       <div class="imgform-container " id="hazard_form">
 	   <div class="imgform-img">
@@ -293,13 +313,22 @@
         </div>
       </div>
 	</div>
-	<div class="pannel" style="margin-top:10px;" onclick="slide('#incident_log')"><h2 id="pass_reset" ><img src="images\logs.png"> <u>I</u>ncident Logs</h2></div>
+	</div>
+	<div class="pannel_con">
+	<div class="pannel" style="margin-top:10px;" onclick="slide('#incident_log')"><p class="lbl_wrap" id="pass_reset" ><img src="images\logs.png"> <u>I</u>ncident Logs</p></div>
     
       <div class="imgform-container " id="incident_log"> 
 			
         <div class="imgform-img">
 			<div class="inner-wrapper">
-				<table class="disasters" style="margin-bottom:5px;">
+				<input type="text" id="search_disaster" Placeholder="Search Disaster" style="font-size: 18px;margin-right:10px;margin-left:5px;">
+				<select id='search_category'>
+								<?php 
+								$str="SELECT distinct natureofdisaster, natureofdisaster FROM disaster";
+								loadropdown($str,"natureofdisaster","natureofdisaster","Nature of Disaster");
+								?>
+				</select>
+				<table class="disasters" style="margin-bottom:5px;margin-top:10px;">
 				<?php
 				$classes=array("all","item");
 				$sql="select id,name,category,natureofdisaster,description, datestarted, file_upload  from disaster";
@@ -318,6 +347,7 @@
 
        
    
+	  </div>
 	  </div>
 	  <?php //there was a plan to setup a connection between js file and php however there is a problm whenever a js file updated
 	  //is not reflecting  when being integrated in script tag, so the solution if to utilize the footer to 
@@ -345,6 +375,11 @@ $(document).ready(function(){
 	remove_next_word(".disasters td:nth-child(6)");	
 	var alt=false;
 	$(document).keyup(function(e) {
+		if(e.key === "Alt"){
+		alt=false;
+		}
+	});
+	$(window).keyup(function(e) {
 		if(e.key === "Alt"){
 		alt=false;
 		}
@@ -546,6 +581,25 @@ function validate_date(input){
 			}
 		clear();
 		
+
+	});
+	$("#search_category").change(function(){
+		var str="select id,name,category,natureofdisaster,description, \
+			datestarted, file_upload  from disaster where natureofdisaster= '"+$(this).val()+"'";
+			var headers="%Name%Category%Nature%Description%Date logged%File";
+			var classes ="all%item";
+			global_load_table(str,headers,true,false,classes,".disasters",".item",".disasters td:nth-child(7)",".disasters td:nth-child(6)");
+			
+	});
+
+	$("#search_disaster").keyup(function(){
+		//alert("test");
+			var str="select id,name,category,natureofdisaster,description, \
+			datestarted, file_upload  from disaster where name like '%"+$(this).val()+"%'";
+			var headers="%Name%Category%Nature%Description%Date logged%File";
+			var classes ="all%item";
+			global_load_table(str,headers,true,false,classes,".disasters",".item",".disasters td:nth-child(7)",".disasters td:nth-child(6)");
+									
 
 	});
 	$("#clear2").click(function(){

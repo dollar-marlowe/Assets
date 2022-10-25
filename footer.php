@@ -38,7 +38,7 @@
             });
             
         }
-            function sizeof(array){
+        function sizeof(array){
 
             var c = 0;
             for(i in array) // in returns key, not object
@@ -147,6 +147,9 @@
                    });    
             }); 
         }
+        function slide(target){
+			$(target).slideToggle("slow");
+		}
        
         function get_total_assets(office_val,arr_id,call_from){
 			$.post("AJAX/get_assets_total.php",

@@ -86,7 +86,21 @@
 			border-right:solid 2px #ddd;
 			
 		}
-		.pannel h2 img{
+		.lbl_wrap{
+			width:fit-content;
+			display:inline-block;
+    		font-size: 18px;
+			margin-left:10px;
+			transition: transform .2s; 
+		}
+		.lbl_wrap:hover{
+			transform: scale(1.05); 
+		}
+		.wrap{
+			width:fit-content;
+			margin:auto;
+		}
+		.pannel .lbl_wrap img{
 			width:30px;
 			margin-bottom:-6px;
 		}
@@ -181,7 +195,7 @@
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
- <div class="pannel"><h2  id="accounts" ><img src="images\activate.png">Accounts Activation</h2><h2 id="pass_reset"><img src="images\reset.png">Password Reset</h2></div>
+ <div class="pannel"><div class="wrapper"><p class="lbl_wrap"  id="accounts" ><img src="images\activate.png">Accounts Activation</p><p class="lbl_wrap" id="pass_reset"><img src="images\reset.png">Password Reset</p></div></div>
       <div class="imgform-container " id="accounts_form">
 		
         <div class="imgform-img">
@@ -244,7 +258,8 @@
                         loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
                         ?>
                 </select>   
-					</div>	
+			</div>	
+			
 			<table class="table_search" style="margin-top:10px;margin-bottom:10px">
 			<?php //THIS IS THE PHP CODE FOR LOADING THE TABLE FROM FUNCTION CALL LOCATED IN CODES
 				$str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='active'";
@@ -305,14 +320,14 @@ $(document).ready(function(){
 
 		
 		$("#accounts").click(function(){
-			$("#accounts_form").slideToggle("slow");
+			$("#accounts_form").slideDown("slow");
 			$("#resets_form").slideUp("slow");
 		
 	  	});
 
 	  $("#pass_reset").click(function(){
 		$("#accounts_form").slideUp("slow");
-		$("#resets_form").slideToggle("slow");
+		$("#resets_form").slideDown("slow");
 
 	  });
 
