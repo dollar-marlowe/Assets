@@ -13,8 +13,8 @@
 			display:inline-block;
 			font-size:18px;
 		}
-		.imgform-img  select, select{
-			font-size:18px;
+		#search_disaster, .imgform-img  select, select{
+			font-size:12px;
 		}
 		
 		.imgform-img{
@@ -52,14 +52,24 @@
 			padding-left:10px;
 			text-transform:capitalize;			
 		}
+		.table_con{
+			overflow:auto;
+			margin:auto;
+			height:250px;;
+			width:90%;
+		}
 		table{
 			border-collapse: collapse;
-			width:100%;
+			
 			margin-left:5px;
 			margin-right:10px;
 			border-style:none;
 			font-size:16px;		
 		
+		}
+		table.disasters{
+			width:100%;
+			margin:auto;
 		}
 		table tr td{
 			padding-bottom:10px;
@@ -151,7 +161,7 @@
 			border-radius:10px;
 			border:solid 1px #ddd;
 			margin-top:0px;
-			top:0;
+			margin-bottom:10px;
 		}
 		.cols1{
 			float:left;
@@ -164,7 +174,8 @@
 		table{
 			font-size:12px;
 		}
-			
+		
+		
 		@media (max-width:1267px){
 			.imgform-container{
 				display:block;
@@ -190,7 +201,7 @@
 			
 				font-size:13px;
 			}
-			.imgform-img p, .imgform-img  select, input[type=text]{
+			.imgform-img p, .imgform-img  select{
 			font-size:95%;
 			}
 		}
@@ -199,7 +210,7 @@
 				
 				font-size:9px;
 			}
-			.imgform-img p, .imgform-img  select, input[type=text]{
+			.imgform-img p, .imgform-img  select{
 			font-size:15px;
 			}
 			.pannel h2{
@@ -284,14 +295,25 @@
 											<input type="submit" id="test" value="Submit" class="btn btn-primary">
 											</div>   -->
 											<br><br>
-											<table class="disasters">
-												<?php
-												$sql="select id,name,natureofdisaster, datestarted, file_upload  from disaster ";
-												$classes=array("dst_all","dst_item");
-												$headers=array("","Disaster","Nature..","Date","File");
-												loadtable_radio($sql,$headers,true,false,$classes);
-												?>
-											</table>	
+											<div class="input_wrapper" style="margin:auto">
+											<input type="text" id="search_disaster" Placeholder="Search Disaster">
+											<select id='search_category'>
+													<?php 
+													$str="SELECT distinct natureofdisaster, natureofdisaster FROM disaster";
+													loadropdown($str,"natureofdisaster","natureofdisaster","Nature of Disaster");
+													?>
+											</select>
+											</div>
+											<div class="table_con">
+												<table class="disasters">
+													<?php
+													$sql="select id,name,natureofdisaster, datestarted, file_upload  from disaster ";
+													$classes=array("dst_all","dst_item");
+													$headers=array("","Disaster","Nature..","Date","File");
+													loadtable_radio($sql,$headers,true,false,$classes);
+													?>
+												</table>	
+											</div>	
 										</div>  
 
 										<div class="cols cols2" >
@@ -339,6 +361,26 @@ $(document).ready(function(){
 	remove_next_word(".disasters td:nth-child(4)");	
 	$("#test").click(function(){
 		alert($(".gender").val());
+	});
+
+	$("#search_category").change(function(){
+		var str="select id,name,natureofdisaster, datestarted, file_upload \
+		 from disaster where natureofdisaster= '"+$(this).val()+"'";
+			 var headers="%Disaster%Nature..%Date%File";
+			var classes ="dst_all%dst_item";
+			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)");
+			
+	});
+
+	$("#search_disaster").keyup(function(){
+		//alert("test");
+			var str="select id,name,natureofdisaster, datestarted, \
+			file_upload  from disaster where name like '%"+$(this).val()+"%'";
+			var headers="%Disaster%Nature..%Date%File";
+			var classes ="dst_all%dst_item";
+			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)");
+									
+
 	});
  });
     </script>

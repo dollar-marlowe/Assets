@@ -129,6 +129,30 @@
             });
         }
 
+        function global_load_table_radio(str,headers,chkbox,allchk,classes,target,item,href,next_word){
+            $.post("AJAX/loadtable_radio.php", 
+            {
+                sql:str,
+                hdr:headers,
+                class:classes,
+                check: chkbox,
+                all:allchk
+            },
+            function(data){
+                $(target).html(data);
+                if(item!=""){
+                    enrycpt_each(item);
+			
+                }
+                if(href!=""){
+                    href_each(href);	
+                }
+                if(next_word!=""){
+                    remove_next_word(next_word);	
+                }
+            });
+        }
+
         function enrycpt_each(target){
 
          $.each($(target),function(){

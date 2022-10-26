@@ -57,10 +57,14 @@ $command=$_REQUEST["command"];
         }
     }
 
-    if($command=="logout"){
+   /*  if($command=="logout"){
         session_unset(); 
          session_destroy(); 
-    }
+    } */
+    if($command=="logout2"){
+        session_unset(); 
+         session_destroy(); 
+    } 
     
    
 }

@@ -4,13 +4,13 @@
 //these are all session creation
 //It is placed here as this php file is always present in all modules of the system
 session_start();
-if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
+/* if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 1800)) {
     //this is the condition that makes the session expire if inactive for 1 hour
     
     session_unset(); 
     session_destroy(); 
    
-}
+} */
 $_SESSION['start'] = time();
 
 //this is the condition which reroute the php view if an outsider tries to acces this file htoruhg the browser
@@ -666,6 +666,75 @@ function total($str, $col){
         echo "No items as of yet";
     }
 }
+
+function loadtable_radio($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
+    //$str is the sql command, 
+    //$headers(array): are the header that shows on the table column head 
+    //$chkbox is a boolean to add checkboxes at the begiining of each row
+      //$all is a  boolean variable if true will add check all at the very first table header cell
+    //the $class is an array with 2 elements: 
+    //1st elem is the class header of checkbox for check all and the second elem 
+    //is the class name for each checkbox in the table rows
+   $db =new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+    if($data!=null){
+        echo "<tr>";
+        $chk=$chkbox;
+        foreach($headers as $header){
+            if($header==" "){
+                echo"<th>";
+                if($all){
+                    echo"<input type='checkbox' 
+                    class='".$class[0]."' >";
+                }
+               
+            }
+            else{
+                echo "<th>".$header;
+            } 
+            echo"</th>";
+        } 
+        echo "</tr>";
+        $j=1;
+        foreach($data as $elem){
+           $i=0;
+          
+            echo "<tr id='".$j."'>";
+            $size=sizeof($elem);
+           
+            foreach($elem as $e){
+                
+                if($chkbox){
+                    if($i==0){
+                        echo"<td><input type='radio' 
+                        class='".$class[1]."'  name='".$class[1]."'  value='".$e."' ></td>";    
+                    }
+                    $chkbox=false; 
+                }
+                else{
+                    if($e=='activation'){
+                        $e="For ".$e;
+                    }
+                       
+                    if($i==$size-1){
+                        echo"<td class='last'>".$e."</td>";
+                    }else{
+                        echo"<td>".$e."</td>";
+                    }
+                }
+                $i++;          
+            }
+            $chkbox=$chk;
+            $j++;
+            echo "</tr>";
+        }
+    }
+    else{
+        echo "";
+    }
+}
+
 function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
     //$str is the sql command, 
     //$headers(array): are the header that shows on the table column head 

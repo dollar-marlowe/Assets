@@ -193,10 +193,13 @@
           setInterval(function(){
             idleTime = idleTime + 1;
            // 
+           //alert("called");
             if (idleTime >= idleMax) { 
+             // alert("called");
               Popup_modal_show2("You have been automatically logged out due to inactivity. Thank you.",600);
+
               $.post("AJAX/mycodes.php",{
-                command: "logout"
+                command: "logout2"
               }, function(data){
                 
               });
