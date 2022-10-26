@@ -1,0 +1,6 @@
+Follow the instruction on this video:
+
+https://www.youtube.com/watch?v=ZXdX5aFVMeo
+
+Then go to activate_account.php under AJAX folder.
+go to line 25 and change the value of the email to where you want to receive your test mail
