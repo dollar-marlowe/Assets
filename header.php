@@ -112,6 +112,16 @@
               
          
          echo "<section class='ac-container'>";
+      
+         echo   "<div>";
+         echo       "<input id='ac-6' name='accordion-1' type='checkbox' >";
+         echo       "<label for='ac-6'>My <u>P</u>rofile</label>";
+         echo       "<article class='ac-medium'>";
+         echo           "<a href='userprofile'><u>V</u>iew Profile</a>";
+         echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
+         echo       "</article>";
+         echo   "</div>";
+
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
          echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
@@ -255,6 +265,7 @@
               if($(".navbar-container .ac-container div #ac-3").is(":checked")){
                 $(".navbar-container .ac-container div #ac-2").prop("checked",false);
                 $(".navbar-container .ac-container div #ac-5").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-6").prop("checked",false);
               }
             });
 
@@ -262,13 +273,22 @@
               if($(".navbar-container .ac-container div #ac-2").is(":checked")){
                 $(".navbar-container .ac-container div #ac-3").prop("checked",false);
                 $(".navbar-container .ac-container div #ac-5").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-6").prop("checked",false);
               }
             });
 
             $(".navbar-container .ac-container div #ac-5").click(function(){
               if($(".navbar-container .ac-container div #ac-5").is(":checked")){
                 $(".navbar-container .ac-container div #ac-3").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-6").prop("checked",false);
                 $(".navbar-container .ac-container div #ac-2").prop("checked",false);
+              }
+            });
+            $(".navbar-container .ac-container div #ac-6").click(function(){
+              if($(".navbar-container .ac-container div #ac-6").is(":checked")){
+                $(".navbar-container .ac-container div #ac-3").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-2").prop("checked",false);
+                $(".navbar-container .ac-container div #ac-5").prop("checked",false);
               }
             });
             $(document).keydown(function(e) {
@@ -294,6 +314,7 @@
                 var id_office=".navbar-container .ac-container div #ac-3";
                   var id_assets=".navbar-container .ac-container div #ac-2";
                   var id_etc=".navbar-container .ac-container div #ac-5";
+                  var id_profile=".navbar-container .ac-container div #ac-6";
                 if($("#nbrger").is(":checked")){
                  
                     if (e.key === "h" || e.key === "H"){
@@ -303,16 +324,28 @@
                     if (e.key === "A" || e.key === "a"){
                      $(id_office).prop("checked",false);
                      $(id_etc).prop("checked",false);
+                     $(id_profile).prop("checked",false);
                         if($(id_assets).is(":checked")){
                           $(id_assets).prop("checked",false);
                         }else{
                           $(id_assets).prop("checked",true);
                         }
                     }
+                    if (e.key === "P" || e.key === "p"){
+                     $(id_office).prop("checked",false);
+                     $(id_assets).prop("checked",false);
+                     $(id_etc).prop("checked",false);
+                        if($(id_profile).is(":checked")){
+                          $(id_profile).prop("checked",false);
+                        }else{
+                          $(id_profile).prop("checked",true);
+                        }
+                    }
                    
                     if (e.key === "O" || e.key === "o"){
                       $(id_assets).prop("checked",false);
                       $(id_etc).prop("checked",false);
+                      $(id_profile).prop("checked",false);
                         if($(id_office).is(":checked")){
                           $(id_office).prop("checked",false);
                         }else{
@@ -322,6 +355,7 @@
                     if (e.key === "E" || e.key === "e"){
                       $(id_assets).prop("checked",false);
                       $(id_office).prop("checked",false);
+                      $(id_profile).prop("checked",false);
                         if($(id_etc).is(":checked")){
                           $(id_etc).prop("checked",false);
                         }else{
@@ -369,11 +403,23 @@
                       }
                      
                   }
+
+                  if($(id_profile).is(":checked")){
+                      
+                      if (e.key === "V" || e.key === "v"){
+                      window.location="userprofile.php";
+                      }
+                      if (e.key === "D" || e.key === "d"){
+                      window.location="editprofile.php";
+                      }
+                     
+                  }
                 }
                 else{
                   $(id_assets).prop("checked",false);
                   $(id_office).prop("checked",false);
                   $(id_etc).prop("checked",false);
+                  $(id_profile).prop("checked",false);
                 }
 
             });
