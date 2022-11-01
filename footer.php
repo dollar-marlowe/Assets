@@ -38,6 +38,10 @@
             });
             
         }
+        function attributes_input(category){
+
+
+        }
         function sizeof(array){
 
             var c = 0;
@@ -129,14 +133,15 @@
             });
         }
 
-        function global_load_table_radio(str,headers,chkbox,allchk,classes,target,item,href,next_word){
+        function global_load_table_radio(str,headers,chkbox,allchk,classes,target,item,href,next_word,funct){
             $.post("AJAX/loadtable_radio.php", 
             {
                 sql:str,
                 hdr:headers,
                 class:classes,
                 check: chkbox,
-                all:allchk
+                all:allchk,
+                func: funct
             },
             function(data){
                 $(target).html(data);

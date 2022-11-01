@@ -116,7 +116,7 @@
          echo   "<div>";
          echo       "<input id='ac-6' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-6'>My <u>P</u>rofile</label>";
-         echo       "<article class='ac-medium'>";
+         echo       "<article class='ac-small'>";
          echo           "<a href='userprofile'><u>V</u>iew Profile</a>";
          echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
          echo       "</article>";
@@ -201,12 +201,12 @@
           var idleMax = 20; // Logout after 10 minutes of IDLE
           var idleTime = 0;
           setInterval(function(){
-            idleTime = idleTime + 1;
+           
            // 
            //alert("called");
             if (idleTime >= idleMax) { 
              // alert("called");
-              Popup_modal_show2("You have been automatically logged out due to inactivity. Thank you.",600);
+              Popup_modal_show2("<center><b>SYSTEM NOTIFICATION!</b><br><br>You have been automatically logged out due to inactivity. Thank you.</center>",600);
 
               $.post("AJAX/mycodes.php",{
                 command: "logout2"
@@ -215,6 +215,8 @@
               });
             
                        
+            }else{
+              idleTime = idleTime + 1;
             }
           }, 60000); 
      

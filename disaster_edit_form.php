@@ -374,6 +374,9 @@ $(document).ready(function(){
 	href_each(".disasters td:nth-child(7)");
 	remove_next_word(".disasters td:nth-child(6)");	
 	var alt=false;
+	/* $(document).on("click",".item",function(){
+		alert("click");
+	}); */
 	$(document).keyup(function(e) {
 		if(e.key === "Alt"){
 		alt=false;

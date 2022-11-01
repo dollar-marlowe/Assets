@@ -667,7 +667,7 @@ function total($str, $col){
     }
 }
 
-function loadtable_radio($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
+function loadtable_radio($str,$headers,$chkbox,$all,$class,$func){//paramerters are as follows:
     //$str is the sql command, 
     //$headers(array): are the header that shows on the table column head 
     //$chkbox is a boolean to add checkboxes at the begiining of each row
@@ -708,7 +708,11 @@ function loadtable_radio($str,$headers,$chkbox,$all,$class){//paramerters are as
                 if($chkbox){
                     if($i==0){
                         echo"<td><input type='radio' 
-                        class='".$class[1]."'  name='".$class[1]."'  value='".$e."' ></td>";    
+                        class='".$class[1]."'  name='".$class[1]."'  value='".$e."'";
+                        if($func!=""){
+                            echo "onclick='".$func."'";
+                        }
+                        echo"></td>";    
                     }
                     $chkbox=false; 
                 }
@@ -843,6 +847,27 @@ function loadropdown($str,$col1,$col2,$from){
     }
     else{
         echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
+function load_label_input($str, $div2,$class,$col1,$col2,$col3){
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+    $elem="";
+    if($data!=null){
+       
+        foreach($data as $d){
+            echo"<div class'".$div2."'><label>".ucfirst($d[$col2])."</label> <input type='hidden' id='".$d[$col1]."' value='".encrypt($d[$col1])."'><input class='".$class."' type='text' id='".$d[$col2]."'";
+            if($col3!=""){
+                echo "value='".$d[$col3]."'";
+            }
+            echo "></div>";
+            $elem.="%".$d[$col2];                                                                           
+        }
+        echo "<script>var elems='". $elem."';</script>";
+    }
+    else{
+        echo "";
     }
 }
 function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deafult value of the combo box if data is null, $col1 ar ethe column names form the db 
@@ -1176,7 +1201,8 @@ on the browser window."); */
 //$db=new Database();
 //test();
 //echo $db->connect();
- //$str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
+ //$str="SELECT * FROM d_attributes d";
+ //load_label_input($str,"input","attrs","id","attributes_name","");
 //echo abreviate("ACCESS POINT",2); 
 
 //JS API

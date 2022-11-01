@@ -13,7 +13,7 @@
 			display:inline-block;
 			font-size:18px;
 		}
-		#search_disaster, .imgform-img  select, select{
+		.inputs, .imgform-img  select, select{
 			font-size:12px;
 		}
 		
@@ -55,7 +55,13 @@
 		.table_con{
 			overflow:auto;
 			margin:auto;
-			height:250px;;
+			height:250px;
+			
+			
+		}
+		.container{
+			margin:auto;
+			margin-top:10px;
 			width:90%;
 		}
 		table{
@@ -177,10 +183,10 @@
 		
 		
 		@media (max-width:1267px){
-			.imgform-container{
-				display:block;
-				
+			.pannel_con{
+				width:90%;
 			}
+			
 			.align_center{
 				margin:auto;
 				
@@ -193,8 +199,17 @@
 			width:100%;
 			margin:auto;
 		}
+		.cols2{
+			margin-top:10px;
+			margin-bottom:10px;
+		}
 			
 			
+		}
+		@media (max-width:900px){
+			.pannel_con{
+				width:95%;
+			}
 		}
 		@media (max-width:820px){
 			table{
@@ -204,6 +219,7 @@
 			.imgform-img p, .imgform-img  select{
 			font-size:95%;
 			}
+			
 		}
 		@media (max-width:600px){
 			table{
@@ -237,6 +253,9 @@
 			}
 		}
 		@media(max-width:400px){
+			.pannel_con{
+				width:100%;
+			}
 			th:nth-child(3),td:nth-child(3){
 				display:none;
 			}
@@ -268,10 +287,16 @@
 			th:nth-child(7),td:nth-child(7){
 				display:none;
 			}
+			#search_category{
+				font-size:11px;
+			}
 		}
 		@media(max-width:280px){
 			th:nth-child(3),td:nth-child(3){
 				display:none;
+			}
+			.inputs{
+				font-size:10px;
 			}
 		}
 		
@@ -284,7 +309,7 @@
 			<div class="pannel" onclick="slide('#hazard_form')" ><p  id="accounts"  class="lbl_wrap"><img src="images\hazard.png"> <u>A</u>ffected Areas</p></div>		
 				<div class="imgform-container " id="hazard_form">
 					<div class="imgform-img">
-									<div class="inner-wrapper" style='height:300px;'>
+									<div class="inner-wrapper" >
 										<div class="cols cols1" >
 									
 											<!-- <div class="input_wrapper" style="margin:auto">
@@ -294,26 +319,29 @@
 											<div class="input_wrapper" style="margin:auto">
 											<input type="submit" id="test" value="Submit" class="btn btn-primary">
 											</div>   -->
-											<br><br>
+											<br>
 											<div class="input_wrapper" style="margin:auto">
-											<input type="text" id="search_disaster" Placeholder="Search Disaster">
-											<select id='search_category'>
+											<input type="text" id="search_disaster" class="inputs" Placeholder="Search Disaster">
+											<select id='search_category' class="inputs">
 													<?php 
 													$str="SELECT distinct natureofdisaster, natureofdisaster FROM disaster";
 													loadropdown($str,"natureofdisaster","natureofdisaster","Nature of Disaster");
 													?>
 											</select>
 											</div>
-											<div class="table_con">
+											<div class="table_con container" >
 												<table class="disasters">
 													<?php
 													$sql="select id,name,natureofdisaster, datestarted, file_upload  from disaster ";
 													$classes=array("dst_all","dst_item");
 													$headers=array("","Disaster","Nature..","Date","File");
-													loadtable_radio($sql,$headers,true,false,$classes);
+													loadtable_radio($sql,$headers,true,false,$classes,"");
 													?>
 												</table>	
 											</div>	
+											<div id="attributes" class="container">
+
+											</div>
 										</div>  
 
 										<div class="cols cols2" >
@@ -321,7 +349,7 @@
 											<div class="input_wrapper" style="margin:auto">
 												
 											</div>   
-									</div>  
+										</div>  
 
 						</div>
 				</div>
@@ -351,26 +379,40 @@
     </section>
 
     <script>
+	function radio_click(){
+		alert("click radio");
+		alert($(".dst_item:checked").parent().next().next().text());
 		
+	}	
+	
 		
-		
-		
+	
 
 $(document).ready(function(){
 	href_each(".disasters td:nth-child(5)");
 	remove_next_word(".disasters td:nth-child(4)");	
+	enrycpt_each(".dst_item");
 	$("#test").click(function(){
 		alert($(".gender").val());
 	});
+	$(document).on("change",".dst_item",function(){
+		alert($(this).parent().next().next().text());
+		//alert($(this).val());
+		
+	});
+	
 
 	$("#search_category").change(function(){
 		var str="select id,name,natureofdisaster, datestarted, file_upload \
 		 from disaster where natureofdisaster= '"+$(this).val()+"'";
 			 var headers="%Disaster%Nature..%Date%File";
 			var classes ="dst_all%dst_item";
-			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)");
+			$(".disasters").empty();
+			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)","");
+			enrycpt_each(".dst_item");
 			
 	});
+	
 
 	$("#search_disaster").keyup(function(){
 		//alert("test");
@@ -378,7 +420,8 @@ $(document).ready(function(){
 			file_upload  from disaster where name like '%"+$(this).val()+"%'";
 			var headers="%Disaster%Nature..%Date%File";
 			var classes ="dst_all%dst_item";
-			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)");
+			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)", "");
+			enrycpt_each(".dst_item");
 									
 
 	});
