@@ -145,6 +145,53 @@ class Database{
         return "Closed!";
     }
 }
+function is_empty($query){// this is a dubplicate function independent from Databse declaration
+
+    $query=linig($query);
+    $db=new Database();
+    $db->connect();
+    $result=$db->select($query);
+    if(mysqli_num_rows($result)>0){
+        return "false";
+    }
+    else{
+        return "true";
+    }
+    //return $result."<br>";
+    
+}
+//cols are as follows: columnt names to be placed under label(attributes_name), hidden (attr_id/id) and input value(value)
+//for label needs tha name of the attributes
+//for hidden is the id as value of the attributes
+//for the input is tha vlue, empty if the disaster has no attributes value yet
+//classes name are as follows:the div class name, the label class name, input class name
+//ipunt hidden class name
+function make_label_inputs($sql,$class,$with_hidden,$is_empty_val,$cols){
+    //echo $sql;
+    $db=new Database();
+    $db->connect();
+    $result=$db->selectrows($sql,0);
+    if($result!=null){
+       
+                foreach($result as $row){
+                    echo "<div class='".$class[0]."'><p class='".$class[1]."'>".$row[$cols[0]].":</p> ";
+                    if($with_hidden){
+                        echo "<input type='hidden' class='".encrypt($class[3])."' value='".$row[$cols[1]]."'>";
+                    }
+                    $val= $is_empty_val ? $row[$cols[2]]: "";             
+                    echo "<input type='text' class='".$class[2]."' value='".$val."'>";
+                    echo "</div>";
+                
+            }
+        
+    }
+    else{
+        echo "null";
+    }
+    
+
+}
+
 function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){//brg_id[0], lat[1], long[2], category[3], serial[4], count[5]
     //this is a function to turn array into a string which will be later on exploded back to array when 
     //passed back to jquery, it uses a delimeter to identify the start of next item or next row in a 2d array
@@ -1099,36 +1146,11 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
       }
 }
 function test2(){
-    //$office=decrypt($_POST["office"]);
-        $headers=explode("%","Assets%Location%Total");
-        $class="assets_dep";
-        $arr_data=array("2","DICT Central");//office_id and  officename in an array
-        $mydb = new Database();
-        $mydb->connect();
-        $sql="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  ,
-        GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`,
-       
-       
-         (Select barangay.name from barangay where id=i.brgy_id) as barangay,
-       (Select municipality.name from municipality where municipality.id=i.muni_id) as municipality,
-        (Select province.name from province where province.id=i.prov_id) as province,
-       
-        count(*) as `count` FROM deployed_assets_loc i where id=". $arr_data[0]." group by  brgy_id order by province asc";
-       $data=$mydb->selectrows($sql,0);
-       echo "<table class='".$class."'><tr>";
-       foreach($headers as $content){
-        echo "<th>".$content;
-       }
-       if($data!=null){
-            foreach($data as $row){
-                echo "<tr><td>".str_replace(";",";<br>",summarize_list($row["category"], $row["serial"],intval($row["count"])));
-                echo"<td>".$row["province"].", ".$row["municipality"].", ".$row["barangay"]."<td>".$row["count"];
-            }
-       }
-       else{
-        echo "";
-       }
-       echo "</table>";
+    $class=array("input_wrapper","dst_lbl label","dst_input","dst_hidden");
+    $sql="SELECT attributes_name,id,`value`,disaster_id FROM disaster_attributes_view where disaster_id=9";
+    $cols=array("attributes_name","id","value");
+    make_label_inputs($sql,$class,true,true,$cols);
+
 }
 //test2();
 
@@ -1140,7 +1162,7 @@ function test(){
    
     $data=$mydb->selectrows("SELECT lname,gender FROM officials where id=". $staff_id,0);
     $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
-    $gender=(!$data==0) ? $data[0]["gender"]: "MR./Ms.";
+    $gender=(!$data==0) ? $data[0]["gender"]: "Mr./Ms.";
 
     if($gender=="Male"){
         $gender="Mr.";

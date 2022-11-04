@@ -129,13 +129,21 @@
 		.input_wrapper{
 			
 			width:fit-content;
+			margin:auto;
 			margin-top:5px;
+			
 		}
 
 		
 		.input_wrapper .label{
-			width:200px;
+			width:120px;
 			margin-top:0px;
+			font-size:13px;
+			
+		}
+		.input_wrapper input, .input_wrapper select{
+			width:170px;
+			margin-bottom:5px;
 		}
 		.inner-wrapper{
 			margin:auto;			
@@ -180,29 +188,64 @@
 		table{
 			font-size:12px;
 		}
-		
+		.halfcol{
+				width:100%;
+				display:block;
+				border:solid 1px #ddd;
+				border-radius:10px;
+				margin-top:5px;
+				margin-bottom:10px;
+			}
+			.box_label{
+				width:100%;
+				margin-top:-15px;
+				margin-left:15px;
+				margin-bottom:20px;
+				position:absolute;
+			}
+			.box_label span{
+				background-color:white;
+				font-size:16px;
+				text-align:left;
+			}
+			#desc_risk tr:nth-child(1) td{
+				text-align:center;
+				
+			}
+			#desc_risk td:nth-child(1){
+				
+				font-weight:bold
+			}
+			#desc_risk{
+				margin:auto;
+				margin-bottom:10px;
+			}
 		
 		@media (max-width:1267px){
-			.pannel_con{
-				width:90%;
-			}
-			
-			.align_center{
-				margin:auto;
+				.pannel_con{
+					width:90%;
+				}
 				
-				width:fit-content;
-			
-			
+				.align_center{
+					margin:auto;
+					
+					width:fit-content;
+				
+				
+				}
+				.cols, .cols2{
+				display:block;
+				width:100%;
+				margin:auto;
 			}
-			.cols, .cols2{
-			display:block;
-			width:100%;
-			margin:auto;
-		}
-		.cols2{
-			margin-top:10px;
-			margin-bottom:10px;
-		}
+			.cols2{
+				margin-top:10px;
+				margin-bottom:10px;
+			}
+			.halfcol{
+				width:49.5%;
+				display:inline-block;
+			}
 			
 			
 		}
@@ -218,6 +261,11 @@
 			}
 			.imgform-img p, .imgform-img  select{
 			font-size:95%;
+			}
+			.halfcol{
+				width:100%;
+				display:block;
+				
 			}
 			
 		}
@@ -243,6 +291,7 @@
 			.input_wrapper{
 				margin:auto;
 				margin-top:10px;
+				
 			}
 			.input_wrapper >*{
 				display:block;
@@ -311,6 +360,7 @@
 					<div class="imgform-img">
 									<div class="inner-wrapper" >
 										<div class="cols cols1" >
+											<p class="box_label"><span>Disaster/Calamity</span></p>
 									
 											<!-- <div class="input_wrapper" style="margin:auto">
 											<input type="radio" name="gender" class="gender" value="male">Male<br>
@@ -339,8 +389,40 @@
 													?>
 												</table>	
 											</div>	
-											<div id="attributes" class="container">
+											<div  class="container" >
+												<div id="attributes" class="halfcol" style="float:left;" >
+												<p class="box_label"><span>Parameters</span></p>
+												<br>
+												test <br>
+												test
+												</div>
+												<div id="attributes2" class="halfcol"   style="float:right;" >
+												<p class="box_label"><span>Risk</span></p><br>
+													<div class="input_wrapper">
+														<p class="label">Pobability</p>
+														<select id="probability">
+																<option value="0">Select</option>
+																
+																<option value="D Certain/Immenent">D Certain/Immenent</option>
+																<option value="C Highly Likely">C Highly Likely</option>
+																<option value="B Highly Likely">B Highly Likely</option>
+																<option value="A Unlikely">A Unlikely</option>
+														</select>
+													</div>
+													<div class="input_wrapper">
+														<p class="label">Overall Impact</p>
+														<select id="o_impact">
+																<option value="0">Select</option>
+																<option value="4 Catastrophic">4 Catastrophic</option>
+																<option value="3 Major">3 Major</option>
+																<option value="2 Minor">2 Minor</option>
+																<option value="1 Neglegible">1 Neglegible</option>
+														</select>
+													</div>
+													<div class="container risk_desc">
 
+													</div>
+												</div>
 											</div>
 										</div>  
 
@@ -392,14 +474,63 @@ $(document).ready(function(){
 	href_each(".disasters td:nth-child(5)");
 	remove_next_word(".disasters td:nth-child(4)");	
 	enrycpt_each(".dst_item");
+
+	
 	$("#test").click(function(){
 		alert($(".gender").val());
 	});
 	$(document).on("change",".dst_item",function(){
-		alert($(this).parent().next().next().text());
+		
+		var cat=$(this).parent().next().next().text();
+		
+		var disaster_id =$(this).val();
+		var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
+		make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span>Parameters</span></p><br>","#attributes div:nth-child(1)" );
+		
+            
 		//alert($(this).val());
+
 		
 	});
+	function desc_risk(val){
+		var table="";
+		if(val=="D Certain/Immenent"){
+			table="<table id='desc_risk'> \
+			<tr><td colspan='2'>D Certain/Immenent \
+			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td> More than 2 Provinces/highly urbanized cities exposed \
+			<tr><td>Escalation Protocol <td> RDRRMC to take lead and manage \
+			</table>";
+		}
+		if(val=="C Highly Likely"){
+			table="<table id='desc_risk'> \
+			<tr><td colspan='2'>D Certain/Immenent \
+			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td>2 Provinces/highly urbanized cities exposed \
+			<tr><td>Escalation Protocol <td> RDRRMC to augment \
+			</table>";
+		}
+		if(val=="B Highly Likely"){
+			table="<table id='desc_risk'> \
+			<tr><td colspan='2'>D Certain/Immenent \
+			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td>1 Provinces/highly urbanized cities exposed \
+			<tr><td>Escalation Protocol <td> RDRRMC to monitor \
+			</table>";
+		}
+		if(val=="A Unlikely"){
+			table="<table id='desc_risk'> \
+			<tr><td colspan='2' align='Center'>D Certain/Immenent \
+			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td>2 Provinces/highly urbanized cities exposed \
+			<tr><td>Escalation Protocol <td>No Exposure \
+			</table>";
+		}
+		$(".risk_desc").html(table);
+
+	}
+	$("#probability").change(function(){
+		var val =$(this).val();
+		desc_risk(val);
+		
+	});
+	
 	
 
 	$("#search_category").change(function(){

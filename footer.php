@@ -131,8 +131,27 @@
                     remove_next_word(next_word);	
                 }
             });
+            
         }
+        
+        function make_input_attributes(target,class_names,cat,disaster_id,add_this,target_add){
+		$.post("AJAX/load_disaster_attributes.php",
+		{
+			category:cat,
+			disaster:disaster_id,
+            myclass: class_names
+		},
+		function(data){
+			$(target).html(data);
+            if(add_this!=""){
+                $(target_add).before(add_this);
+            }
+            if(data=="null"){
+                $(target).html(add_this);
+            }
+		});
 
+	 }
         function global_load_table_radio(str,headers,chkbox,allchk,classes,target,item,href,next_word,funct){
             $.post("AJAX/loadtable_radio.php", 
             {

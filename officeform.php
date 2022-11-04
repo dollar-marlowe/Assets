@@ -285,8 +285,7 @@
       $("#region, #province, #municipality, #barangay").css("border-bottom-color","#ddd");
 				if(frm==""){
           $("#province").css("border-bottom-color","red");
-					$("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");
-					
+					$("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");					
 
 				}
 				if(frm=="Region"){
