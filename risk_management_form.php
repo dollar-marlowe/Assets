@@ -89,7 +89,7 @@
 			text-align:center;
 			border:solid 1px #ddd;
 			padding:10px 0px 10px 0px;
-			background-color:white;
+			background-color:#eaeaeaab;
 		}
 		.pannel h2{
 			display:inline;
@@ -197,7 +197,7 @@
 				margin-bottom:10px;
 			}
 			.box_label{
-				width:100%;
+			
 				margin-top:-15px;
 				margin-left:15px;
 				margin-bottom:20px;
@@ -389,13 +389,22 @@
 													?>
 												</table>	
 											</div>	
+											
+											<br>
+												
 											<div  class="container" >
+											<input type='submit' value='Add Parameter' id='add_attr'
+											 style='font-size:11px;width:
+											 fit-content;padding:2px;
+											  display:block;
+											  margin-left:120px; margin-bottom:-15px;'>
+
 												<div id="attributes" class="halfcol" style="float:left;" >
 												<p class="box_label"><span>Parameters</span></p>
 												<br>
-												test <br>
-												test
 												</div>
+											
+												
 												<div id="attributes2" class="halfcol"   style="float:right;" >
 												<p class="box_label"><span>Risk</span></p><br>
 													<div class="input_wrapper">
@@ -422,8 +431,10 @@
 													<div class="container risk_desc">
 
 													</div>
+													<!-- <input type="submit" value="Session_test" id="sess_id"> -->
 												</div>
 											</div>
+												
 										</div>  
 
 										<div class="cols cols2" >
@@ -467,15 +478,29 @@
 		
 	}	
 	
-		
+	<?php  echo "
+
+	var sess_id='".$_SESSION["id"]."';
+	function test4(){
+		alert(sess_id);
+	}
 	
+	";?>
+
 
 $(document).ready(function(){
+
 	href_each(".disasters td:nth-child(5)");
 	remove_next_word(".disasters td:nth-child(4)");	
 	enrycpt_each(".dst_item");
-
+	$("#add_attr").hide();
 	
+	$("#sess_id").click(function(){
+		//test4();
+	});
+	$("#add_attr").click(function(){
+		alert("Clicked");
+	});
 	$("#test").click(function(){
 		alert($(".gender").val());
 	});
@@ -485,51 +510,113 @@ $(document).ready(function(){
 		
 		var disaster_id =$(this).val();
 		var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
-		make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span>Parameters</span></p><br>","#attributes div:nth-child(1)" );
-		
+		make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span>Parameters</span></p><br>","#attributes div:nth-child(1)");
+	
+		$("#add_attr").show();
             
 		//alert($(this).val());
 
 		
 	});
-	function desc_risk(val){
+	// $('#attributes').on('DOMSubtreeModified', function(){
+	// 	$('#attributes:last-child').after("<input type='submit' value='Add Parameter' id='add_attr' \
+	// 										 style='font-size:11px;width: \
+	// 										 fit-content;padding:2px; \
+	// 										  display:block; '>");
+	// 	});
+
+	function desc_risk(val,type){
 		var table="";
-		if(val=="D Certain/Immenent"){
+		if(type=="risk"){
+			if(val=="D Certain/Immenent"){
 			table="<table id='desc_risk'> \
-			<tr><td colspan='2'>D Certain/Immenent \
-			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td> More than 2 Provinces/highly urbanized cities exposed \
-			<tr><td>Escalation Protocol <td> RDRRMC to take lead and manage \
+			<tr><td colspan='2'>"+val+" \
+			<tr><td>Tropical Cyclone Track/Floods/Lanslide: <td> More than 2 Provinces/highly urbanized cities exposed \
+			<tr><td>Escalation Protocol: <td> RDRRMC to take lead and manage \
 			</table>";
+			}
+
+			if(val=="C Highly Likely"){
+				table="<table id='desc_risk'> \
+				<tr><td colspan='2'>"+val+" \
+				<tr><td>Tropical Cyclone Track/Floods/Lanslide: <td>2 Provinces/highly urbanized cities exposed \
+				<tr><td>Escalation Protocol: <td> RDRRMC to augment \
+				</table>";
+			}
+			if(val=="B Highly Likely"){
+				table="<table id='desc_risk'> \
+				<tr><td colspan='2'>"+val+" \
+				<tr><td>Tropical Cyclone Track/Floods/Lanslide: <td>1 Provinces/highly urbanized cities exposed \
+				<tr><td>Escalation Protocol: <td> RDRRMC to monitor \
+				</table>";
+			}
+			if(val=="A Unlikely"){
+				table="<table id='desc_risk'> \
+				<tr><td colspan='2'>"+val+" \
+				<tr><td>Tropical Cyclone Track/Floods/Lanslide: <td>2 Provinces/highly urbanized cities exposed \
+				<tr><td>Escalation Protocol: <td>No Exposure \
+				</table>";
+			}
 		}
-		if(val=="C Highly Likely"){
-			table="<table id='desc_risk'> \
-			<tr><td colspan='2'>D Certain/Immenent \
-			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td>2 Provinces/highly urbanized cities exposed \
-			<tr><td>Escalation Protocol <td> RDRRMC to augment \
-			</table>";
+		if(type=="impact"){
+			if(val=="4 Catastrophic"){
+				table="<table id='desc_risk'> \
+				<tr><td colspan='2'>"+val+" \
+				<tr><td>Wind Impact: <td>Tropical Cyclone Wind Signal 3 and above \
+				<tr><td>Floods/Lanslide: <td>High to very high susceptibility \
+				<tr><td>Ciritcal Cyclone Chart Track: <td> RED ALERT LEVEL Within 200km diameter \
+				<tr><td>Affected Pupulation: <td> 15% or more than 15% of the overall Regional Population \
+				</table>";
+			}
+
+			if(val=="3 Major"){
+				table="<table id='desc_risk'> \
+				<tr><td colspan='2'>"+val+" \
+				<tr><td>Wind Impact: <td>Tropical Cyclone Wind Signal 2 \
+				<tr><td>Floods/Lanslide: <td>Moderate susceptibility \
+				<tr><td>Ciritcal Cyclone Chart Track: <td> ORANGE ALERT LEVEL Within 201KM to 400KM diameter \
+				<tr><td>Affected Pupulation: <td> 9% to 14% of the overall Regional Population \
+				</table>";
+			}
+			if(val=="2 Minor"){
+				table="<table id='desc_risk'> \
+				<tr><td colspan='2'>"+val+" \
+				<tr><td>Wind Impact: <td>Tropical Cyclone Wind Signal 1 \
+				<tr><td>Floods/Lanslide: <td>Low susceptibility \
+				<tr><td>Ciritcal Cyclone Chart Track: <td> YELLOW ALERT LEVEL Within 401KM to 600KM diameter \
+				<tr><td>Affected Pupulation: <td> 10% of the overall Regional Population \
+				</table>";
+			}
+			if(val=="1 Neglegible"){
+				table="<table id='desc_risk'> \
+				<tr><td colspan='2'>"+val+" \
+				<tr><td>Wind Impact: <td>No ropical Cyclone Wind Signal  \
+				<tr><td>Floods/Lanslide: <td>No susceptibility \
+				<tr><td>Ciritcal Cyclone Chart Track: <td> No susceptibility \
+				<tr><td>Affected Pupulation: <td> No affected population \
+				</table>";
+			}
 		}
-		if(val=="B Highly Likely"){
-			table="<table id='desc_risk'> \
-			<tr><td colspan='2'>D Certain/Immenent \
-			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td>1 Provinces/highly urbanized cities exposed \
-			<tr><td>Escalation Protocol <td> RDRRMC to monitor \
-			</table>";
-		}
-		if(val=="A Unlikely"){
-			table="<table id='desc_risk'> \
-			<tr><td colspan='2' align='Center'>D Certain/Immenent \
-			<tr><td>Tropical Cyclone Track/Floods/Lanslide <td>2 Provinces/highly urbanized cities exposed \
-			<tr><td>Escalation Protocol <td>No Exposure \
-			</table>";
-		}
+		
 		$(".risk_desc").html(table);
+		$("#impact_desc").remove();
+		$("#desc_risk").before("<p id='impact_desc' Style='font-size:16px;text-align:center; width:100%;'>Description</p>");
 
 	}
 	$("#probability").change(function(){
 		var val =$(this).val();
-		desc_risk(val);
+		desc_risk(val,"risk");
+		
 		
 	});
+
+	$("#o_impact").change(function(){
+		var val =$(this).val();
+		desc_risk(val,"impact");
+		$("#desc_risk").before("<p ></p>");
+		
+	});
+	
 	
 	
 

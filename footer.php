@@ -152,6 +152,7 @@
 		});
 
 	 }
+   
         function global_load_table_radio(str,headers,chkbox,allchk,classes,target,item,href,next_word,funct){
             $.post("AJAX/loadtable_radio.php", 
             {
@@ -196,6 +197,7 @@
             }); 
         }
         function slide(target){
+          
 			$(target).slideToggle("slow");
 		}
        

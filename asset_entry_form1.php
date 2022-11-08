@@ -21,8 +21,8 @@
 	
 		.imgform-img p{
 			margin-left:10px;
-			margin-bottom:10px;
-			display:inline-block;
+			margin-bottom:-6px;
+			
 			font-size:14px;
 		}
 		.imgform-img  select, .imgform-img  select options {
@@ -53,90 +53,9 @@
 			width:90%;
 			margin:auto;
 		}
-		/*Media Queries */
-		@media (max-width:1267px){
-			.imgform-container{
-				display:block;
-				
-			}
-			.imgform-img{
-				padding-top:40px;
-			}
-		}
-		@media (max-width:820px){
-			
-			.imgform-img p, .imgform-img  select, input[type=text]{
-			font-size:95%;
-			}
-			
-		}
-		@media (max-width:600px){
-			
-			.imgform-img p, .imgform-img  select, input[type=text]{
-			font-size:15px;
-			}
-			.imgform-img img{
-			
-			height:200px;
-			}
-			.ss, .pp{
-				margin-top:6px;
-			}
 
-		}
-		
 		/**Accordion styles */
-		.imgform-img .ac-container{
-        width: 100%;
-        display:block;
-		text-align:center;
-		margin:auto;		
-		box-shadow:0px 0px 7px #3f4240;
-	
-      }
-	  .imgform-img .ac-container div{
-		  display:block;
-		  margin:auto;		 
-	  }
-	  .imgform-img .ac-container label{
-        width:100%;
-		position:relative;
-		z-index: 0;		
-		margin-bottom:10px;
-      }	
-	  .imgform-img .ac-container article{
-		  padding-left:30px;
-	  }
-	  .imgform-img .ac-container label:hover{
-       
-		font-weight:700;
 		
-      }
-	  .imgform-img section.ac-container div:nth-child(odd){
-			background-color:	rgb(120,120,120);
-			color:white;
-		}
-		/* .imgform-img section.ac-container div:nth-child(even) {
-			background-color:	rgb(245, 243, 240);
-		
-			
-		} */
-		.imgform-img section.ac-container div:nth-child(even) article {
-			border-top:solid 1px rgb(217, 216, 215);
-			
-		}
-		.ac-container input:checked ~ article.sizeauto{
-       
-		height:auto;
-		display:inline-block;
-		padding-bottom:15px;
-		padding-top:8;
-		
-		}
-		article.sizeauto > * {
-			display:inline-block;
-			overflow:hidden;
-		}	
 	.set{
 		margin-top:10px;
 		margin-left:5px;
@@ -212,7 +131,95 @@
 	.pp{
 		margin-bottom:-6px;
 	}
+	.new_sub{
+		width:95%;	
+	}
+	
 
+		/*Media Queries */
+	
+			
+			.imgform-img p{
+				display:inline;
+				width:fit-content;
+				border:solid 1px #ddd;
+			}
+		
+		@media (max-width:1267px){
+			.imgform-container{
+				display:block;
+				
+			}
+			.imgform-img{
+				padding-top:40px;
+			}
+		}
+		@media (max-width:820px){
+			
+			.imgform-img p, .imgform-img  select, input[type=text]{
+			font-size:95%;
+			}
+			.imgform-container, .new_pannel, .new_sub{
+				width:100%;
+				
+			}
+			.imgform-img{
+				padding:0px;
+
+			}
+			.new_pannel_body{
+				padding-left:10px;
+				padding-right:10px;
+			}
+			
+			
+		}
+		@media (max-width:600px){
+			
+			.imgform-img p, .imgform-img  select, input[type=text]{
+			font-size:15px;
+			}
+			.imgform-img img{
+			
+			height:200px;
+			}
+			.ss, .pp{
+				margin-top:6px;
+			}
+			.new_pannel_body p > *{
+				display:block;
+				margin-left:0px;
+				width:100%;
+				text-align:left;
+			}
+			
+
+		}
+		@media (max-width:763px){
+			.new_pannel_body > *{
+				display:block;
+				margin:auto;
+				width:250px;
+			}
+			.new_pannel_body p {
+				margin:0px;
+				margin:auto;
+				width:250px;
+				
+				display:block;
+			}
+		}
+		@media (max-width:365px){
+			.new_pannel_body > *, .new_pannel_body p {
+			width:95%;
+			}
+			.imgform-img h2, #assetsub, #assetheader{
+				font-size:16px;
+			}
+		}
+		
+		
+		
 	
 </style>
 	<section id="imgform">
@@ -221,59 +228,55 @@
 	  	<div class="imgform-img"  >
 			  <h2 id='assetsub'>
 			  <div  id="minus-item" class='set'></div> 
-				  Sub-Inventory Items
+				 Sub-Inventory Items
 				 
 			  <div  id="add-item" class='set'></div></h2>
 	 	 	<img src="images/asset.jpg" alt="" id="img"/>
-			<section class='ac-container' >
-				<div id='subitem1'>
-					<input id='ac-6' name='accordion-6' type='checkbox' >
-					<label for='ac-6' class='acc-label'>Sub-item1</label>
-					<article class='sizeauto' >							
+			<div class="new_sub">
+				<div class="new_pannel" id="subitem11">
+					<label class="label_new" onclick="slide('#acc1')">Sub-Item 1</label>
+					<article class="new_pannel_body" id="acc1">
 						<input type='text' placeholder='Item Name*' id='asset1' class='subset' />
-						<p>Status:* 
-							<select id='status1' class='subset' >
-								<option value=''>Select from below</option>
-								<option value='Available1'>Intact</option>
-								<option value='Damaged1'>Damaged</option>
-							</select>
-						</p>
-						<input type='text' placeholder='Category*' id="cat1" class='subset ss' />	
-						<p>Set:*<input type='text' placeholder='Set*' id='set1' class='subset setset' value='A' style='display:inline-block;'/>
-						</p>							
-						<input type='text' placeholder='Brand*' id='brand1' class='subset ss'/>
-						<input type='text' placeholder='Model' id='model1'/>
-						<input type='text' placeholder='Provider' id='prov1'/>
-						<input type='text' placeholder='Fund source'  id='fs1' />
-						<input type='text' placeholder='Donor' id='donor1' />
-						<textarea
-							cols='25'
-							rows='2'
-							placeholder='SERIAL:* for multiple input, place / in between each serial'
-							id='serial1'
-							class='subset pp'
-						></textarea>
-						<textarea
-							cols='25'
-							rows='2'
-							placeholder='IMEI:* for multiple input, place / in between each imei'
-							id='ime1'
-							class='pp'
-						></textarea>
-						<textarea
-							cols='25'
-							rows='2'
-							placeholder='Descreption/Remarks'
-							id='remarks1'
-							 class=' pp'
-						></textarea>
-						
-					</article>
-					
+							<p>Status:* 
+								<select id='status1' class='subset' >
+									<option value=''>Select from below</option>
+									<option value='Available1'>Intact</option>
+									<option value='Damaged1'>Damaged</option>
+								</select>
+							</p>
+							<input type='text' placeholder='Category*' id="cat1" class='subset ss' />	
+							<p>Set:* <input type='text' placeholder='Set*' id='set1' class='subset setse`t' value='A' style='display:inline-block;'/>
+							</p>							
+							<input type='text' placeholder='Brand*' id='brand1' class='subset ss'/>
+							<input type='text' placeholder='Model' id='model1'/>
+							<input type='text' placeholder='Provider' id='prov1'/>
+							<input type='text' placeholder='Fund source'  id='fs1' />
+							<input type='text' placeholder='Donor' id='donor1' />
+							<textarea
+								cols='25'
+								rows='2'
+								placeholder='SERIAL:* for multiple input, place / in between each serial'
+								id='serial1'
+								class='subset pp'
+							></textarea>
+							<textarea
+								cols='25'
+								rows='2'
+								placeholder='IMEI:* for multiple input, place / in between each imei'
+								id='ime1'
+								class='pp'
+							></textarea>
+							<textarea
+								cols='25'
+								rows='2'
+								placeholder='Descreption/Remarks'
+								id='remarks1'
+								class=' pp'
+							></textarea>
+					</article>	
 				</div>
-				
-				
-			</section>
+			</div>
+			
 			<input type="submit" value="Save" id='save-items' class='set sub-bttn'/>
 			<input type="submit" value="Clear" id='clear-sub' class='set sub-bttn'/>
 			<p class="set">All sub items has same data &nbsp <input type="checkbox" id="allinput" ></p>
@@ -383,8 +386,9 @@
 			windsize();
 			var acid=6;
 			var elemid=1;
+			$("#assetsub").hide();
 			$(".set").hide();
-			$(".imgform-img .ac-container, #assetsub").css("display","none");
+			$(".new_sub").hide();
 			var isok={
 				"aname":false,
 				"category":false,
@@ -646,12 +650,15 @@
 				clear_sub();
 				if($(this).val()=="set"){
 					$(".single, #img").css("display","none");
-					$(".imgform-img .ac-container, #assetsub").css("display","block");
+					$(".new_sub").show();
+					$("#assetsub").show();
 					$(".set").show();
+					
 				}
 				else{
 					$(".single, #img").css("display","block");
-					$(".imgform-img .ac-container, #assetsub").css("display","none");
+					$(".new_sub").hide();
+					$("#assetsub").hide();
 					$(".set").hide();
 				}
 				windsize();//window size detection function is called when the page loads fucntion definition is below
@@ -952,13 +959,13 @@
 				acid++; 
 				elemid++;
 				var forms="<input type='text' placeholder='Item Name*' id='asset"+elemid+"' class='subset sasset' />\
-				<p>Status:*<select id='status"+elemid+"' class='subset sstatus'>\
+				<p>Status:* <select id='status"+elemid+"' class='subset sstatus'>\
 				<option value=''>Select from below</option>\
 				<option value='Available'>Intact</option>\
 				<option value='Damaged'>Damaged</option>\
 				</select></p>\
 				<input type='text' placeholder='Category*' id='cat"+elemid+"' class='subset ss scat' /><p>	\
-				Set:*<input type='text' placeholder='Set*' id='set"+elemid+"' class='subset setset sset' value='A' style='display:inline-block;'/></p>\
+				Set:* <input type='text' placeholder='Set*' id='set"+elemid+"' class='subset setset sset' value='A' style='display:inline-block;'/></p>\
 				<input type='text'  placeholder='Brand*' id='brand"+elemid+"'class='subset ss sbrand' />\
 				<input type='text' placeholder='Model' id='model"+elemid+"' class='smodel'/>\
 				<input type='text'  placeholder='Provider' id='prov"+elemid+"' ng-bind='prov' class='sprov'/>\
@@ -969,10 +976,15 @@
 				<textarea cols='25' rows='2'placeholder='IMEI:* for multiple input, place / in between each imei' \
 				id='ime"+elemid+"' class='pp sime'></textarea>\
 				<textarea cols='25' rows='2'placeholder='Descreption/Remarks'id='remarks"+elemid+"' class='pp sremarks'></textarea>";
-				var elem="<div id='subitem"+elemid+"' ><input id='ac-"+acid+"' name='accordion-"+acid+"' \
+				var elem="<div id='subitem1"+elemid+"' ><input id='ac-"+acid+"' name='accordion-"+acid+"' \
 				type='checkbox' ><label for='ac-"+acid+"' class='acc-label'>Sub-item"+elemid+"</label>\
 				<article class='sizeauto'>"+forms+"</article></div>";
-				$("#subitem"+(elemid-1)+"").last().after(elem);
+				var elem2="<div class='new_pannel' id='subitem1"+elemid+"' > \
+					<label class='label_new' onclick=slide('#acc"+acid+"')>Sub-Item "+elemid+"</label> \
+					<article class='new_pannel_body' id='acc"+acid+"' >" + forms+" \
+					</article></div>";
+
+				$("#subitem1"+(elemid-1)+"").last().after(elem2);
 				
 				if($("#fs1").val()!=""){$("#fs"+elemid).val($("#fs1").val());}
 				if($("#donor1").val()!=""){$("#donor"+elemid).val($("#donor1").val());}
@@ -985,7 +997,7 @@
 			});
 			$("#minus-item").click(function(){
 				if(elemid>1){
-					$("#subitem"+elemid+"").remove();
+					$("#subitem1"+elemid+"").remove();
 					elemid--;
 					acid--;
 				}

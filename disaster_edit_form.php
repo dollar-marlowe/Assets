@@ -74,7 +74,7 @@
 			text-align:center;
 			border:solid 1px #ddd;
 			padding:10px 0px 10px 0px;
-			background-color:white;
+			background-color:#eaeaeaab;
 		}
 		.pannel h2{
 			display:inline;
@@ -170,12 +170,16 @@
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:95%;
 			}
+			.pannel_con{
+				width:100%;
+			}
 		}
 		@media (max-width:600px){
 			table{
 				
 				font-size:9px;
 			}
+		
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:15px;
 			}
@@ -428,13 +432,19 @@ function validate_date(input){
 
 	$("#myFile").change(function(){
 		//alert($(this).val());
-		validate("#myFile","")
+		validate("#myFile","");
+		//var file =$("#myFile").prop("files")[0];
+		//alert(file["name"]);
+		//$("#profile").attr("src",file["name"]);
+		//console.log(file);
 	});
 
 	$("#description").keyup(function(){
 		
 		//alert($(this).val());
-		validate("#description","")
+		validate("#description","");
+		
+
 	});
 	
 	function validate(target,value){
