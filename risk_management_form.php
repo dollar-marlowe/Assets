@@ -202,6 +202,7 @@
 				margin-left:15px;
 				margin-bottom:20px;
 				position:absolute;
+				
 			}
 			.box_label span{
 				background-color:white;
@@ -326,6 +327,9 @@
 			.inner-wrapper{
 				width:100%;
 			}
+			.imgform-img{
+				padding:0px;
+			}
 			.input_wrapper{
 				margin:auto;
 				margin-top:10px;
@@ -355,7 +359,7 @@
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
 	<div class="pannel_con">
-			<div class="pannel" onclick="slide('#hazard_form')" ><p  id="accounts"  class="lbl_wrap"><img src="images\hazard.png"> <u>A</u>ffected Areas</p></div>		
+			<div class="pannel 1stpannel" onclick="slide('#hazard_form')" ><p  id="accounts"  class="lbl_wrap"><img src="images\hazard.png"> <u>A</u>ffected Areas</p></div>		
 				<div class="imgform-container " id="hazard_form">
 					<div class="imgform-img">
 									<div class="inner-wrapper" >
@@ -390,8 +394,6 @@
 												</table>	
 											</div>	
 											
-											<br>
-												
 											<div  class="container" >
 											<input type='submit' value='Add Parameter' id='add_attr'
 											 style='font-size:11px;width:
@@ -400,13 +402,13 @@
 											  margin-left:120px; margin-bottom:-15px;'>
 
 												<div id="attributes" class="halfcol" style="float:left;" >
-												<p class="box_label"><span>Parameters</span></p>
+												<p class="box_label"><span><u>P</u>arameters</span></p>
 												<br>
 												</div>
 											
 												
 												<div id="attributes2" class="halfcol"   style="float:right;" >
-												<p class="box_label"><span>Risk</span></p><br>
+												<p class="box_label"><span><u>R</u>isk</span></p><br>
 													<div class="input_wrapper">
 														<p class="label">Pobability</p>
 														<select id="probability">
@@ -438,10 +440,56 @@
 										</div>  
 
 										<div class="cols cols2" >
-										test
+										<p class="box_label"><span>Affected Areas</span></p>
 											<div class="input_wrapper" style="margin:auto">
-												
-											</div>   
+												<div class="input_wrapper">
+													<p class="label">Scale: </p>
+													<select id="scale">
+														<option value='Regional'>Regional level</option>
+														<option value='Provincial'>Provincial level</option>
+														<option value='Municipal'>Municipal level</option>
+														<option value='Brangay'>Brangay level</option>
+													</select>
+												</div>  
+												<div class="input_wrapper">
+													<p class="label" for="region">Region:</p>
+													<select id="region" name="region" onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#province','id','name','')">
+														<?php
+														
+														$str="SELECT id,name FROM region";
+														loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
+
+														?>
+													</select>
+												</div>  
+												 
+												<div class="input_wrapper">
+													<p class="label" for="region">Province:</p>
+														<select id="province" disabled name='province'
+														onchange="FetchRegion(this.value,'SELECT * FROM municipality where province_id=','#municipality','id','name','Region')"
+														>
+														<option value=0>Select from Region</option>
+														</select>
+												</div>  
+
+												<div class="input_wrapper">
+													<p class="label" for="region">Municipality:</p>
+														<select id="municipality" disabled name='municipality' 
+														onchange="FetchRegion(this.value,'SELECT * FROM barangay where muni_id=','#barangay','id','name','Municipality')"
+														>
+														<option value=0>Select from Province</option>
+														</select>
+												</div>  
+												<div class="input_wrapper">
+													<p class="label" for="region">Barangay:</p>
+														<select id="barangay" disabled name='barangay' onchange="revertcss('#barangay')">
+														<option value=0>Select from Municipality</option>
+														</select>
+												</div>  
+												<table class="affected">
+													
+												</table>	
+											</div>  
 										</div>  
 
 						</div>
@@ -449,8 +497,8 @@
 			</div>
 	</div>
 	<div class="pannel_con">
-			<div class="pannel" onclick="slide('#incident_log')"><p id="pass_reset"  class="lbl_wrap"><img src="images\logs.png"> <u>E</u>mergency Telecoms Cluster Activation</p></div>
-					<div class="imgform-container " id="incident_log"> 						
+			<div class="pannel" onclick="slide('#incident_areas')"><p id="pass_reset"  class="lbl_wrap"><img src="images\logs.png"> <u>E</u>mergency Telecoms Cluster Activation</p></div>
+					<div class="imgform-container " id="incident_areas"> 						
 						<div class="imgform-img">
 							<div class="inner-wrapper" style='height:300px;'>
 							
@@ -487,22 +535,135 @@
 	
 	";?>
 
-
 $(document).ready(function(){
+	// $(".showcase-container, .showcase-area").hide();
+	// $("#imgform").css("padding-top","100px");
+	$("#add_attr").hide();
+	
+	
+	$("#province").hide().prev().hide();
+	$("#municipality").hide().prev().hide();
+	$("#barangay").hide().prev().hide();
 
+	var alt=false;
+	var height=$(".big").css("height");
 	href_each(".disasters td:nth-child(5)");
 	remove_next_word(".disasters td:nth-child(4)");	
 	enrycpt_each(".dst_item");
-	$("#add_attr").hide();
+	$("#search_category option[value=0]").text("Select Category");
+
+
+	$(window).keyup(function(e) {
+		if(e.key === "Alt"){
+		alt=false;
+		}
+	});
+	
+	
+	$(document).keydown(function(e) {
+		//alert("key");
+		if(e.key === "Alt"){
+		alt=true;
+		}
+		if(alt){
+			if(e.key === "P" || e.key === "p" ){
+				$("#attributes").slideToggle("slow");
+				$("#add_attr").toggle();
+			}
+			if(e.key === "R" || e.key === "r" ){
+				$("#attributes2").slideToggle("slow");
+			}
+		}
+	});
+	
 	
 	$("#sess_id").click(function(){
 		//test4();
 	});
+	$("#scale").change(function(){
+		var val = $(this).val();
+		if(val=="Regional"){
+			$("#province").hide().prev().hide();
+			$("#municipality").hide().prev().hide();
+			$("#barangay").hide().prev().hide();
+
+		}
+		if(val=="Provincial"){
+			$("#province").show().prev().show();
+			$("#municipality").hide().prev().hide();
+			$("#barangay").hide().prev().hide();
+			
+		}
+		if(val=="Municipal"){
+			$("#province").show().prev().show();
+			$("#municipality").show().prev().show();
+			$("#barangay").hide().prev().hide();
+			
+		}
+		if(val=="Brangay"){
+			$("#province").show().prev().show();
+			$("#municipality").show().prev().show();
+			$("#barangay").show().prev().show();
+			
+		}
+	});
 	$("#add_attr").click(function(){
-		alert("Clicked");
+		var elem="<div class='input_wrapper'> \
+		<p class='label'>Attribute Name:</p> \
+		<input type='text' id='new_attr'>\
+		</div> \
+		<div class='input_wrapper'> \
+		<p class='label'>Values if any:</p> \
+		<textarea cols='25' rows='5' id='attr_val' \
+		Placeholder='Place / in between each value'></textarea>\
+		</div> \
+		<div class='input_wrapper'> \
+		<input type='submit' value='Add' id='add_new_attr' style='width:50px;'> \
+		</div> \
+		";
+		
+		$(".big").css("height","fit-content");
+		
+		Popup_modal_show(elem,100);
+		$(".big div div .label").css("text-align","left");
 	});
 	$("#test").click(function(){
 		alert($(".gender").val());
+	});
+	$(document).on("click","#add_new_attr",function(){
+		var disaster_id=$(".dst_item:checked").val();
+		var cat=$(".dst_item:checked").parent().next().next().text();
+		if(global_validate("#new_attr","")==false){
+		
+			$.post("AJAX/add_attributes.php",
+			{
+				disaster: disaster_id,
+				attr: $("#new_attr").val(),
+				val: $("#attr_val").val(),
+				category: cat
+			}, function(data){
+				if(data=="New record created!"){
+					var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
+					make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span><u>P</u>arameters</span></p><br>","#attributes div:nth-child(1)");
+			
+					$("#add_attr").show();
+					$("#new_attr").val("");
+					$("#attr_val").val("");
+
+					alert("Attribute added");
+					
+
+				}
+				else{
+					alert(data);
+				}
+				
+			});
+		}
+		else{
+			//alert(disaster_id+" "+cat);
+		}
+		//alert($("#new_attr").val());
 	});
 	$(document).on("change",".dst_item",function(){
 		
@@ -510,10 +671,12 @@ $(document).ready(function(){
 		
 		var disaster_id =$(this).val();
 		var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
-		make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span>Parameters</span></p><br>","#attributes div:nth-child(1)");
-	
-		$("#add_attr").show();
-            
+		make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span><u>P</u>arameters</span></p><br>","#attributes div:nth-child(1)");
+		if(	!$("#attributes").is(":hidden")){
+			$("#add_attr").show();
+							//$("#btncovid").css("border","none");
+		}
+		            
 		//alert($(this).val());
 
 		
@@ -621,8 +784,15 @@ $(document).ready(function(){
 	
 
 	$("#search_category").change(function(){
-		var str="select id,name,natureofdisaster, datestarted, file_upload \
-		 from disaster where natureofdisaster= '"+$(this).val()+"'";
+		var str="";
+		if($(this).val()=="0"){
+			str="select id,name,natureofdisaster, datestarted, file_upload \
+		 from disaster order by id desc";
+		}else{
+			str="select id,name,natureofdisaster, datestarted, file_upload \
+		 from disaster where natureofdisaster= '"+$(this).val()+"' order by id desc";
+		}
+		 
 			 var headers="%Disaster%Nature..%Date%File";
 			var classes ="dst_all%dst_item";
 			$(".disasters").empty();

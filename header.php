@@ -80,6 +80,61 @@
       .modal {
   display: none;
       }
+     
+   
+   @media (max-width:900px){
+     
+     .modal-content {
+       margin:20% auto;
+     }
+ 
+  }
+  @media (max-width:800px){
+     
+     .modal-content {
+       margin:30% auto;
+     }
+ 
+  }
+  @media (max-width:700px){
+     
+     .modal-content {
+       margin:40% auto;
+     }
+ 
+  }
+  @media (max-width:600px){
+     
+     .modal-content {
+       margin:45% auto;
+     }
+ 
+  }
+  @media (max-width:600px){
+     
+     .modal-content {
+       margin:50% auto;
+     }
+ 
+  }
+   @media (max-width:500px){
+    .modal-content {
+        margin:60% auto;
+       
+      }
+   }
+   @media (max-width:400px){
+    .modal-content {
+        margin:70% auto;
+        width:100%;
+      }
+   }
+   @media (max-width:300px){
+    .modal-content {
+        margin:80% auto;
+        width:100%;
+      }
+   }
     
      
     </style>
@@ -113,6 +168,13 @@
          
          echo "<section class='ac-container'>";
       
+   
+
+         echo   "<div>";
+         echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
+         echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
+         echo  "</div>";
+
          echo   "<div>";
          echo       "<input id='ac-6' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-6'>My <u>P</u>rofile</label>";
@@ -121,11 +183,6 @@
          echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
          echo       "</article>";
          echo   "</div>";
-
-         echo   "<div>";
-         echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
-         echo  "</div>";
 
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
@@ -183,10 +240,10 @@
     <div id="myModal" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content big">
-    <span class="close">&times;</span>
-   <br> <div id="popmsg"></div>
-  </div>
+    <div class="modal-content big">
+      <span class="close">&times;</span>
+    <br> <div id="popmsg"></div>
+    </div>
   </div>
 
   <div id="myModal" class="modal2">

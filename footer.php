@@ -152,6 +152,67 @@
 		});
 
 	 }
+
+     function FetchRegion(id,str,tofill,c1,c2,frm){
+		if(id!=0 || id==""){
+      $("#region, #province, #municipality, #barangay").css("border-bottom-color","#ddd");
+				if(frm==""){
+          $("#province").css("border-bottom-color","red");
+					$("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");					
+
+				}
+				if(frm=="Region"){
+          $("#municipality").css("border-bottom-color","red");
+					$("#barangay").html("<option value=0>Select from Municipality</option>").attr("disabled","disabled").css("border-bottom-color","red");
+
+				}
+        if(frm=="Municipality"){
+          $("#barangay").css("border-bottom-color","red");
+
+        }
+        
+				$.post("AJAX/dropdown.php",
+				{
+				
+					sql:str+""+id+" order by name",
+					col1:c1,
+					col2:c2,
+					from:frm
+				},
+				function(data){
+					$(tofill).removeAttr("disabled");
+					$(tofill).html(data);
+				}
+			);
+
+		}
+		else{
+			if(frm==""){
+        $("#region").css("border-bottom-color","red");
+					$("#province, #municipality, #barangay").html("<option value=0>Select from Region</option>").attr("disabled","disabled").css("border-bottom-color","red");
+					
+
+				}
+				if(frm=="Region"){
+				  $("#province").css("border-bottom-color","red");
+					$("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");
+
+				}
+
+        if(frm=="Municipality"){
+				  $("#municipality").css("border-bottom-color","red");
+        $(" #barangay").html("<option value=0>Select from Municipality</option>").attr("disabled","disabled").css("border-bottom-color","red");
+
+      }
+
+        
+		}
+			
+		 
+			
+		
+		
+	}
    
         function global_load_table_radio(str,headers,chkbox,allchk,classes,target,item,href,next_word,funct){
             $.post("AJAX/loadtable_radio.php", 
@@ -241,7 +302,18 @@
             $("#popmsg").html(msg);
             $(".modal").delay(speed).fadeIn();
         }
-        function Popup_modal_show2(msg,speed){
+        function global_validate(target,value){
+		if($(target).val().trim()==value){
+			$(target).css({"border":"solid 1px red"}); 
+			return true;
+		}else{
+			$(target).css({"border":"solid 1px rgb(118, 118, 118)"});
+			return false;
+		}
+	}
+        function Popup_modal_show2(msg,speed){// this pop-up modal will logout upon clicking close, 
+            //this is only used for auto log-out message
+
             $(".modal2").css("display","block");
             $(".modal2").hide();
             $("#popmsg1").html(msg);

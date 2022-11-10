@@ -280,65 +280,6 @@
     }
    
   }
-	function FetchRegion(id,str,tofill,c1,c2,frm){
-		if(id!=0 || id==""){
-      $("#region, #province, #municipality, #barangay").css("border-bottom-color","#ddd");
-				if(frm==""){
-          $("#province").css("border-bottom-color","red");
-					$("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");					
-
-				}
-				if(frm=="Region"){
-          $("#municipality").css("border-bottom-color","red");
-					$("#barangay").html("<option value=0>Select from Municipality</option>").attr("disabled","disabled").css("border-bottom-color","red");
-
-				}
-        if(frm=="Municipality"){
-          $("#barangay").css("border-bottom-color","red");
-
-        }
-        
-				$.post("AJAX/dropdown.php",
-				{
-				
-					sql:str+""+id+" order by name",
-					col1:c1,
-					col2:c2,
-					from:frm
-				},
-				function(data){
-					$(tofill).removeAttr("disabled");
-					$(tofill).html(data);
-				}
-			);
-
-		}
-		else{
-			if(frm==""){
-        $("#region").css("border-bottom-color","red");
-					$("#province, #municipality, #barangay").html("<option value=0>Select from Region</option>").attr("disabled","disabled").css("border-bottom-color","red");
-					
-
-				}
-				if(frm=="Region"){
-				  $("#province").css("border-bottom-color","red");
-					$("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");
-
-				}
-
-        if(frm=="Municipality"){
-				  $("#municipality").css("border-bottom-color","red");
-        $(" #barangay").html("<option value=0>Select from Municipality</option>").attr("disabled","disabled").css("border-bottom-color","red");
-
-      }
-
-        
-		}
-			
-		 
-			
-		
-		
-	}
+	
 	
 </script>

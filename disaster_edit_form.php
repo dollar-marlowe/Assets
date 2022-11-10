@@ -267,7 +267,7 @@
 					<div class="input_wrapper"><p class="label"><label for="naturedisaster">Nature of Disaster</label></p>
 					<select id="category">
 							<option value="0">Select from below</option>
-							<option value="Typhoon%Meteorological">Typhoon</option>
+							<option value="Cyclone%Meteorological">Cyclone</option>
 							<option value="Earthquake%Geophysical">Earthquake</option>
 							<option value="Volcanic Eruption%Geophysical">Volcanic Eruption</option>
 							<option value="Landslide%Geophysical">Landslide</option>
