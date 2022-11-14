@@ -261,6 +261,20 @@
           
 			$(target).slideToggle("slow");
 		}
+        function mini_pannel_slide(target,imganimate){
+		
+		$(target).slideToggle("slow",function(){
+			if($(target).is(":hidden")){
+				$(imganimate).attr("src","images/arrow_down.png");
+			
+			}
+			else{
+				$(imganimate).attr("src","images/arrow.png");
+				
+			}
+		});
+
+	}
        
         function get_total_assets(office_val,arr_id,call_from){
 			$.post("AJAX/get_assets_total.php",
