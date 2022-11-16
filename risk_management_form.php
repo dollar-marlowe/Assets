@@ -11,7 +11,7 @@
 		.imgform-img p{
 			
 			display:inline-block;
-			font-size:18px;
+			
 		}
 		.inputs, .imgform-img  select, select{
 			font-size:12px;
@@ -62,7 +62,7 @@
 			height:250px;
 			overflow:scroll;
 			margin:auto;
-			margin-bottom:20px;
+			
 			border:solid 1px #ddd;
 			padding:10px;
 			border-radius:0 0 10px 10px;
@@ -153,7 +153,7 @@
 			font-size:13px;
 			
 		}
-		.input_wrapper input, .input_wrapper select{
+		.input_wrapper input[type=text], .input_wrapper select{
 			width:170px;
 			margin-bottom:5px;
 		}
@@ -172,14 +172,11 @@
 			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
 			width:80%;
 			margin:auto;
-			margin-bottom:30px;		
+			
 			border-radius:0 0 30px 30px;
 			
 		}
-		input[type=submit]{
-			width:200px;
-			
-		}
+		
 		.cols{
 			display:inline-block;
 			width:49.5%;
@@ -211,7 +208,7 @@
 				margin-bottom:10px;
 			}
 			.box_label{
-			
+				display:inline-block;
 				margin-top:-15px;
 				margin-left:15px;						
 			}
@@ -231,13 +228,16 @@
 			#desc_risk{
 				margin:auto;
 				margin-bottom:10px;
+				width:100%;
+				
 			}
-			.container_affected{
+			#desc_risk tr:nth-child(odd){
+				background-color:white;
+			}
+			#desc_risk tr{
+				border-bottom:solid 1px #ddd;
+			}
 			
-
-			
-			
-		}
 		.affected tr td:nth-child(1){
 			width:15px;
 			align-items:center;
@@ -274,13 +274,63 @@
 		.arrow{
 			opacity: 0.5;
 		}
-		.selection .label{
+		
+		.selection {
+			width:49%;
+			float:left;
+			border: solid 1px #ddd;
+			border-radius:10px;
+			margin:0;
+			margin-bottom:10px;
+			display:inline-block;
+		}
+		.selection .label, .local_impact .label
+		{
 			width:85px;
 		}
-		.selection input, .selection select{
+		.selection input[type=text], .selection select,
+		.local_impact select
+		{
 			width:120px;
 		}
+		.local_impact{
+			width:49%;
+			margin:0;
+			display:inline-block;
+			border:solid 1px #ddd;
+			border-radius:10px;
+			float:right;
+			margin-bottom:10px;
+
+		}
+		#add_attr{
+			font-size:11px;
+			width:fit-content;
+			padding:2px;
+			display:block;
+			margin-left:120px; 
+			margin-bottom:-30px;
+		}
 		
+		
+		.d_lbl .label{
+			width: fit-content;
+			margin-right:20px;
+			display:inline;
+		}
+		.tables{
+			width:100%;
+			float:left;
+		}
+		#select_areas{
+			float:left;
+		}
+		#areas_selected{
+			float:right;
+		}
+		.lbl_wrap > *{
+			display:inline-block;
+		}
 		
 		@media (max-width:1267px){
 				.pannel_con{
@@ -307,6 +357,15 @@
 				width:49.5%;
 				display:inline-block;
 			}
+			.selection .label, .local_impact .label
+			{
+				width:120px;
+			}
+			.selection input, .selection select,
+			.local_impact select
+			{
+				width:180px;
+			}
 			
 			
 		}
@@ -327,6 +386,15 @@
 				width:100%;
 				display:block;
 				
+			}
+			.selection .label, .local_impact .label
+			{
+				width:85px;
+			}
+			.selection input, .selection select,
+			.local_impact select
+			{
+				width:120px;
 			}
 			
 		}
@@ -363,6 +431,14 @@
 			}
 			.cols2{
 				padding:0px;
+			}
+			.sub_pannel{
+				width:100%;
+				float:none;
+				display:block;
+			}
+			.sub_pannel .input_wrapper > *{
+				display:inline-block;
 			}
 		}
 		@media(max-width:400px){
@@ -406,6 +482,19 @@
 			#search_category{
 				font-size:11px;
 			}
+			.sub_pannel .input_wrapper > *{
+				display:block;
+			}
+			.selection .label, .local_impact .label
+			{
+				width:120px;
+			}
+			.selection input, .selection select,
+			.local_impact select
+			{
+				width:180px;
+			}
+			
 		}
 		@media(max-width:280px){
 			th:nth-child(2),td:nth-child(2){
@@ -414,6 +503,31 @@
 			.inputs{
 				font-size:10px;
 			}
+			.selection input, .selection select,
+			.local_impact select
+			{
+				width:160px;
+			}
+			#add_attr{
+				display:block;
+				margin-left:0;
+				width:100%;
+				margin-bottom:0;
+			}
+		}
+		.buttons{
+			width:fit-content;
+			padding:5px;
+			padding-left:8px;
+			padding-right:8px;
+			background-color:rgb(45, 44, 46);
+			color:white;
+			margin-bottom:10px;
+			transition: transform .2s;
+
+		}
+		.buttons:hover{
+			transform:scale(1.01);
 		}
 		
 	
@@ -422,7 +536,7 @@
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
 	<div class="pannel_con">
-			<div class="pannel 1stpannel" onclick="slide('#hazard_form')" ><p  id="accounts"  class="lbl_wrap"><img src="images\hazard.png"> <u>A</u>ffected Areas</p></div>		
+			<div class="pannel 1stpannel" onclick="slide('#hazard_form')" ><div  id="accounts"  class="lbl_wrap"><img src="images\hazard.png"> <p id="lbl_disaster_header"><u>D</u>isaster and Impact</p></div></div>		
 				<div class="imgform-container " id="hazard_form">
 					<div class="imgform-img">
 									<div class="inner-wrapper" >
@@ -446,8 +560,10 @@
 													?>
 											</select>
 											</div>
-											<div class="mini_pannel" onclick="mini_pannel_slide('#d_select','#arrow1')" style="width:90%;margin:auto;"><img id="arrow1" src="images/arrow.png" class="arrow" style="height:15px;width:20px;margin-left:10px;"></div>
-												
+											<div class="mini_pannel" onclick="mini_pannel_slide('#d_select','#narrow')" style="width:90%; margin:auto;">
+															<img src="images/arrow.png" id="narrow"class="arrow" style="height:15px;width:20px;margin-left:15px;">
+															<div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">Select Hazard</p></div>
+											</div>	
 											<div class="table_con container" style="margin-top:0" id="d_select" >
 												<table class="disasters">
 													<?php
@@ -461,16 +577,19 @@
 											
 											<div  class="container" >
 											<input type='submit' value='Add Parameter' id='add_attr'
-											 style='font-size:11px;width:
-											 fit-content;padding:2px;
-											  display:block;
-											  margin-left:120px; margin-bottom:-30px;'>
+											 style=''>
 
-												<div id="attributes" class="halfcol" style="float:left;" >
+												<div class="halfcol" style="float:left;" >
 												<p class="box_label"><span><u>P</u>arameters</span></p>
-												<br>
+												
+													<div id="attributes" >
+													
+													
+													</div>
+													
 												</div>
-											
+												
+												
 												
 												<div id="attributes2" class="halfcol"   style="float:right;padding-bottom:10px;" >
 												<p class="box_label"><span><u>R</u>isk</span></p><br>
@@ -497,8 +616,8 @@
 													</div>
 												
 
-													<div class="mini_pannel" onclick="mini_pannel_slide('.risk_desc','#arrow2')" style="width:90%; margin:auto;">
-													 <img src="images/arrow.png" id="arrow2"class="arrow" style="height:15px;width:20px;margin-left:15px;">
+													<div class="mini_pannel" onclick="mini_pannel_slide('.risk_desc','#arrow')" style="width:90%; margin:auto;">
+													 <img src="images/arrow.png" id="arrow"class="arrow" style="height:15px;width:20px;margin-left:15px;">
 													 <div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">Description</p></div>
 													</div>
 													<div class="container risk_desc"  style="width:90%;margin-top:0;">
@@ -506,13 +625,27 @@
 													</div>
 													<!-- <input type="submit" value="Session_test" id="sess_id"> -->
 												</div>
+												
 											</div>
+													<div style="width:100%;display:block; float:right;">
+														<div class="input_wrapper" >
+														<input type="submit" id="clear_disaster" value="Clear" class="buttons" style="width:130px;">
+														<input type="submit" id="save_disaster" value="Save" class="buttons" style="width:130px;">
+														<select class="impact_log impact1" style="width:120px;">
+																
+														</select>
+														</div>
+													</div>
 												
 										</div>  
 
 										<div class="cols cols2" >
-										<p class="box_label" ><span>Affected Areas</span></p>
-											<div class="input_wrapper selection" style="margin:auto;">
+										<p class="box_label" style="width:100%;text-align:left;" ><span>Affected Areas</span></p>
+										<div class="input_wrapper d_lbl">
+													<p class="label disaster_name">Disaster Name:</p> <p class="label disaster_nature">Nature of Disaster</p>
+												</div>  
+												<hr style="width:95%;margin:auto;margin-bottom:20px;">
+											<div class=" selection sub_pannel" >
 												<div class="input_wrapper">
 													<p class="label">Scale: </p>
 													<select id="scale">
@@ -532,7 +665,9 @@
 
 														?>
 													</select>
+													
 												</div>  
+												
 												 
 												<div class="input_wrapper">
 													<p class="label" for="region">Province:</p>
@@ -552,15 +687,9 @@
 														</select>
 												</div>  
 											</div>  
-											<div class="mini_pannel" onclick="mini_pannel_slide('#table_affected','#arrow2')"><img src="images/arrow.png" id="arrow2"class="arrow" style="height:15px;width:20px;margin-left:10px;"></div>
-												
-												<div class="table_con" id="table_affected" style="width:100%;">
-													<table class="affected" style="width:100%;">
-														
-													</table>	
-												</div> 
-												<div class="input_wrapper">
-														<p class="label">EPR Protocol</p>
+											<div class="local_impact sub_pannel">
+													<div class="input_wrapper">
+														<p class="label">EPR Protocol:</p>
 														<select id="epr">
 																<option value="0">Select</option>
 																
@@ -571,7 +700,7 @@
 														</select>
 													</div>
 													<div class="input_wrapper">
-														<p class="label">Localized Impact</p>
+														<p class="label">Localized Impact:</p>
 														<select id="l_impact">
 																<option value="0">Select</option>
 																<option value="4 Catastrophic">4 Catastrophic</option>
@@ -580,6 +709,43 @@
 																<option value="1 Neglegible">1 Neglegible</option>
 														</select>
 													</div> 
+													<div class="input_wrapper">
+														<p class="label">Which log?</p>
+														<select class="impact_log impact2">
+																
+														</select>
+														<br><p></p>
+													</div> 
+												</div> 
+											<div class="tables">
+												<div id="select_areas" class="halfcol"  style="border-radius:0 0 10px 10px;"  >
+														<div class="mini_pannel" onclick="mini_pannel_slide('#table_affected','#arrow2')" style="width:100%; margin:auto;">
+															<img src="images/arrow.png" id="arrow2"class="arrow" style="height:15px;width:20px;margin-left:15px;">
+															<div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">Select New Affected Areas</p></div>
+															</div>
+													
+															<div class="table_con" id="table_affected" style="width:100%;margin-bottom:0;">
+																<table class="affected" style="width:100%;">
+																	
+																</table>	
+															</div> 
+															<div class="input_wrapper"><input type="submit" value="Add Selected" id="add_selected" class="buttons"></div>
+												</div> 
+												
+												<div id="areas_selected" class="halfcol"    style="border-radius:0 0 10px 10px;" >
+													
+														
+														<div class="mini_pannel" onclick="mini_pannel_slide('#all_affected','#arrow3')" style="width:100%; margin:auto;">
+															<img src="images/arrow.png" id="arrow3"class="arrow" style="height:15px;width:20px;margin-left:15px;">
+															<div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">All Affected Areas</p></div>
+															</div>
+													
+														<div class="table_con" id="all_affected" style="width:100%;">
+															
+														</div> 
+
+													</div> 	
+												</div>	
 											
 										</div>  
 
@@ -611,6 +777,7 @@
     </section>
 
     <script>
+		var disaster_lbl="</u>D</u>isaster and Impact";
 	function radio_click(){
 		alert("click radio");
 		alert($(".dst_item:checked").parent().next().next().text());
@@ -623,10 +790,13 @@
 	function test4(){
 		alert(sess_id);
 	}
+	var slect_log='".encrypt("SELECT id, concat(date_start,'-',`status`) as log FROM etc_disaster where disaster_id=")."';
 	
 	";?>
 
 $(document).ready(function(){
+	$(".impact_log").attr("disabled","disabled");
+	$("#add_selected").hide();
 	// $(".showcase-container, .showcase-area").hide();
 	// $("#imgform").css("padding-top","100px");
 	$("#add_attr").hide();
@@ -653,7 +823,12 @@ $(document).ready(function(){
 		}
 	});
 	
-	
+	$(".impact1").change(function(){
+		$(".impact2").val($(this).val());
+	});
+	$(".impact2").change(function(){
+		$(".impact1").val($(this).val());
+	});
 	$(document).keydown(function(e) {
 		//alert("key");
 		if(e.key === "Alt"){
@@ -712,7 +887,7 @@ $(document).ready(function(){
 			}, function(data){
 				if(data=="New record created!"){
 					var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
-					make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span><u>P</u>arameters</span></p><br>","#attributes div:nth-child(1)");
+					make_input_attributes("#attributes", classes, cat, disaster_id,"","#attributes div:nth-child(1)","");
 			
 					$("#add_attr").show();
 					$("#new_attr").val("");
@@ -736,16 +911,27 @@ $(document).ready(function(){
 	$(document).on("change",".dst_item",function(){
 		
 		var cat=$(this).parent().next().next().text();
-		
+		var name=$(this).parent().next().text();
+		$(".disaster_name").html("Disater: "+"<b>"+name+"</b>");
+		$(".disaster_nature").html("Type: "+"<b>"+cat+"</b>");
+
+
+
 		var disaster_id =$(this).val();
 		var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
-		make_input_attributes("#attributes", classes, cat, disaster_id,"<p class='box_label'><span><u>P</u>arameters</span></p><br>","#attributes div:nth-child(1)");
+		make_input_attributes("#attributes", classes, cat, disaster_id,"","#attributes div:nth-child(1)","");
 		if(	!$("#attributes").is(":hidden")){
 			$("#add_attr").show();
 							//$("#btncovid").css("border","none");
+		}else{
+			$("#add_attr").hide();
 		}
+		
+		loaddropdown(slect_log,disaster_id,"id","log","disaster",".impact_log",".impact_log option:nth-child(1)","New/Escalation");
+	
 		            
 		//alert($(this).val());
+		$("#lbl_disaster_header").html(name+" Risk and Impact");
 
 		
 	});
@@ -883,57 +1069,54 @@ $(document).ready(function(){
 		 from disaster where natureofdisaster= '"+$(this).val()+"' order by id desc";
 		}
 		 
-			 var headers="%Disaster%Nature..%Date%File";
-			var classes ="dst_all%dst_item";
-			$(".disasters").empty();
-			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)","");
-			enrycpt_each(".dst_item");
+		load_disaster(str);
 			
 	});
-	
+	function load_disaster(str){
+		
+			var headers="%Disaster%Nature..%Date%File";
+			var classes ="dst_all%dst_item";
+			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)", "");
+			enrycpt_each(".dst_item");
+	}
 
 	$("#search_disaster").keyup(function(){
 		//alert("test");
 			var str="select id,name,natureofdisaster, datestarted, \
 			file_upload  from disaster where name like '%"+$(this).val()+"%'";
-			var headers="%Disaster%Nature..%Date%File";
-			var classes ="dst_all%dst_item";
-			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)", "");
-			enrycpt_each(".dst_item");
+			load_disaster(str);
 									
 
 	});
 
 	function fill_areas(str,headers){
 		
-		var classes ="all_area%item_all";
+		var classes ="all_area%item_area";
 		global_load_table(str,headers,true,true,classes,".affected",".item_all","","");
 									
 
 	}
 	function fill_province(){
-		var str="SELECT id, (select name from region where region.id=p.reg_id) \
-		 as region ,name, geocode FROM assets.province p where reg_id="+$("#region").val();
-		 var headers="%Region%Province%Geocode";
+		var str="SELECT id,name, geocode FROM assets.province p where reg_id="+$("#region").val();
+		 var headers="%Province%Geocode";
 		 if($("#region").val()=="0"){
-			str="SELECT id, (select name from region where region.id=p.reg_id) \
-		 as region ,name, geocode FROM assets.province p ";
+			str="SELECT id ,name, geocode FROM assets.province p ";
 		 }
 			
 			fill_areas(str,headers);
 	}
 	function fill_municipality(){
-		var str="select id,(select name from province p where id=m.province_id) as `province`,\
+		var str="select id,\
 		name, geocode  FROM municipality m where province_id="+$("#province").val();
-		var headers="%Province%Municiplality%Geocode";
+		var headers="%Municiplality%Geocode";
 		
 			
 			fill_areas(str,headers);
 	}
 	function fill_barangay(){
-		var str="SELECT id,(select name from municipality m where m.id=b.muni_id) as municipality,\
+		var str="SELECT id,\
 		 name, geocode  FROM assets.barangay b where muni_id="+$("#municipality").val();
-			var headers="%Municipality%Barangay%Geocode";
+			var headers="%Barangay%Geocode";
 			fill_areas(str,headers);
 	}
 	$("#region").change(function(){
@@ -990,5 +1173,60 @@ $(document).ready(function(){
 		}
 		
 	});
+	$(document).on("click",".item_area",function(){
+		
+		if($(this).is(":checked")){
+			$("#add_selected").show();
+		}
+		else{
+			$("#add_selected").hide();
+		}
+	});
+	$("#clear_disaster").click(function(){
+		$("#lbl_disaster_header").html(disaster_lbl);
+		$(".dst_item").prop("checked",false);
+		$("#attributes").empty();
+		$("#add_attr").hide();
+		$(".disasters").css({"border":"none"});
+		$(".dst_item").css({"border":"solid 1px rgb(113, 113, 113)"});
+		$("#attributes2 div select").css({"border":"solid 1px rgb(113, 113, 113)"});
+		$("#attributes2 div select").val("0");
+		$(".risk_desc").empty();
+		$("#search_disaster").val("");
+		$("#search_category").val("0");
+		var str="select id,name,natureofdisaster, datestarted, \
+			file_upload  from disaster ";
+		load_disaster(str);
+	});
+	$("#save_disaster").click(function(){
+		$(".disasters").css({"border":"none"});
+		var risks=is_empty_class("#attributes2 select","0");
+		if($(".dst_item").is(":checked")){
+			// $.each($("#attributes2 select"),function(){
+			// 	alert($(this).val());
+			// });
+			if(!is_empty_class("input.dst_input","") && risks==false){
+				var arr_attributes="";
+				var arr_keys=["/","%","?","&","^","<",">","$","@"];
+				var length=$("input.dst_input").length;
+				var index=1;
+				//alert(length);
+				$.each($("input.dst_input"),function(){
+					arr_attributes+=str_replace(arr_keys,$(this).parent().find("p").text())+"isog"+str_replace(arr_keys,$(this).val())+"isog"+$(this).prev().val();
+					if(index<length){
+						arr_attributes+="msunod";
+					}
+					index++;
+				});
+				alert(arr_attributes);
+				
+			}
+		
+			
+		}else{
+			$(".disasters").css({"border":"solid 1px red"});
+		}
+	});
+
  });
     </script>

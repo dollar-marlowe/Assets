@@ -10,11 +10,11 @@
         $mydb->connect();
         $etc_disaster=0;
         $today=date("Y-m-d");
-       $data=$mydb->select("SELECT * FROM current_etc c;");
+       $data=$mydb->select("SELECT * FROM etc where `status`='active'");
         if($data!=null){
             $row=mysqli_fetch_assoc($data);
             $etc_disaster=$row["id"];
-            $status="Transfered under ".$row["etc_act_name"];
+            $status="Transfered under etc";
         }
         else{
             $status="Transfered under normal circumstances";

@@ -160,23 +160,27 @@ function is_empty($query){// this is a dubplicate function independent from Data
     //return $result."<br>";
     
 }
-//cols are as follows: columnt names to be placed under label(attributes_name), hidden (attr_id/id) and input value(value)
+//cols are as follows: colum names to be placed under label(attributes_name column in the database ), hidden (attr_id/id column in the database) and input value(value)
 //for label needs tha name of the attributes
 //for hidden is the id as value of the attributes
 //for the input is tha vlue, empty if the disaster has no attributes value yet
 //classes name are as follows:the div class name, the label class name, input class name
 //ipunt hidden class name
+//$is empty is a vaiuable that defines weather the specific attributes already has a value in disaster_attributes table
+//the mul)options variable it has to checkl weather the input elements source table is d_attributes or disaster_attr
+//disaster_attr tabel source has more column numbersx that is why it has to adjuist if $is_empty is false
 function make_label_inputs($sql,$class,$with_hidden,$is_empty_val,$cols){
     //echo $sql;
     $db=new Database();
     $db->connect();
     $result=$db->selectrows($sql,0);
+
     if($result!=null){
-       
+                $in_id=1;
                 foreach($result as $row){
                     echo "<div class='".$class[0]."'><p class='".$class[1]."'>".$row[$cols[0]].":</p> ";
                     if($with_hidden){
-                        echo "<input type='hidden' class='".encrypt($class[3])."' value='".$row[$cols[1]]."'>";
+                        echo "<input type='hidden' class='".encrypt($class[3])."' value='".encrypt($row[$cols[1]])."'>";
                     }
                     $val= $is_empty_val ? $row[$cols[2]]: ""; 
                     $mul_option= $is_empty_val? $row[$cols[3]]:  $row[$cols[2]];
@@ -188,7 +192,8 @@ function make_label_inputs($sql,$class,$with_hidden,$is_empty_val,$cols){
                    
                     }  
                     else{
-                        echo "<input type='text' class='".$class[2]."' value='".$val."'>";
+                        echo "<input type='text' class='".$class[2]."' value='".$val."' id='".$in_id."a' onkeyup=global_validate('#".$in_id."a','')>";
+                        $in_id++;
                    
                     }     
                     echo "</div>";
@@ -686,10 +691,17 @@ function shorten($txt){
 function replace($chars,$orig){//
     //this function is used to combine dta frm different column into a one string 
     //the value came form a jquery that is why you cannto use implode fucntion here
+    //this is used in list putting a white space before the defined key
+    //its purpose is so that when the resolution fits that of the element
+    //the character will a\utomatically word wrap
+    //hahaha looks too complicated algo but only doing simple task
+    // the list can still work even without this
+    //the function name replace is to only to put white space in between / - or ( ) or how it is defined 
+    //in the chars parameter
     $elems=explode("%",$chars);
     $val=$orig;
     foreach($elems as $elem){
-        $val=str_replace($elem,$elem." ",$val);
+        $val=str_replace($elem,$elem." ",$val);// this workls this way: replace this, with this, in this string
     }
     return $val;
 }

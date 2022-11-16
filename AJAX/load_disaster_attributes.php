@@ -5,7 +5,10 @@
         
         $category=$_POST["category"];
         $disaster=decrypt($_POST["disaster"]);
+        $etc_id=$_POST["etc_id"];
         $sql="SELECT attributes_name,id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and `status`='Active'";
+        $sql2="SELECT attributes_name,id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and disaster_etc_id=".$etc_id ;
+        
         //there should be a status active filter in disater_attr table this table holds the avlue of the duynamically added attributes in the d_attributes
         //of each disaster, however since a disaster may escalate so there will be a second reference of same disaster with different attributres values
         //so to resolve this there is a need to tag whowhc attribute values were currentlyu in place
@@ -18,6 +21,7 @@
         //as specific attributes may contain more than one value nfrom different timeline for a specific disaster
 
         //echo is_empty($sql);
+        $sql=($etc_id=="")?$sql:$sql2;
         $class=explode("%",$_POST["myclass"]);
         if(is_empty($sql)=="true"){
            

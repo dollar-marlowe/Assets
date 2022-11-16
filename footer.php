@@ -109,6 +109,19 @@
 
             });
         }
+        function str_replace(arr_keys,orig_string){
+            //this function is to remove special characters such as / % ? 
+            //& ^ $ @ < > in a field that is not appropriate or depending on how you define the jeys
+            // they arr_keys is an array of string
+            var str=orig_string;
+          
+            var size=sizeof(arr_keys);
+            for(let i=0; i< size; i++){
+                str=str.replace(arr_keys[i],"");
+            }
+            return str;
+        }
+        
         function global_load_table(str,headers,chkbox,allchk,classes,target,item,href,next_word){
             $.post("AJAX/loadtable.php", 
             {
@@ -134,12 +147,13 @@
             
         }
         
-        function make_input_attributes(target,class_names,cat,disaster_id,add_this,target_add){
+        function make_input_attributes(target,class_names,cat,disaster_id,add_this,target_add,etc){
 		$.post("AJAX/load_disaster_attributes.php",
 		{
 			category:cat,
 			disaster:disaster_id,
-            myclass: class_names
+            myclass: class_names,
+            etc_id:etc
 		},
 		function(data){
 			$(target).html(data);
@@ -152,6 +166,26 @@
 		});
 
 	 }
+     function loaddropdown(str,myid, mycol1,mycol2,myfrom,tofill,change_child,child_val){
+        $.post("AJAX/dropdown_decrypt.php",
+				{
+				
+					sql:str,
+                    id:myid,
+					col1:mycol1,
+					col2:mycol2,
+					from:myfrom
+				},
+				function(data){
+					$(tofill).removeAttr("disabled");
+					$(tofill).html(data);
+                    if(change_child!=""){
+                        $(change_child).text(child_val);
+                        $(change_child).after("<option val='C'>Current</option>");
+                    }
+				}
+			);
+     }
 
      function FetchRegion(id,str,tofill,c1,c2,frm){
 		if(id!=0 || id==""){
@@ -316,12 +350,29 @@
             $("#popmsg").html(msg);
             $(".modal").delay(speed).fadeIn();
         }
+        function mytest(){
+            alert("test");
+        }
+        function is_empty_class(myclass,empty_val){
+            var isempty=false;
+            $.each($(myclass),function(){
+                if($(this).val().trim()==empty_val){
+                    isempty=true;
+                    $(this).css({"border":"solid 1px red"});
+
+                }else{
+                    $(this).css({"border":"solid 1px rgb(113, 113, 113)"});
+                }
+            });
+            return isempty;
+            
+        }
         function global_validate(target,value){
 		if($(target).val().trim()==value){
 			$(target).css({"border":"solid 1px red"}); 
 			return true;
 		}else{
-			$(target).css({"border":"solid 1px rgb(118, 118, 118)"});
+			$(target).css({"border":"solid 1px rgb(113, 113, 113)"});
 			return false;
 		}
 	}

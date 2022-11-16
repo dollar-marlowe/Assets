@@ -144,7 +144,7 @@
 			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
 			width:80%;
 			margin:auto;
-			margin-bottom:30px;				
+					
 		}
 		
 		@media (max-width:1267px){
