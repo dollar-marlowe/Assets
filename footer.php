@@ -141,7 +141,15 @@
                     href_each(href);	
                 }
                 if(next_word!=""){
-                    remove_next_word(next_word);	
+                     if(next_word==".item_area"){
+                        $(next_word).attr("disabled","disabled");
+                    }
+                    else{
+                        remove_next_word(next_word);	
+                    }
+                }
+                if(target==".affected"){
+                    $(".item_area").removeAttr("disabled");
                 }
             });
             
@@ -156,16 +164,45 @@
             etc_id:etc
 		},
 		function(data){
-			$(target).html(data);
+			//alert(data);
             if(add_this!=""){
                 $(target_add).before(add_this);
             }
-            if(data=="null"){
-                $(target).html(add_this);
+            if(data=="nullmmm new"){
+                
+                $(target).html("<div class='input_wrapper'><p >No paremeters yet. Please click add button.</p></div>");
+            }else{
+                var inputs=to_array(data,"mmm");
+                $(target).html(inputs[0]);
+               
+                if(inputs[1].trim()=="retrieved"){
+                   //alert(inputs[4].trim());
+                    $("#probability").val(inputs[2].trim());
+                    $("#o_impact").val(inputs[3].trim());
+                    $("#form").val(inputs[4].trim());
+                   
+                }else{
+                    $("#form").val("0");
+                    $("#probability").val("0");
+                    $("#o_impact").val("0");
+                }
+                if(  $("#form").val()!="0"){
+                    enable_affected();
+                  
+                   }else{
+                    disable_affected()
+                   }
             }
+            loaddropdown(slect_log,disaster_id,"id","log","disaster",".impact_log",".impact_log option:nth-child(1)","New/Escalation");
 		});
 
 	 }
+     function enable_affected(){
+		$(".inputs2, .item_area").removeAttr("disabled");
+	}
+    function disable_affected(){
+		$(".inputs2, .item_area").attr("disabled","disabled");
+	}
      function loaddropdown(str,myid, mycol1,mycol2,myfrom,tofill,change_child,child_val){
         $.post("AJAX/dropdown_decrypt.php",
 				{
@@ -181,7 +218,10 @@
 					$(tofill).html(data);
                     if(change_child!=""){
                         $(change_child).text(child_val);
-                        $(change_child).after("<option val='C'>Current</option>");
+                        $(change_child).after("<option value='C'>Current</option>");
+                        //alert($("#form").val());
+		                $(tofill).val($("#form").val());
+                      
                     }
 				}
 			);
@@ -268,7 +308,13 @@
                     href_each(href);	
                 }
                 if(next_word!=""){
-                    remove_next_word(next_word);	
+                    if(next_word==".item_area"){
+                        $(next_word).attr("disabled","disabled");
+                    }
+                    else{
+                        remove_next_word(next_word);	
+                    }
+                  
                 }
             });
         }

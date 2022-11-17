@@ -551,6 +551,7 @@
 											<input type="submit" id="test" value="Submit" class="btn btn-primary">
 											</div>   -->
 											<br>
+											<input type="hidden" value="0" id="form">
 											<div class="input_wrapper" style="margin:auto">
 											<input type="text" id="search_disaster" class="inputs" Placeholder="Search Disaster">
 											<select id='search_category' class="inputs">
@@ -629,8 +630,8 @@
 											</div>
 													<div style="width:100%;display:block; float:right;">
 														<div class="input_wrapper" >
-														<input type="submit" id="clear_disaster" value="Clear" class="buttons" style="width:130px;">
-														<input type="submit" id="save_disaster" value="Save" class="buttons" style="width:130px;">
+														<input type="submit" id="clear_disaster" value="Clear" class="buttons dstr" style="width:130px;">
+														<input type="submit" id="save_disaster" value="Save" class="buttons dstr" style="width:130px;">
 														<select class="impact_log impact1" style="width:120px;">
 																
 														</select>
@@ -640,15 +641,15 @@
 										</div>  
 
 										<div class="cols cols2" >
-										<p class="box_label" style="width:100%;text-align:left;" ><span>Affected Areas</span></p>
+										<p class="box_label" style="width:100%;text-align:left;" ><span id="span_affected">Affected Areas</span></p>
 										<div class="input_wrapper d_lbl">
 													<p class="label disaster_name">Disaster Name:</p> <p class="label disaster_nature">Nature of Disaster</p>
 												</div>  
 												<hr style="width:95%;margin:auto;margin-bottom:20px;">
 											<div class=" selection sub_pannel" >
-												<div class="input_wrapper">
+												<div class="input_wrapper ">
 													<p class="label">Scale: </p>
-													<select id="scale">
+													<select id="scale" class="inputs2">
 														<option value='Regional'>Regional level</option>
 														<option value='Provincial'>Provincial level</option>
 														<option value='Municipal'>Municipal level</option>
@@ -657,7 +658,7 @@
 												</div>  
 												<div class="input_wrapper">
 													<p class="label" for="region">Region:</p>
-													<select id="region" name="region" onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#province','id','name','')">
+													<select id="region" class="inputs3" name="region" onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#province','id','name','')">
 														<?php
 														
 														$str="SELECT id,name FROM region";
@@ -671,7 +672,7 @@
 												 
 												<div class="input_wrapper">
 													<p class="label" for="region">Province:</p>
-														<select id="province" disabled name='province'
+														<select id="province" disabled name='province' class="inputs3"
 														onchange="FetchRegion(this.value,'SELECT * FROM municipality where province_id=','#municipality','id','name','Region')"
 														>
 														<option value=0>Select from Region</option>
@@ -680,7 +681,7 @@
 
 												<div class="input_wrapper">
 													<p class="label" for="region">Municipality:</p>
-														<select id="municipality" disabled name='municipality' 
+														<select id="municipality" disabled name='municipality' class="inputs3"
 														onchange="FetchRegion(this.value,'SELECT * FROM barangay where muni_id=','#barangay','id','name','Municipality')"
 														>
 														<option value=0>Select from Province</option>
@@ -690,7 +691,7 @@
 											<div class="local_impact sub_pannel">
 													<div class="input_wrapper">
 														<p class="label">EPR Protocol:</p>
-														<select id="epr">
+														<select id="epr" class="inputs2">
 																<option value="0">Select</option>
 																
 																<option value="STANDBY" >STANDBY</option>
@@ -701,7 +702,7 @@
 													</div>
 													<div class="input_wrapper">
 														<p class="label">Localized Impact:</p>
-														<select id="l_impact">
+														<select id="l_impact" class="inputs2">
 																<option value="0">Select</option>
 																<option value="4 Catastrophic">4 Catastrophic</option>
 																<option value="3 Major">3 Major</option>
@@ -795,6 +796,8 @@
 	";?>
 
 $(document).ready(function(){
+	fill_areas("SELECT id,name, geocode FROM assets.region","Select All%Regions%Geocode");
+	
 	$(".impact_log").attr("disabled","disabled");
 	$("#add_selected").hide();
 	// $(".showcase-container, .showcase-area").hide();
@@ -807,7 +810,7 @@ $(document).ready(function(){
 	$("#municipality").hide().prev().hide();
 	
 	
-	fill_areas("SELECT id,name, geocode FROM assets.region","Select All%Regions%Geocode");
+	
 
 	var alt=false;
 	var height=$(".big").css("height");
@@ -815,7 +818,7 @@ $(document).ready(function(){
 	remove_next_word(".disasters td:nth-child(4)");	
 	enrycpt_each(".dst_item");
 	$("#search_category option[value=0]").text("Select Category");
-
+	disable_affected();
 
 	$(window).keyup(function(e) {
 		if(e.key === "Alt"){
@@ -825,6 +828,9 @@ $(document).ready(function(){
 	
 	$(".impact1").change(function(){
 		$(".impact2").val($(this).val());
+		//alert("change");
+		//$(".inputs2").removeAttr("disabled");
+
 	});
 	$(".impact2").change(function(){
 		$(".impact1").val($(this).val());
@@ -914,9 +920,9 @@ $(document).ready(function(){
 		var name=$(this).parent().next().text();
 		$(".disaster_name").html("Disater: "+"<b>"+name+"</b>");
 		$(".disaster_nature").html("Type: "+"<b>"+cat+"</b>");
+		
 
-
-
+		
 		var disaster_id =$(this).val();
 		var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
 		make_input_attributes("#attributes", classes, cat, disaster_id,"","#attributes div:nth-child(1)","");
@@ -927,11 +933,12 @@ $(document).ready(function(){
 			$("#add_attr").hide();
 		}
 		
-		loaddropdown(slect_log,disaster_id,"id","log","disaster",".impact_log",".impact_log option:nth-child(1)","New/Escalation");
 	
+		
 		            
 		//alert($(this).val());
 		$("#lbl_disaster_header").html(name+" Risk and Impact");
+		//alert($("#form").val());
 
 		
 	});
@@ -1058,7 +1065,6 @@ $(document).ready(function(){
 	
 	
 	
-
 	$("#search_category").change(function(){
 		var str="";
 		if($(this).val()=="0"){
@@ -1092,7 +1098,9 @@ $(document).ready(function(){
 	function fill_areas(str,headers){
 		
 		var classes ="all_area%item_area";
-		global_load_table(str,headers,true,true,classes,".affected",".item_all","","");
+		global_load_table(str,headers,true,true,classes,".affected",".item_all","",".item_area");
+		$(".item_area").removeAttr("disabled");
+		//$(".item_area").attr("disabled","disabled");
 									
 
 	}
@@ -1118,12 +1126,15 @@ $(document).ready(function(){
 		 name, geocode  FROM assets.barangay b where muni_id="+$("#municipality").val();
 			var headers="%Barangay%Geocode";
 			fill_areas(str,headers);
+			$(".item_area").removeAttr("disabled");
 	}
 	$("#region").change(function(){
 		$(".affected").empty();
 		if($("#scale").val()=="Provincial"){
 			fill_province();
+
 		}
+		$(".item_area").removeAttr("disabled");
 		
 	});
 	$("#province").change(function(){
@@ -1131,12 +1142,14 @@ $(document).ready(function(){
 		if($("#scale").val()=="Municipal"){
 		fill_municipality();
 		}
+		$(".item_area").removeAttr("disabled");
 	});
 	$("#municipality").change(function(){
 		$(".affected").empty();
 		if($("#scale").val()=="Brangay"){
 		fill_barangay();
 		}
+		$(".item_area").removeAttr("disabled");
 	});
 	$("#scale").change(function(){
 		var val = $(this).val();
@@ -1148,6 +1161,7 @@ $(document).ready(function(){
 			var str="SELECT id,name, geocode FROM assets.region";
 			var headers="Select All%Region%Geocode";
 			fill_areas(str,headers);
+		
 
 		}
 		if(val=="Provincial"){
@@ -1155,6 +1169,7 @@ $(document).ready(function(){
 			$("#province").hide().prev().hide();
 			$("#municipality").hide().prev().hide();
 			fill_province();
+			$("#region").removeAttr("disabled");
 			
 		}
 		if(val=="Municipal"){
@@ -1162,6 +1177,8 @@ $(document).ready(function(){
 			$("#province").show().prev().show();
 			$("#municipality").hide().prev().hide();
 			fill_municipality();
+			$("#region").removeAttr("disabled");
+			$("#province").removeAttr("disabled");
 			
 		}
 		if(val=="Brangay"){
@@ -1169,8 +1186,12 @@ $(document).ready(function(){
 			$("#province").show().prev().show();
 			$("#municipality").show().prev().show();
 			fill_barangay();
+			$("#region").removeAttr("disabled");
+			$("#province").removeAttr("disabled");
+			$("#municipality").removeAttr("disabled");
 			
 		}
+		$(".item_area").removeAttr("disabled");
 		
 	});
 	$(document).on("click",".item_area",function(){
@@ -1197,9 +1218,16 @@ $(document).ready(function(){
 		var str="select id,name,natureofdisaster, datestarted, \
 			file_upload  from disaster ";
 		load_disaster(str);
+		$("#form").val("New/Escalation");
+		$("#scale").val("Regional");
+		$(".inputs3").attr("disabled","disabled").hide().prev().hide();
+		disable_affected();
+		$(".impact_log ").empty().attr("disabled","disabled");
+
 	});
 	$("#save_disaster").click(function(){
 		$(".disasters").css({"border":"none"});
+		//alert($(".dst_item:checked").val()+" "+$(".dst_item:checked").parent().next().text());
 		var risks=is_empty_class("#attributes2 select","0");
 		if($(".dst_item").is(":checked")){
 			// $.each($("#attributes2 select"),function(){
@@ -1207,21 +1235,60 @@ $(document).ready(function(){
 			// });
 			if(!is_empty_class("input.dst_input","") && risks==false){
 				var arr_attributes="";
-				var arr_keys=["/","%","?","&","^","<",">","$","@"];
+				var arr_keys=["%","?","&","^","<",">","$","@","'"];
 				var length=$("input.dst_input").length;
 				var index=1;
 				//alert(length);
 				$.each($("input.dst_input"),function(){
-					arr_attributes+=str_replace(arr_keys,$(this).parent().find("p").text())+"isog"+str_replace(arr_keys,$(this).val())+"isog"+$(this).prev().val();
+					arr_attributes+=str_replace(arr_keys,$(this).parent().find("p").text())+" isog "+str_replace(arr_keys,$(this).val())+" isog "+$(this).prev().val();
 					if(index<length){
-						arr_attributes+="msunod";
+						arr_attributes+=" msunod ";
 					}
 					index++;
 				});
+			
+				//alert(length);
+				$.each($("select.dst_input"),function(){
+					arr_attributes+=" msunod "+str_replace(arr_keys,$(this).parent().find("p").text())+" isog "+str_replace(arr_keys,$(this).val())+" isog "+$(this).prev().val();
+					
+				});
+
 				alert(arr_attributes);
+				var ajax="";
+				if($(".impact1").val()=="0"){
+					ajax="AJAX/add_etc_disaster.php";
+				}
+				$.post(ajax,
+				{
+					disaster:$(".dst_item:checked").val(),
+					attributes:arr_attributes,
+					probability:$("#probability").val(),
+					o_impact:$("#o_impact").val()
+
+				},
+				function(data){
+					if(data=="New records created!"){
+						Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record created!</b>",600);
+						$(".impact2").val("C");
+						
+						$("#attributes2 div > select").attr("disabled","disabled");
+						$(".dst_input").attr("disabled","disabled");
+						$("#add_attr").attr("disabled","disabled");
+						$(".dstr").attr("disabled","disabled");
+						$(".impact1, .impact2").attr("disabled","disabled");
+						$("#add_lbl").remove();
+						$(".dst_item").attr("disabled","disabled");
+						$("#span_affected").after("<span id='add_lbl' style='font-size:12px;'>-(complete the data by adding affected areas)</span>");
+
+						enable_affected();
+						$(".item_area").removeAttr("disabled");
 				
-			}
-		
+					}
+					else{
+						alert(data);
+					}
+				});
+			}		
 			
 		}else{
 			$(".disasters").css({"border":"solid 1px red"});

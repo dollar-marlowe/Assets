@@ -270,6 +270,7 @@
 							<option value="Cyclone%Meteorological">Cyclone</option>
 							<option value="Earthquake%Geophysical">Earthquake</option>
 							<option value="Volcanic Eruption%Geophysical">Volcanic Eruption</option>
+							<option value="Lahar%Geophysical">Lahar</option>
 							<option value="Landslide%Geophysical">Landslide</option>
 							<option value="Tsunami%Hydrological">Tsunami</option>
 							<option value="La-Niña%Hydrological">La-Niña</option>
@@ -372,6 +373,7 @@
 		
 
 $(document).ready(function(){
+	
 	var edit=false;
 	var item_id="";
 	enrycpt_each(".item");
