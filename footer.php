@@ -143,6 +143,9 @@
                 if(next_word!=""){
                      if(next_word==".item_area"){
                         $(next_word).attr("disabled","disabled");
+                        enrycpt_each(".item_area");
+                       
+                       
                     }
                     else{
                         remove_next_word(next_word);	
@@ -221,6 +224,11 @@
                         $(change_child).after("<option value='C'>Current</option>");
                         //alert($("#form").val());
 		                $(tofill).val($("#form").val());
+                        //alert($(".impact_log").val());
+                        if($(".impact_log").val()=="0"){
+                          
+                          $(".item_area").attr("disabled","disabled");
+                      }
                       
                     }
 				}

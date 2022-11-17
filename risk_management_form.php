@@ -796,8 +796,8 @@
 	";?>
 
 $(document).ready(function(){
-	fill_areas("SELECT id,name, geocode FROM assets.region","Select All%Regions%Geocode");
 	
+	disable_affected();
 	$(".impact_log").attr("disabled","disabled");
 	$("#add_selected").hide();
 	// $(".showcase-container, .showcase-area").hide();
@@ -818,7 +818,7 @@ $(document).ready(function(){
 	remove_next_word(".disasters td:nth-child(4)");	
 	enrycpt_each(".dst_item");
 	$("#search_category option[value=0]").text("Select Category");
-	disable_affected();
+	
 
 	$(window).keyup(function(e) {
 		if(e.key === "Alt"){
@@ -939,7 +939,8 @@ $(document).ready(function(){
 		//alert($(this).val());
 		$("#lbl_disaster_header").html(name+" Risk and Impact");
 		//alert($("#form").val());
-
+		fill_areas("SELECT id,name, geocode FROM assets.region","Select All%Regions%Geocode");
+		
 		
 	});
 	// $('#attributes').on('DOMSubtreeModified', function(){
@@ -1100,6 +1101,7 @@ $(document).ready(function(){
 		var classes ="all_area%item_area";
 		global_load_table(str,headers,true,true,classes,".affected",".item_all","",".item_area");
 		$(".item_area").removeAttr("disabled");
+		
 		//$(".item_area").attr("disabled","disabled");
 									
 
@@ -1293,6 +1295,21 @@ $(document).ready(function(){
 		}else{
 			$(".disasters").css({"border":"solid 1px red"});
 		}
+	});
+	$("#add_selected").click(function(){
+		var size=$(".item_area:checked").length;
+		var index=1;
+		var str_affected="";
+		//alert(size);
+		$.each($(".item_area:checked"),function(){
+			str_affected+=$(this).val();
+			//+" sibog "+$("#scale").val()+" sibog "+$("#epr").val()+" sibog "+$("#l_impact").val();
+			if(index < size){
+				str_affected+=" msunod ";
+			}
+			index++;
+		});
+		alert(str_affected);
 	});
 
  });
