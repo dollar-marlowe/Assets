@@ -183,6 +183,37 @@ box-shadow: -1px -1px 9px 6px rgba(0,0,0,0.34);
   text-decoration: none;
   cursor: pointer;
 }
+/* SIMPLICITY PANNEL */
+
+.new_pannel{
+  width:100%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  /* border-radius:10px; */
+  
+}
+.label_new{
+  width:100%;
+  display:block;
+  text-align:center;
+  align-items:center;
+  font-size:19px;
+  padding-top:10px;
+  padding-bottom:10px;
+  background-color:#eaeaeaab;
+  /* border-radius:10px; */
+  border-bottom-color:#001a33;
+  
+  
+}
+.label_new:hover{
+  background-color:#b3b3b3a3;
+}
+.new_pannel_body{
+  width:100%;
+  margin-top:20px;
+  margin-bottom:20px;
+  padding-bottom:20px;
+}
 
 /* ............/navbar and acordion menu/............ */
  .ac-container{

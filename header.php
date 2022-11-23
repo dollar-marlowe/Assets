@@ -17,7 +17,7 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/safiro.css" />
+    <link rel="stylesheet" href="CSS/esmeralda.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>
@@ -80,6 +80,61 @@
       .modal {
   display: none;
       }
+     
+   
+   @media (max-width:900px){
+     
+     .modal-content {
+       margin:20% auto;
+     }
+ 
+  }
+  @media (max-width:800px){
+     
+     .modal-content {
+       margin:30% auto;
+     }
+ 
+  }
+  @media (max-width:700px){
+     
+     .modal-content {
+       margin:40% auto;
+     }
+ 
+  }
+  @media (max-width:600px){
+     
+     .modal-content {
+       margin:45% auto;
+     }
+ 
+  }
+  @media (max-width:600px){
+     
+     .modal-content {
+       margin:50% auto;
+     }
+ 
+  }
+   @media (max-width:500px){
+    .modal-content {
+        margin:60% auto;
+       
+      }
+   }
+   @media (max-width:400px){
+    .modal-content {
+        margin:70% auto;
+        width:100%;
+      }
+   }
+   @media (max-width:300px){
+    .modal-content {
+        margin:80% auto;
+        width:100%;
+      }
+   }
     
      
     </style>
@@ -113,19 +168,21 @@
          
          echo "<section class='ac-container'>";
       
-         echo   "<div>";
-         echo       "<input id='ac-6' name='accordion-1' type='checkbox' >";
-         echo       "<label for='ac-6'>My <u>P</u>rofile</label>";
-         echo       "<article class='ac-medium'>";
-         echo           "<a href='userprofile'><u>V</u>iew Profile</a>";
-         echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
-         echo       "</article>";
-         echo   "</div>";
+   
 
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
          echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
          echo  "</div>";
+
+         echo   "<div>";
+         echo       "<input id='ac-6' name='accordion-1' type='checkbox' >";
+         echo       "<label for='ac-6'>My <u>P</u>rofile</label>";
+         echo       "<article class='ac-small'>";
+         echo           "<a href='userprofile'><u>V</u>iew Profile</a>";
+         echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
+         echo       "</article>";
+         echo   "</div>";
 
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
@@ -183,10 +240,10 @@
     <div id="myModal" class="modal">
 
   <!-- Modal content -->
-  <div class="modal-content big">
-    <span class="close">&times;</span>
-   <br> <div id="popmsg"></div>
-  </div>
+    <div class="modal-content big">
+      <span class="close">&times;</span>
+    <br> <div id="popmsg"></div>
+    </div>
   </div>
 
   <div id="myModal" class="modal2">
@@ -201,12 +258,12 @@
           var idleMax = 20; // Logout after 10 minutes of IDLE
           var idleTime = 0;
           setInterval(function(){
-            idleTime = idleTime + 1;
+           
            // 
            //alert("called");
             if (idleTime >= idleMax) { 
              // alert("called");
-              Popup_modal_show2("You have been automatically logged out due to inactivity. Thank you.",600);
+              Popup_modal_show2("<center><b>SYSTEM NOTIFICATION!</b><br><br>You have been automatically logged out due to inactivity. Thank you.</center>",600);
 
               $.post("AJAX/mycodes.php",{
                 command: "logout2"
@@ -215,6 +272,8 @@
               });
             
                        
+            }else{
+              idleTime = idleTime + 1;
             }
           }, 60000); 
      

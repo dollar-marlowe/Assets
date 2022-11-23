@@ -74,7 +74,7 @@
 			text-align:center;
 			border:solid 1px #ddd;
 			padding:10px 0px 10px 0px;
-			background-color:white;
+			background-color:#eaeaeaab;
 		}
 		.pannel h2{
 			display:inline;
@@ -144,7 +144,7 @@
 			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
 			width:80%;
 			margin:auto;
-			margin-bottom:30px;				
+					
 		}
 		
 		@media (max-width:1267px){
@@ -170,12 +170,16 @@
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:95%;
 			}
+			.pannel_con{
+				width:100%;
+			}
 		}
 		@media (max-width:600px){
 			table{
 				
 				font-size:9px;
 			}
+		
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:15px;
 			}
@@ -263,9 +267,10 @@
 					<div class="input_wrapper"><p class="label"><label for="naturedisaster">Nature of Disaster</label></p>
 					<select id="category">
 							<option value="0">Select from below</option>
-							<option value="Typhoon%Meteorological">Typhoon</option>
+							<option value="Cyclone%Meteorological">Cyclone</option>
 							<option value="Earthquake%Geophysical">Earthquake</option>
 							<option value="Volcanic Eruption%Geophysical">Volcanic Eruption</option>
+							<option value="Lahar%Geophysical">Lahar</option>
 							<option value="Landslide%Geophysical">Landslide</option>
 							<option value="Tsunami%Hydrological">Tsunami</option>
 							<option value="La-Niña%Hydrological">La-Niña</option>
@@ -368,12 +373,16 @@
 		
 
 $(document).ready(function(){
+	
 	var edit=false;
 	var item_id="";
 	enrycpt_each(".item");
 	href_each(".disasters td:nth-child(7)");
 	remove_next_word(".disasters td:nth-child(6)");	
 	var alt=false;
+	/* $(document).on("click",".item",function(){
+		alert("click");
+	}); */
 	$(document).keyup(function(e) {
 		if(e.key === "Alt"){
 		alt=false;
@@ -410,28 +419,23 @@ $(document).ready(function(){
 		
 	});
 	
-function validate_date(input){
-	var date = new Date($(input).val());
-		//alert(date.getDate());
-		if(isNaN(date.getDate())){
-			$(input).css({"border":"solid 1px red"}); 
-			return true;
-		}
-		else{
-			$(input).css({"border":"solid 1px rgb(118, 118, 118)"}); 
-			return false;
-		}
-}
+
 
 	$("#myFile").change(function(){
 		//alert($(this).val());
-		validate("#myFile","")
+		validate("#myFile","");
+		//var file =$("#myFile").prop("files")[0];
+		//alert(file["name"]);
+		//$("#profile").attr("src",file["name"]);
+		//console.log(file);
 	});
 
 	$("#description").keyup(function(){
 		
 		//alert($(this).val());
-		validate("#description","")
+		validate("#description","");
+		
+
 	});
 	
 	function validate(target,value){

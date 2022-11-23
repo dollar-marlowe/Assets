@@ -8,11 +8,10 @@
         $class=$_POST["class"];
         $check=$_POST["check"];
         $all=$_POST["all"];
-        $func=$_POST["func"];
         $headers=explode("%",$header);
         $class=explode("%",$class);
        
-        loadtable_radio($sql,$headers,$check,$all,$class, $func);
+        loadtable_radio($sql,$headers,$check,$all,$class);
     }
     else{
         echo "<script>window.location='../login.php';</script>";

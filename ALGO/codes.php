@@ -145,6 +145,84 @@ class Database{
         return "Closed!";
     }
 }
+function is_empty($query){// this is a dubplicate function independent from Databse declaration
+
+    $query=linig($query);
+    $db=new Database();
+    $db->connect();
+    $result=$db->select($query);
+    if(mysqli_num_rows($result)>0){
+        return "false";
+    }
+    else{
+        return "true";
+    }
+    //return $result."<br>";
+    
+}
+function php_is_empty($query){// this is a dubplicate function independent from Databse declaration
+
+    $query=linig($query);
+    $db=new Database();
+    $db->connect();
+    $result=$db->select($query);
+    if(mysqli_num_rows($result)>0){
+        return  false;
+    }
+    else{
+        return true;
+    }
+    //return $result."<br>";
+    
+}
+//cols are as follows: colum names to be placed under label(attributes_name column in the database ), hidden (attr_id/id column in the database) and input value(value)
+//for label needs tha name of the attributes
+//for hidden is the id as value of the attributes
+//for the input is tha vlue, empty if the disaster has no attributes value yet
+//classes name are as follows:the div class name, the label class name, input class name
+//ipunt hidden class name
+//$is empty is a vaiuable that defines weather the specific attributes already has a value in disaster_attributes table
+//the mul)options variable it has to checkl weather the input elements source table is d_attributes or disaster_attr
+//disaster_attr tabel source has more column numbersx that is why it has to adjuist if $is_empty is false
+function make_label_inputs($sql,$class,$with_hidden,$is_empty_val,$cols){
+    //echo $sql;
+    $db=new Database();
+    $db->connect();
+    $result=$db->selectrows($sql,0);
+
+    if($result!=null){
+                $in_id=1;
+                foreach($result as $row){
+                    echo "<div class='".$class[0]."'><p class='".$class[1]."'>".$row[$cols[0]].":</p> ";
+                    if($with_hidden){
+                        echo "<input type='hidden' class='".encrypt($class[3])."' value='".encrypt($row[$cols[1]])."'>";
+                    }
+                    $val= $is_empty_val ? $row[$cols[2]]: ""; 
+                    $mul_option= $is_empty_val? $row[$cols[3]]:  $row[$cols[2]];
+                    $option= $is_empty_val? $row[$cols[4]]:  $row[$cols[3]]; 
+                    if(intval( $mul_option)>1) {
+                        echo "<select  class='".$class[2]."' value='".$val."'>";
+                        echo  $option;
+                        echo "</select>";
+                   
+                    }  
+                    else{
+                        echo "<input type='text' class='".$class[2]."' value='".$val."' id='".$in_id."a' onkeyup=global_validate('#".$in_id."a','')>";
+                        $in_id++;
+                   
+                    }     
+                    echo "</div>";
+                
+            }
+        
+    }
+    else{
+        echo "null";
+    }
+    
+
+}
+
 function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){//brg_id[0], lat[1], long[2], category[3], serial[4], count[5]
     //this is a function to turn array into a string which will be later on exploded back to array when 
     //passed back to jquery, it uses a delimeter to identify the start of next item or next row in a 2d array
@@ -338,7 +416,6 @@ function removepecialchars($str){
     $str=str_replace(";","",$str);
     $str=str_replace("=","",$str);
     $str=str_replace("%","",$str);
-    $str=str_replace("/","",$str);    
     $str=str_replace("~","",$str);    
     $str=str_replace("||","",$str); 
     $str=str_replace("|","",$str); 
@@ -628,10 +705,17 @@ function shorten($txt){
 function replace($chars,$orig){//
     //this function is used to combine dta frm different column into a one string 
     //the value came form a jquery that is why you cannto use implode fucntion here
+    //this is used in list putting a white space before the defined key
+    //its purpose is so that when the resolution fits that of the element
+    //the character will a\utomatically word wrap
+    //hahaha looks too complicated algo but only doing simple task
+    // the list can still work even without this
+    //the function name replace is to only to put white space in between / - or ( ) or how it is defined 
+    //in the chars parameter
     $elems=explode("%",$chars);
     $val=$orig;
     foreach($elems as $elem){
-        $val=str_replace($elem,$elem." ",$val);
+        $val=str_replace($elem,$elem." ",$val);// this workls this way: replace this, with this, in this string
     }
     return $val;
 }
@@ -667,7 +751,7 @@ function total($str, $col){
     }
 }
 
-function loadtable_radio($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
+function loadtable_radio($str,$headers,$chkbox,$all,$class,$func){//paramerters are as follows:
     //$str is the sql command, 
     //$headers(array): are the header that shows on the table column head 
     //$chkbox is a boolean to add checkboxes at the begiining of each row
@@ -708,7 +792,11 @@ function loadtable_radio($str,$headers,$chkbox,$all,$class){//paramerters are as
                 if($chkbox){
                     if($i==0){
                         echo"<td><input type='radio' 
-                        class='".$class[1]."'  name='".$class[1]."'  value='".$e."' ></td>";    
+                        class='".$class[1]."'  name='".$class[1]."'  value='".$e."'";
+                        if($func!=""){
+                            echo "onclick='".$func."'";
+                        }
+                        echo"></td>";    
                     }
                     $chkbox=false; 
                 }
@@ -843,6 +931,27 @@ function loadropdown($str,$col1,$col2,$from){
     }
     else{
         echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
+function load_label_input($str, $div2,$class,$col1,$col2,$col3){
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+    $elem="";
+    if($data!=null){
+       
+        foreach($data as $d){
+            echo"<div class'".$div2."'><label>".ucfirst($d[$col2])."</label> <input type='hidden' id='".$d[$col1]."' value='".encrypt($d[$col1])."'><input class='".$class."' type='text' id='".$d[$col2]."'";
+            if($col3!=""){
+                echo "value='".$d[$col3]."'";
+            }
+            echo "></div>";
+            $elem.="%".$d[$col2];                                                                           
+        }
+        echo "<script>var elems='". $elem."';</script>";
+    }
+    else{
+        echo "";
     }
 }
 function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deafult value of the combo box if data is null, $col1 ar ethe column names form the db 
@@ -1074,36 +1183,11 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
       }
 }
 function test2(){
-    //$office=decrypt($_POST["office"]);
-        $headers=explode("%","Assets%Location%Total");
-        $class="assets_dep";
-        $arr_data=array("2","DICT Central");//office_id and  officename in an array
-        $mydb = new Database();
-        $mydb->connect();
-        $sql="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  ,
-        GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`,
-       
-       
-         (Select barangay.name from barangay where id=i.brgy_id) as barangay,
-       (Select municipality.name from municipality where municipality.id=i.muni_id) as municipality,
-        (Select province.name from province where province.id=i.prov_id) as province,
-       
-        count(*) as `count` FROM deployed_assets_loc i where id=". $arr_data[0]." group by  brgy_id order by province asc";
-       $data=$mydb->selectrows($sql,0);
-       echo "<table class='".$class."'><tr>";
-       foreach($headers as $content){
-        echo "<th>".$content;
-       }
-       if($data!=null){
-            foreach($data as $row){
-                echo "<tr><td>".str_replace(";",";<br>",summarize_list($row["category"], $row["serial"],intval($row["count"])));
-                echo"<td>".$row["province"].", ".$row["municipality"].", ".$row["barangay"]."<td>".$row["count"];
-            }
-       }
-       else{
-        echo "";
-       }
-       echo "</table>";
+    $class=array("input_wrapper","dst_lbl label","dst_input","dst_hidden");
+    $sql="SELECT attributes_name,id,`value`,disaster_id FROM disaster_attributes_view where disaster_id=9";
+    $cols=array("attributes_name","id","value");
+    make_label_inputs($sql,$class,true,true,$cols);
+
 }
 //test2();
 
@@ -1115,7 +1199,7 @@ function test(){
    
     $data=$mydb->selectrows("SELECT lname,gender FROM officials where id=". $staff_id,0);
     $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
-    $gender=(!$data==0) ? $data[0]["gender"]: "MR./Ms.";
+    $gender=(!$data==0) ? $data[0]["gender"]: "Mr./Ms.";
 
     if($gender=="Male"){
         $gender="Mr.";
@@ -1176,7 +1260,8 @@ on the browser window."); */
 //$db=new Database();
 //test();
 //echo $db->connect();
- //$str="Select * from log``in whe'''re BINARY password='admin123' or 1=1";
+ //$str="SELECT * FROM d_attributes d";
+ //load_label_input($str,"input","attrs","id","attributes_name","");
 //echo abreviate("ACCESS POINT",2); 
 
 //JS API

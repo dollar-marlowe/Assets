@@ -83,7 +83,7 @@
 		}
 		.imgform-img{
 			width:100%;
-			margin-top:20px;
+			
 		}
 		.imgform-container{
 			width:95%;
@@ -107,9 +107,7 @@
 				display:block;
 				
 			}
-			.imgform-img{
-				padding-top:40px;
-			}
+			
 			table{
 				width:fit-content;
 				font-size:12px;
@@ -258,6 +256,8 @@
 			background-color:white;
 			color:black;
 		}
+		
+		
 
 </style>
 	
@@ -266,13 +266,10 @@
 		
 		<!-- this section if for the summary--> 
 	  	<div class="imgform-img" >
-				
-		  <section class='ac-container' >
-				<div id='assets_summary'>
-					<input id='ac-6' name='accordion-6' type='checkbox' class="acc-head">
-					<label for='ac-6' class='acc-label' style='padding-bottom:20px;'>Assets Summary</label>
-					<article class='sizeauto' >							
-						<p class='head' style="margin-bottom:10px;margin-top:10px;"></p>
+		<div class="new_pannel">
+			<label class="label_new" onclick="slide('#acc1')">Assets Summary</label>
+			<article class="new_pannel_body" id="acc1">
+					<p class='head' style="margin-bottom:10px;margin-top:10px;"></p>
 						
 						<div class="container" >
 								<?php 
@@ -306,15 +303,12 @@
 						?>
 						</h3>
 						<hr class="divide2" style="margin-top:2px">
-						
-					</article>
-					
-				</div>
-				<div id='inventory_table' class="acc-head">
-					<input id='ac-7' name='accordion-7' type='checkbox' >
-					<label for='ac-7' class='acc-label'>Inventory Table</label>
-					<article class='sizeauto' >							
-						<p class='head'></p>
+			</article>
+		</div>
+		<div class="new_pannel">
+			<label class="label_new" onclick="slide('#acc2')">Inventory Table</label>
+			<article class="new_pannel_body" id="acc2">
+			<p class='head'></p>
 						<p>Status: 
 						<select id='status'>
 							<option value='all'>All</option>
@@ -355,11 +349,9 @@
 								<input   id="sbdemove" type='submit' Value='Demobilize' class='sub-bttn' >
 								<input   id="receive" type='submit' Value='Receive' class='sub-bttn'>
 								
-					</article>
-					
-				</div>
-				
-			</section>
+			</article>
+		</div>
+		  
 				
 				
 				<br>
@@ -418,7 +410,7 @@
     </section>
 	<script>
 		$(document).ready(function(){
-			$('#ac-7').attr('checked', true);
+			$('#acc2').slideUp("slow");
 			$("#status").val("available");
 			$(".transfer").css("display","none");
 			$("#sbdemove, #receive").css("display","none");
