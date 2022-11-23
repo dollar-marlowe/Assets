@@ -160,6 +160,21 @@ function is_empty($query){// this is a dubplicate function independent from Data
     //return $result."<br>";
     
 }
+function php_is_empty($query){// this is a dubplicate function independent from Databse declaration
+
+    $query=linig($query);
+    $db=new Database();
+    $db->connect();
+    $result=$db->select($query);
+    if(mysqli_num_rows($result)>0){
+        return  false;
+    }
+    else{
+        return true;
+    }
+    //return $result."<br>";
+    
+}
 //cols are as follows: colum names to be placed under label(attributes_name column in the database ), hidden (attr_id/id column in the database) and input value(value)
 //for label needs tha name of the attributes
 //for hidden is the id as value of the attributes

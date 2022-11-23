@@ -109,6 +109,15 @@
 
             });
         }
+        function remove_first_word(target){
+            $.each($(target),function(){
+                //alert("click");
+                var value=$(this).text();
+                var arr_val=to_array(value," ");
+                $(this).html(arr_val[1]);
+
+            });
+        }
         function str_replace(arr_keys,orig_string){
             //this function is to remove special characters such as / % ? 
             //& ^ $ @ < > in a field that is not appropriate or depending on how you define the jeys
@@ -177,17 +186,25 @@
             }else{
                 var inputs=to_array(data,"mmm");
                 $(target).html(inputs[0]);
-               
+               //alert(inputs[1].trim());
                 if(inputs[1].trim()=="retrieved"){
-                   //alert(inputs[4].trim());
+                 // alert(inputs[4].trim());
                     $("#probability").val(inputs[2].trim());
                     $("#o_impact").val(inputs[3].trim());
                     $("#form").val(inputs[4].trim());
+                    $("#current_etc").val(inputs[5].trim());
+                    load_affected("#disaster_affected");
                    
-                }else{
+                } 
+                if(inputs[1].trim()=="new"){
+                    
                     $("#form").val("0");
                     $("#probability").val("0");
                     $("#o_impact").val("0");
+                    $("#current_etc").val(inputs[2].trim());
+                   // alert(inputs[2].trim());
+                   $("#disaster_affected").empty();
+                    
                 }
                 if(  $("#form").val()!="0"){
                     enable_affected();
@@ -197,9 +214,13 @@
                    }
             }
             loaddropdown(slect_log,disaster_id,"id","log","disaster",".impact_log",".impact_log option:nth-child(1)","New/Escalation");
+            //this is the dropdown for impact log it's sql is encrypted 
+
+        
 		});
 
 	 }
+     
      function enable_affected(){
 		$(".inputs2, .item_area").removeAttr("disabled");
 	}
@@ -364,6 +385,25 @@
 
 	}
        
+    function load_affected(target){
+        $(target).empty();
+		var headers="%Affected%Scale%Log%Impact%EPR%Status";
+		var classes="all_affected%item_affected";
+		$.post("AJAX/load_affected_areas.php",
+		{
+			disaster: $(".dst_item:checked").val(),
+			etc: $("#current_etc").val(),
+			header: headers,
+			class:classes
+		},
+		function(data){
+			$(target).html(data);
+			enrycpt_each(".item_affected");
+            remove_next_word("#disaster_affected td:nth-child(4)");
+            remove_first_word("#disaster_affected td:nth-child(5)");
+		});
+
+	}
         function get_total_assets(office_val,arr_id,call_from){
 			$.post("AJAX/get_assets_total.php",
 			{
@@ -406,6 +446,19 @@
         }
         function mytest(){
             alert("test");
+        }
+
+        function validate_date(input){
+            var date = new Date($(input).val());
+                //alert(date.getDate());
+                if(isNaN(date.getDate())){
+                    $(input).css({"border":"solid 1px red"}); 
+                    return true;
+                }
+                else{
+                    $(input).css({"border":"solid 1px rgb(118, 118, 118)"}); 
+                    return false;
+                }
         }
         function is_empty_class(myclass,empty_val){
             var isempty=false;

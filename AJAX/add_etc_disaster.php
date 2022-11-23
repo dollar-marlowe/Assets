@@ -12,7 +12,7 @@
         $o_impact=removepecialchars($_POST["o_impact"]);
 
         $arr_attr=explode("msunod",$attributes);
-
+        $today=date("Y-m-d H:i:s");
         $etc_disaster_id=$db->select_one(" SELECT max(id) as id FROM etc_disaster ","id");
         $etc_disaster_id=intval($etc_disaster_id)+1;
        $sql="";
@@ -24,18 +24,18 @@
              values (".$disaster.",".decrypt($items[2]).",'".$items[1]."',".$etc_disaster_id.",'activating');";
         }
 
-        $newsql="insert into etc_disaster (id,disaster_id,escalated_from,`status`,probability,overall_impact) values
-        (".$etc_disaster_id.",".$disaster.",0,'activating', '".$probability."','".$o_impact."');";
+        $newsql="insert into etc_disaster (id,disaster_id,escalated_from,`status`,probability,overall_impact,date_logged) values
+        (".$etc_disaster_id.",".$disaster.",0,'activating', '".$probability."','".$o_impact."','".$today."');";
         
 
         
 
           $msg=$db->insertmultiple($newsql.$sql);
           if( $msg=="New records created!"){
-            echo $msg;
+            echo $msg."%".$etc_disaster_id;
           }
           else{
-            echo  $msg;
+            echo  $msg."%0";
           }
 
      

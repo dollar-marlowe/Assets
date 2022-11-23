@@ -27,6 +27,7 @@
         //as specific attributes may contain more than one value from different timeline for a specific disaster
 
         //echo is_empty($sql);
+        $current_etc=($etc_id=="")?$check_pending_etc_d:$etc_id;
         $sql=($etc_id=="")?$sql:$sql2;
         $class=explode("%",$_POST["myclass"]);
         if(is_empty($sql)=="true"){
@@ -54,7 +55,8 @@
             $result=$db->selectrows($sql4,0);
             echo " mmm ".$result[0]["probability"]." mmm ".$result[0]["overall_impact"]." mmm ".$status;
 
-        }              
+        }   
+        echo " mmm ".$current_etc;        
     }
     else{
         echo "<script>window.location='../login.php';</script>";

@@ -251,22 +251,22 @@
 			background-color:white;
 
 		}
-		#epr option:nth-child(2)
+		#epr option:nth-child(5)
 		{
 			background-color:#b3e6b3;
 
 		}
-		#epr option:nth-child(3)
+		#epr option:nth-child(4)
 		{
 			background-color:#ffeb99;
 
 		}
-		#epr option:nth-child(4)
+		#epr option:nth-child(3)
 		{
 			background-color:#ffb84d;
 
 		}
-		#epr option:nth-child(5)
+		#epr option:nth-child(2)
 		{
 			background-color:#ff4d4d;
 
@@ -529,6 +529,9 @@
 		.buttons:hover{
 			transform:scale(1.01);
 		}
+		#disaster_affected{
+			width:100%;
+		}
 		
 	
 		
@@ -552,6 +555,7 @@
 											</div>   -->
 											<br>
 											<input type="hidden" value="0" id="form">
+											<input type="hidden" value="0" id="current_etc">
 											<div class="input_wrapper" style="margin:auto">
 											<input type="text" id="search_disaster" class="inputs" Placeholder="Search Disaster">
 											<select id='search_category' class="inputs">
@@ -693,11 +697,12 @@
 														<p class="label">EPR Protocol:</p>
 														<select id="epr" class="inputs2">
 																<option value="0">Select</option>
-																
-																<option value="STANDBY" >STANDBY</option>
-																<option value="ALPHA">ALPHA</option>
-																<option value="BRAVO">BRAVO</option>
+
 																<option value="CHARLIE">CHARLIE</option>
+																<option value="BRAVO">BRAVO</option>
+																<option value="ALPHA">ALPHA</option>
+																<option value="STANDBY" >STANDBY</option>												
+																		
 														</select>
 													</div>
 													<div class="input_wrapper">
@@ -715,7 +720,12 @@
 														<select class="impact_log impact2">
 																
 														</select>
-														<br><p></p>
+														
+													</div> 
+
+													<div class="input_wrapper">
+														<p class="label">Start date:</p>
+														<input type="date" name="affected_date" id="affected_date" class="form-control">
 													</div> 
 												</div> 
 											<div class="tables">
@@ -730,10 +740,10 @@
 																	
 																</table>	
 															</div> 
-															<div class="input_wrapper"><input type="submit" value="Add Selected" id="add_selected" class="buttons"></div>
+															<div class="input_wrapper add_con"><input type="submit" value="Add Selected" id="add_selected" class="buttons"></div>
 												</div> 
 												
-												<div id="areas_selected" class="halfcol"    style="border-radius:0 0 10px 10px;" >
+													<div id="areas_selected" class="halfcol"    style="border-radius:0 0 10px 10px;" >
 													
 														
 														<div class="mini_pannel" onclick="mini_pannel_slide('#all_affected','#arrow3')" style="width:100%; margin:auto;">
@@ -742,10 +752,14 @@
 															</div>
 													
 														<div class="table_con" id="all_affected" style="width:100%;">
-															
+															<table id="disaster_affected">
+
+															</table>
+
 														</div> 
 
 													</div> 	
+													<div class="input_wrapper done_wr"><input type="submit" value="Done" id="done" class="buttons"></div>
 												</div>	
 											
 										</div>  
@@ -791,7 +805,7 @@
 	function test4(){
 		alert(sess_id);
 	}
-	var slect_log='".encrypt("SELECT id, concat(date_start,'-',`status`) as log FROM etc_disaster where disaster_id=")."';
+	var slect_log='".encrypt("SELECT id, concat(date_logged,'-',`status`) as log FROM etc_disaster where disaster_id=")."';
 	
 	";?>
 
@@ -808,7 +822,7 @@ $(document).ready(function(){
 	$("#region").hide().prev().hide();
 	$("#province").hide().prev().hide();
 	$("#municipality").hide().prev().hide();
-	
+	$("#done").hide();
 	
 	
 
@@ -1099,7 +1113,9 @@ $(document).ready(function(){
 	function fill_areas(str,headers){
 		
 		var classes ="all_area%item_area";
-		global_load_table(str,headers,true,true,classes,".affected",".item_all","",".item_area");
+		global_load_table(str,headers,true,true,classes,".affected",".item_all","",".item_area");//the checkbox item_area are disabled on first load 
+		//as disaster attributes were not yet supplied
+		//this will enable as soon as the save button under disater/calamatiy pannel is clicked
 		$(".item_area").removeAttr("disabled");
 		
 		//$(".item_area").attr("disabled","disabled");
@@ -1255,7 +1271,7 @@ $(document).ready(function(){
 					
 				});
 
-				alert(arr_attributes);
+				//alert(arr_attributes);
 				var ajax="";
 				if($(".impact1").val()=="0"){
 					ajax="AJAX/add_etc_disaster.php";
@@ -1269,9 +1285,10 @@ $(document).ready(function(){
 
 				},
 				function(data){
-					if(data=="New records created!"){
+					var arr_data=to_array(data,"%");
+					if(arr_data[0]=="New records created!"){
 						Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record created!</b>",600);
-						$(".impact2").val("C");
+						$(".impact2, .impact").val("C");
 						
 						$("#attributes2 div > select").attr("disabled","disabled");
 						$(".dst_input").attr("disabled","disabled");
@@ -1281,13 +1298,13 @@ $(document).ready(function(){
 						$("#add_lbl").remove();
 						$(".dst_item").attr("disabled","disabled");
 						$("#span_affected").after("<span id='add_lbl' style='font-size:12px;'>-(complete the data by adding affected areas)</span>");
-
 						enable_affected();
 						$(".item_area").removeAttr("disabled");
+						$("#current_etc").val(arr_data[1]);
 				
 					}
 					else{
-						alert(data);
+						alert(arr_data[0]);
 					}
 				});
 			}		
@@ -1297,20 +1314,71 @@ $(document).ready(function(){
 		}
 	});
 	$("#add_selected").click(function(){
+		var date= new Date($("#affected_date").val());
+		var str_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+		//alert(str_date);
 		var size=$(".item_area:checked").length;
 		var index=1;
-		var str_affected="";
-		//alert(size);
-		$.each($(".item_area:checked"),function(){
+		var str_affected=""; 
+		validate_date("#affected_date");
+		if(is_empty_class(".inputs2","0")==false && validate_date("#affected_date")==false){
+			$.each($(".item_area:checked"),function(){
 			str_affected+=$(this).val();
 			//+" sibog "+$("#scale").val()+" sibog "+$("#epr").val()+" sibog "+$("#l_impact").val();
 			if(index < size){
 				str_affected+=" msunod ";
 			}
 			index++;
-		});
-		alert(str_affected);
+			});
+
+			//alert(str_affected);
+			$.post("AJAX/add_affected_areas.php",
+			{
+				areas:str_affected,
+				disaster: $(".dst_item:checked").val(),
+				scale: $("#scale").val(),
+				epr: $("#epr").val(),
+				l_impact: $("#l_impact").val(),
+				etc: $("#current_etc").val(),
+				epr: $("#epr").val(),
+				date: str_date
+			},function(data){
+				//alert(data);
+				Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
+				soft_clear_col2();
+				load_affected("#disaster_affected");
+				$("#done").show();
+				
+
+			});
+		}else{
+			$(".add_err").remove();
+			$(".add_con").after("<div class='input_wrapper add_err'><p style='color:red;'>Please check required fields!</p></div>");
+		}
+		//alert(size);		
 	});
+	$("#done").click(function(data){
+		soft_clear_col2();
+		$(".impact_log ").empty();
+		$(".dst_item").prop("checked",false).removeAttr("disabled");
+		$("#attributes").empty();
+		$("#add_attr").hide();
+		$("#probability, #o_impact").removeAttr("disabled");
+		$(".dstr").removeAttr("disabled");
+
+		
+
+
+
+	});
+	function soft_clear_col2(){
+		$('.item_area').prop("checked",false);
+		$("#scale").val("Regional");
+		$("#epr").val("0");
+		$("#l_impact").val("0");
+		$(".add_err").remove();
+
+	}
 
  });
     </script>

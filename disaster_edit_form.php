@@ -419,18 +419,7 @@ $(document).ready(function(){
 		
 	});
 	
-function validate_date(input){
-	var date = new Date($(input).val());
-		//alert(date.getDate());
-		if(isNaN(date.getDate())){
-			$(input).css({"border":"solid 1px red"}); 
-			return true;
-		}
-		else{
-			$(input).css({"border":"solid 1px rgb(118, 118, 118)"}); 
-			return false;
-		}
-}
+
 
 	$("#myFile").change(function(){
 		//alert($(this).val());
