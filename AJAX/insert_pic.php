@@ -5,7 +5,7 @@
     if(isset($_POST["id"])){
 
         $officials_id=decrypt($_POST["id"]);
-        $destination=$_POST["destination"];
+        $destination=$_POST["url"];
         //$cat=removepecialchars($_POST["cat"]);
         
         $str="insert into profilepic (officials_id,url) values (".$officials_id.",'".$destination."')";

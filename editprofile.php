@@ -264,7 +264,7 @@ echo "var sess_id='".$_SESSION["id"]."';";
 				success: function(result){
 
                    // alert(result);
-                   $("#userprofile").attr("src",result);
+                    $("#userprofile").attr("src",result);
                     $.post("AJAX/insert_pic.php",
                     {
                         id:sess_id,
