@@ -1289,6 +1289,7 @@ function send_email($to,$subject,$content){
         return  $msg;
     }
 }
+//echo $_SESSION["url"]. " ".decrypt($_SESSION["id"]);
 //echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
 // echo summarize_list("Manpack Radio, Sat Phone, UHF Radio, Manpack Radio",
   //"65464225, 356065065478581, a12312313, 65464225", 4);

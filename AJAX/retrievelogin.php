@@ -15,6 +15,8 @@
         $row=mysqli_fetch_assoc($data);
           if($pass==decrypt($row["password"])){
                $_SESSION["id"]=encrypt($row["official_id"]);
+               $url= $mydb->select_one("SELECT `url` FROM profilepic where officials_id=".$row["official_id"]." and id=(SELECT max(id) FROM profilepic where officials_id=".$row["official_id"].")","url");
+               $_SESSION["url"]=($url===0) ? false: $url;
               $_SESSION["uname"]=$row["username"];
               $_SESSION["officename"]=$row["office_name"];
               $_SESSION["officeid"]=$row["office_id"];
