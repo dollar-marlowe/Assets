@@ -151,7 +151,18 @@ body{
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" id="userprofile" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        <img class="img-account-profile rounded-circle mb-2" id="userprofile"
+                        <?php
+                        if($_SESSION["url"]==false){
+                            echo  "src='http://bootdey.com/img/Content/avatar/avatar1.png'";
+                        }
+                        else{
+                            echo  "src='".$_SESSION["url"]."'";
+
+                        }
+                        ?> 
+                       
+                         alt="">
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Buttons for choosing and uploading image-->
