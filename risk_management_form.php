@@ -398,6 +398,7 @@
 			}
 			
 		}
+		
 		@media (max-width:600px){
 			table{
 				
@@ -532,7 +533,9 @@
 		#disaster_affected{
 			width:100%;
 		}
-		
+		#activatefile, #date_activated{
+			width:180px;
+		}
 	
 		
 </style>
@@ -772,11 +775,32 @@
 			<div class="pannel" onclick="slide('#incident_areas')"><p id="pass_reset"  class="lbl_wrap"><img src="images\logs.png"> <u>E</u>mergency Telecoms Cluster Activation</p></div>
 					<div class="imgform-container " id="incident_areas"> 						
 						<div class="imgform-img">
-							<div class="inner-wrapper" style='height:300px;'>
+							<div class="inner-wrapper" >
+							<div class="cols cols1" >
+								<div  class="halfcol"   style="float:right;padding-bottom:10px;border:none;" >
+								<div class="input_wrapper">
+													<p class="label">Date Activated:</p>
+													<input type="date" id="date_activated" class="form-control">
+											</div> 
+											<div class="input_wrapper"><p class="label">
+														<label for="status">Attachment</label></p>
+														<input type="file" id="activatefile" name="myFile" />
+											</div>
 							
-								<div class="input_wrapper" style="margin:auto">
-							
-								</div>								
+								</div>
+								<div class="halfcol width90" style="float:left;border:none;" >
+									<div style="width:90%;background-color:red;margin:auto;">
+									test
+									</div>
+										
+								</div>
+									
+								
+							</div>
+							<div class="cols cols2" >
+								
+							</div>		
+																
 						</div>			
 					</div>	
 			</div>
@@ -810,7 +834,7 @@
 	";?>
 
 $(document).ready(function(){
-	
+	$("#hazard_form").slideUp();
 	disable_affected();
 	$(".impact_log").attr("disabled","disabled");
 	$("#add_selected").hide();

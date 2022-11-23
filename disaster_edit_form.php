@@ -247,6 +247,7 @@
 			width:200px;
 			
 		}
+	
 			
 	
 		
@@ -476,13 +477,16 @@ $(document).ready(function(){
 		
 		if(validate_all()){
 			$("#err_lbl").remove();
+			//pagkuha ng date
 			var date= new Date($("#date_added").val());
 			var str_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-				
+			//pog kuha ng file
+			//need dito id name
 			var file =$("#myFile").prop("files")[0];
-		
+			//after gettign the form input field
+			//you need to declare a formdata object
 			var form= new FormData();
-			form.append("myFile",file);
+			form.append("myFile",file);//ginagamit anf name ng input hindi and id
 			//console.log(form);
 			
 			$.ajax({
