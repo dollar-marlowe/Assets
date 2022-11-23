@@ -1,32 +1,13 @@
+personnelogiinfo
 
- ----------
-avail_assets_loc 
-
-select `office`.`id` AS `id`,`office`.`office_name` AS `office_name`,`assets`.`id` AS `asset_id`,`owned_assets`.`name` AS `name`,`assets`.`serial` AS `serial`,`assets`.`category` AS `category`,`barangay`.`id` AS `brgy_id`,`office`.`region_id` AS `reg_id`,`office`.`province_id` AS `prov_id`,`office`.`muni_id` AS `muni_id`,`barangay`.`lat` AS `lat`,`barangay`.`long` AS `long` from (((`owned_assets` join `assets`) join `office`) join `barangay`) where `assets`.`id` = `owned_assets`.`asset_id` and `owned_assets`.`office_id` = `office`.`id` and `office`.`brgy_id` = `barangay`.`id` and `owned_assets`.`status` = 'available'
- -------
- 
-deployed_assets_loc
-
- select `office`.`id` AS `id`,`office`.`office_name` AS `office_name`,`assets`.`id` AS `asset_id`,`owned_assets`.`name` AS `name`,`assets`.`serial` AS `serial`,`assets`.`category` AS `category`,`deployment`.`reg_id` AS `reg_id`,`deployment`.`prov_id` AS `prov_id`,`deployment`.`muni_id` AS `muni_id`,`barangay`.`id` AS `brgy_id`,`barangay`.`lat` AS `lat`,`barangay`.`long` AS `long` from ((((`owned_assets` join `assets`) join `office`) join `barangay`) join `deployment`) where `assets`.`id` = `owned_assets`.`asset_id` and `owned_assets`.`office_id` = `office`.`id` and `deployment`.`asset_owner_id` = `owned_assets`.`ownerid` and `deployment`.`brgy_id` = `barangay`.`id` and `deployment`.`deployment_stat` = 'Active'
- 
- ------
-geo_add
-
-select `region`.`id` AS `reg_id`,`region`.`reg_code` AS `reg_code`,`region`.`name` AS `reg_name`,`province`.`id` AS `prov_id`,`province`.`prov_code` AS `prov_code`,`province`.`name` AS `prov_name`,`municipality`.`id` AS `muni_id`,`municipality`.`muni_code` AS `muni_code`,`municipality`.`name` AS `muni_name`,`barangay`.`id` AS `brgy_id`,`barangay`.`name` AS `brgy_name`,`barangay`.`geocode` AS `brgy_geocode`,`barangay`.`brgy_code` AS `brgy_code`,`barangay`.`lat` AS `brgy_lat`,`barangay`.`long` AS `brgy_long` from (((`region` join `province`) join `municipality`) join `barangay`) where `barangay`.`muni_id` = `municipality`.`id` and `municipality`.`province_id` = `province`.`id` and `province`.`reg_id` = `region`.`id`
- 
- ---------
- offices_latlong 
-
-select `o`.`id` AS `id`,`o`.`office_name` AS `office_name`,`o`.`category` AS `category`,`o`.`region_id` AS `region_id`,(select `region`.`name` from `region` where `region`.`id` = `o`.`region_id`) AS `region`,`o`.`province_id` AS `province_id`,(select `province`.`name` from `province` where `province`.`id` = `o`.`province_id`) AS `province`,`o`.`muni_id` AS `muni_id`,(select `municipality`.`name` from `municipality` where `municipality`.`id` = `o`.`muni_id`) AS `municipality`,`b`.`id` AS `brgy_id`,`b`.`name` AS `barangay`,`b`.`lat` AS `lat`,`b`.`long` AS `long` from (`office` `o` join `barangay` `b`) where `o`.`brgy_id` = `b`.`id`
-
--=-=--------
-
- owned_assets
-
-select `assetowner`.`id` AS `ownerid`,`assetowner`.`id` AS `property_id`,`assetowner`.`office_id` AS `office_id`,`assets`.`id` AS `asset_id`,`assets`.`assetid` AS `asset_number`,`assets`.`serial` AS `serial`,`assets`.`name` AS `name`,`assets`.`category` AS `category`,`assets`.`brand` AS `brand`,`assetowner`.`date_aquired` AS `date`,`assetowner`.`status` AS `status` from (`assets` join `assetowner`) where `assetowner`.`assets_id` = `assets`.`id` 
- 
- personnelogiinfo
- 
 select `office`.`id` AS `office_id`,`office`.`office_name` AS `office_name`,`office`.`category` AS `category`,`officials`.`id` AS `official_id`,`officials`.`fname` AS `fname`,`officials`.`mname` AS `mname`,`officials`.`lname` AS `lname`,`officials`.`position` AS `position`,`officials`.`email` AS `email`,`officials`.`contact` AS `contact`,`login`.`username` AS `username`,`login`.`password` AS `password`,`login`.`auth_level` AS `auth_level`,`login`.`status` AS `status`,`office`.`region_id` AS `region_id`,`office`.`province_id` AS `province_id`,`office`.`muni_id` AS `muni_id`,`office`.`brgy_id` AS `brgy_id` from ((`office` join `officials`) join `login`) where `office`.`id` = `officials`.`office_id` and `officials`.`id` = `login`.`official_id`
+
+-----------------
+disaster_affected_areas
+
+ select `da`.`id` AS `id`,`da`.`disaster_id` AS `disaster_id`,(select `d`.`name` from `disaster` `d` where `d`.`id` = `da`.`disaster_id`) AS `d_name`,`da`.`area_id` AS `area_id`,case when `da`.`scale` = 'Regional' then (select `r`.`name` from `region` `r` where `r`.`id` = `da`.`area_id`) when `da`.`scale` = 'Provincial' then (select `p`.`name` from `province` `p` where `p`.`id` = `da`.`area_id`) when `da`.`scale` = 'Municipal' then (select `m`.`name` from `municipality` `m` where `m`.`id` = `da`.`area_id`) when `da`.`scale` = 'Brangay' then (select `b`.`name` from `barangay` `b` where `b`.`id` = `da`.`area_id`) end AS `area`,`da`.`scale` AS `scale`,`da`.`status` AS `status`,`da`.`date_start` AS `date_start`,`da`.`date_end` AS `date_end`,`da`.`impact` AS `impact`,`da`.`epr_protocol` AS `epr_protocol`,`da`.`etc_disaster_id` AS `etc_disaster_id` from `disaster_affected` `da`
  
- ----
+--------
+`disaster_attributes_view` 
+
+ select `d`.`id` AS `id`,(select `disaster`.`id` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `disaster_id`,(select `disaster`.`name` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `disaster_name`,(select `disaster`.`category` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `category`,(select `disaster`.`natureofdisaster` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `natureofdisaster`,`d`.`attr_id` AS `attr_id`,(select `d_attributes`.`attributes_name` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `attributes_name`,(select `d_attributes`.`mul_options` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `mul_options`,(select `d_attributes`.`options` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `options`,`d`.`value` AS `value`,`d`.`disaster_etc_id` AS `disaster_etc_id`,`d`.`status` AS `status` from `disaster_attr` `d`
