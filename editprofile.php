@@ -106,7 +106,7 @@ body{
         include "ALGO/codes.php";
         include "header.php";
     ?>
-/*
+
 <!-- 
           /*
         error_reporting(0);
@@ -151,7 +151,7 @@ body{
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        <img class="img-account-profile rounded-circle mb-2" id="userprofile" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Buttons for choosing and uploading image-->
@@ -218,7 +218,7 @@ body{
                                     <input class="form-control" id="inputPhone" type="tel" value=<?php echo $_SESSION["user_mobile"]?>>
                             </div>
                             <!-- Save changes button-->
-                            <button class="btn btn-primary" style="border: none" type="submit">Save changes</button>
+                            <button class="btn btn-primary" style="border: none" type="submit" id="update_profile_btn">Save changes</button>
                             <button class="btn btn-danger"  style="border: none" type="button" id="backbutton">Back</button>
                         </form>
                     </div>
@@ -226,7 +226,12 @@ body{
             </div>
         </div>
     </div>
+
+
     <script>
+        <?php
+echo "var sess_id='".$_SESSION["id"]."';";
+?>
           // Listener for page 
           $(document).ready(function(){
             
@@ -250,13 +255,29 @@ body{
                      var form= new FormData();
                     form.append("myFile",file);
                                         
-                    $.ajax({
+                    $.ajax({    
                 url:"AJAX/image_upload.php",
 				type: "POST",
 				data:form,
 				contentType:false,
 				processData:false,
 				success: function(result){
+
+                   // alert(result);
+                   $("#userprofile").attr("src",result);
+                    $.post("AJAX/insert_pic.php",
+                    {
+                        id:sess_id,
+                        url: result
+
+                    }
+                    ,
+                    function(data){
+                        //if else
+                        //alert..
+
+                    }
+                    );
                 }
                     });
 
