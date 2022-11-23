@@ -12,29 +12,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script>
-          // Listener for page 
-          $(document).ready(function(){
-            
-            // Checks whether an image is selected
-            $("#myFile").change(function(){
-                if($(this).val()){
-                    $("#fileUpload").attr('disabled',false);
-                }
-            });
-            
-            // Goes back to User Profile page
-            $("#backbutton").click(function(){
-              window.location = "userprofile.php";
-            });
 
-            // [Button] Substitute for the input form
-            $("#fileChoose").click(function(){
-                $("#myFile").click();
-            });        
-          });  
-
-        </script>
 </head>
 
 <style>
@@ -129,7 +107,8 @@ body{
         include "header.php";
     ?>
 
-<?php 
+<!-- 
+          /*
         error_reporting(0);
     
         $msg = "";
@@ -137,11 +116,12 @@ body{
         $db = new Database();
         
         // If upload button is clicked ...
+      
         if (isset($_POST["#fileUpload"])) {
-            
+
             $filename = $_FILES["uploadfile"]["name"];
             $tempname = $_FILES["uploadfile"]["tmp_name"];
-            $folder = "./profile_images/" . $filename;
+            $folder = "../profile_images/profile" . $filename;
         
             $db = mysqli_connect("localhost", "lowe", "admin123", "assets");
         
@@ -158,7 +138,9 @@ body{
                 echo "<h3>  Failed to upload image!</h3>";
             }
         }
-?>
+        */
+ -->
+
 
     <div class="container-xl px-4 mt-4">
         <hr class="mt-0 mb-4">
@@ -169,14 +151,14 @@ body{
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        <img class="img-account-profile rounded-circle mb-2" id="userprofile" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Buttons for choosing and uploading image-->
                         <div class="file-upload">
                             <input type="file" class="file-upload-input" id="myFile" name="uploadfile">
                             <button type="button" class="btn file-choose-button" id="fileChoose">Choose Image</button>
-                            <button type="submit" class="btn file-upload-button" id="fileUpload" disabled>Upload</button>
+                            <button type="submit" class="btn file-upload-button" id="fileUpload" hidden>Upload</button>
                         </div>
                         
                     </div>
@@ -227,7 +209,7 @@ body{
                             <!-- Address form-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputEmailAddress">Address</label>
-                                <input class="form-control" id="inputEmailAddress" type="email" value=<?php echo $_SESSION["user_address"]?>>
+                                <input class="form-control" id="inputEmailAddress" type="text" value=<?php echo $_SESSION["user_address"]?>>
                             </div>
                             
                             <div class="row gx-3 mb-3">
@@ -236,7 +218,7 @@ body{
                                     <input class="form-control" id="inputPhone" type="tel" value=<?php echo $_SESSION["user_mobile"]?>>
                             </div>
                             <!-- Save changes button-->
-                            <button class="btn btn-primary" style="border: none" type="submit">Save changes</button>
+                            <button class="btn btn-primary" style="border: none" type="submit" id="update_profile_btn">Save changes</button>
                             <button class="btn btn-danger"  style="border: none" type="button" id="backbutton">Back</button>
                         </form>
                     </div>
@@ -245,6 +227,81 @@ body{
         </div>
     </div>
 
+
+    <script>
+        <?php
+echo "var sess_id='".$_SESSION["id"]."';";
+?>
+          // Listener for page 
+          $(document).ready(function(){
+            
+            // Checks whether an image is selected
+            $("#myFile").change(function(){
+                if($(this).val()){
+                   // $("#fileUpload").attr('disabled',false);
+                    // [Button] make upload buttom visible from being hidden
+                    $("#fileUpload").attr('hidden',false);
+                    
+                }
+            });
+            
+            $("#fileUpload").click(function(){
+                    // sample lng po, trial lng sa pag control ng button usigng JQuery
+                    $("#fileUpload").attr('hidden',true);
+                    alert("SAMPLE Message: uploaded succesfully");
+                    
+                    var file =$("#myFile").prop("files")[0];
+                
+                     var form= new FormData();
+                    form.append("myFile",file);
+                                        
+                    $.ajax({    
+                url:"AJAX/image_upload.php",
+				type: "POST",
+				data:form,
+				contentType:false,
+				processData:false,
+				success: function(result){
+
+                   // alert(result);
+                   $("#userprofile").attr("src",result);
+                    $.post("AJAX/insert_pic.php",
+                    {
+                        id:sess_id,
+                        url: result
+
+                    }
+                    ,
+                    function(data){
+                        //if else
+                        //alert..
+
+                    }
+                    );
+                }
+                    });
+
+
+            });
+
+            // Goes back to User Profile page
+            $("#backbutton").click(function(){
+              window.location = "userprofile.php";
+            });
+
+            // [Button] make upload buttom visible
+                   
+        
+            // [Button] Substitute for the input form
+            $("#fileChoose").click(function(){
+                $("#myFile").click();
+            });        
+          });  
+
+          
+
+
+        </script>
    
 </body>
 
