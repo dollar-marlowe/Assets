@@ -370,15 +370,16 @@
           
 			$(target).slideToggle("slow");
 		}
-        function mini_pannel_slide(target,imganimate){
+        //used in risk_management_form.php
+        function mini_pannel_slide(target,imganimate,imgtrue,imgfalse){
 		
 		$(target).slideToggle("slow",function(){
 			if($(target).is(":hidden")){
-				$(imganimate).attr("src","images/arrow_down.png");
+				$(imganimate).attr("src",imgtrue);
 			
 			}
 			else{
-				$(imganimate).attr("src","images/arrow.png");
+				$(imganimate).attr("src",imgfalse);
 				
 			}
 		});

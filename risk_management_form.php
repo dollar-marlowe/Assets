@@ -533,9 +533,74 @@
 		#disaster_affected{
 			width:100%;
 		}
-		#activatefile, #date_activated{
+		#activatefile, #date_activated, #reso{
 			width:180px;
 		}
+		.row_pannel{
+			width:100%;
+			border-bottom: solid 1px #ddd;
+		
+		}
+		.row_pannel > *{
+			display:inline-block;
+		}
+		
+		.mini_affct{
+		width:100%;
+		}
+		.mini_affct tr:nth-child(odd){
+			background-color:white;
+
+		}
+		.broder_table tr{
+			border-bottom: solid 1px #f0f1f6;
+		}
+		
+		.mini_affct tr{
+			margin:0;
+			padding:0;
+			font-size:12px;
+			
+		}
+
+		.mini_affct tr td{
+			padding:0px;
+			padding-top:3px;
+		}
+		.head_table td:nth-child(1), .head_table th:nth-child(1){
+			padding-top:5px;
+			width:25px;
+		}
+		.mini_con{
+			display:none;
+			width:90%;
+			margin:auto;
+		}
+		img.mini_arrow{
+			width:12px;
+			height:12px;
+			opacity:0.5;
+			display:inline;
+			float:left;
+			margin-top:5px;
+			margin-left:5px;
+			margin-right:10px;
+		
+		}
+		.mini_row_head{
+			width:94%;
+			
+		}
+		.body_table tr td{
+			padding-left:5px;
+		}
+		.etc_pannel{
+			width:96%;margin:auto;
+		}
+		.etc_row{
+			width:100%;
+		}
+
 	
 		
 </style>
@@ -568,7 +633,7 @@
 													?>
 											</select>
 											</div>
-											<div class="mini_pannel" onclick="mini_pannel_slide('#d_select','#narrow')" style="width:90%; margin:auto;">
+											<div class="mini_pannel" onclick="mini_pannel_slide('#d_select','#narrow','images/arrow_down.png','images/arrow.png')" style="width:90%; margin:auto;">
 															<img src="images/arrow.png" id="narrow"class="arrow" style="height:15px;width:20px;margin-left:15px;">
 															<div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">Select Hazard</p></div>
 											</div>	
@@ -624,7 +689,7 @@
 													</div>
 												
 
-													<div class="mini_pannel" onclick="mini_pannel_slide('.risk_desc','#arrow')" style="width:90%; margin:auto;">
+													<div class="mini_pannel" onclick="mini_pannel_slide('.risk_desc','#arrow','images/arrow_down.png','images/arrow.png')" style="width:90%; margin:auto;">
 													 <img src="images/arrow.png" id="arrow"class="arrow" style="height:15px;width:20px;margin-left:15px;">
 													 <div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">Description</p></div>
 													</div>
@@ -733,7 +798,7 @@
 												</div> 
 											<div class="tables">
 												<div id="select_areas" class="halfcol"  style="border-radius:0 0 10px 10px;"  >
-														<div class="mini_pannel" onclick="mini_pannel_slide('#table_affected','#arrow2')" style="width:100%; margin:auto;">
+														<div class="mini_pannel" onclick="mini_pannel_slide('#table_affected','#arrow2','images/arrow_down.png','images/arrow.png')" style="width:100%; margin:auto;">
 															<img src="images/arrow.png" id="arrow2"class="arrow" style="height:15px;width:20px;margin-left:15px;">
 															<div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">Select New Affected Areas</p></div>
 															</div>
@@ -749,7 +814,7 @@
 													<div id="areas_selected" class="halfcol"    style="border-radius:0 0 10px 10px;" >
 													
 														
-														<div class="mini_pannel" onclick="mini_pannel_slide('#all_affected','#arrow3')" style="width:100%; margin:auto;">
+														<div class="mini_pannel" onclick="mini_pannel_slide('#all_affected','#arrow3','images/arrow_down.png','images/arrow.png')" style="width:100%; margin:auto;">
 															<img src="images/arrow.png" id="arrow3"class="arrow" style="height:15px;width:20px;margin-left:15px;">
 															<div style="display:inline-block;width:80%;"><p style="width:100%;text-align:center;">All Affected Areas</p></div>
 															</div>
@@ -778,21 +843,27 @@
 							<div class="inner-wrapper" >
 							<div class="cols cols1" >
 								<div  class="halfcol"   style="float:right;padding-bottom:10px;border:none;" >
-								<div class="input_wrapper">
+											<div class="input_wrapper">
 													<p class="label">Date Activated:</p>
 													<input type="date" id="date_activated" class="form-control">
 											</div> 
 											<div class="input_wrapper"><p class="label">
-														<label for="status">Attachment</label></p>
+														<label for="status">Attachment:</label></p>
 														<input type="file" id="activatefile" name="myFile" />
+											</div>
+											<div class="input_wrapper"><p class="label">
+														<label for="status">Resolution No.:</label></p>
+														<input type="text" id="reso"  />
 											</div>
 							
 								</div>
 								<div class="halfcol width90" style="float:left;border:none;" >
-									<div style="width:90%;background-color:red;margin:auto;">
-									test
-									</div>
+								<hr style="width:96%;margin:auto;">
+								<div class="etc_pannel">
+									
 										
+									</div>	
+
 								</div>
 									
 								
@@ -1398,9 +1469,18 @@ $(document).ready(function(){
 	function soft_clear_col2(){
 		$('.item_area').prop("checked",false);
 		$("#scale").val("Regional");
-		$("#epr").val("0");
+
+		$("#epr").val("0").css({"background-color":"white"});
+
 		$("#l_impact").val("0");
 		$(".add_err").remove();
+		$("#region").hide().prev().hide();
+			$("#province").hide().prev().hide();
+			$("#municipality").hide().prev().hide();
+		
+			var str="SELECT id,name, geocode FROM assets.region";
+			var headers="Select All%Region%Geocode";
+			fill_areas(str,headers);
 
 	}
 
