@@ -1298,7 +1298,7 @@ function update_session($data){
         $_SESSION[$key]=$data[$key];
     }
  }
- echo $_SESSION["p"];
+ //echo $_SESSION["p"];
 // if(isset($_GET["fname"])){
 //    $_SESSION["fname"]=$_GET["fname"];
 //    $_SESSION["lname"]=$_GET["lname"];
