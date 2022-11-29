@@ -187,7 +187,7 @@ body{
                             <!-- Username form -->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputUsername">Username</label>
-                                <input class="form-control" id="inputUsername" type="text" value=<?php echo $_SESSION["uname"]?>>
+                                <input disabled class="form-control" id="inputUsername" type="text" value=<?php echo $_SESSION["uname"]?>>
                             </div>
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
@@ -212,7 +212,7 @@ body{
                                 <!-- Location form -->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputLocation">Office Assignment</label>
-                                    <input class="form-control" id="inputLocation" type="text" value=<?php echo $_SESSION["officename"]?>>
+                                    <input disabled class="form-control" id="inputLocation" type="text" value=<?php echo $_SESSION["officename"]?>>
                                 </div>
                             </div>
                             <!-- Email address form -->
