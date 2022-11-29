@@ -35,18 +35,16 @@
         contact='".$user_mobile."' where id=".$id;
 
           $msg=$db->insert($sql);
-          if( $msg=="New Record created!"){
+          if( $msg=="New record created!"){
             echo $msg;
-          
-            $_SESSION["fname"]=$fname;
-            $_SESSION["lname"]=$lname;
-            $_SESSION["position"]=$position;
-            $_SESSION["login_email"]=$login_email;
-            $_SESSION["user_address"]=$user_address;
-            $_SESSION["user_mobile"]=$user_mobile;
+           // echo "%ALGO/codes.php?fname=".$fname."&lname=".$lname."&position=".$position."&login_email=".$login_email."&user_address=".$user_address."&user_mobile=".$user_mobile;
+            $data=array("fname"=>$fname,"lname"=>$lname,"position"=>$position,"login_email"=>$login_email,"user_address"=>$user_address,"user_mobile"=>$user_mobile);
+            update_session($data);
+            
           }
           else{
             echo $msg;
+            //echo "%none";
           }
 
      

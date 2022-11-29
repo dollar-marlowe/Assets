@@ -425,6 +425,8 @@ function removepecialchars($str){
     $str=str_replace("=","",$str); 
     $str=str_replace("^^","",$str); 
     $str=str_replace("^","",$str); 
+    $str=str_replace("<","",$str); 
+    $str=str_replace(">","",$str); 
     return trim($str);
 }
 function region_to_letter($val){
@@ -1289,6 +1291,23 @@ function send_email($to,$subject,$content){
         return  $msg;
     }
 }
+function update_session($data){
+    
+    
+    foreach($data as $key => $value) {
+        $_SESSION[$key]=$data[$key];
+    }
+}
+if(isset($_GET["fname"])){
+   $_SESSION["fname"]=$_GET["fname"];
+   $_SESSION["lname"]=$_GET["lname"];
+   $_SESSION["position"]=$_GET["position"];
+   $_SESSION["login_email"]=$_GET["login_email"];
+   $_SESSION["user_address"]=$_GET["user_address"];
+   $_SESSION["user_mobile"]=$_GET["user_mobile"];
+    header("Location:../userprofile.php");
+}
+
 //echo $_SESSION["url"]. " ".decrypt($_SESSION["id"]);
 //echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
 // echo summarize_list("Manpack Radio, Sat Phone, UHF Radio, Manpack Radio",

@@ -154,18 +154,7 @@ body{
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" id="userprofile" 
-                            <?php
-                            if ($_SESSION["url"]==false) {
-                                echo  'src="http://bootdey.com/img/Content/avatar/avatar1.png"';
-                                }
-                            else {
-                                echo "src='".$_SESSION["url"]."'";
-                                }
-                            ?>
-                        alt="">
-                        <!--if else ng php gamit ung session-->
-
+                        <img class="img-account-profile rounded-circle mb-2" id="userprofile" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Buttons for choosing and uploading image-->
@@ -260,7 +249,7 @@ echo "var sess_id='".$_SESSION["id"]."';";
                     
                 }
             });
-            
+            //this is the control for upl;oading ifle using nested ajax 
             $("#fileUpload").click(function(){
                     // sample lng po, trial lng sa pag control ng button usigng JQuery
                     $("#fileUpload").attr('hidden',true);
@@ -371,7 +360,15 @@ echo "var sess_id='".$_SESSION["id"]."';";
                 },
                     function(data) {
                         //pop up message
-                        alert(data);
+                        //alert(data);
+                       
+                        //alert(arr_data[1]);
+                        if(data.trim()=="New record created!"){
+                            Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br>Your personal information has been successfully updated!",600);
+                            //windows.location(arr_data[1]);
+                        }else{
+                            Popup_modal_show("<h4 style='color:red;'>SYSTEM ERROR!</h4><br><p style='color:red;'>Your personal information has been successfully updated!</p>",600);
+                        }
                         
 
                     }

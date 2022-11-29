@@ -370,15 +370,26 @@
           
 			$(target).slideToggle("slow");
 		}
-        function mini_pannel_slide(target,imganimate){
+        //used in risk_management_form.php
+        function mini_pannel_slide(target,imganimate,imgtrue,imgfalse){
 		
 		$(target).slideToggle("slow",function(){
 			if($(target).is(":hidden")){
-				$(imganimate).attr("src","images/arrow_down.png");
+                var image=$(imganimate);
+                image.fadeOut("fast",function(){
+                    $(imganimate).attr("src",imgtrue);
+                    image.fadeIn("fast");
+                });
+				
 			
 			}
 			else{
-				$(imganimate).attr("src","images/arrow.png");
+                var image=$(imganimate);
+                image.fadeOut("fast",function(){
+                    $(imganimate).attr("src",imgfalse);
+                    image.fadeIn("fast");
+                });
+			
 				
 			}
 		});
