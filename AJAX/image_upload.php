@@ -10,6 +10,7 @@
    $destination1=  "../profile_images/profile/".$basename;//this is the file path that will appear on tthe database
    if(move_uploaded_file($src,  $destination )){
     echo  $destination1;
+    $_SESSION["url"]=$destination1;
    }else{
     echo "error";
    }

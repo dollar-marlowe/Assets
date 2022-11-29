@@ -80,6 +80,16 @@
       .modal {
   display: none;
       }
+      input[type=text]:focus, textarea:focus{
+        box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
+-webkit-box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
+-moz-box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
+border:solid 1px #33bbff;
+      }
+      input[type=text]{
+        border-radius:5px;
+       
+      }
      
    
    @media (max-width:900px){
