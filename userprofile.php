@@ -11,14 +11,6 @@
         <!-- For animation -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        <script>
-          // Listener for Edit Your Profile button  
-          $(document).ready(function(){
-            $("#editprofile").click(function(){
-              window.location = "editprofile.php";
-            });
-          });
-        </script>
 
         <!-- Styles for the User Profile page -->
         <style>
@@ -99,6 +91,7 @@
     <?php
         include "ALGO/codes.php";
         include "header.php";
+        include "footer.php";
     ?>
 
   <section style="background-color: #eee;">
@@ -209,5 +202,19 @@
       </div>
     </div>
   </section>
-      
+
+  <script>
+          // Listener for Edit Your Profile button  
+          $(document).ready(function(){
+            $("#editprofile").click(function(){
+              window.location = "editprofile.php";
+
+            
+            });
+            $("#footer").hide();
+          });
+
+        </script> 
+</body>
+
 </html>
