@@ -183,19 +183,19 @@ body{
                             <!-- Username form -->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputUsername">Username</label>
-                                <input disabled class="form-control" id="inputUsername" type="text" value=<?php echo $_SESSION["uname"]?>>
+                                <input disabled class="form-control" id="inputUsername" type="text" value="<?php echo $_SESSION["uname"]?>">
                             </div>
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
                                 <!-- First name form -->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputFirstName">First name</label>
-                                    <input class="form-control" id="inputFirstName" type="text" value=<?php echo $_SESSION["fname"]?>>
+                                    <input class="form-control" id="inputFirstName" type="text" value="<?php echo $_SESSION["fname"]?>">
                                 </div>
                                 <!-- Last name form -->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputLastName">Last name</label>
-                                    <input class="form-control" id="inputLastName" type="text" value=<?php echo $_SESSION["lname"]?>>
+                                    <input class="form-control" id="inputLastName" type="text" value="<?php echo $_SESSION["lname"]?>">
                                 </div>
                             </div>
                             <!-- Position form -->
@@ -203,18 +203,18 @@ body{
                                 <!-- Position form -->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputOrgName">Position/Title</label>
-                                    <input class="form-control" id="inputOrgName" type="text" value=<?php echo $_SESSION["position"]?>>
+                                    <input class="form-control" id="inputOrgName" type="text" value="<?php echo $_SESSION["position"]?>">
                                 </div>
                                 <!-- Location form -->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputLocation">Office Assignment</label>
-                                    <input disabled class="form-control" id="inputLocation" type="text" value=<?php echo $_SESSION["officename"]?>>
+                                    <input disabled class="form-control" id="inputLocation" type="text" value="<?php echo $_SESSION["officename"]?>">
                                 </div>
                             </div>
                             <!-- Email address form -->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                <input class="form-control" id="inputEmailAddress" type="email" value=<?php echo $_SESSION["login_email"]?>>
+                                <input class="form-control" id="inputEmailAddress" type="email" value="<?php echo $_SESSION["login_email"]?>">
                             </div>
                             <!-- Address form-->
                             <div class="mb-3">
@@ -225,7 +225,7 @@ body{
                             <div class="row gx-3 mb-3">
                                 <!-- Phone Number form -->
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <input class="form-control" id="inputPhone" type="tel" value=<?php echo $_SESSION["user_mobile"]?>>
+                                    <input class="form-control" id="inputPhone" type="tel" value="<?php echo $_SESSION["user_mobile"]?>">
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" style="border: none" type="submit" id="update_profile_btn">Save changes</button>
