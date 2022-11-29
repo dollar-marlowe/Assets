@@ -375,11 +375,21 @@
 		
 		$(target).slideToggle("slow",function(){
 			if($(target).is(":hidden")){
-				$(imganimate).attr("src",imgtrue);
+                var image=$(imganimate);
+                image.fadeOut("fast",function(){
+                    $(imganimate).attr("src",imgtrue);
+                    image.fadeIn("fast");
+                });
+				
 			
 			}
 			else{
-				$(imganimate).attr("src",imgfalse);
+                var image=$(imganimate);
+                image.fadeOut("fast",function(){
+                    $(imganimate).attr("src",imgfalse);
+                    image.fadeIn("fast");
+                });
+			
 				
 			}
 		});

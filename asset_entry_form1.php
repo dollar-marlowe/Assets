@@ -98,7 +98,7 @@
 	}
 	#add-item:before:hover,
 	#add-item:after:hover,
-	#minus-item:after:hover,
+	#minus-item:after:hover
 	{
 	background: white;
 	transition: 0.2s;

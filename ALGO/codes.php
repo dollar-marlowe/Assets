@@ -425,6 +425,8 @@ function removepecialchars($str){
     $str=str_replace("=","",$str); 
     $str=str_replace("^^","",$str); 
     $str=str_replace("^","",$str); 
+    $str=str_replace("<","",$str); 
+    $str=str_replace(">","",$str); 
     return trim($str);
 }
 function region_to_letter($val){

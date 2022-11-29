@@ -555,6 +555,11 @@
 		.broder_table tr{
 			border-bottom: solid 1px #f0f1f6;
 		}
+		tr.head_table:nth-child(odd){
+			border-bottom: solid 1px #ddd;
+			
+		}
+		
 		
 		.mini_affct tr{
 			margin:0;
@@ -571,10 +576,17 @@
 			padding-top:5px;
 			width:25px;
 		}
+		.head_table th:last-child{
+			width:25px;
+		}
+		
+		
 		.mini_con{
 			display:none;
 			width:90%;
 			margin:auto;
+			max-height:200px;
+			overflow:auto;
 		}
 		img.mini_arrow{
 			width:12px;
@@ -588,7 +600,7 @@
 		
 		}
 		.mini_row_head{
-			width:94%;
+			width:92%;
 			
 		}
 		.body_table tr td{
@@ -600,7 +612,20 @@
 		.etc_row{
 			width:100%;
 		}
-
+	
+		
+		.mini_affct td, .mini_affct th{
+			
+			background-color:white;
+			color:black;
+			text-align:left;
+		}
+		/* .head_table{
+			transition: transform .2s;
+		}
+		.head_table:hover{
+			transform: scale(1.008); 
+		} */
 	
 		
 </style>
@@ -673,7 +698,7 @@
 																
 																<option value="D Certain/Immenent">D Certain/Immenent</option>
 																<option value="C Highly Likely">C Highly Likely</option>
-																<option value="B Highly Likely">B Highly Likely</option>
+																<option value="B Less Likely">B Less Likely</option>
 																<option value="A Unlikely">A Unlikely</option>
 														</select>
 													</div>
@@ -855,12 +880,17 @@
 														<label for="status">Resolution No.:</label></p>
 														<input type="text" id="reso"  />
 											</div>
+											<div class="input_wrapper" >
+														<input type="submit" id="clear_etc_act" value="Clear" class="buttons dstr" style="width:130px;">
+														<input type="submit" id="save_etc" value="Submit" class="buttons dstr" style="width:130px;">
+														
+											</div>
 							
 								</div>
 								<div class="halfcol width90" style="float:left;border:none;" >
 								<hr style="width:96%;margin:auto;">
 								<div class="etc_pannel">
-									
+								
 										
 									</div>	
 
@@ -905,6 +935,7 @@
 	";?>
 
 $(document).ready(function(){
+	get_etc("activating",".etc_pannel");
 	$("#hazard_form").slideUp();
 	disable_affected();
 	$(".impact_log").attr("disabled","disabled");
@@ -989,6 +1020,7 @@ $(document).ready(function(){
 		alert($(".gender").val());
 	});
 	$(document).on("click","#add_new_attr",function(){
+		
 		var disaster_id=$(".dst_item:checked").val();
 		var cat=$(".dst_item:checked").parent().next().next().text();
 		if(global_validate("#new_attr","")==false){
@@ -1346,7 +1378,10 @@ $(document).ready(function(){
 			// $.each($("#attributes2 select"),function(){
 			// 	alert($(this).val());
 			// });
-			if(!is_empty_class("input.dst_input","") && risks==false){
+			if(!is_empty_class("input.dst_input","") && risks==false){// this global function allows you to validate all inputs within thesame class
+				//witout the husle of manually checkicking each
+				//this function only colord the border red of the input that is empty
+				//howevewr if on of the inputs wihin this class is empty it will always retrun true. emaing that there is an empty input within the class
 				var arr_attributes="";
 				var arr_keys=["%","?","&","^","<",">","$","@","'"];
 				var length=$("input.dst_input").length;
@@ -1481,8 +1516,59 @@ $(document).ready(function(){
 			var str="SELECT id,name, geocode FROM assets.region";
 			var headers="Select All%Region%Geocode";
 			fill_areas(str,headers);
-
 	}
+	function get_etc(stat, target){
+		//alert("test");
+		$.post("AJAX/load_etc_rows.php",
+		{
+			status:stat
+		},
+		function (data){
+			
+			$(target).html(data);
+			remove_next_word(".head_table th:nth-child(2)");
+			remove_first_word(".head_tableth:nth-child(4)");
+			remove_first_word(".head_table th:nth-child(5)");
+			remove_next_word(".mini_con td:nth-child(5)");
+
+		});
+	}
+	$(document).on("change",".etc_item",function(){
+	
+		//alert($(this).val());
+		var src=$(this).parent().siblings(":last").find(".mini_arrow");
+		if($(this).is(":checked")){
+			$(".mini_con").slideUp();
+		$(".mini_arrow").attr("src","images/mini_arrow_down1.png")
+		
+		$(this).parent().parent().next().find("td .mini_con").slideDown();
+		
+                src.fadeOut("fast",function(){
+					src.attr("src","images/mini_arrow_up.png");
+                    src.fadeIn("fast");
+                });
+		}
+		else{
+			$(this).parent().parent().next().find("td .mini_con").slideUp();
+			src.fadeOut("fast",function(){
+					src.attr("src","images/mini_arrow_down1.png");
+                    src.fadeIn("fast");
+                });
+
+		}
+		
+		//alert(src);
+	});
+	// $(".head_table").hover(function(){
+	// 	$(this).find("th").css("background-color", "yellow");
+	// 	alert("hover");
+	// });
+	$("#clear_etc_act").click(function(){
+		$('#date_activated').val(new Date());
+		$("#activatefile").val("");
+		$("#reso").val("");
+		$(".etc_item").prop("checked",false).change();
+	});
 
  });
     </script>

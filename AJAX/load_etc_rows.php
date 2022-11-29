@@ -8,40 +8,56 @@
         $db->connect();
         $status=$_POST["status"];
         $sql="SELECT id,date_logged,disaster,probability,overall_impact
-         FROM etc_disaster_view where `status`='".$status."'";
+         FROM etc_disaster_view where `status`='".$status."' order by id";
         $result=$db->selectrows($sql,0);
+        $counter=1;
         if($result!=null){
 
-                foreach($result as $row){
+            echo "<table class='mini_affct broder_table_strong' >";	
 
-        
-                        echo "                      <div class='etc_row'>
-                                                    <div class='row_pannel'  onclick=mini_pannel_slide('#mini_con','#m_arrow1','images/mini_arrow_down1.png','images/mini_arrow_right1.png')>
-                                                    <img src='images/mini_arrow_down1.png' class='mini_arrow' id='m_arrow1' >
-                                                        <div class='mini_row_head'><table class=';mini_affct head_table' ><tr>";
-                                                        $i=1;
-                                                        foreach($row as $data){
-                                                            if($i<=1){
-                                                                echo "<td><input type='radio' class='etc_item' name='etc_item' value='".encrypt($data)."'>";
-                                                            }else{
-                                                                echo "<td>".$data;
-                                                            }
-                                                            $i++;
-                                                             
-                                                        }
-
-                                                        echo "</table></div>
-                                                    </div>
-                                                        <div class='mini_con' id='mini_con'>
-                                                            <table class='mini_affct broder_table body_table' >
-                                                                <tr><td>test<td>test<td>test
-                                                                <tr><td>test<td>test<td>test
-                                                                <tr><td>test<td>test<td>test
-                                                            </table>
-
-                                                        </div> 
-                                                </div>";
+            foreach($result as $row){
+                $i=1;
+                echo "<tr  class='head_table'>";
+                foreach($row as $data){
+                    if($i<=1){
+                        echo "<th><input type='radio' class='etc_item' name='etc_item' value='".encrypt($data)."'>";
+                    }else{
+                        echo "<th>".$data;
+                    }
+                    $i++; 
                 }
+                echo " <th> <img src='images/mini_arrow_down1.png' class='mini_arrow' id='m_arrow".$counter."' 
+                onclick=mini_pannel_slide('#mini_con".$counter."','#m_arrow$counter','images/mini_arrow_down1.png','images/mini_arrow_up.png') >
+                 <tr  ><td colspan=6  >
+                 <div class='mini_con' id='mini_con".$counter."'>
+                     <table class='mini_affct broder_table body_table' >
+                     ";
+                     $sql2="SELECT  area,scale, impact, epr_protocol, date_start  FROM assets.disaster_affected_areas where etc_disaster_id=".$row["id"]." order by epr_protocol desc";
+                     $result2=$db->selectrows($sql2,0);
+                     if($result2!=null){
+                      
+                         foreach($result2 as $data2){
+                             echo "<tr>";
+                             foreach($data2 as $d){
+                                 echo "<td>".$d;
+                             }
+                            
+                         }
+
+                     }
+                   
+                     
+               echo "
+                     </table>
+
+                </div>
+                </td>";
+
+                
+                     $counter++;
+            }
+            echo "  </table>";
+
         }
         else{
             echo "";
