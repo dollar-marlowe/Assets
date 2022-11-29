@@ -105,6 +105,9 @@ body{
     <?php
         include "ALGO/codes.php";
         include "header.php";
+        include "footer.php";
+
+        
     ?>
 
 <!-- 
@@ -151,7 +154,18 @@ body{
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" id="userprofile" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        <img class="img-account-profile rounded-circle mb-2" id="userprofile" 
+                            <?php
+                            if ($_SESSION["url"]==false) {
+                                echo  'src="http://bootdey.com/img/Content/avatar/avatar1.png"';
+                                }
+                            else {
+                                echo "src='".$_SESSION["url"]."'";
+                                }
+                            ?>
+                        alt="">
+                        <!--if else ng php gamit ung session-->
+
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Buttons for choosing and uploading image-->
@@ -169,7 +183,7 @@ body{
                 <div class="card mb-4">
                     <div class="card-header">Account Details</div>
                     <div class="card-body">
-                        <form>
+                        
                             <!-- Username form -->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputUsername">Username</label>
@@ -208,8 +222,8 @@ body{
                             </div>
                             <!-- Address form-->
                             <div class="mb-3">
-                                <label class="small mb-1" for="inputEmailAddress">Address</label>
-                                <input class="form-control" id="inputEmailAddress" type="text" value=<?php echo $_SESSION["user_address"]?>>
+                                <label class="small mb-1" for="inputAddress">Address</label>
+                                <input class="form-control" id="inputAddress" type="text" value=<?php echo $_SESSION["user_address"]?>>
                             </div>
                             
                             <div class="row gx-3 mb-3">
@@ -220,7 +234,7 @@ body{
                             <!-- Save changes button-->
                             <button class="btn btn-primary" style="border: none" type="submit" id="update_profile_btn">Save changes</button>
                             <button class="btn btn-danger"  style="border: none" type="button" id="backbutton">Back</button>
-                        </form>
+                        
                     </div>
                 </div>
             </div>
@@ -234,6 +248,8 @@ echo "var sess_id='".$_SESSION["id"]."';";
 ?>
           // Listener for page 
           $(document).ready(function(){
+
+            $("#footer").hide(); 
             
             // Checks whether an image is selected
             $("#myFile").change(function(){
@@ -283,6 +299,87 @@ echo "var sess_id='".$_SESSION["id"]."';";
 
 
             });
+        //OLD validate option
+        //     function validate(target,value){
+        //     if($(target).val().trim()==value){
+        //         $(target).css({"border":"solid 1px red"}); 
+        //         return true;
+        //     }else{
+        //         $(target).css({"border":"solid 1px rgb(118, 118, 118)"});
+        //         return false;
+        //         }
+        //     }
+        //     function validate_all(){
+
+        //     var keys ={
+        //         "#inputUsername":"",
+        //         "#inputFirstName":"",
+        //         "#inputLastName":"",
+        //         "#inputOrgName":"", //Position/Title
+        //         "#inputLocation":"", //Office Assignment
+        //         "#inputEmailAddress":"",
+        //         "#inputAddress":"",
+        //         "#inputPhone":""
+
+        //     };
+
+        //     var go=true;
+
+        //     for(var key in keys){
+        //         if(validate(key,keys[key])){
+        //             go=false;
+        //         }
+        //     }
+            
+        // }
+
+            $("#update_profile_btn").click(function(){
+                //risk management ine 1278-1296
+                if(!is_empty_class("input.form-control","")){
+				var arr_attributes="";
+				var arr_keys=["%","?","&","^","<",">","$","@","'"];
+				var length=$("input.form-control").length;
+				var index=1;
+				//alert(length);
+				$.each($("input.form-control"),function(){
+					arr_attributes+=str_replace(arr_keys,$(this).parent().find("p").text())+" isog "+str_replace(arr_keys,$(this).val())+" isog "+$(this).prev().val();
+					if(index<length){
+						arr_attributes+=" msunod ";
+					}
+					index++;
+				});
+                $.each($("select.form-control"),function(){
+					arr_attributes+=" msunod "+str_replace(arr_keys,$(this).parent().find("p").text())+" isog "+str_replace(arr_keys,$(this).val())+" isog "+$(this).prev().val();
+					
+				});
+            }
+                //footer: global triggered
+                
+                //ajax post
+
+                $.post("AJAX/user_update.php",
+                { 
+                    
+                    fname:          $("#inputFirstName").val(),
+                    lname:          $("#inputLastName").val(),
+                    position:       $("#inputOrgName") .val(),
+                    //officename:     $("#inputLocation").val(),
+                    login_email:    $("#inputEmailAddress").val(),
+                    user_address:   $("#inputAddress").val(),
+                    user_mobile:    $("#inputPhone").val()
+
+                },
+                    function(data) {
+                        //pop up message
+                        alert(data);
+                        
+
+                    }
+
+                )
+
+            });
+            
 
             // Goes back to User Profile page
             $("#backbutton").click(function(){

@@ -120,7 +120,17 @@
             <div class="card-body text-center">
               
               <!-- If image is found in database, show it. Otherwise, show a blank profile image -->
-              <img src="" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">  
+              <img class="rounded-circle img-fluid" 
+              style="width: 150px;"
+              <?php
+                            if ($_SESSION["url"]==false) {
+                                echo  'src="http://bootdey.com/img/Content/avatar/avatar1.png"';
+                                }
+                            else {
+                                echo "src='".$_SESSION["url"]."'";
+                                }
+                            ?>
+              alt="avatar">  
 
               <h5 class="my-3" name="name"><?php
               //For nickname
