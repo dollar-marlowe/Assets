@@ -11,9 +11,10 @@
          FROM etc_disaster_view where `status`='".$status."' order by id";
         $result=$db->selectrows($sql,0);
         $counter=1;
-        if($result!=null){
+        if(  $db->is_empty($sql)=="false"){
 
-            echo "<table class='mini_affct broder_table_strong' >";	
+            echo "<table class='mini_affct broder_table_strong' >";
+           echo "<tr class='head_table' style='border-bottom:solid 1px black;'><th><th>Date<th>Disaster<th>Impact<th>EPR Protocol<th></tr>";	
 
             foreach($result as $row){
                 $i=1;
@@ -31,6 +32,7 @@
                  <tr  ><td colspan=6  >
                  <div class='mini_con' id='mini_con".$counter."'>
                      <table class='mini_affct broder_table body_table' >
+                     <tr><th colspan=5 style='text-align:center;'>AFFECTED AREAS
                      ";
                      $sql2="SELECT  area,scale, impact, epr_protocol, date_start  FROM assets.disaster_affected_areas where etc_disaster_id=".$row["id"]." order by epr_protocol desc";
                      $result2=$db->selectrows($sql2,0);

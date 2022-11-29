@@ -102,6 +102,27 @@ CREATE TABLE `disaster_attributes_view` (
 );
 
 --
+-- Temporary table structure for view `etc_disaster_view`
+--
+DROP TABLE IF EXISTS `etc_disaster_view`;
+DROP VIEW IF EXISTS `etc_disaster_view`;
+CREATE TABLE `etc_disaster_view` (
+  `id` int(10) unsigned,
+  `disaster_id` int(10) unsigned,
+  `disaster` varchar(45),
+  `date_start` datetime,
+  `date_end` datetime,
+  `escalated_from` int(10) unsigned,
+  `reso_activation_no` varchar(45),
+  `file_activation` varchar(100),
+  `file_deactivation` varchar(100),
+  `probability` varchar(45),
+  `status` varchar(45),
+  `overall_impact` varchar(45),
+  `date_logged` datetime
+);
+
+--
 -- Temporary table structure for view `geo_add`
 --
 DROP TABLE IF EXISTS `geo_add`;
@@ -178,6 +199,7 @@ CREATE TABLE `personnelogiinfo` (
   `mname` varchar(45),
   `lname` varchar(45),
   `position` varchar(45),
+  `address` varchar(1000),
   `email` varchar(45),
   `contact` varchar(45),
   `username` varchar(45),
@@ -42819,7 +42841,7 @@ CREATE TABLE `disaster` (
   `status` varchar(45) DEFAULT NULL,
   `file_upload` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `disaster`
@@ -42832,7 +42854,8 @@ INSERT INTO `disaster` (`id`,`name`,`category`,`natureofdisaster`,`description`,
  (11,'May May','Meteorological','Cyclone','The typhoon dissolved','2022-09-16 00:00:00',NULL,NULL,'../butang/disaster/bkPrJ57jG2Bz6Ffj5JEvxZuTkC4md1k27q7JVhhO.pdf'),
  (12,'Luis','Meteorological','Cyclone','Did not landfall, went to Japan','2022-09-23 00:00:00',NULL,NULL,'../butang/disaster/9O3jTq9cO8Z9b3SBfMmRr23yKqnVWyP2NwlG6czz.pdf'),
  (13,'Tineg (Abra) 6.4M','Geophysical','Earthquake','26 Oct 2022 - 12:42:03 PM. Location: 	\n17.85°N, 120.80°E - 014 km N 10° W of Tineg (Abra). Depth of Focus (Km): 001. Origin: TECTONIC. Magnitude: Ms 2.6','2022-10-26 00:00:00',NULL,NULL,'../butang/disaster/58z347DHMCM91i8U3eka85Mo32cQhm67j20NRbt3.pdf'),
- (14,'Mayon','Geophysical','Volcanic Eruption','Alert Level 3','2022-11-17 00:00:00',NULL,NULL,'../butang/disaster/vcV2Q5d1MIJ6EwCwXDhHsm0Zizo8Vc.pdf');
+ (14,'Mayon','Geophysical','Volcanic Eruption','Alert Level 3','2022-11-17 00:00:00',NULL,NULL,'../butang/disaster/vcV2Q5d1MIJ6EwCwXDhHsm0Zizo8Vc.pdf'),
+ (15,'Quenie','Meteorological','Cyclone','Did not landfall','2022-11-04 00:00:00',NULL,NULL,'../butang/disaster/UVs0W9pLljlEi3hDCW8kQKp3c5Lp4v.pdf');
 /*!40000 ALTER TABLE `disaster` ENABLE KEYS */;
 
 
@@ -42853,7 +42876,7 @@ CREATE TABLE `disaster_affected` (
   `epr_protocol` varchar(45) NOT NULL,
   `etc_disaster_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `disaster_affected`
@@ -42884,7 +42907,22 @@ INSERT INTO `disaster_affected` (`id`,`disaster_id`,`area_id`,`scale`,`status`,`
  (22,14,499,'Municipal','activating','2022-10-19 00:00:00',NULL,'4 Catastrophic','BRAVO',3),
  (23,14,506,'Municipal','activating','2022-10-19 00:00:00',NULL,'4 Catastrophic','BRAVO',3),
  (24,12,6,'Provincial','activating','2022-10-21 00:00:00',NULL,'2 Minor','ALPHA',5),
- (29,11,4,'Regional','activating','2022-10-22 00:00:00',NULL,'4 Catastrophic','ALPHA',4);
+ (29,11,4,'Regional','activating','2022-10-22 00:00:00',NULL,'4 Catastrophic','ALPHA',4),
+ (30,9,126,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (31,9,127,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (32,9,128,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (33,9,129,'Municipal','activating','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
+ (34,9,130,'Municipal','activating','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
+ (35,14,497,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',3),
+ (36,14,498,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',3),
+ (37,9,130,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
+ (38,9,131,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
+ (39,15,39,'Provincial','activating','2022-11-04 00:00:00',NULL,'2 Minor','ALPHA',7),
+ (40,15,42,'Provincial','activating','2022-11-04 00:00:00',NULL,'2 Minor','ALPHA',7),
+ (41,15,34,'Provincial','activating','2022-11-04 00:00:00',NULL,'1 Neglegible','STANDBY',7),
+ (42,15,35,'Provincial','activating','2022-11-04 00:00:00',NULL,'1 Neglegible','STANDBY',7),
+ (43,15,36,'Provincial','activating','2022-11-04 00:00:00',NULL,'1 Neglegible','STANDBY',7),
+ (44,15,37,'Provincial','activating','2022-11-04 00:00:00',NULL,'1 Neglegible','STANDBY',7);
 /*!40000 ALTER TABLE `disaster_affected` ENABLE KEYS */;
 
 
@@ -42901,7 +42939,7 @@ CREATE TABLE `disaster_attr` (
   `disaster_etc_id` int(10) unsigned NOT NULL,
   `status` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `disaster_attr`
@@ -42947,7 +42985,14 @@ INSERT INTO `disaster_attr` (`id`,`disaster_id`,`attr_id`,`value`,`disaster_etc_
  (97,13,6,' 6 ',6,'activating'),
  (98,13,7,' No ',6,'activating'),
  (99,13,8,' No ',6,'activating'),
- (100,13,4,' Tectonic ',6,'activating');
+ (100,13,4,' Tectonic ',6,'activating'),
+ (101,15,10,' Northeastern Mindanao ',7,'activating'),
+ (102,15,11,' 7.5 ',7,'activating'),
+ (103,15,12,' 133.7 ',7,'activating'),
+ (104,15,13,' 65km/h ',7,'activating'),
+ (105,15,14,' W 15 ',7,'activating'),
+ (106,15,15,' 80km/h ',7,'activating'),
+ (107,15,9,' Tropical Depression ',7,'activating');
 /*!40000 ALTER TABLE `disaster_attr` ENABLE KEYS */;
 
 
@@ -43019,7 +43064,7 @@ CREATE TABLE `etc_disaster` (
   `overall_impact` varchar(45) NOT NULL,
   `date_logged` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `etc_disaster`
@@ -43032,7 +43077,8 @@ INSERT INTO `etc_disaster` (`id`,`disaster_id`,`date_start`,`date_end`,`escalate
  (3,14,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','3 Major','2022-11-23 09:48:12'),
  (4,11,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
  (5,12,NULL,NULL,0,NULL,NULL,NULL,'activating','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
- (6,13,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12');
+ (6,13,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
+ (7,15,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor','2022-11-28 07:56:47');
 /*!40000 ALTER TABLE `etc_disaster` ENABLE KEYS */;
 
 
@@ -44816,7 +44862,7 @@ CREATE TABLE `officials` (
 INSERT INTO `officials` (`id`,`office_id`,`fname`,`mname`,`lname`,`position`,`contact`,`email`,`date_added`,`date_started`,`date_terminated`,`status`,`gender`,`address`) VALUES 
  (1,3,'Rey','','Parnacio','Regional Director','','rey.parnacio@dict.gov.ph',NULL,NULL,NULL,NULL,'Male',NULL),
  (2,3,'Marry Jane','B','Nerona','TECHNICAL OPERATIONS DIVISION','','jane.nerona@dict.gov.ph',NULL,NULL,NULL,NULL,'Female',NULL),
- (3,2,'Lowe James','V','Forescal','DRRMD WEB ADMIN','','loue.mayores@dict.gov.ph',NULL,NULL,NULL,NULL,'Male',NULL),
+ (3,2,'Marlowe James','V','Forescal','Web Administrator','09396787363','loue.mayores@dict.gov.ph',NULL,NULL,NULL,NULL,'Male','Krus na Ligas, Diliman'),
  (7,7,'James','Potter','Bond','Regional Director','(02)7684654','james@edotco.uk.com','2022-03-30 08:03:25',NULL,NULL,NULL,'Male',NULL),
  (8,2,'Ronibeth','M','Castamado','ESET I','68768768768','ronibeth.castamado@dict.gov.ph','2022-07-21 10:07:44',NULL,NULL,NULL,'Female',NULL),
  (9,7,'Bebang','C','Dimagiba','Engineer II','09396787363','lowejames.mayores@gmail.com','2022-07-25 04:07:10',NULL,NULL,NULL,'Female',NULL),
@@ -44839,7 +44885,7 @@ CREATE TABLE `profilepic` (
   `officials_id` int(10) unsigned NOT NULL,
   `url` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `profilepic`
@@ -44847,7 +44893,10 @@ CREATE TABLE `profilepic` (
 
 /*!40000 ALTER TABLE `profilepic` DISABLE KEYS */;
 INSERT INTO `profilepic` (`id`,`officials_id`,`url`) VALUES 
- (1,3,'me.jpg');
+ (5,3,'../profile_images/profile/U2lhhYdb2I6WRt982oCO01njI5NQJjISOS9djSrJ.jpg'),
+ (6,3,'../profile_images/profile/UN6u8u6osZ3At7HZc96mncc2AdQjPn49k6fqBwkj.jpg'),
+ (7,3,'../profile_images/profile/QSq4bolIU3ZOlbBN6kz1aFjO4q8EoqXZ96fphcnK.jpg'),
+ (8,3,'../profile_images/profile/7qOj7PM93vyMLz3A3za7TAP7RS88y4ogjQYG68v2.jpg');
 /*!40000 ALTER TABLE `profilepic` ENABLE KEYS */;
 
 
@@ -45179,7 +45228,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 
 DROP TABLE IF EXISTS `disaster_affected_areas`;
 DROP VIEW IF EXISTS `disaster_affected_areas`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `disaster_affected_areas` AS select `da`.`id` AS `id`,`da`.`disaster_id` AS `disaster_id`,(select `d`.`name` from `disaster` `d` where `d`.`id` = `da`.`disaster_id`) AS `d_name`,`da`.`area_id` AS `area_id`,case when `da`.`scale` = 'Regional' then (select `r`.`name` from `region` `r` where `r`.`id` = `da`.`area_id`) when `da`.`scale` = 'Provincial' then (select `p`.`name` from `province` `p` where `p`.`id` = `da`.`area_id`) when `da`.`scale` = 'Municipal' then (select `m`.`name` from `municipality` `m` where `m`.`id` = `da`.`area_id`) when `da`.`scale` = 'Brangay' then (select `b`.`name` from `barangay` `b` where `b`.`id` = `da`.`area_id`) end AS `area`,`da`.`scale` AS `scale`,`da`.`status` AS `status`,`da`.`date_start` AS `date_start`,`da`.`date_end` AS `date_end`,`da`.`impact` AS `impact`,`da`.`epr_protocol` AS `epr_protocol`,`da`.`etc_disaster_id` AS `etc_disaster_id` from `disaster_affected` `da`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `disaster_affected_areas` AS select `da`.`id` AS `id`,`da`.`disaster_id` AS `disaster_id`,(select `d`.`name` from `disaster` `d` where `d`.`id` = `da`.`disaster_id`) AS `d_name`,`da`.`area_id` AS `area_id`,case when `da`.`scale` = 'Regional' then (select `r`.`name` from `region` `r` where `r`.`id` = `da`.`area_id`) when `da`.`scale` = 'Provincial' then (select `p`.`name` from `province` `p` where `p`.`id` = `da`.`area_id`) when `da`.`scale` = 'Municipal' then (select `m`.`name` from `municipality` `m` where `m`.`id` = `da`.`area_id`) when `da`.`scale` = 'Brangay' then (select `b`.`name` from `barangay` `b` where `b`.`id` = `da`.`area_id`) end AS `area`,`da`.`scale` AS `scale`,`da`.`status` AS `status`,`da`.`date_start` AS `date_start`,`da`.`date_end` AS `date_end`,`da`.`impact` AS `impact`,`da`.`epr_protocol` AS `epr_protocol`,`da`.`etc_disaster_id` AS `etc_disaster_id` from `disaster_affected` `da`;
 
 --
 -- Definition of view `disaster_attributes_view`
@@ -45187,7 +45236,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `disaste
 
 DROP TABLE IF EXISTS `disaster_attributes_view`;
 DROP VIEW IF EXISTS `disaster_attributes_view`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `disaster_attributes_view` AS select `d`.`id` AS `id`,(select `disaster`.`id` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `disaster_id`,(select `disaster`.`name` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `disaster_name`,(select `disaster`.`category` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `category`,(select `disaster`.`natureofdisaster` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `natureofdisaster`,`d`.`attr_id` AS `attr_id`,(select `d_attributes`.`attributes_name` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `attributes_name`,(select `d_attributes`.`mul_options` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `mul_options`,(select `d_attributes`.`options` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `options`,`d`.`value` AS `value`,`d`.`disaster_etc_id` AS `disaster_etc_id`,`d`.`status` AS `status` from `disaster_attr` `d`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `disaster_attributes_view` AS select `d`.`id` AS `id`,(select `disaster`.`id` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `disaster_id`,(select `disaster`.`name` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `disaster_name`,(select `disaster`.`category` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `category`,(select `disaster`.`natureofdisaster` from `disaster` where `disaster`.`id` = `d`.`disaster_id`) AS `natureofdisaster`,`d`.`attr_id` AS `attr_id`,(select `d_attributes`.`attributes_name` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `attributes_name`,(select `d_attributes`.`mul_options` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `mul_options`,(select `d_attributes`.`options` from `d_attributes` where `d_attributes`.`id` = `d`.`attr_id`) AS `options`,`d`.`value` AS `value`,`d`.`disaster_etc_id` AS `disaster_etc_id`,`d`.`status` AS `status` from `disaster_attr` `d`;
+
+--
+-- Definition of view `etc_disaster_view`
+--
+
+DROP TABLE IF EXISTS `etc_disaster_view`;
+DROP VIEW IF EXISTS `etc_disaster_view`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `etc_disaster_view` AS select `e`.`id` AS `id`,`e`.`disaster_id` AS `disaster_id`,(select `d`.`name` from `disaster` `d` where `d`.`id` = `e`.`disaster_id`) AS `disaster`,`e`.`date_start` AS `date_start`,`e`.`date_end` AS `date_end`,`e`.`escalated_from` AS `escalated_from`,`e`.`reso_activation_no` AS `reso_activation_no`,`e`.`file_activation` AS `file_activation`,`e`.`file_deactivation` AS `file_deactivation`,`e`.`probability` AS `probability`,`e`.`status` AS `status`,`e`.`overall_impact` AS `overall_impact`,`e`.`date_logged` AS `date_logged` from `etc_disaster` `e`;
 
 --
 -- Definition of view `geo_add`
@@ -45219,7 +45276,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 
 DROP TABLE IF EXISTS `personnelogiinfo`;
 DROP VIEW IF EXISTS `personnelogiinfo`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`%` SQL SECURITY DEFINER VIEW `personnelogiinfo` AS select `office`.`id` AS `office_id`,`office`.`office_name` AS `office_name`,`office`.`category` AS `category`,`officials`.`id` AS `official_id`,`officials`.`fname` AS `fname`,`officials`.`mname` AS `mname`,`officials`.`lname` AS `lname`,`officials`.`position` AS `position`,`officials`.`email` AS `email`,`officials`.`contact` AS `contact`,`login`.`username` AS `username`,`login`.`password` AS `password`,`login`.`auth_level` AS `auth_level`,`login`.`status` AS `status`,`office`.`region_id` AS `region_id`,`office`.`province_id` AS `province_id`,`office`.`muni_id` AS `muni_id`,`office`.`brgy_id` AS `brgy_id` from ((`office` join `officials`) join `login`) where `office`.`id` = `officials`.`office_id` and `officials`.`id` = `login`.`official_id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `personnelogiinfo` AS select `office`.`id` AS `office_id`,`office`.`office_name` AS `office_name`,`office`.`category` AS `category`,`officials`.`id` AS `official_id`,`officials`.`fname` AS `fname`,`officials`.`mname` AS `mname`,`officials`.`lname` AS `lname`,`officials`.`position` AS `position`,`officials`.`address` AS `address`,`officials`.`email` AS `email`,`officials`.`contact` AS `contact`,`login`.`username` AS `username`,`login`.`password` AS `password`,`login`.`auth_level` AS `auth_level`,`login`.`status` AS `status`,`office`.`region_id` AS `region_id`,`office`.`province_id` AS `province_id`,`office`.`muni_id` AS `muni_id`,`office`.`brgy_id` AS `brgy_id` from ((`office` join `officials`) join `login`) where `office`.`id` = `officials`.`office_id` and `officials`.`id` = `login`.`official_id`;
 
 --
 -- Definition of view `test`

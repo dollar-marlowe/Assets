@@ -79,7 +79,7 @@
 		table{
 			border-collapse: collapse;
 			
-			margin-left:5px;
+			
 			margin-right:10px;
 			border-style:none;
 			font-size:16px;		
@@ -555,7 +555,7 @@
 		.broder_table tr{
 			border-bottom: solid 1px #f0f1f6;
 		}
-		tr.head_table:nth-child(odd){
+		tr.head_table:nth-child(even){
 			border-bottom: solid 1px #ddd;
 			
 		}
@@ -575,6 +575,9 @@
 		.head_table td:nth-child(1), .head_table th:nth-child(1){
 			padding-top:5px;
 			width:25px;
+		}
+		table .head_table:nth-child(n+2) th{
+			color: #4d4d4d;
 		}
 		.head_table th:last-child{
 			width:25px;
@@ -627,7 +630,9 @@
 			transform: scale(1.008); 
 		} */
 	
-		
+		.all_etc{
+			border:solid 1px #ddd;
+		}
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
@@ -870,15 +875,15 @@
 								<div  class="halfcol"   style="float:right;padding-bottom:10px;border:none;" >
 											<div class="input_wrapper">
 													<p class="label">Date Activated:</p>
-													<input type="date" id="date_activated" class="form-control">
+													<input type="date" id="date_activated" class="form-control all_etc">
 											</div> 
 											<div class="input_wrapper"><p class="label">
 														<label for="status">Attachment:</label></p>
-														<input type="file" id="activatefile" name="myFile" />
+														<input type="file" id="activatefile" name="myFile" class="etc_input all_etc"/>
 											</div>
 											<div class="input_wrapper"><p class="label">
 														<label for="status">Resolution No.:</label></p>
-														<input type="text" id="reso"  />
+														<input type="text" id="reso"  class="etc_input all_etc" />
 											</div>
 											<div class="input_wrapper" >
 														<input type="submit" id="clear_etc_act" value="Clear" class="buttons dstr" style="width:130px;">
@@ -1568,7 +1573,19 @@ $(document).ready(function(){
 		$("#activatefile").val("");
 		$("#reso").val("");
 		$(".etc_item").prop("checked",false).change();
-	});
+		$(".err_lbl_etc").remove();
+		$(".all_etc").css({"border":"solid 1px #ddd"})
 
+	});
+	$("#save_etc").click(function(){
+		var validate_d=validate_date("#date_activated");
+		if(is_empty_class(".etc_input","")==false && validate_d==false ){
+
+		}
+		else{
+			$(".err_lbl_etc").remove();
+			$("#date_activated").parent().before("<div class='input_wrapper err_lbl_etc'><p id='err_etc' style='color:red;'>Required fields cannto be empty!</p></div>");
+		}
+	});
  });
     </script>

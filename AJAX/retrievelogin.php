@@ -18,6 +18,7 @@
                $url= $mydb->select_one("SELECT `url` FROM profilepic where officials_id=".$row["official_id"]." and id=(SELECT max(id) FROM profilepic where officials_id=".$row["official_id"].")","url");
                $_SESSION["url"]=($url===0) ? false: $url;
               $_SESSION["uname"]=$row["username"];
+              $_SESSION["p"]=$row["password"];
               $_SESSION["officename"]=$row["office_name"];
               $_SESSION["officeid"]=$row["office_id"];
               $_SESSION["position"]=$row["position"];
