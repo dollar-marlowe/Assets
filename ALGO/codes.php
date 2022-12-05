@@ -1185,10 +1185,17 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
       }
 }
 function test2(){
-    $class=array("input_wrapper","dst_lbl label","dst_input","dst_hidden");
-    $sql="SELECT attributes_name,id,`value`,disaster_id FROM disaster_attributes_view where disaster_id=9";
-    $cols=array("attributes_name","id","value");
-    make_label_inputs($sql,$class,true,true,$cols);
+   
+        $db= new Database();
+        $db->connect();
+        $status='activating';
+        $sql="SELECT id,date_logged,disaster,`status`
+         FROM etc_disaster_view where `status`='".$status."' order by id";
+        $result=$db->selectrows($sql,0);
+        $counter=1;
+     
+            $size=sizeof($result);
+            echo $size;
 
 }
 //test2();
@@ -1291,9 +1298,7 @@ function send_email($to,$subject,$content){
         return  $msg;
     }
 }
-function update_session($data){
-    
-    
+function update_session($data){       
     foreach($data as $key => $value) {
         $_SESSION[$key]=$data[$key];
     }

@@ -80,7 +80,7 @@
       .modal {
   display: none;
       }
-      input[type=text]:focus, textarea:focus, select:focus{
+      input[type=text]:focus, input[type=file]:hover,input[type=date]:focus, textarea:focus, select:focus{
         box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
 -webkit-box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
 -moz-box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);

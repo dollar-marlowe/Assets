@@ -4,7 +4,7 @@
       <div class="imgform-container container" style="width:fit-content;margin:auto;box-shadow:5px 5px 25px #3f4240;">
         
         <div class="form-container" style="width:300px;margin:auto;opacity:1" >
-        <h2 id="loginheader">Login</h2>
+        <h2 id="loginheader" style="font-size:30px;">DRRMD AMIS Login</h2>
 				<input type="text" placeholder="Username*" id="username"/>
 				<input type="password" placeholder="Password*" id="password"/>
         <input type="password" placeholder="Repeat Password*" id="repassword"/>

@@ -533,7 +533,7 @@
 		#disaster_affected{
 			width:100%;
 		}
-		#activatefile, #date_activated, #reso{
+		#activatefile, #date_activated, #reso, #etc_stat{
 			width:180px;
 		}
 		.row_pannel{
@@ -591,6 +591,11 @@
 			max-height:200px;
 			overflow:auto;
 		}
+		.mini_con2{
+			display:none;
+			width:90%;
+			margin:auto;
+		}
 		img.mini_arrow{
 			width:12px;
 			height:12px;
@@ -632,6 +637,17 @@
 	
 		.all_etc{
 			border:solid 1px #ddd;
+		}
+		.all_active_etc{
+			width:100%;
+			
+			
+			margin:auto;
+			display:inline-block;
+			margin-top:10px;
+		}
+		.all_active_etc > *{
+			margin:auto;
 		}
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
@@ -872,6 +888,7 @@
 						<div class="imgform-img">
 							<div class="inner-wrapper" >
 							<div class="cols cols1" >
+							<p class="box_label"><span>For Activation</span></p>
 								<div  class="halfcol"   style="float:right;padding-bottom:10px;border:none;" >
 											<div class="input_wrapper">
 													<p class="label">Date Activated:</p>
@@ -884,6 +901,14 @@
 											<div class="input_wrapper"><p class="label">
 														<label for="status">Resolution No.:</label></p>
 														<input type="text" id="reso"  class="etc_input all_etc" />
+											</div>
+											<div class="input_wrapper"><p class="label">
+														<label for="status">ETC Status:</label></p>
+														<select  id="etc_stat"  class="etc_input all_etc" />
+															<option value="New Log">New Log</option>
+															<option value="Escalated">Escalation</option>
+															<option value="Downgraded">Downgrade</option>
+														</select>
 											</div>
 											<div class="input_wrapper" >
 														<input type="submit" id="clear_etc_act" value="Clear" class="buttons dstr" style="width:130px;">
@@ -904,6 +929,10 @@
 								
 							</div>
 							<div class="cols cols2" >
+							<p class="box_label"><span>Active ETC</span></p>
+								<div class="all_active_etc">
+											
+								</div>
 								
 							</div>		
 																
@@ -1580,7 +1609,34 @@ $(document).ready(function(){
 	$("#save_etc").click(function(){
 		var validate_d=validate_date("#date_activated");
 		if(is_empty_class(".etc_input","")==false && validate_d==false ){
-
+			var date= new Date($("#date_activatedv").val());
+			var str_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+			var file =$("#activatefile").prop("files")[0];
+			var form= new FormData();
+			form.append("myFile",file);
+			$.ajax({
+				url:"AJAX/file_upload_etc.php",
+				type:"POST",
+				data:form,
+				contentType:false,
+				processData:false,
+				success: function(result){
+					if(result!="error"){
+						$.post("AJAX/activate_etc_disaster.php",
+						{
+							etc_id:$(".etc_item:checked").val(),
+							date_activated:str_date,
+							file:result,
+							reso: $("#reso").val().trim(),
+							etc_stat: $("$etc_stat").val()
+						},
+						function(data){
+							alert(data);							
+						});
+					}				
+				}
+			});
+					
 		}
 		else{
 			$(".err_lbl_etc").remove();
