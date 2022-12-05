@@ -43064,7 +43064,7 @@ CREATE TABLE `etc_disaster` (
   `overall_impact` varchar(45) NOT NULL,
   `date_logged` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `etc_disaster`
@@ -43072,13 +43072,14 @@ CREATE TABLE `etc_disaster` (
 
 /*!40000 ALTER TABLE `etc_disaster` DISABLE KEYS */;
 INSERT INTO `etc_disaster` (`id`,`disaster_id`,`date_start`,`date_end`,`escalated_from`,`reso_activation_no`,`file_activation`,`file_deactivation`,`status`,`probability`,`overall_impact`,`date_logged`) VALUES 
- (1,9,'2022-11-16 00:00:00',NULL,0,NULL,NULL,NULL,'activating','D Certain/Immenent','4 Catastrophic','2022-11-23 09:48:12'),
+ (1,9,'0000-00-00 00:00:00',NULL,0,'','',NULL,'activating','D Certain/Immenent','4 Catastrophic','2022-11-23 09:48:12'),
  (2,10,NULL,NULL,0,NULL,NULL,NULL,'activating','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
  (3,14,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','3 Major','2022-11-23 09:48:12'),
  (4,11,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
  (5,12,NULL,NULL,0,NULL,NULL,NULL,'activating','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
  (6,13,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
- (7,15,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor','2022-11-28 07:56:47');
+ (7,15,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor','2022-11-28 07:56:47'),
+ (8,9,NULL,NULL,NULL,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor',NULL);
 /*!40000 ALTER TABLE `etc_disaster` ENABLE KEYS */;
 
 
@@ -45166,6 +45167,36 @@ INSERT INTO `transferhistory` (`id`,`asset_owner_id`,`from`,`to`,`datetransfered
 
 
 --
+-- Definition of procedure `fine`
+--
+
+DROP PROCEDURE IF EXISTS `fine`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`lowe`@`%` PROCEDURE `fine`(etc_id INTEGER)
+BEGIN
+DECLARE my_count INTEGER;
+DECLARE my INTEGER;
+ SELECT count(disaster_id) into  my_count FROM etc_disaster e where disaster_id=(Select disaster_id from  etc_disaster d where id=etc_id);
+
+IF my_count < 1 THEN
+
+SELECT max(id) as my FROM etc_disaster e where disaster_id=(select disaster_id from etc_disaster d where id=etc_id);
+
+ELSE
+ set my=etc_id;
+END IF;
+
+ Select @my;
+
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
 -- Definition of procedure `get_loc_avail_assets`
 --
 
@@ -45174,7 +45205,7 @@ DROP PROCEDURE IF EXISTS `get_loc_avail_assets`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`lowe`@`%` PROCEDURE `get_loc_avail_assets`(office int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_loc_avail_assets`(office int)
 BEGIN
 SELECT office.id, `assets`.`id` as `asset_id`, owned_assets.name,  `assets`.`serial`, assets.category, `barangay`.`lat`, `barangay`.`long` from owned_assets, assets, office,barangay where
 assets.id=owned_assets.asset_id and owned_assets.office_id=office.id and office.brgy_id=barangay.id and office_id=office and `assets`.`status`='available' ;
@@ -45194,7 +45225,7 @@ DROP PROCEDURE IF EXISTS `get_loc_deployed_assets`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`lowe`@`%` PROCEDURE `get_loc_deployed_assets`(office int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_loc_deployed_assets`(office int)
 BEGIN
 
 SELECT office.id,  `assets`.`id` as `asset_id`, owned_assets.name,  `assets`.`serial`, assets.category, `barangay`.`lat`, `barangay`.`long` from owned_assets, assets, office,barangay,deployment where
