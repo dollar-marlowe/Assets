@@ -6,7 +6,7 @@
     if(isset($_POST["status"])){
         $db= new Database();
         $db->connect();
-        $status=$_POST["status"];
+        $status=removepecialchars($_POST["status"]);
         $sql="SELECT id,date_logged,disaster,probability,overall_impact
          FROM etc_disaster_view where `status`='".$status."' order by id";
         $result=$db->selectrows($sql,0);

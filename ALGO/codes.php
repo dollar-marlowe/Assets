@@ -577,37 +577,50 @@ function abreviate($str,$num_char){//THIS IS USED FOR ABREVIATING WORDS $NUM_CHA
     //'Very Small Aperture Termninal' then you specified 4 letters abreviation
     // result would be like this 'VSAT'
     //pretty brilliant haha
-    $word= explode(" ",$str);
-    $size=sizeof($word);
     $abreviate="";
-    if($size>1){
-        if($size>=$num_char){
-            for($i=0;$i<$num_char;$i++){
-                $chars=str_split($word[$i]);
-                $abreviate=$abreviate.$chars[0];
+    if($num_char!=0){
+
+        $word= explode(" ",$str);
+        $size=sizeof($word);
+       
+        if($size>1){
+            if($size>=$num_char){
+                for($i=0;$i<$num_char;$i++){
+                    $chars=str_split($word[$i]);
+                    $abreviate=$abreviate.$chars[0];
+                }
             }
+            else{
+                for($i=0;$i<$size;$i++){
+                    $chars=str_split($word[$i]);
+                    $abreviate=$abreviate.$chars[0];
+                }
+            }
+            
+        
         }
         else{
-            for($i=0;$i<$size;$i++){
-                $chars=str_split($word[$i]);
-                $abreviate=$abreviate.$chars[0];
+            $chars=str_split($word[0]);
+            $n=sizeof($chars);
+            if($n>=$num_char){
+                for($i=0;$i<$num_char;$i++){
+                    $abreviate=$abreviate.$chars[$i];
+                }
+            }else{
+                $abreviate=$chars[0];
             }
-        }
         
-       
+        
+        }
     }
     else{
-        $chars=str_split($word[0]);
-        $n=sizeof($chars);
-        if($n>=$num_char){
-            for($i=0;$i<$num_char;$i++){
-                $abreviate=$abreviate.$chars[$i];
-            }
-        }else{
-            $abreviate=$chars[0];
+        $word= explode(" ",$str);
+        $size=sizeof($word);
+        foreach($word as $w){
+            $chars=str_split($w);
+            $abreviate=$abreviate.$chars[0];
         }
-       
-      
+
     }
     return strtoupper($abreviate);
 }

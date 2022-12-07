@@ -53,7 +53,15 @@
             }
             $sql4="SELECT  probability,overall_impact FROM etc_disaster where id=".$d_etc;
             $result=$db->selectrows($sql4,0);
-            echo " mmm ".$result[0]["probability"]." mmm ".$result[0]["overall_impact"]." mmm ".$status;
+            $prob=0;
+            $imp=0;
+            $status=0;
+            if($result!=null){
+            $prob=$result[0]["probability"];
+            $imp=$result[0]["overall_impact"];
+            $status="C";
+            }
+            echo " mmm ".$prob." mmm ".$imp." mmm ".$status;
 
         }   
         echo " mmm ".$current_etc;        

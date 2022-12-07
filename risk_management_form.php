@@ -970,6 +970,7 @@
 
 $(document).ready(function(){
 	get_etc("activating",".etc_pannel");
+	get_etc_active("active",".all_active_etc");		
 	$("#hazard_form").slideUp();
 	disable_affected();
 	$(".impact_log").attr("disabled","disabled");
@@ -1606,6 +1607,20 @@ $(document).ready(function(){
 		$(".all_etc").css({"border":"solid 1px #ddd"})
 
 	});
+
+	function get_etc_active(stat, target){
+		//alert("test");
+		$.post("AJAX/load_active_etc.php",
+		{
+			status:stat
+		},
+		function (data){
+			
+			$(target).html(data);
+			
+
+		});
+	}
 	$("#save_etc").click(function(){
 		var validate_d=validate_date("#date_activated");
 		if(is_empty_class(".etc_input","")==false && validate_d==false ){
@@ -1628,10 +1643,12 @@ $(document).ready(function(){
 							date_activated:str_date,
 							file:result,
 							reso: $("#reso").val().trim(),
-							etc_stat: $("$etc_stat").val()
+							etc_stat: $("#etc_stat").val()
 						},
 						function(data){
-							alert(data);							
+							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
+							get_etc("activating",".etc_pannel");	
+							get_etc_active("active",".all_active_etc");					  
 						});
 					}				
 				}

@@ -485,6 +485,12 @@
             return isempty;
             
         }
+        function clear_class_input(myclass,empty_val){
+            $.each($(myclass),function(){                
+                    $(this).css({"border":"solid 1px rgb(113, 113, 113)"}).val(empty_val);
+            });          
+            
+        }
         function global_validate(target,value){
 		if($(target).val().trim()==value){
 			$(target).css({"border":"solid 1px red"}); 
