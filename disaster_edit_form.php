@@ -618,7 +618,7 @@ $(document).ready(function(){
 		var chk_size=$(".item:checked").length;
 		if(chk_size>1){
 			$("#err_2").remove();
-			$(".disasters").before("<p id='err_2' style='color:red;width:100%;text-align:center;'>You can only select one record to be mofied!</p>");
+			$(".disasters").before("<p id='err_2' style='color:red;width:100%;text-align:center;'>You can only select one record to be modified!</p>");
 		}
 		else if(chk_size==1){
 			$("#err_2").remove();

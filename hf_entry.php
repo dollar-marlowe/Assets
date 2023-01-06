@@ -5,7 +5,7 @@
     include "COMPONENTS/reroute.php";
 
     include "header.php";
-    include "testEventsForm.php";
+    include "hf_entry_form.php";
     include "about.php";
     include "footer.php";
     ?>

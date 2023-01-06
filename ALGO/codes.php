@@ -919,6 +919,23 @@ function loadropdown1($str,$col1,$col2){//the second  dropdown has others
     echo"<option value='others'>Others</option>";
     
 }
+function loadstationlist($str,$col1,$col2,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+   
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            echo "<option value='".$d[$col1]."'>".$d[$col2]."</option>";
+        }
+    }
+    else{
+        echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
+
 function loadropdown($str,$col1,$col2,$from){
     
     $db = new Database();
@@ -935,6 +952,7 @@ function loadropdown($str,$col1,$col2,$from){
         echo"<option value='0'>Select from ".$from."</option>";
     }
 }
+
 function load_label_input($str, $div2,$class,$col1,$col2,$col3){
     $db = new Database();
     $db->connect();
@@ -1298,7 +1316,7 @@ function update_session($data){
         $_SESSION[$key]=$data[$key];
     }
  }
- echo $_SESSION["p"];
+// echo $_SESSION["p"];
 // if(isset($_GET["fname"])){
 //    $_SESSION["fname"]=$_GET["fname"];
 //    $_SESSION["lname"]=$_GET["lname"];
