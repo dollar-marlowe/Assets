@@ -26,5 +26,5 @@ function testme(){
     echo " mmm ".$prob." mmm ".$imp." mmm ".$status;
   }
 
-  echo abreviate("SURIGAO DEL NORTE",0);
+ // echo remove_next_words("SURIGAO DEL NORTE",2," ");
   ?>

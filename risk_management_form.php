@@ -569,6 +569,7 @@
 		}
 
 		.mini_affct tr td{
+			vertical-align:top;
 			padding:0px;
 			padding-top:3px;
 		}
@@ -586,7 +587,7 @@
 		
 		.mini_con{
 			display:none;
-			width:90%;
+			width:98%;
 			margin:auto;
 			max-height:200px;
 			overflow:auto;

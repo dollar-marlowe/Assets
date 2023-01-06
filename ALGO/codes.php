@@ -717,6 +717,16 @@ function shorten($txt){
     }
     return $str;
 }
+function remove_next_words($str,$index,$delimeter){
+    $words=explode($delimeter,$str);
+    $size=sizeof($words);
+    $new_str="";
+    for($i=0;$i<$index; $i++){
+        $new_str.=$words[$i]." ";
+    }
+    return trim($new_str);
+    
+}
 function replace($chars,$orig){//
     //this function is used to combine dta frm different column into a one string 
     //the value came form a jquery that is why you cannto use implode fucntion here
