@@ -15,7 +15,7 @@
       $sql="select id,disaster_id from etc_disaster e where e.disaster_id=(select d.disaster_id from etc_disaster d where d.id=$etc_id) order by id desc";
       $etcs=$db->selectrows($sql,0);
       $size_etc= sizeof($etcs);
-      $sql2="update etc_disaster set date_start='$date_activated', reso_activation_no='10', file_activation='etc', `status`='active' where id=$etc_id";
+      $sql2="update etc_disaster set date_start='$date_activated', reso_activation_no='$reso', file_activation='$file', `status`='active' where id=$etc_id";
       $msg1=$db->insert($sql2);
       $msg2="";
       $sql3="update disaster_affected set `status`='active' where etc_disaster_id='active'";

@@ -650,6 +650,9 @@
 		.all_active_etc > *{
 			margin:auto;
 		}
+		.deact_pannel{
+			margin-bottom:10px;
+		}
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
@@ -934,6 +937,14 @@
 								<div class="all_active_etc">
 											
 								</div>
+									<div class="input_wrapper" >
+										<input type="date" id="date_deactivated" class="form-control all_etc deact_pannel" style="width:130px;"/>
+									
+										<input type="file" id="deactivatefile" name="deactFile" class="etc_input all_etc deact_pannel" style="width:130px;"/>
+									</div>
+									<div class="input_wrapper" >
+										<input type="submit" id="deactivate_etc" value="Deactivate" class="buttons dstr deact_pannel" style="width:130px;">														
+									</div>
 								
 							</div>		
 																
@@ -972,6 +983,7 @@
 $(document).ready(function(){
 	get_etc("activating",".etc_pannel");
 	get_etc_active("active",".all_active_etc");		
+	$(".deact_pannel").hide();
 	$("#hazard_form").slideUp();
 	disable_affected();
 	$(".impact_log").attr("disabled","disabled");
@@ -1093,7 +1105,7 @@ $(document).ready(function(){
 	});
 	$(document).on("change",".dst_item",function(){
 		
-		var cat=$(this).parent().next().next().text();
+		var cat=$(this).parent().next().next().text();	
 		var name=$(this).parent().next().text();
 		$(".disaster_name").html("Disater: "+"<b>"+name+"</b>");
 		$(".disaster_nature").html("Type: "+"<b>"+cat+"</b>");
@@ -1618,7 +1630,9 @@ $(document).ready(function(){
 		function (data){
 			
 			$(target).html(data);
-			
+			href_each(".active_etc_logs th:nth-child(5)");
+			remove_first_word(".active_etc_logs_affected td:nth-child(3)");
+			remove_next_word(".active_etc_logs_affected td:nth-child(5)");
 
 		});
 	}
@@ -1637,6 +1651,7 @@ $(document).ready(function(){
 				contentType:false,
 				processData:false,
 				success: function(result){
+					alert(result);
 					if(result!="error"){
 						$.post("AJAX/activate_etc_disaster.php",
 						{
@@ -1649,7 +1664,8 @@ $(document).ready(function(){
 						function(data){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
 							get_etc("activating",".etc_pannel");	
-							get_etc_active("active",".all_active_etc");					  
+							get_etc_active("active",".all_active_etc");	
+
 						});
 					}				
 				}
@@ -1660,6 +1676,15 @@ $(document).ready(function(){
 			$(".err_lbl_etc").remove();
 			$("#date_activated").parent().before("<div class='input_wrapper err_lbl_etc'><p id='err_etc' style='color:red;'>Required fields cannto be empty!</p></div>");
 		}
+	});
+	$(document).on("change",".radio_active_etc",function(){
+		$(".deact_pannel").show();
+		
+		var radio_active= $(".radio_active_etc:checked").parent().parent().next().find("td div");
+		$(".mini_con").slideUp();
+		radio_active.slideDown();
+
+
 	});
  });
     </script>
