@@ -940,7 +940,7 @@
 									<div class="input_wrapper" >
 										<input type="date" id="date_deactivated" class="form-control all_etc deact_pannel" style="width:130px;"/>
 									
-										<input type="file" id="deactivatefile" name="deactFile" class="etc_input all_etc deact_pannel" style="width:130px;"/>
+										<input type="file" id="deactivatefile" name="myFile" class="all_etc deact_pannel" style="width:130px;"/>
 									</div>
 									<div class="input_wrapper" >
 										<input type="submit" id="deactivate_etc" value="Deactivate" class="buttons dstr deact_pannel" style="width:130px;">														
@@ -1645,13 +1645,13 @@ $(document).ready(function(){
 			var form= new FormData();
 			form.append("myFile",file);
 			$.ajax({
-				url:"AJAX/file_upload_etc.php",
+			url:"AJAX/file_upload_etc.php",
 				type:"POST",
 				data:form,
 				contentType:false,
 				processData:false,
 				success: function(result){
-					alert(result);
+					//alert(result);
 					if(result!="error"){
 						$.post("AJAX/activate_etc_disaster.php",
 						{
@@ -1662,7 +1662,7 @@ $(document).ready(function(){
 							etc_stat: $("#etc_stat").val()
 						},
 						function(data){
-							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
+							Popup_modal_show("<h4 style='color:red'>SYSTEM ERROR!</h4><br><b>"+data+"</b>",600);
 							get_etc("activating",".etc_pannel");	
 							get_etc_active("active",".all_active_etc");	
 
@@ -1683,8 +1683,42 @@ $(document).ready(function(){
 		var radio_active= $(".radio_active_etc:checked").parent().parent().next().find("td div");
 		$(".mini_con").slideUp();
 		radio_active.slideDown();
-
-
 	});
+	$("#deactivate_etc").click(function(){
+		var validate_deact=validate_date("#date_deactivated");
+		if(global_validate("#deactivatefile","")==false && validate_deact==false){
+			var deactdate= new Date($("#deactivatefile").val());
+			var strdeactdate= deactdate.getFullYear()+"-"+(deactdate.getMonth()+1)+"-"+deactdate.getDate();		
+			var deactfile=$("#deactivatefile").prop("files")[0];
+			var form = new FormData();
+			form.append("myFile",deactfile);
+			$.ajax({
+				url:"AJAX/file_upload_etc.php",
+				type:"POST",
+				data:form,
+				contentType:false,
+				processData:false,
+				success: function(result){
+					//alert(result);
+					if(result!="error"){
+						$post("AJAX/deactetc.php",{
+							etc_disaster:$("#radio_active_etc:checked").val(),
+							date:strdeactdate,
+							attchfileurl:result
+						},
+						function(data){
+							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
+						});
+					}
+					else{
+						Popup_modal_show("<h4 style='color:red'>SYSTEM ERROR!</h4><br><b>"+data+"</b>",600);
+					}
+				}
+				
+			});
+		}
+	});
+	
+	
  });
     </script>
