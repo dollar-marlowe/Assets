@@ -662,7 +662,7 @@
 					<div class="imgform-img">
 									<div class="inner-wrapper" >
 										<div class="cols cols1" >
-											<p class="box_label"><span>Disaster/Calamity</span></p>
+											<p class="box_label me"><span>Disaster/Calamity</span></p>
 									
 											<!-- <div class="input_wrapper" style="margin:auto">
 											<input type="radio" name="gender" class="gender" value="male">Male<br>
@@ -690,9 +690,9 @@
 											<div class="table_con container" style="margin-top:0" id="d_select" >
 												<table class="disasters">
 													<?php
-													$sql="select id,name,natureofdisaster, datestarted, file_upload  from disaster ";
+													$sql="select id,name,natureofdisaster, datestarted, file_upload,`status` from disaster where `status`='activating'  or `status`='active'";
 													$classes=array("dst_all","dst_item");
-													$headers=array("","Disaster","Nature..","Date","File");
+													$headers=array("","Disaster","Nature..","Date","File","Status");
 													loadtable_radio($sql,$headers,true,false,$classes,"");
 													?>
 												</table>	
@@ -1083,6 +1083,10 @@ $(document).ready(function(){
 				if(data=="New record created!"){
 					var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
 					make_input_attributes("#attributes", classes, cat, disaster_id,"","#attributes div:nth-child(1)","");
+					//#attributes div:nth-child(1) is used to get the 1st elemnt under the attributes and div to add dynamicdally a button for adding new attributes
+					//however this has already been resolved placed outside the div for whenever a new attributs is added thye whole contants of teh div is being reset thus 
+					//erasing the button. so the #attributes div:nth-child(1) is no longer necessary, the field before it is supposed  to hold the definition of the said add button
+
 			
 					$("#add_attr").show();
 					$("#new_attr").val("");
@@ -1258,33 +1262,40 @@ $(document).ready(function(){
 	$("#search_category").change(function(){
 		var str="";
 		if($(this).val()=="0"){
-			str="select id,name,natureofdisaster, datestarted, file_upload \
+			str="select id,name,natureofdisaster, datestarted, file_upload,`status` \
 		 from disaster order by id desc";
 		}else{
-			str="select id,name,natureofdisaster, datestarted, file_upload \
+			str="select id,name,natureofdisaster, datestarted, file_upload,`status` \
 		 from disaster where natureofdisaster= '"+$(this).val()+"' order by id desc";
 		}
 		 
 		load_disaster(str);
 			
 	});
+	
+	// $(".me").click(function(){
+	// 	disable_inactive(".dst_item");
+	// });
 	function load_disaster(str){
 		
-			var headers="%Disaster%Nature..%Date%File";
+			var headers="%Disaster%Nature..%Date%File%Status";
 			var classes ="dst_all%dst_item";
 			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)", "");
-			enrycpt_each(".dst_item");
+		
+			//enrycpt_each(".dst_item");
+		
 	}
 
 	$("#search_disaster").keyup(function(){
 		//alert("test");
 			var str="select id,name,natureofdisaster, datestarted, \
-			file_upload  from disaster where name like '%"+$(this).val()+"%'";
+			file_upload,`status` from disaster where name like '%"+$(this).val()+"%'";
 			load_disaster(str);
 									
 
 	});
 
+	
 	function fill_areas(str,headers){
 		
 		var classes ="all_area%item_area";
@@ -1662,7 +1673,7 @@ $(document).ready(function(){
 							etc_stat: $("#etc_stat").val()
 						},
 						function(data){
-							Popup_modal_show("<h4 style='color:red'>SYSTEM ERROR!</h4><br><b>"+data+"</b>",600);
+							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
 							get_etc("activating",".etc_pannel");	
 							get_etc_active("active",".all_active_etc");	
 
@@ -1691,6 +1702,7 @@ $(document).ready(function(){
 			var strdeactdate= deactdate.getFullYear()+"-"+(deactdate.getMonth()+1)+"-"+deactdate.getDate();		
 			var deactfile=$("#deactivatefile").prop("files")[0];
 			var form = new FormData();
+		
 			form.append("myFile",deactfile);
 			$.ajax({
 				url:"AJAX/file_upload_etc.php",
@@ -1701,13 +1713,17 @@ $(document).ready(function(){
 				success: function(result){
 					//alert(result);
 					if(result!="error"){
-						$post("AJAX/deactetc.php",{
-							etc_disaster:$("#radio_active_etc:checked").val(),
-							date:strdeactdate,
-							attchfileurl:result
+						$.post("AJAX/deactivate_etc.php",
+						{
+							etc : $(".radio_active_etc:checked").val(),
+							date : strdeactdate,							
+							attchfileurl :result
 						},
 						function(data){
-							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
+							var arr_data= to_array(data,"%");
+							 var msg=(arr_data[0]=="New records created!" ) ? "<h4>SYSTEM NOTIFICATION!</h4><br><b>"+arr_data[1]+" disaster deactivated!</b>" : "<h4 style='color:red'>SYSTEM ERROR!</h4><br><b>"+data+"</b>";
+								Popup_modal_show(msg,600);
+								get_etc_active("active",".all_active_etc");	
 						});
 					}
 					else{
@@ -1718,7 +1734,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	
+
 	
  });
     </script>

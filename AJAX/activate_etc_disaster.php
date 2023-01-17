@@ -20,6 +20,8 @@
       $msg2="";
       $sql3="update disaster_affected set `status`='active' where etc_disaster_id='active'";
       $db->insert($sql3);
+      $sql4="update disaster set `status`='active' where id=(select d.disaster_id from etc_disaster d where d.id=$etc_id)";
+      $db->insert($sql4);
 
       if($size_etc>1){
           $sql3="update etc_disaster set date_end='$date_activated',escalated_from=1, `status`='$etc_stat' where id=". $etcs[$size_etc-1]["id"].";";

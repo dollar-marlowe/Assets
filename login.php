@@ -13,26 +13,35 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"          
     />
-    <link rel="stylesheet" href="CSS/esmeralda.css" />
+    <link rel="stylesheet" href="CSS/rubio.css" />
 	
   </head>
   <style>
     body{
-      background:url("images/DICT.png") center no-repeat;
-      background-size:60%;
+      background:url("images/bg2.png") center no-repeat;
+      /* background-size:100%; */
       /*background-position: 50% 11%;*/
+      /* width:auto;
+      height:100%; */
+       -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 
 
     }
-    @media (min-width: 901px) and (max-width: 1400px){
-      body{
-        background-size:80%;
-      }
-    }
+    
     @media (max-width: 900px){
-      body{
-        background-size:100%;
-      }
+      
+    }
+    #imgform{
+      background:none;
+    }
+    #form_title{
+      height:100px;
+      width:100%;
+      background: url("images/amis_tempest.png") center no-repeat;
+       background-size:100%;
     }
   </style>
   <body>

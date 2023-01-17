@@ -12,8 +12,8 @@
         $db = new Database();
         $db->connect();
         $sql="Insert into disaster 
-         (name,category,natureofdisaster,description,datestarted,file_upload)
-          values('".$disaster."','".$category_array[1]."','".$category_array[0]."','".$description."','".$datestart."','". $myFile."')";
+         (name,category,natureofdisaster,description,datestarted,status,file_upload)
+          values('".$disaster."','".$category_array[1]."','".$category_array[0]."','".$description."','".$datestart."','activating','". $myFile."')";
           $msg=$db->insert($sql);
           if( $msg=="New record created!"){
             echo $msg;

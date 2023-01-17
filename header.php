@@ -17,7 +17,7 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/esmeralda.css" />
+    <link rel="stylesheet" href="CSS/rubio.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>
@@ -38,11 +38,18 @@
         padding-bottom:5px;
       }
       .navbar {
-        height:9vh;
+        height:50px;;
       }
       .navbar-container{
         margin:0;
-        margin-top:13px;
+        margin-top:9px;
+      }
+      .navbar-container .hamburger-lines{
+        top:5px;
+      }
+      .showcase-area{
+        height:250px;
+       background:none;
       }
 
       
@@ -90,6 +97,87 @@ border:solid 1px #33bbff;
         border-radius:5px;
        
       }
+     #nav_bg{
+      width:100%;
+      height:200px;
+      position:absolute;
+      object-fit: fill;
+      margin-top:42px;
+     }
+     .nav{
+      position:absolute;
+     }
+     .img_right{
+     
+      width:350px;
+     margin-top:20px;
+      
+     }
+     .img_left{
+     
+     height:250px;
+    margin-top:-20px;
+     
+    }
+     .img_con_right{
+      right:349px;
+      
+     }
+     .img_con_left{
+      left:0px;
+      
+     }
+     .img_left_gear{
+      left:100px;
+      position:absolute;
+      height:200px;
+      width:200px;
+      margin-top:30px;
+     }
+     .img_left_gear2{
+      left:5px;
+      position:absolute;
+      height:120px;
+      width:120px;
+      margin-top:150px;
+     }
+     .img_left_dict{
+      left:164px;
+      position:absolute;
+      height:70px;
+      width:70px;
+      margin-top:95px;
+     }
+     .img_right_gear3{
+      right:220px;
+      position:absolute;
+      height:200px;
+      width:200px;
+      margin-top:-100px;
+     }
+     .img_right_gear4{
+      right:80px;
+      position:absolute;
+      height:100px;
+      width:100px;
+      margin-top:160px;
+     }
+     .back{
+      position:absolute;
+      width:100%;
+      height:224px;
+      background:url("images/bgbg.png") center no-repeat;
+    
+       -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+     }
+     .back_elem{
+   
+      text-align:center;
+     }
      
    
    @media (max-width:900px){
@@ -145,13 +233,29 @@ border:solid 1px #33bbff;
         width:100%;
       }
    }
+   .logo{
+    height:50px;
+   }
+   .back-img{
+    display:block;
+    margin:auto;
+   }
+   .large{
+    width:25%;
+    margin:auto;
     
+   }
+   .mid{
+    width:40%;
+    margin:auto;
+   }
+   
      
     </style>
   </head>
   <body>
-  <img class="logo lg1" src="images/drrmd1.png" >
-          <img class="logo" src="images/dictlogo1.png">
+  
+          <img class="logo" src="images/dict_banner.png">
 <nav class="navbar">
       
         <?php
@@ -243,8 +347,27 @@ border:solid 1px #33bbff;
     <section class="showcase-area" id="showcase">
       <br>
       <div class="showcase-container">
-        <h1 class="main-title" id="home">DICT-DRRM FOCALS</h1>
-        <p class='header'>Shared Assets Management Portal.</p>
+       
+       <div class="back"><br>
+       <img src="images/label_head1.png" class="back-img large">
+       <img src="images/label_head3.png" class="back-img mid">
+        </div>
+        <img src="images/ger_small.png" class="img_right_gear4 rotate_clockwise">
+        <div class="img_con_right nav">
+        <img src="images/beeswax2.png" class="nav img_right">
+        </div>
+       
+      
+        <div class="img_con_left nav">
+        <img src="images/left_img_tech2.png" class="nav img_left">
+        </div>
+        <img src="images/lowe_bar_only3.png" id="nav_bg">
+        <img src="images/gear4.png" class="img_left_gear rotate_clockwise">
+        <img src="images/ger_small2.png" class="img_left_gear2 rotate_counter">
+        <img src="images/gear4.png" class="img_right_gear3 rotate_counter">
+        <img src="images/small_dict_shadow.png" class="img_left_dict">
+        
+     
       </div>
     </section>
     <div id="myModal" class="modal">
@@ -285,9 +408,62 @@ border:solid 1px #33bbff;
             }else{
               idleTime = idleTime + 1;
             }
+
+           
           }, 60000); 
+
+          var rotate1='+360';
+            var rotate2='-360';
+          setInterval(function(){
+           
+           // 
+         
+            //animation
+           
+            $('.rotate_clockwise').animate({  borderSpacing: rotate1 }, {
+            step: function(now,fx) {
+              $('.rotate_clockwise').css('-webkit-transform','rotate('+now+'deg)'); 
+              $('.rotate_clockwise').css('-moz-transform','rotate('+now+'deg)');
+              $('.rotate_clockwise').css('transform','rotate('+now+'deg)');
+             
+            },
+            duration:2200
+        },'linear');
+        rotate1=(rotate1=='+360')?'-360':'+360';
+        $('.rotate_counter').animate({  borderSpacing: rotate2 }, {
+            step: function(now2,fx) {
+              $(this).css('-webkit-transform','rotate('+now2+'deg)'); 
+              $(this).css('-moz-transform','rotate('+now2+'deg)');
+              $(this).css('transform','rotate('+now2+'deg)');
+             
+            },
+            duration:2200
+        },'linear');
+        rotate2=(rotate2=='-360')?'+360':'-360';
+          }, 10000); 
      
         $(document).ready(function(){
+          
+          $('.rotate_clockwise').animate({  borderSpacing: -360 }, {
+            step: function(now,fx) {
+              $('.rotate_clockwise').css('-webkit-transform','rotate('+now+'deg)'); 
+              $('.rotate_clockwise').css('-moz-transform','rotate('+now+'deg)');
+              $('.rotate_clockwise').css('transform','rotate('+now+'deg)');
+              //rotate1=(rotate1=='+360')?'-360':'+360';
+            },
+            duration:2200
+        },'linear');
+         
+        $('.rotate_counter').animate({  borderSpacing: +360 }, {
+            step: function(now2,fx) {
+              $(this).css('-webkit-transform','rotate('+now2+'deg)'); 
+              $(this).css('-moz-transform','rotate('+now2+'deg)');
+              $(this).css('transform','rotate('+now2+'deg)');
+              //rotate2=(rotate2=='-360')?'+360':'-360';
+            },
+            duration:2200
+        },'linear');
+
           $(".modal2").hide();
         
 
@@ -297,7 +473,8 @@ border:solid 1px #33bbff;
           });
         
          });
-         
+
+      
            // 1 minute interval    
           $( document ).mousemove(function( event ) {
               idleTime = 0; // reset to zero
@@ -504,16 +681,7 @@ border:solid 1px #33bbff;
 
           function hidelogo(){
             var lenght=$(window).width();
-           if(lenght<570){
-              if ($("#nbrger").is(":checked")==true){
-                $("img.lg1").hide();
-                
-              }
-              else{
-                $("img.lg1").delay(9000).show();
-              }
-           
-           }
+         
            if(lenght<434){
               if ($("#nbrger").is(":checked")==true){
                   $("img.logo").hide();
@@ -534,17 +702,8 @@ border:solid 1px #33bbff;
           $(window).resize(function(){
             var lenght=$(window).width();
          
-            if(lenght<=570 && lenght >434){
-              if ($("#nbrger").is(":checked")==true){
-                $("img.lg1").hide();
-              }
-              else{
-                $("img.lg1").delay(800).show();
-              }
-            }
-            if(lenght>570){
-              $("img.lg1").show();
-            }
+            
+            
 
 
           });
