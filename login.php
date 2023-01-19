@@ -40,7 +40,7 @@
     #form_title{
       height:100px;
       width:100%;
-      background: url("images/amis_tempest.png") center no-repeat;
+      background: url("images/samp5.png") center no-repeat;
        background-size:100%;
     }
   </style>

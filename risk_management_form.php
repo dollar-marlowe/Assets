@@ -916,7 +916,7 @@
 											</div>
 											<div class="input_wrapper" >
 														<input type="submit" id="clear_etc_act" value="Clear" class="buttons dstr" style="width:130px;">
-														<input type="submit" id="save_etc" value="Submit" class="buttons dstr" style="width:130px;">
+														<input type="submit" id="save_etc" value="Activate" class="buttons dstr" style="width:130px;">
 														
 											</div>
 							
@@ -1476,7 +1476,7 @@ $(document).ready(function(){
 				function(data){
 					var arr_data=to_array(data,"%");
 					if(arr_data[0]=="New records created!"){
-						Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record created!</b>",600);
+						Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record submitted, you can now add affected areas!</b>",600);
 						$(".impact2, .impact").val("C");
 						
 						$("#attributes2 div > select").attr("disabled","disabled");
@@ -1537,6 +1537,8 @@ $(document).ready(function(){
 				soft_clear_col2();
 				load_affected("#disaster_affected");
 				$("#done").show();
+				get_etc("activating",".etc_pannel");	
+				get_etc_active("active",".all_active_etc");	
 				
 
 			});
@@ -1641,6 +1643,7 @@ $(document).ready(function(){
 		function (data){
 			
 			$(target).html(data);
+			href_each(".head_table th:nth-child(5)");
 			href_each(".active_etc_logs th:nth-child(5)");
 			remove_first_word(".active_etc_logs_affected td:nth-child(3)");
 			remove_next_word(".active_etc_logs_affected td:nth-child(5)");
@@ -1649,9 +1652,11 @@ $(document).ready(function(){
 	}
 	$("#save_etc").click(function(){
 		var validate_d=validate_date("#date_activated");
+		alert('click');
 		if(is_empty_class(".etc_input","")==false && validate_d==false ){
-			var date= new Date($("#date_activatedv").val());
+			var date= new Date($("#date_activated").val());
 			var str_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+			//alert(str_date);
 			var file =$("#activatefile").prop("files")[0];
 			var form= new FormData();
 			form.append("myFile",file);

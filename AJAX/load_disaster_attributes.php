@@ -8,13 +8,14 @@
         $disaster=decrypt($_POST["disaster"]);
         $etc_id=($_POST["etc_id"]!="") ? decrypt($_POST["etc_id"]): "";// this is a ternary operator ehcking if etc_id is blank
         //if it is not blank the it will be decrypted an dassign its value to $etc_id 
-        $sql="SELECT attributes_name,id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and `status`='activating' order by attr_id";
-        //this sql will load the current etc_disaster if it is active else if there nop are specified etc id
+        $sql="SELECT attributes_name,attr_id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and `status`='activating' order by attr_id";
+        //this sql will load the current etc_disaster if it is active else if there no are specified etc id
         // if there is on it will uise this second sql instead
-        $sql2="SELECT attributes_name,id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and disaster_etc_id=".$etc_id." order by attr_id" ;
-        $sql3="SELECT attributes_name,id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and `status`='active'";
+        $sql2="SELECT attributes_name,attr_id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and disaster_etc_id=".$etc_id." order by attr_id" ;
+        $sql3="SELECT attributes_name,attr_id,`value`,disaster_id,mul_options,options FROM disaster_attributes_view where disaster_id=".$disaster." and `status`='active' order by attr_id";
         
         $check_pending_etc_d=$db->select_one("select id from  etc_disaster where disaster_id=".$disaster." and `status`='activating'","id");
+        $check_active_etc_d=$db->select_one("select id from  etc_disaster where disaster_id=".$disaster." and `status`='active'","id");
 
         //there should be a status active filter in disater_attr table this table holds the vlaue of the dynamically added attributes in the d_attributes
         //of each disaster, however since a disaster may escalate so there will be a second reference of same disaster with different attributres values
@@ -42,7 +43,7 @@
         else{
             //$class=array("input_wrapper","dst_lbl label","dst_input","dst_hidden");
             //$sql="SELECT attributes_name,id,`value`,disaster_id FROM disaster_attributes_view where disaster_id=".$disaster;
-            $cols=array("attributes_name","id","value","mul_options","options");
+            $cols=array("attributes_name","attr_id","value","mul_options","options");
             make_label_inputs($sql,$class,true,true,$cols);
             echo "mmm retrieved";
             $d_etc=$etc_id;

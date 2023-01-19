@@ -9,7 +9,7 @@
 				<input type="password" placeholder="Password*" id="password"/>
         <input type="password" placeholder="Repeat Password*" id="repassword"/>
 				
-				<input type='submit' Value='S u b m i t' class="btn btn-primary"  style="color:white;font-weight:500;border-radius:10px;"  id="submitlogin">
+				<input type='submit' Value='L O G I N' class="btn btn-primary"  style="color:white;font-weight:500;border-radius:10px;"  id="submitlogin">
        <!--  <input type='submit' Value='Clear' class="btn btn-primary"  style="color:white;font-weight:800;"  id="clearlogin">
 			 -->
         </div>

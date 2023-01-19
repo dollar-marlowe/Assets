@@ -2,6 +2,16 @@
     <?php
    
     include "ALGO/codes.php";
+    test_size();
+    function test_size(){
+      $db = new Database();
+    $db->connect();
+    $etc_id=9;
+      $sql="select id,disaster_id from etc_disaster e where e.disaster_id=(select d.disaster_id from etc_disaster d where d.id=$etc_id) order by id desc";
+      $etcs=$db->selectrows($sql,0);
+      $size_etc= sizeof($etcs);
+      echo  $size_etc;
+    }
 function testme(){
     $db = new Database();
     $db->connect();

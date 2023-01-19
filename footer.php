@@ -525,6 +525,7 @@
             $(".modal2").hide();
             $("#popmsg1").html(msg);
             $(".modal2").delay(speed).fadeIn();
+            return true;
         }
        
 

@@ -195,7 +195,7 @@ function make_label_inputs($sql,$class,$with_hidden,$is_empty_val,$cols){
                 foreach($result as $row){
                     echo "<div class='".$class[0]."'><p class='".$class[1]."'>".$row[$cols[0]].":</p> ";
                     if($with_hidden){
-                        echo "<input type='hidden' class='".encrypt($class[3])."' value='".encrypt($row[$cols[1]])."'>";
+                        echo "<input type='hidden' class='".$class[3]."' value='".encrypt($row[$cols[1]])."'>";
                     }
                     $val= $is_empty_val ? $row[$cols[2]]: ""; 
                     $mul_option= $is_empty_val? $row[$cols[3]]:  $row[$cols[2]];
