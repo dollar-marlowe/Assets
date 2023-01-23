@@ -3,7 +3,7 @@
     include "../ALGO/codes.php";
 
     if(isset($_POST["hf_name"])){
-    
+        $hf_id=decrypt($_POST["hf_id"]);;
         $hf_name=removepecialchars($_POST["hf_name"]);
         $hf_code=removepecialchars($_POST["hf_code"]);
         $region=($_POST["region"]);
@@ -17,8 +17,18 @@
 
         $db = new Database();
         $db->connect();
-        $sql="insert into hf_data (station_name, station_code, station_region, station_province, station_municipality, station_barangay, station_status, station_lat, station_long, station_desc) values
-        ('".$hf_name."', '".$hf_code."', ".$region.", ".$province.", ".$municipality.", ".$barangay.", '".$status."', '".$hf_lat."', '".$hf_long."', '".$description."')";
+        $sql="update hf_data set 
+        station_name='".$hf_name."',
+        station_code='".$hf_code."', 
+        station_region=".$region.",
+        station_province=".$province.",
+        station_municipality=".$municipality.",
+        station_barangay=".$barangay.",
+        station_status='".$status."',
+        station_lat='".$hf_lat."',
+        station_long='".$hf_long."',
+        station_desc='".$description."'
+        where hf_id=".$hf_id;
 
         $msg=$db->insert($sql);
           if( $msg=="New record created!"){
@@ -26,7 +36,7 @@
             //update_session($data);
          }else{
             echo $msg;
-            //echo "%none";s
+            //echo "%none";
               }   
     }
     else{

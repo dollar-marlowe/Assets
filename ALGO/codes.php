@@ -1195,7 +1195,7 @@ function decrypt($data) {
     }
 }
 function reroute($level,$destination){//$level is for the access level, 2nd paramenter is for the destination of reroute if $_SESSION["auth_level"]<=$elvel 
-   
+    $statusCode="";
     if(intval($_SESSION["auth_level"])<=$level){
       
         header('Location: ' . $destination, true, $statusCode);

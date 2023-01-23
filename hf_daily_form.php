@@ -62,9 +62,43 @@
 			font-size:16px;		
 		
 		}
+
+		table #hf_table{
+			width:fit-content;
+			overflow: scroll;
+			font-size:9px;
+		}
+
 		table tr td{
 			padding-bottom:10px;
 			padding-top:10px;
+		}
+
+		#hf_table tr th:nth-child(4),
+		#hf_table tr th:nth-child(6),
+		#hf_table tr th:nth-child(8),
+		#hf_table tr th:nth-child(9),
+		#hf_table tr th:nth-child(10),
+		#hf_table tr th:nth-child(11),
+		#hf_table tr th:nth-child(12),
+		#hf_table tr th:nth-child(13),
+		#hf_table tr th:nth-child(14),
+		#hf_table tr th:nth-child(15),
+		#hf_table tr th:nth-child(16){
+			display:none;
+		}
+		#hf_table tr td:nth-child(4),
+		#hf_table tr td:nth-child(6),
+		#hf_table tr td:nth-child(8),
+		#hf_table tr td:nth-child(9),
+		#hf_table tr td:nth-child(10),
+		#hf_table tr td:nth-child(11),
+		#hf_table tr td:nth-child(12),
+		#hf_table tr td:nth-child(13),
+		#hf_table tr td:nth-child(14),
+		#hf_table tr td:nth-child(15),
+		#hf_table tr td:nth-child(16){
+			display:none;
 		}
 		.pannel{
 			
@@ -124,6 +158,11 @@
 		.input_wrapper .label{
 			width:200px;
 			margin-top:0px;
+		}
+
+		.input_wrapper .station_log{
+			padding: 2px 2px;
+			font-size: 18px;
 		}
 		.inner-wrapper{
 			
@@ -251,15 +290,27 @@
  <section id="station_entry_form">
 	<br>
  <div class="pannel_con">
-		<div class="pannel" onclick="slide('#station_form_div')" >
+	<div class="pannel"> <!--onclick="slide('#station_form_div')" -->
             <p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
-        </div>
-      
+			
+			<div class="input_wrapper" style="margin:auto">
+				<!--this div is for single or group log entry-->
+				<p class="label"><label >Logging Option:</label></p>
+					<select id="log_option">
+						<option value="Single">Single Station Daily Log</option>
+						<option value="Group">Group Station Daily Log</option>
+					</select>		
+			</div>
+			<br>
+		
+		
         <div class="imgform-container " id="station_form_div">
 	        <div class="imgform-img">
-				<div class="inner-wrapper top">				
-				    <div class="input_wrapper entry">
-                        <p class="label"><label for="disaster">Station Name:</label></p>				       
+				<div class="inner-wrapper top">	
+				    <div class="input_wrapper entry" id="single_log_div">
+						<p class="label"><label for="disaster" id="label_log_option">Single HF Station Log</label></p>
+						<br><br>
+                        <p class="label" id="station_name_label"><label for="disaster">Station Name:</label></p>				       
 							<input type="text" name="city" id="station_name" placeholder="Station Name *" list="list_station" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
 								<datalist id="list_station" name="list_station" hidden>
 									<?php
@@ -267,8 +318,31 @@
 										loadstationlist($str,"station_name","region","province");
 									?>
 								</datalist>
-							
-						<p class="label"><label for="disaster">Assignee:</label></p>
+
+						<div class="input_wrapper entry" id="group_log_div">
+							<!--<p class="label"><label for="disaster">Group HF Station Log</label></p><br><br>-->
+							<p class="label"><label>Search Stations:</label></p>
+						
+							<input type="text" id="search_station" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
+							<select id="search_region">
+								<?php 
+									$str="SELECT id,name FROM region";
+									loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
+								?>
+							</select>
+						
+							<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
+								<?php
+									$classes=array("all","item");
+									$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations";
+									$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
+									loadtable($sql,$headers,true,true,$classes);
+								?>
+							</table>
+						</div>
+
+						
+						<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
 						<input type="text" id="station_assignee" placeholder="Optional *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
 						<br><br>
 						
@@ -318,12 +392,27 @@
 						
 
 							
-                    
+			
                 </div>
 				<br>
             </div>
         </div>
+
+		<!--for Group ito na div -->
+		
+		<div class="imgform-container " id="station_form_div">
+	        <div class="imgform-img">
+				<div class="inner-wrapper top">	
+				    
+						
+				
+
+					</div>
+				</div>
+			</div>
+		</div>
         
+ 	</div>
  </div>
 
  <div class="pannel_con">
@@ -345,7 +434,7 @@
 				<table class="disasters" style="margin-bottom:5px;margin-top:10px;">
 				<?php
 				$classes=array("all","item");
-				$sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily";
+				$sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily order by log_date desc";
 				$headers=array("tik","Station Name","Station Assignee","Date","Time","Weather","Signal Status");
 				loadtable($sql,$headers,true,false,$classes);
 				
@@ -361,10 +450,17 @@
     function slide(target){
 		$(target).slideToggle("slow");
 		}
-		
+	
     
     $(document).ready(function(){
 
+		//decrypt
+		//filter-- for each checkbox
+		//then encrypt ulit
+	// $("#station_name_label").css("visibility","hidden");
+	// $("#station_name").css("visibility","hidden");
+	$("#group_log_div").css("display","none");
+	$("#log_option").val("Single");
 	var edit=false;
 	var item_id="";
 	enrycpt_each(".item");
@@ -522,7 +618,7 @@
 					signal_status:		signal_val				
 			},
 				function(data){
-						alert(data);
+						//alert(data);
 						if(data=="New record created!"){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);								
 						}else{
@@ -545,6 +641,83 @@
 	$("#clear").click(function(){
 		// $("select#signal_value").prop()
 	});
+
+
+	$("#log_option").change(function(){
+
+		//alert($("#log_option").val());
+		if($("#log_option").val() =="Single"){
+			//$("#single_log_div").css("display","block");
+			$("#group_log_div").css("display","none");	
+			//$("#station_name").css("display","block");
+			$("#label_log_option").text("Single Station Log");
+			$("#station_name_label").css("visibility","visible");
+			$("#station_name").css("visibility","visible");
+			$("#station_assignee").css("visibility","visible");
+			$("#station_assignee_label").css("visibility","visible");
+
+		}else if(($("#log_option").val() =="Group")){
+			//$("#group_log_div").css("display","block");
+			//$("#single_log_div").css("display","none");
+			//$("#station_name").css("display","none");	
+			$("#group_log_div").css("display","block");
+			$("#label_log_option").text("Group Station Log");
+			$("#station_name_label").css("visibility","hidden");
+			$("#station_name").css("visibility","hidden");
+			//station_assignee na elements
+			$("#station_assignee").css("visibility","hidden");
+			$("#station_assignee_label").css("visibility","hidden");
+
+
+			// $("#station_name_label").css("visibility","hidden");
+			// $("#station_name").css("visibility","hidden");
+		}
+
+	});
+
+	$("#search_region").change(function(){
+			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"regional",$(this).val());
+
+
+			
+			// var str="select hf_id, station_name, region, province from hf_locations where station_name= '"+$(this).val()+"'";
+			// 	var headers="Tik%Station Name%Region%Province%";
+			// 	var classes ="all%item";
+			// 	global_load_table(str,headers,true,false,classes,".disasters",".item",".disasters td:nth-child(11)",".disasters td:nth-child(10)");	
+		});
+
+		$("#search_station").keyup(function(){
+			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"open",$(this).val());
+			//alert($(this).val());
+		});
+
+		$(".item").click(function(){
+
+			var numberOfChecked = $('input:checkbox:checked').length;
+			var totalCheckboxes = $('input:checkbox').length;
+			var numberNotChecked = totalCheckboxes - numberOfChecked;
+
+			alert(numberOfChecked);
+
+
+		});
+
+		function load_hf_table(target,classes,header,columns,with_checkbox,with_header_chk,filter,mydata){
+					$.post("AJAX/load_hf_table.php",
+					{
+						filter_type: filter,
+						data:mydata,
+						my_head:header,
+						my_classes:classes,
+						my_columns:columns,
+						chk: with_checkbox,
+						all_chk: with_header_chk
+
+					},
+					function(data){
+						$(target).html(data);
+					});
+				}
 
 });
 </script>
