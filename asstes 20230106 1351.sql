@@ -42884,19 +42884,19 @@ CREATE TABLE `disaster_affected` (
 
 /*!40000 ALTER TABLE `disaster_affected` DISABLE KEYS */;
 INSERT INTO `disaster_affected` (`id`,`disaster_id`,`area_id`,`scale`,`status`,`date_start`,`date_end`,`impact`,`epr_protocol`,`etc_disaster_id`) VALUES 
- (2,9,4,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (3,9,5,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (4,9,4,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (5,9,5,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (2,9,4,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (3,9,5,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (4,9,4,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (5,9,5,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
  (6,10,1,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',2),
  (7,11,1,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',4),
  (8,11,2,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',4),
  (9,11,3,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',4),
- (10,9,6,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (11,9,7,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (12,9,8,'Regional','activating','2022-10-21 00:00:00',NULL,'2 Minor','ALPHA',1),
- (13,9,17,'Provincial','activating','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (14,9,18,'Provincial','activating','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (10,9,6,'Regional','active','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (11,9,7,'Regional','active','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (12,9,8,'Regional','active','2022-10-21 00:00:00',NULL,'2 Minor','ALPHA',1),
+ (13,9,17,'Provincial','active','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (14,9,18,'Provincial','active','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
  (15,13,1330,'Municipal','activating','2022-10-26 00:00:00',NULL,'2 Minor','ALPHA',6),
  (16,12,126,'Municipal','activating','2022-10-19 00:00:00',NULL,'1 Neglegible','STANDBY',5),
  (17,12,127,'Municipal','activating','2022-10-19 00:00:00',NULL,'1 Neglegible','STANDBY',5),
@@ -42908,15 +42908,15 @@ INSERT INTO `disaster_affected` (`id`,`disaster_id`,`area_id`,`scale`,`status`,`
  (23,14,506,'Municipal','activating','2022-10-19 00:00:00',NULL,'4 Catastrophic','BRAVO',3),
  (24,12,6,'Provincial','activating','2022-10-21 00:00:00',NULL,'2 Minor','ALPHA',5),
  (29,11,4,'Regional','activating','2022-10-22 00:00:00',NULL,'4 Catastrophic','ALPHA',4),
- (30,9,126,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (31,9,127,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (32,9,128,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (33,9,129,'Municipal','activating','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
- (34,9,130,'Municipal','activating','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
+ (30,9,126,'Municipal','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (31,9,127,'Municipal','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (32,9,128,'Municipal','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (33,9,129,'Municipal','active','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
+ (34,9,130,'Municipal','active','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
  (35,14,497,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',3),
  (36,14,498,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',3),
- (37,9,130,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
- (38,9,131,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
+ (37,9,130,'Municipal','active','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
+ (38,9,131,'Municipal','active','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
  (39,15,39,'Provincial','activating','2022-11-04 00:00:00',NULL,'2 Minor','ALPHA',7),
  (40,15,42,'Provincial','activating','2022-11-04 00:00:00',NULL,'2 Minor','ALPHA',7),
  (41,15,34,'Provincial','activating','2022-11-04 00:00:00',NULL,'1 Neglegible','STANDBY',7),
@@ -43072,14 +43072,13 @@ CREATE TABLE `etc_disaster` (
 
 /*!40000 ALTER TABLE `etc_disaster` DISABLE KEYS */;
 INSERT INTO `etc_disaster` (`id`,`disaster_id`,`date_start`,`date_end`,`escalated_from`,`reso_activation_no`,`file_activation`,`file_deactivation`,`status`,`probability`,`overall_impact`,`date_logged`) VALUES 
- (1,9,'0000-00-00 00:00:00',NULL,0,'','',NULL,'activating','D Certain/Immenent','4 Catastrophic','2022-11-23 09:48:12'),
- (2,10,NULL,NULL,0,NULL,NULL,NULL,'activating','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
+ (1,9,'2022-12-07 00:00:00',NULL,0,'10','etc',NULL,'active','D Certain/Immenent','4 Catastrophic','2022-11-23 09:48:12'),
+ (2,10,'2022-12-07 00:00:00',NULL,0,'10','etc',NULL,'active','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
  (3,14,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','3 Major','2022-11-23 09:48:12'),
- (4,11,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
+ (4,11,'2022-12-07 00:00:00',NULL,0,'10','etc',NULL,'active','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
  (5,12,NULL,NULL,0,NULL,NULL,NULL,'activating','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
  (6,13,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
- (7,15,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor','2022-11-28 07:56:47'),
- (8,9,NULL,NULL,NULL,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor',NULL);
+ (7,15,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor','2022-11-28 07:56:47');
 /*!40000 ALTER TABLE `etc_disaster` ENABLE KEYS */;
 
 

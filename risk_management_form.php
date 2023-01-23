@@ -533,7 +533,7 @@
 		#disaster_affected{
 			width:100%;
 		}
-		#activatefile, #date_activated, #reso{
+		#activatefile, #date_activated, #reso, #etc_stat{
 			width:180px;
 		}
 		.row_pannel{
@@ -569,6 +569,7 @@
 		}
 
 		.mini_affct tr td{
+			vertical-align:top;
 			padding:0px;
 			padding-top:3px;
 		}
@@ -586,10 +587,15 @@
 		
 		.mini_con{
 			display:none;
-			width:90%;
+			width:98%;
 			margin:auto;
 			max-height:200px;
 			overflow:auto;
+		}
+		.mini_con2{
+			display:none;
+			width:90%;
+			margin:auto;
 		}
 		img.mini_arrow{
 			width:12px;
@@ -633,6 +639,20 @@
 		.all_etc{
 			border:solid 1px #ddd;
 		}
+		.all_active_etc{
+			width:100%;
+			
+			
+			margin:auto;
+			display:inline-block;
+			margin-top:10px;
+		}
+		.all_active_etc > *{
+			margin:auto;
+		}
+		.deact_pannel{
+			margin-bottom:10px;
+		}
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
@@ -642,7 +662,7 @@
 					<div class="imgform-img">
 									<div class="inner-wrapper" >
 										<div class="cols cols1" >
-											<p class="box_label"><span>Disaster/Calamity</span></p>
+											<p class="box_label me"><span>Disaster/Calamity</span></p>
 									
 											<!-- <div class="input_wrapper" style="margin:auto">
 											<input type="radio" name="gender" class="gender" value="male">Male<br>
@@ -670,9 +690,9 @@
 											<div class="table_con container" style="margin-top:0" id="d_select" >
 												<table class="disasters">
 													<?php
-													$sql="select id,name,natureofdisaster, datestarted, file_upload  from disaster ";
+													$sql="select id,name,natureofdisaster, datestarted, file_upload,`status` from disaster where `status`='activating'  or `status`='active'";
 													$classes=array("dst_all","dst_item");
-													$headers=array("","Disaster","Nature..","Date","File");
+													$headers=array("","Disaster","Nature..","Date","File","Status");
 													loadtable_radio($sql,$headers,true,false,$classes,"");
 													?>
 												</table>	
@@ -872,6 +892,7 @@
 						<div class="imgform-img">
 							<div class="inner-wrapper" >
 							<div class="cols cols1" >
+							<p class="box_label"><span>For Activation</span></p>
 								<div  class="halfcol"   style="float:right;padding-bottom:10px;border:none;" >
 											<div class="input_wrapper">
 													<p class="label">Date Activated:</p>
@@ -885,9 +906,17 @@
 														<label for="status">Resolution No.:</label></p>
 														<input type="text" id="reso"  class="etc_input all_etc" />
 											</div>
+											<div class="input_wrapper"><p class="label">
+														<label for="status">ETC Status:</label></p>
+														<select  id="etc_stat"  class="etc_input all_etc" />
+															<option value="New Log">New Log</option>
+															<option value="Escalated">Escalation</option>
+															<option value="Downgraded">Downgrade</option>
+														</select>
+											</div>
 											<div class="input_wrapper" >
 														<input type="submit" id="clear_etc_act" value="Clear" class="buttons dstr" style="width:130px;">
-														<input type="submit" id="save_etc" value="Submit" class="buttons dstr" style="width:130px;">
+														<input type="submit" id="save_etc" value="Activate" class="buttons dstr" style="width:130px;">
 														
 											</div>
 							
@@ -904,6 +933,18 @@
 								
 							</div>
 							<div class="cols cols2" >
+							<p class="box_label"><span>Active ETC</span></p>
+								<div class="all_active_etc">
+											
+								</div>
+									<div class="input_wrapper" >
+										<input type="date" id="date_deactivated" class="form-control all_etc deact_pannel" style="width:130px;"/>
+									
+										<input type="file" id="deactivatefile" name="myFile" class="all_etc deact_pannel" style="width:130px;"/>
+									</div>
+									<div class="input_wrapper" >
+										<input type="submit" id="deactivate_etc" value="Deactivate" class="buttons dstr deact_pannel" style="width:130px;">														
+									</div>
 								
 							</div>		
 																
@@ -941,6 +982,8 @@
 
 $(document).ready(function(){
 	get_etc("activating",".etc_pannel");
+	get_etc_active("active",".all_active_etc");		
+	$(".deact_pannel").hide();
 	$("#hazard_form").slideUp();
 	disable_affected();
 	$(".impact_log").attr("disabled","disabled");
@@ -1040,6 +1083,10 @@ $(document).ready(function(){
 				if(data=="New record created!"){
 					var classes="input_wrapper%dst_lbl label%dst_input%dst_hidden";
 					make_input_attributes("#attributes", classes, cat, disaster_id,"","#attributes div:nth-child(1)","");
+					//#attributes div:nth-child(1) is used to get the 1st elemnt under the attributes and div to add dynamicdally a button for adding new attributes
+					//however this has already been resolved placed outside the div for whenever a new attributs is added thye whole contants of teh div is being reset thus 
+					//erasing the button. so the #attributes div:nth-child(1) is no longer necessary, the field before it is supposed  to hold the definition of the said add button
+
 			
 					$("#add_attr").show();
 					$("#new_attr").val("");
@@ -1062,7 +1109,7 @@ $(document).ready(function(){
 	});
 	$(document).on("change",".dst_item",function(){
 		
-		var cat=$(this).parent().next().next().text();
+		var cat=$(this).parent().next().next().text();	
 		var name=$(this).parent().next().text();
 		$(".disaster_name").html("Disater: "+"<b>"+name+"</b>");
 		$(".disaster_nature").html("Type: "+"<b>"+cat+"</b>");
@@ -1215,33 +1262,40 @@ $(document).ready(function(){
 	$("#search_category").change(function(){
 		var str="";
 		if($(this).val()=="0"){
-			str="select id,name,natureofdisaster, datestarted, file_upload \
+			str="select id,name,natureofdisaster, datestarted, file_upload,`status` \
 		 from disaster order by id desc";
 		}else{
-			str="select id,name,natureofdisaster, datestarted, file_upload \
+			str="select id,name,natureofdisaster, datestarted, file_upload,`status` \
 		 from disaster where natureofdisaster= '"+$(this).val()+"' order by id desc";
 		}
 		 
 		load_disaster(str);
 			
 	});
+	
+	// $(".me").click(function(){
+	// 	disable_inactive(".dst_item");
+	// });
 	function load_disaster(str){
 		
-			var headers="%Disaster%Nature..%Date%File";
+			var headers="%Disaster%Nature..%Date%File%Status";
 			var classes ="dst_all%dst_item";
 			global_load_table_radio(str,headers,true,false,classes,".disasters",".dst_item",".disasters td:nth-child(5)",".disasters td:nth-child(4)", "");
-			enrycpt_each(".dst_item");
+		
+			//enrycpt_each(".dst_item");
+		
 	}
 
 	$("#search_disaster").keyup(function(){
 		//alert("test");
 			var str="select id,name,natureofdisaster, datestarted, \
-			file_upload  from disaster where name like '%"+$(this).val()+"%'";
+			file_upload,`status` from disaster where name like '%"+$(this).val()+"%'";
 			load_disaster(str);
 									
 
 	});
 
+	
 	function fill_areas(str,headers){
 		
 		var classes ="all_area%item_area";
@@ -1422,7 +1476,7 @@ $(document).ready(function(){
 				function(data){
 					var arr_data=to_array(data,"%");
 					if(arr_data[0]=="New records created!"){
-						Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record created!</b>",600);
+						Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record submitted, you can now add affected areas!</b>",600);
 						$(".impact2, .impact").val("C");
 						
 						$("#attributes2 div > select").attr("disabled","disabled");
@@ -1483,6 +1537,8 @@ $(document).ready(function(){
 				soft_clear_col2();
 				load_affected("#disaster_affected");
 				$("#done").show();
+				get_etc("activating",".etc_pannel");	
+				get_etc_active("active",".all_active_etc");	
 				
 
 			});
@@ -1577,15 +1633,113 @@ $(document).ready(function(){
 		$(".all_etc").css({"border":"solid 1px #ddd"})
 
 	});
+
+	function get_etc_active(stat, target){
+		//alert("test");
+		$.post("AJAX/load_active_etc.php",
+		{
+			status:stat
+		},
+		function (data){
+			
+			$(target).html(data);
+			href_each(".head_table th:nth-child(5)");
+			href_each(".active_etc_logs th:nth-child(5)");
+			remove_first_word(".active_etc_logs_affected td:nth-child(3)");
+			remove_next_word(".active_etc_logs_affected td:nth-child(5)");
+
+		});
+	}
 	$("#save_etc").click(function(){
 		var validate_d=validate_date("#date_activated");
+		alert('click');
 		if(is_empty_class(".etc_input","")==false && validate_d==false ){
+			var date= new Date($("#date_activated").val());
+			var str_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+			//alert(str_date);
+			var file =$("#activatefile").prop("files")[0];
+			var form= new FormData();
+			form.append("myFile",file);
+			$.ajax({
+			url:"AJAX/file_upload_etc.php",
+				type:"POST",
+				data:form,
+				contentType:false,
+				processData:false,
+				success: function(result){
+					//alert(result);
+					if(result!="error"){
+						$.post("AJAX/activate_etc_disaster.php",
+						{
+							etc_id:$(".etc_item:checked").val(),
+							date_activated:str_date,
+							file:result,
+							reso: $("#reso").val().trim(),
+							etc_stat: $("#etc_stat").val()
+						},
+						function(data){
+							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
+							get_etc("activating",".etc_pannel");	
+							get_etc_active("active",".all_active_etc");	
 
+						});
+					}				
+				}
+			});
+					
 		}
 		else{
 			$(".err_lbl_etc").remove();
 			$("#date_activated").parent().before("<div class='input_wrapper err_lbl_etc'><p id='err_etc' style='color:red;'>Required fields cannto be empty!</p></div>");
 		}
 	});
+	$(document).on("change",".radio_active_etc",function(){
+		$(".deact_pannel").show();
+		
+		var radio_active= $(".radio_active_etc:checked").parent().parent().next().find("td div");
+		$(".mini_con").slideUp();
+		radio_active.slideDown();
+	});
+	$("#deactivate_etc").click(function(){
+		var validate_deact=validate_date("#date_deactivated");
+		if(global_validate("#deactivatefile","")==false && validate_deact==false){
+			var deactdate= new Date($("#deactivatefile").val());
+			var strdeactdate= deactdate.getFullYear()+"-"+(deactdate.getMonth()+1)+"-"+deactdate.getDate();		
+			var deactfile=$("#deactivatefile").prop("files")[0];
+			var form = new FormData();
+		
+			form.append("myFile",deactfile);
+			$.ajax({
+				url:"AJAX/file_upload_etc.php",
+				type:"POST",
+				data:form,
+				contentType:false,
+				processData:false,
+				success: function(result){
+					//alert(result);
+					if(result!="error"){
+						$.post("AJAX/deactivate_etc.php",
+						{
+							etc : $(".radio_active_etc:checked").val(),
+							date : strdeactdate,							
+							attchfileurl :result
+						},
+						function(data){
+							var arr_data= to_array(data,"%");
+							 var msg=(arr_data[0]=="New records created!" ) ? "<h4>SYSTEM NOTIFICATION!</h4><br><b>"+arr_data[1]+" disaster deactivated!</b>" : "<h4 style='color:red'>SYSTEM ERROR!</h4><br><b>"+data+"</b>";
+								Popup_modal_show(msg,600);
+								get_etc_active("active",".all_active_etc");	
+						});
+					}
+					else{
+						Popup_modal_show("<h4 style='color:red'>SYSTEM ERROR!</h4><br><b>"+data+"</b>",600);
+					}
+				}
+				
+			});
+		}
+	});
+
+	
  });
     </script>

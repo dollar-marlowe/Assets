@@ -1,15 +1,15 @@
 
-	 <section id="imgform" style="width:100%;height:100%;margin:auto;opacity:0.95;
+	 <section id="imgform" style="width:100%;height:100%;margin:auto;
 	 display:flex;background:fit-content;position:fixed;z-index:2;padding-bottom:150px;padding-top:150px;" >
-      <div class="imgform-container container" style="width:fit-content;margin:auto;box-shadow:5px 5px 25px #3f4240;">
+      <div class="imgform-container container" style="width:350px;margin:auto;box-shadow:5px 5px 25px #3f4240;">
         
-        <div class="form-container" style="width:300px;margin:auto;opacity:1" >
-        <h2 id="loginheader">Login</h2>
+        <div class="form-container" style="width:100%;margin:auto;" >
+       <div id='form_title'></div>
 				<input type="text" placeholder="Username*" id="username"/>
 				<input type="password" placeholder="Password*" id="password"/>
         <input type="password" placeholder="Repeat Password*" id="repassword"/>
 				
-				<input type='submit' Value='Submit' class="btn btn-primary"  style="color:white;font-weight:800;"  id="submitlogin">
+				<input type='submit' Value='L O G I N' class="btn btn-primary"  style="color:white;font-weight:500;border-radius:10px;"  id="submitlogin">
        <!--  <input type='submit' Value='Clear' class="btn btn-primary"  style="color:white;font-weight:800;"  id="clearlogin">
 			 -->
         </div>

@@ -195,7 +195,7 @@ function make_label_inputs($sql,$class,$with_hidden,$is_empty_val,$cols){
                 foreach($result as $row){
                     echo "<div class='".$class[0]."'><p class='".$class[1]."'>".$row[$cols[0]].":</p> ";
                     if($with_hidden){
-                        echo "<input type='hidden' class='".encrypt($class[3])."' value='".encrypt($row[$cols[1]])."'>";
+                        echo "<input type='hidden' class='".$class[3]."' value='".encrypt($row[$cols[1]])."'>";
                     }
                     $val= $is_empty_val ? $row[$cols[2]]: ""; 
                     $mul_option= $is_empty_val? $row[$cols[3]]:  $row[$cols[2]];
@@ -577,37 +577,50 @@ function abreviate($str,$num_char){//THIS IS USED FOR ABREVIATING WORDS $NUM_CHA
     //'Very Small Aperture Termninal' then you specified 4 letters abreviation
     // result would be like this 'VSAT'
     //pretty brilliant haha
-    $word= explode(" ",$str);
-    $size=sizeof($word);
     $abreviate="";
-    if($size>1){
-        if($size>=$num_char){
-            for($i=0;$i<$num_char;$i++){
-                $chars=str_split($word[$i]);
-                $abreviate=$abreviate.$chars[0];
+    if($num_char!=0){
+
+        $word= explode(" ",$str);
+        $size=sizeof($word);
+       
+        if($size>1){
+            if($size>=$num_char){
+                for($i=0;$i<$num_char;$i++){
+                    $chars=str_split($word[$i]);
+                    $abreviate=$abreviate.$chars[0];
+                }
             }
+            else{
+                for($i=0;$i<$size;$i++){
+                    $chars=str_split($word[$i]);
+                    $abreviate=$abreviate.$chars[0];
+                }
+            }
+            
+        
         }
         else{
-            for($i=0;$i<$size;$i++){
-                $chars=str_split($word[$i]);
-                $abreviate=$abreviate.$chars[0];
+            $chars=str_split($word[0]);
+            $n=sizeof($chars);
+            if($n>=$num_char){
+                for($i=0;$i<$num_char;$i++){
+                    $abreviate=$abreviate.$chars[$i];
+                }
+            }else{
+                $abreviate=$chars[0];
             }
-        }
         
-       
+        
+        }
     }
     else{
-        $chars=str_split($word[0]);
-        $n=sizeof($chars);
-        if($n>=$num_char){
-            for($i=0;$i<$num_char;$i++){
-                $abreviate=$abreviate.$chars[$i];
-            }
-        }else{
-            $abreviate=$chars[0];
+        $word= explode(" ",$str);
+        $size=sizeof($word);
+        foreach($word as $w){
+            $chars=str_split($w);
+            $abreviate=$abreviate.$chars[0];
         }
-       
-      
+
     }
     return strtoupper($abreviate);
 }
@@ -703,6 +716,16 @@ function shorten($txt){
         $str=$txt;
     }
     return $str;
+}
+function remove_next_words($str,$index,$delimeter){
+    $words=explode($delimeter,$str);
+    $size=sizeof($words);
+    $new_str="";
+    for($i=0;$i<$index; $i++){
+        $new_str.=$words[$i]." ";
+    }
+    return trim($new_str);
+    
 }
 function replace($chars,$orig){//
     //this function is used to combine dta frm different column into a one string 
@@ -1203,10 +1226,17 @@ function reroute($level,$destination){//$level is for the access level, 2nd para
       }
 }
 function test2(){
-    $class=array("input_wrapper","dst_lbl label","dst_input","dst_hidden");
-    $sql="SELECT attributes_name,id,`value`,disaster_id FROM disaster_attributes_view where disaster_id=9";
-    $cols=array("attributes_name","id","value");
-    make_label_inputs($sql,$class,true,true,$cols);
+   
+        $db= new Database();
+        $db->connect();
+        $status='activating';
+        $sql="SELECT id,date_logged,disaster,`status`
+         FROM etc_disaster_view where `status`='".$status."' order by id";
+        $result=$db->selectrows($sql,0);
+        $counter=1;
+     
+            $size=sizeof($result);
+            echo $size;
 
 }
 //test2();
@@ -1309,14 +1339,12 @@ function send_email($to,$subject,$content){
         return  $msg;
     }
 }
-function update_session($data){
-    
-    
+function update_session($data){       
     foreach($data as $key => $value) {
         $_SESSION[$key]=$data[$key];
     }
  }
-// echo $_SESSION["p"];
+ //echo $_SESSION["p"];
 // if(isset($_GET["fname"])){
 //    $_SESSION["fname"]=$_GET["fname"];
 //    $_SESSION["lname"]=$_GET["lname"];

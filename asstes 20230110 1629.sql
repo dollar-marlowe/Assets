@@ -146,6 +146,29 @@ CREATE TABLE `geo_add` (
 );
 
 --
+-- Temporary table structure for view `hf_locations`
+--
+DROP TABLE IF EXISTS `hf_locations`;
+DROP VIEW IF EXISTS `hf_locations`;
+CREATE TABLE `hf_locations` (
+  `hf_id` int(10) unsigned,
+  `station_name` varchar(45),
+  `station_code` varchar(45),
+  `station_region` int(10) unsigned,
+  `region` varchar(45),
+  `station_province` int(10) unsigned,
+  `province` varchar(45),
+  `station_municipality` int(10) unsigned,
+  `municipality` varchar(45),
+  `station_barangay` int(10) unsigned,
+  `barangay` varchar(45),
+  `station_status` varchar(45),
+  `station_lat` int(10) unsigned,
+  `station_long` int(10) unsigned,
+  `station_desc` varchar(45)
+);
+
+--
 -- Temporary table structure for view `offices_latlong`
 --
 DROP TABLE IF EXISTS `offices_latlong`;
@@ -42849,7 +42872,7 @@ CREATE TABLE `disaster` (
 
 /*!40000 ALTER TABLE `disaster` DISABLE KEYS */;
 INSERT INTO `disaster` (`id`,`name`,`category`,`natureofdisaster`,`description`,`datestarted`,`dateended`,`status`,`file_upload`) VALUES 
- (9,'Paeng','Meteorological','Cyclone','Disastrous','2022-10-28 00:00:00',NULL,NULL,'../butang/disaster/0AsD2LCwxpceEBB7FpOqR2S1WU1At6.pdf'),
+ (9,'Paeng','Meteorological','Cyclone','Disastrous','2022-10-28 00:00:00',NULL,'active','../butang/disaster/0AsD2LCwxpceEBB7FpOqR2S1WU1At6.pdf'),
  (10,'Neneng','Meteorological','Cyclone','Minimal wind and rain clouds','2022-10-13 00:00:00',NULL,NULL,'../butang/disaster/EhD03zuFd1XIVYlJr3NTPypda5vqHCogBW4j1jLB.pdf'),
  (11,'May May','Meteorological','Cyclone','The typhoon dissolved','2022-09-16 00:00:00',NULL,NULL,'../butang/disaster/bkPrJ57jG2Bz6Ffj5JEvxZuTkC4md1k27q7JVhhO.pdf'),
  (12,'Luis','Meteorological','Cyclone','Did not landfall, went to Japan','2022-09-23 00:00:00',NULL,NULL,'../butang/disaster/9O3jTq9cO8Z9b3SBfMmRr23yKqnVWyP2NwlG6czz.pdf'),
@@ -42884,19 +42907,19 @@ CREATE TABLE `disaster_affected` (
 
 /*!40000 ALTER TABLE `disaster_affected` DISABLE KEYS */;
 INSERT INTO `disaster_affected` (`id`,`disaster_id`,`area_id`,`scale`,`status`,`date_start`,`date_end`,`impact`,`epr_protocol`,`etc_disaster_id`) VALUES 
- (2,9,4,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (3,9,5,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (4,9,4,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (5,9,5,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (2,9,4,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (3,9,5,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (4,9,4,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (5,9,5,'Regional','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
  (6,10,1,'Regional','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',2),
  (7,11,1,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',4),
  (8,11,2,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',4),
  (9,11,3,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',4),
- (10,9,6,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (11,9,7,'Regional','activating','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (12,9,8,'Regional','activating','2022-10-21 00:00:00',NULL,'2 Minor','ALPHA',1),
- (13,9,17,'Provincial','activating','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (14,9,18,'Provincial','activating','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (10,9,6,'Regional','active','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (11,9,7,'Regional','active','2022-10-21 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (12,9,8,'Regional','active','2022-10-21 00:00:00',NULL,'2 Minor','ALPHA',1),
+ (13,9,17,'Provincial','active','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (14,9,18,'Provincial','active','2022-11-24 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
  (15,13,1330,'Municipal','activating','2022-10-26 00:00:00',NULL,'2 Minor','ALPHA',6),
  (16,12,126,'Municipal','activating','2022-10-19 00:00:00',NULL,'1 Neglegible','STANDBY',5),
  (17,12,127,'Municipal','activating','2022-10-19 00:00:00',NULL,'1 Neglegible','STANDBY',5),
@@ -42908,15 +42931,15 @@ INSERT INTO `disaster_affected` (`id`,`disaster_id`,`area_id`,`scale`,`status`,`
  (23,14,506,'Municipal','activating','2022-10-19 00:00:00',NULL,'4 Catastrophic','BRAVO',3),
  (24,12,6,'Provincial','activating','2022-10-21 00:00:00',NULL,'2 Minor','ALPHA',5),
  (29,11,4,'Regional','activating','2022-10-22 00:00:00',NULL,'4 Catastrophic','ALPHA',4),
- (30,9,126,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (31,9,127,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (32,9,128,'Municipal','activating','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
- (33,9,129,'Municipal','activating','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
- (34,9,130,'Municipal','activating','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
+ (30,9,126,'Municipal','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (31,9,127,'Municipal','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (32,9,128,'Municipal','active','2022-10-31 00:00:00',NULL,'4 Catastrophic','CHARLIE',1),
+ (33,9,129,'Municipal','active','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
+ (34,9,130,'Municipal','active','2022-10-31 00:00:00',NULL,'3 Major','BRAVO',1),
  (35,14,497,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',3),
  (36,14,498,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',3),
- (37,9,130,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
- (38,9,131,'Municipal','activating','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
+ (37,9,130,'Municipal','active','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
+ (38,9,131,'Municipal','active','2022-11-24 00:00:00',NULL,'3 Major','BRAVO',1),
  (39,15,39,'Provincial','activating','2022-11-04 00:00:00',NULL,'2 Minor','ALPHA',7),
  (40,15,42,'Provincial','activating','2022-11-04 00:00:00',NULL,'2 Minor','ALPHA',7),
  (41,15,34,'Provincial','activating','2022-11-04 00:00:00',NULL,'1 Neglegible','STANDBY',7),
@@ -43021,6 +43044,30 @@ CREATE TABLE `etc` (
 
 
 --
+-- Definition of table `etc_affected_regions`
+--
+
+DROP TABLE IF EXISTS `etc_affected_regions`;
+CREATE TABLE `etc_affected_regions` (
+  `id` int(10) unsigned NOT NULL,
+  `etc_id` int(10) unsigned NOT NULL,
+  `office_id` int(10) unsigned NOT NULL,
+  `region_id` int(10) unsigned NOT NULL,
+  `provinces` varchar(200) NOT NULL,
+  `municipalities` varchar(200) NOT NULL,
+  `brgys` varchar(200) NOT NULL,
+  `status` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `etc_affected_regions`
+--
+
+/*!40000 ALTER TABLE `etc_affected_regions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `etc_affected_regions` ENABLE KEYS */;
+
+
+--
 -- Definition of table `etc_dict_regions`
 --
 
@@ -43072,15 +43119,83 @@ CREATE TABLE `etc_disaster` (
 
 /*!40000 ALTER TABLE `etc_disaster` DISABLE KEYS */;
 INSERT INTO `etc_disaster` (`id`,`disaster_id`,`date_start`,`date_end`,`escalated_from`,`reso_activation_no`,`file_activation`,`file_deactivation`,`status`,`probability`,`overall_impact`,`date_logged`) VALUES 
- (1,9,'0000-00-00 00:00:00',NULL,0,'','',NULL,'activating','D Certain/Immenent','4 Catastrophic','2022-11-23 09:48:12'),
- (2,10,NULL,NULL,0,NULL,NULL,NULL,'activating','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
- (3,14,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','3 Major','2022-11-23 09:48:12'),
- (4,11,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
- (5,12,NULL,NULL,0,NULL,NULL,NULL,'activating','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
+ (1,9,'2022-12-07 00:00:00','0000-00-00 00:00:00',0,'10','etc','','active','D Certain/Immenent','4 Catastrophic','2022-11-23 09:48:12'),
+ (2,10,'2022-12-07 00:00:00',NULL,0,'10','etc',NULL,'active','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
+ (3,14,'0000-00-00 00:00:00',NULL,0,'17','../butang/etc/0jw1VlDw7UKqMi08oQJ8GCx6BAbhXC.pdf',NULL,'active','C Highly Likely','3 Major','2022-11-23 09:48:12'),
+ (4,11,'2022-12-07 00:00:00',NULL,0,'10','etc',NULL,'active','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
+ (5,12,'0000-00-00 00:00:00',NULL,0,'10','etc',NULL,'active','B Highly Likely','2 Minor','2022-11-23 09:48:12'),
  (6,13,NULL,NULL,0,NULL,NULL,NULL,'activating','A Unlikely','1 Neglegible','2022-11-23 09:48:12'),
- (7,15,NULL,NULL,0,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor','2022-11-28 07:56:47'),
- (8,9,NULL,NULL,NULL,NULL,NULL,NULL,'activating','C Highly Likely','2 Minor',NULL);
+ (7,15,'0000-00-00 00:00:00',NULL,0,'14','../butang/etc/J62Kyh22ro6J715t17WA4GH3NHY6Qp.pdf',NULL,'active','C Highly Likely','2 Minor','2022-11-28 07:56:47');
 /*!40000 ALTER TABLE `etc_disaster` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hf_daily`
+--
+
+DROP TABLE IF EXISTS `hf_daily`;
+CREATE TABLE `hf_daily` (
+  `hf_log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `station_name` varchar(45) NOT NULL,
+  `station_assignee` varchar(45) NOT NULL,
+  `log_date` varchar(45) NOT NULL,
+  `log_time` varchar(45) NOT NULL,
+  `weather` varchar(45) NOT NULL,
+  `signal_status` varchar(45) NOT NULL,
+  PRIMARY KEY (`hf_log_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hf_daily`
+--
+
+/*!40000 ALTER TABLE `hf_daily` DISABLE KEYS */;
+INSERT INTO `hf_daily` (`hf_log_id`,`station_name`,`station_assignee`,`log_date`,`log_time`,`weather`,`signal_status`) VALUES 
+ (1,'DICT Iloilo','cdvdz','2023-01-06','15:54','Sunny','2x2'),
+ (2,'DICT Pampanga','seds','2023-01-06','15:55','Sunny','3x3'),
+ (3,'DICT BICOL','scscs','2023-01-06','15:55','Cloudy','3x3'),
+ (4,'DICT BICOL','scscs','2023-01-06','15:55','Cloudy','3x3'),
+ (5,'DICT AKLAN','wdwd','2023-01-06','15:56','Rainy','1x1'),
+ (6,'DICT Pampanga','dwd','2023-01-06','15:57','Cloudy','1x1'),
+ (7,'DICT Iloilo','DEO','2023-01-06','16:09','Rainy','4x4'),
+ (8,'DICT Iloilo','escs','2023-01-06','16:10','Sunny','4x4');
+/*!40000 ALTER TABLE `hf_daily` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hf_data`
+--
+
+DROP TABLE IF EXISTS `hf_data`;
+CREATE TABLE `hf_data` (
+  `hf_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `station_name` varchar(45) DEFAULT NULL,
+  `station_code` varchar(45) DEFAULT NULL,
+  `station_region` int(10) unsigned DEFAULT NULL,
+  `station_province` int(10) unsigned DEFAULT NULL,
+  `station_municipality` int(10) unsigned DEFAULT NULL,
+  `station_barangay` int(10) unsigned DEFAULT NULL,
+  `station_status` varchar(45) DEFAULT NULL,
+  `station_lat` int(10) unsigned DEFAULT NULL,
+  `station_long` int(10) unsigned DEFAULT NULL,
+  `station_desc` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`hf_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hf_data`
+--
+
+/*!40000 ALTER TABLE `hf_data` DISABLE KEYS */;
+INSERT INTO `hf_data` (`hf_id`,`station_name`,`station_code`,`station_region`,`station_province`,`station_municipality`,`station_barangay`,`station_status`,`station_lat`,`station_long`,`station_desc`) VALUES 
+ (1,'DICT Central','NCR-001',0,0,0,0,'',0,0,''),
+ (2,'DICT Roses','NCR-002',2,6,132,3309,'Operational',123213123,2123123123,'ergregerg'),
+ (3,'','',1,1,15,340,'Operational',1232,23213123,'egdfs dvdfv '),
+ (4,'DICT Iloilo','Reg_6_001',6,28,611,16307,'Operational',111,2222,'dvsd gergrtsgrs hgser hersg e gs'),
+ (5,'DICT Pampanga','Reg-2-002',3,13,305,7739,'Operational',111,233432,'Hala di ko alam kung tama ito ehehhe'),
+ (6,'DICT AKLAN','REG VI DEO',6,28,618,16437,'Operational',222,556,'Cute si Deo.'),
+ (7,'DICT BICOL','REG 4 001',4,18,394,10276,'Operational',1111,222,'2e2e2');
+/*!40000 ALTER TABLE `hf_data` ENABLE KEYS */;
 
 
 --
@@ -45284,6 +45399,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `geo_add`;
 DROP VIEW IF EXISTS `geo_add`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `geo_add` AS select `region`.`id` AS `reg_id`,`region`.`reg_code` AS `reg_code`,`region`.`name` AS `reg_name`,`province`.`id` AS `prov_id`,`province`.`prov_code` AS `prov_code`,`province`.`name` AS `prov_name`,`municipality`.`id` AS `muni_id`,`municipality`.`muni_code` AS `muni_code`,`municipality`.`name` AS `muni_name`,`barangay`.`id` AS `brgy_id`,`barangay`.`name` AS `brgy_name`,`barangay`.`geocode` AS `brgy_geocode`,`barangay`.`brgy_code` AS `brgy_code`,`barangay`.`lat` AS `brgy_lat`,`barangay`.`long` AS `brgy_long` from (((`region` join `province`) join `municipality`) join `barangay`) where `barangay`.`muni_id` = `municipality`.`id` and `municipality`.`province_id` = `province`.`id` and `province`.`reg_id` = `region`.`id`;
+
+--
+-- Definition of view `hf_locations`
+--
+
+DROP TABLE IF EXISTS `hf_locations`;
+DROP VIEW IF EXISTS `hf_locations`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`lowe`@`localhost` SQL SECURITY DEFINER VIEW `hf_locations` AS select `h`.`hf_id` AS `hf_id`,`h`.`station_name` AS `station_name`,`h`.`station_code` AS `station_code`,`h`.`station_region` AS `station_region`,(select `r`.`name` from `region` `r` where `r`.`id` = `h`.`station_region`) AS `region`,`h`.`station_province` AS `station_province`,(select `p`.`name` from `province` `p` where `p`.`id` = `h`.`station_province`) AS `province`,`h`.`station_municipality` AS `station_municipality`,(select `m`.`name` from `municipality` `m` where `m`.`id` = `h`.`station_municipality`) AS `municipality`,`h`.`station_barangay` AS `station_barangay`,(select `b`.`name` from `barangay` `b` where `b`.`id` = `h`.`station_barangay`) AS `barangay`,`h`.`station_status` AS `station_status`,`h`.`station_lat` AS `station_lat`,`h`.`station_long` AS `station_long`,`h`.`station_desc` AS `station_desc` from `hf_data` `h`;
 
 --
 -- Definition of view `offices_latlong`

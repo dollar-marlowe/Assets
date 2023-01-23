@@ -17,7 +17,7 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/esmeralda.css" />
+    <link rel="stylesheet" href="CSS/rubio.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>
@@ -38,11 +38,18 @@
         padding-bottom:5px;
       }
       .navbar {
-        height:9vh;
+        height:50px;;
       }
       .navbar-container{
         margin:0;
-        margin-top:13px;
+        margin-top:9px;
+      }
+      .navbar-container .hamburger-lines{
+        top:5px;
+      }
+      .showcase-area{
+        height:250px;
+       background:none;
       }
 
       
@@ -80,7 +87,7 @@
       .modal {
   display: none;
       }
-      input[type=text]:focus, textarea:focus, select:focus{
+      input[type=text]:focus, input[type=file]:hover,input[type=date]:focus, textarea:focus, select:focus{
         box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
 -webkit-box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
 -moz-box-shadow: -1px 1px 15px 3px rgba(175,181,235,0.78);
@@ -90,6 +97,122 @@ border:solid 1px #33bbff;
         border-radius:5px;
        
       }
+     #nav_bg{
+      width:100%;
+      height:200px;
+      position:absolute;
+      object-fit: fill;
+      margin-top:40px;
+     }
+     .nav{
+      position:absolute;
+     }
+     .img_right{
+     
+      width:350px;
+     margin-top:20px;
+      
+     }
+     .img_left{
+     
+     height:250px;
+    margin-top:-20px;
+     
+    }
+     .img_con_right{
+      right:349px;
+      
+     }
+     .img_con_left{
+      left:0px;
+      
+     }
+     .img_left_gear{
+      left:100px;
+      position:absolute;
+      height:200px;
+      width:200px;
+      margin-top:30px;
+     }
+     .img_left_gear2{
+      left:5px;
+      position:absolute;
+      height:120px;
+      width:120px;
+      margin-top:150px;
+     }
+     .img_left_dict{
+      left:164px;
+      position:absolute;
+      height:70px;
+      width:70px;
+      margin-top:95px;
+     }
+     .img_right_gear3{
+      right:220px;
+      position:absolute;
+      height:200px;
+      width:200px;
+      margin-top:-100px;
+     }
+     .img_right_gear5{
+      right:80px;
+      position:absolute;
+      height:100px;
+      width:100px;
+      margin-top:160px;
+     }
+     .img_right_gear4{
+      right:120px;
+      position:absolute;
+      height:100px;
+      width:100px;
+      margin-top:-15px;
+     }
+     .back{
+      position:absolute;
+      width:100%;
+      height:224px;
+    
+     
+
+     }
+     .back_div{
+     display:block;
+     
+        width:100%;
+        height:224px;
+        
+     }
+     #back_div2{
+      background: url("images/bgbg1.png") center no-repeat;
+     
+      -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        
+     }
+     #back_div1{
+      background:url("images/bgbg3.png") center no-repeat;
+      -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        display:none;
+        
+     }
+     #back_div1 > *{
+      text-align:center;
+      margin:auto;
+      color:#4d4d4d;
+      font-size:3vh;
+
+     }
+     .back_elem{
+   
+      text-align:center;
+     }
      
    
    @media (max-width:900px){
@@ -145,13 +268,61 @@ border:solid 1px #33bbff;
         width:100%;
       }
    }
+   .logo{
+    height:50px;
+    top:0px;
+   }
+   .back-img{
+    display:block;
+    margin:auto;
+   }
+   .large{
+    width:25%;
+    margin:auto;
     
+   }
+   .mid{
+    width:40%;
+    margin:auto;
+   }
+   .rotate_clockwise{
+   
+    animation-name: clockwise;
+    animation-duration: 15s;
+    
+    animation-iteration-count: infinite;
+    animation-direction: forward;
+  }
+  .rotate_counter{
+   
+   animation-name: counter;
+   animation-duration: 15s;
+   
+   animation-iteration-count: infinite;
+   animation-direction: forward;
+ }
+
+@keyframes clockwise {
+  0% {transform:rotate(0deg);}
+  25% {transform:rotate(180deg);}
+  75% {transform:rotate(180deg);}
+  100% {transform:rotate(180deg);}
+}
+@keyframes counter {
+  0% {transform:rotate(0deg);}
+  25% {transform:rotate(-180deg);}
+  75% {transform:rotate(-180deg);}
+  100% {transform:rotate(-180deg);}
+}
+   
+  
+
      
     </style>
   </head>
   <body>
-  <img class="logo lg1" src="images/drrmd1.png" >
-          <img class="logo" src="images/dictlogo1.png">
+  
+          <img class="logo" src="images/dict_banner.png">
 <nav class="navbar">
       
         <?php
@@ -243,8 +414,36 @@ border:solid 1px #33bbff;
     <section class="showcase-area" id="showcase">
       <br>
       <div class="showcase-container">
-        <h1 class="main-title" id="home">DICT-DRRM FOCALS</h1>
-        <p class='header'>Shared Assets Management Portal.</p>
+          
+       <div class="back">
+          <div class="back_div" id="back_div1"><br>
+              <h3>ETC ACTIVATED-DECEMBVER 15, 2022 TINEG ABRA</h3>
+          </div>
+
+          <div class="back_div" id="back_div2"><br>
+          <img src="images/label_head2.png" class="back-img large">
+          <img src="images/label_head4.png" class="back-img mid">
+          </div>
+          
+        </div>
+       
+        <div class="img_con_right nav">
+        <img src="images/beeswax2.png" class="nav img_right">
+        </div>
+       
+      
+        <div class="img_con_left nav">
+        <img src="images/left_img_tech2.png" class="nav img_left">
+        </div>
+        <img src="images/lower_bar_only6.png" id="nav_bg">
+        <img src="images/ger_small.png" class="img_right_gear4 rotate_counter">
+        <img src="images/ger_small.png" class="img_right_gear5  rotate_clockwise">
+        <img src="images/gear4.png" class="img_left_gear rotate_counter">
+        <img src="images/ger_small2.png" class="img_left_gear2 rotate_clockwise">
+        <img src="images/gear4.png" class="img_right_gear3 rotate_clockwise">
+        <img src="images/small_dict_shadow.png" class="img_left_dict">
+        
+     
       </div>
     </section>
     <div id="myModal" class="modal">
@@ -265,7 +464,8 @@ border:solid 1px #33bbff;
 
 </div>
       <script>
-          var idleMax = 20; // Logout after 10 minutes of IDLE
+        var luwas=false;
+          var idleMax = 15; // Logout after 10 minutes of IDLE
           var idleTime = 0;
           setInterval(function(){
            
@@ -273,8 +473,9 @@ border:solid 1px #33bbff;
            //alert("called");
             if (idleTime >= idleMax) { 
              // alert("called");
+             luwas=true;
               Popup_modal_show2("<center><b>SYSTEM NOTIFICATION!</b><br><br>You have been automatically logged out due to inactivity. Thank you.</center>",600);
-
+              
               $.post("AJAX/mycodes.php",{
                 command: "logout2"
               }, function(data){
@@ -285,9 +486,52 @@ border:solid 1px #33bbff;
             }else{
               idleTime = idleTime + 1;
             }
+
+           
           }, 60000); 
+
+          
      
         $(document).ready(function(){
+          luwas=false;
+          var show_panel1=true;
+          
+          setInterval(function(){
+           //animate
+           if(show_panel1){
+            $("#back_div2").hide(1000);
+            $("#back_div1").show(1000);
+            show_panel1=false;
+
+           }
+           else{
+            $("#back_div2").slideDown(1000);
+            $("#back_div1").slideUp(1000);
+            show_panel1=true;
+
+           }
+          
+           
+          }, 15000); 
+          
+          //rotate('.rotate_clockwise','-360',2200);
+          //rotate('.rotate_counter','+360',2200);
+          
+          
+          
+         
+        function rotate(target,movement,duration){
+            $(target).animate({  borderSpacing: movement }, {
+                step: function(now2,fx) {
+                  $(this).css('-webkit-transform','rotate('+now2+'deg)'); 
+                  $(this).css('-moz-transform','rotate('+now2+'deg)');
+                  $(this).css('transform','rotate('+now2+'deg)');
+                  //rotate2=(rotate2=='-360')?'+360':'-360';
+                },
+                duration:duration
+            },'swing');
+        }
+
           $(".modal2").hide();
         
 
@@ -297,7 +541,8 @@ border:solid 1px #33bbff;
           });
         
          });
-         
+
+      
            // 1 minute interval    
           $( document ).mousemove(function( event ) {
               idleTime = 0; // reset to zero
@@ -361,11 +606,21 @@ border:solid 1px #33bbff;
               }
             });
             $(document).keydown(function(e) {
+              if(luwas==false)
+              {
               idleTime = 0;
+              }
+            else{
+                window.location="login.php";
+              }
+
             });
 
             $(document).keyup(function(e) {
+              if(luwas==false)
+              {
               idleTime = 0;
+              
                 if (e.key === "Escape") { // escape key maps to keycode `27`
                     // <DO YOUR WORK HERE>
                     $("#nbrger").prop("checked",false);
@@ -490,6 +745,13 @@ border:solid 1px #33bbff;
                   $(id_etc).prop("checked",false);
                   $(id_profile).prop("checked",false);
                 }
+                //alert(luwas);
+              }else{
+                
+                window.location="login.php";
+                //alert(luwas);
+              }
+             
 
             });
 
@@ -504,16 +766,7 @@ border:solid 1px #33bbff;
 
           function hidelogo(){
             var lenght=$(window).width();
-           if(lenght<570){
-              if ($("#nbrger").is(":checked")==true){
-                $("img.lg1").hide();
-                
-              }
-              else{
-                $("img.lg1").delay(9000).show();
-              }
-           
-           }
+         
            if(lenght<434){
               if ($("#nbrger").is(":checked")==true){
                   $("img.logo").hide();
@@ -533,20 +786,6 @@ border:solid 1px #33bbff;
           });
           $(window).resize(function(){
             var lenght=$(window).width();
-         
-            if(lenght<=570 && lenght >434){
-              if ($("#nbrger").is(":checked")==true){
-                $("img.lg1").hide();
-              }
-              else{
-                $("img.lg1").delay(800).show();
-              }
-            }
-            if(lenght>570){
-              $("img.lg1").show();
-            }
-
-
           });
         });
      

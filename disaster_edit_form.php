@@ -490,7 +490,7 @@ $(document).ready(function(){
 			//console.log(form);
 			
 			$.ajax({
-				url:"AJAX/file_upload.php",
+				url:"AJAX/file_upload_dstr.php",
 				type: "POST",
 				data:form,
 				contentType:false,

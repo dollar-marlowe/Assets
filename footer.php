@@ -310,11 +310,25 @@
 
         
 		}
-			
-		 
-			
 		
-		
+	}
+    function disable_inactive(item,next_for,val_check){// this is a function which lets you select a value within the same row checks it if it satisfies the condition
+        //then disables the radio button
+		$.each($(item),function(){
+			var status = $(this).parent();
+            for(let i=0;i<next_for;i++){
+                status=status.next();
+            }
+            status= status.text();
+            
+			//alert(status.trim());
+			if(status.trim()==val_check  ){
+				$(this).attr("disabled","disabled");
+			}
+
+
+		});
+
 	}
    
         function global_load_table_radio(str,headers,chkbox,allchk,classes,target,item,href,next_word,funct){
@@ -331,6 +345,10 @@
                 $(target).html(data);
                 if(item!=""){
                     enrycpt_each(item);
+                    if(item==".dst_item"){
+                        disable_inactive(item,5,"deactivated");
+                    }
+
 			
                 }
                 if(href!=""){
@@ -485,6 +503,12 @@
             return isempty;
             
         }
+        function clear_class_input(myclass,empty_val){
+            $.each($(myclass),function(){                
+                    $(this).css({"border":"solid 1px rgb(113, 113, 113)"}).val(empty_val);
+            });          
+            
+        }
         function global_validate(target,value){
 		if($(target).val().trim()==value){
 			$(target).css({"border":"solid 1px red"}); 
@@ -501,6 +525,7 @@
             $(".modal2").hide();
             $("#popmsg1").html(msg);
             $(".modal2").delay(speed).fadeIn();
+            return true;
         }
        
 
