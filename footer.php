@@ -166,6 +166,48 @@
             });
             
         }
+
+        function global_load_table_paginate(my_cols,headers,chkbox,allchk,classes,target,item,href,next_word,table_n,cold_id){
+            $.post("AJAX/loadtable.php", 
+            {
+                cols:my_cols,
+                
+                hdr:headers,
+                class:classes,
+                check: chkbox,
+                all:allchk,
+                col:cold_id,
+                table:table_n
+            }, 
+            function(data){
+                var arr_data=to_array(data,"%");
+                $(target).html(arr_data[0]); 
+                $(target).after(create_pagination(my_cols,table,col_name,arr_data[0]));
+                
+                if(item!=""){
+                    enrycpt_each(item);
+			
+                }
+                if(href!=""){
+                    href_each(href);	
+                }
+                if(next_word!=""){
+                     if(next_word==".item_area"){
+                        $(next_word).attr("disabled","disabled");
+                        enrycpt_each(".item_area");
+                       
+                       
+                    }
+                    else{
+                        remove_next_word(next_word);	
+                    }
+                }
+                if(target==".affected"){
+                    $(".item_area").removeAttr("disabled");
+                }
+            });
+            
+        }
         
         function make_input_attributes(target,class_names,cat,disaster_id,add_this,target_add,etc){
 		$.post("AJAX/load_disaster_attributes.php",
@@ -526,10 +568,26 @@
             $("#popmsg1").html(msg);
             $(".modal2").delay(speed).fadeIn();
             return true;
+            
         }
-       
+        
 
+        function create_pagination(my_cols,table,col_name,arr_ids){
+            var ids=to_array(arr_ids," ");
+            var body="<div class='input_wrapper'>\
+                            <input type='button' value='Prevous' class='prev_paginate'>\
+                            <input type='button' value='Prevous' class='next_paginate'> \
+                            <select class='pag_opt'>";
+                            var content_select="";
+                            var size=sizeof(ids);
+                            for(let i=0; i<size;i++){
+                                content_select+="<option value="+ids[i]+">page "+(i+1)+"</option>";
+                            }
+                            var body2="</select> <p> of "+size+"\
+                            <input type hidden class='hd1' value='"+my_cols+"%"+table+"%"+col_name+"'><div>";
+                           return body+contect_select+body2;
 
+        }
         function loadtable_decrypt(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem_chk){
 			//var elem="all%item_pass_res"
 			$.post("AJAX/loadtable_decryptstr.php",{

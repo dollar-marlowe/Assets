@@ -2,7 +2,30 @@
     <?php
    
     include "ALGO/codes.php";
-    test_size();
+    //test_size();
+    //test_trim();
+    $today=date("Y-m-d");
+    echo $today;
+    function test_trim(){
+      $db= new Database();
+        $db->connect();
+        $cols="id";
+        $col="id";
+        $table="disaster_affected";
+        $start=0;
+        $sql="Select $cols from $table";
+        $data=$db->selectrows($sql,0);
+        $ids="";
+        if($data!=null){
+          $i=0;
+          while($i<sizeof($data)){
+           $ids.=encrypt($data[$i][$col])." ";
+           $i+=10;
+          }
+       }
+        $ids=trim($ids);
+        echo $ids;
+    }
     function test_size(){
       $db = new Database();
     $db->connect();
