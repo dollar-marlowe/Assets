@@ -630,7 +630,7 @@
 	
 		
 		}else{
-			//alert("Empty");
+			//alert("Empty");s
 			$("#err_lbl").remove();
 			$(".top").before("<p  style='color \
 			:red;text-align:center' id='err_lbl'>Required fields cannot be empty!</p>");
