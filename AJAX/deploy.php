@@ -14,15 +14,9 @@
         $mydb->connect();
         $etc_disaster=0;
         $today=date("Y-m-d");
-       $data=$mydb->select("SELECT * FROM etc where `status`='active'");
-        if($data!=null){
-            $row=mysqli_fetch_assoc($data);
-            $etc_disaster=$row["id"];
-            $status="deployed under etc";
-        }
-        else{
+       
             $status="deployed under normal circumstances";
-        }
+        
         $assetid=0;
         $asset_data=$mydb->select("SELECT asset_id FROM owned_assets where ownerid=".$assetowned);
         if($asset_data!=null){

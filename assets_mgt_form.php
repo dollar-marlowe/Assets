@@ -729,6 +729,7 @@
 										brgy:$("#brgy").val(),
 										remarks:$("#remarks").val()
 										},function(data){
+											alert(data);
 											if(c==chk_size){
 												var plural="";
 												var helping="is";
@@ -772,7 +773,7 @@
 									},function(data){
 										//alert($("#mgtoffice").val()+ " "+$("#office").val())
 									
-										//alert("called");
+										//alert(data);
 										
 										 
 											if(c==chk_size){
