@@ -37,23 +37,23 @@
 			margin:auto;
 		}
 		/*table*/
-		table tr th{
+		table.disasters tr th{
 			text-transform:uppercase;
 			font-weight:600;
 			background-color:rgb(45, 44, 46);
 			color:white;	
 		}
 		
-		tr:nth-child(odd){
+		.disasters	tr:nth-child(odd){
 			background-color:rgb(232,232,232);
 			color:black;
 		}
-		td, th{
+		.disasters td, .disasters th{
 			text-align:left;
 			padding-left:10px;
 			text-transform:capitalize;			
 		}
-		table{
+		table.disasters{
 			border-collapse: collapse;
 			width:100%;
 			margin-left:5px;
@@ -61,8 +61,9 @@
 			border-style:none;
 			font-size:16px;		
 		
+		
 		}
-		table tr td{
+		table.disasters tr td{
 			padding-bottom:10px;
 			padding-top:10px;
 		}
@@ -126,8 +127,8 @@
 			margin-top:0px;
 		}
 		.inner-wrapper{
-			
-			width:fit-content;
+			 
+			width:100%;
 			margin:auto;
 			
 		}
@@ -146,6 +147,11 @@
 			margin:auto;
 					
 		}
+		.dstr_con{
+			width:100%;
+			overflow:auto;
+			height:300px;
+		}
 		
 		@media (max-width:1267px){
 			.imgform-container{
@@ -163,7 +169,7 @@
 			
 		}
 		@media (max-width:820px){
-			table{
+			table.disasters{
 			
 				font-size:13px;
 			}
@@ -175,7 +181,7 @@
 			}
 		}
 		@media (max-width:600px){
-			table{
+			table.disasters{
 				
 				font-size:9px;
 			}
@@ -204,12 +210,12 @@
 			.input_wrapper input, .input_wrapper textarea, .input_wrapper select{
 			width:200px;
 			}
-			th:nth-child(5),td:nth-child(5){
+			.disasters th:nth-child(5),td:nth-child(5){
 				display:none;
 			}
 		}
 		@media(max-width:400px){
-			th:nth-child(3),td:nth-child(3){
+			.disasters th:nth-child(3),td:nth-child(3){
 				display:none;
 			}
 			.pannel h2{
@@ -234,12 +240,12 @@
 		}
 
 		@media(max-width:320px){
-			th:nth-child(7),td:nth-child(7){
+			.disasters th:nth-child(7),td:nth-child(7){
 				display:none;
 			}
 		}
 		@media(max-width:280px){
-			th:nth-child(3),td:nth-child(3){
+			.disasters th:nth-child(3),td:nth-child(3){
 				display:none;
 			}
 		}
@@ -334,15 +340,17 @@
 								loadropdown($str,"natureofdisaster","natureofdisaster","Nature of Disaster");
 								?>
 				</select>
-				<table class="disasters" style="margin-bottom:5px;margin-top:10px;">
-				<?php
-				$classes=array("all","item");
-				$sql="select id,name,category,natureofdisaster,description, datestarted, file_upload  from disaster";
-				$headers=array("","Name","Category","Nature","Description","Date logged","File");
-				loadtable($sql,$headers,true,false,$classes);
-				
-				?>
-				</table>
+				<div class="dstr_con">
+					<table class="disasters" style="margin-bottom:5px;margin-top:10px;">
+					<?php
+					$classes=array("all","item");
+					$sql="select id,name,category,natureofdisaster,description, datestarted, file_upload  from disaster";
+					$headers=array("","Name","Category","Nature","Description","Date logged","File");
+					loadtable($sql,$headers,true,false,$classes);
+					
+					?>
+					</table>
+				</div>
 				<div class="input_wrapper" style="margin:auto">
 					<input type="submit" value="Mofidy" id="modify" class="btn btn-primary" style="color:white;font-weight:800;">
 					<input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear2"> 
