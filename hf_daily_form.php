@@ -340,7 +340,6 @@
 								?>
 							</table>
 						</div>
-
 						
 						<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
 						<input type="text" id="station_assignee" placeholder="Optional *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
@@ -423,22 +422,23 @@
 		<div class="imgform-container " id="station_table_div">
 			<div class="imgform-img">
 			<div class="inner-wrapper">
-				<input type="text" id="search_station" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
-				<select id="search_region">
+				<input type="text" id="search_station_logged" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
+				<select id="filter_type_selection">
 					<?php 
-						$str="SELECT distinct station_name, station_region, region, province FROM hf_daily";
-						loadropdown($str,"station_name","region","province");
+					$today =date("Y-m-d");				
+					$str="SELECT distinct weather FROM hf_daily where log_date='$today'";
+					loadropdown($str,"weather","weather","weather");
 					?>
 				</select>
 				
-				<table class="disasters" style="margin-bottom:5px;margin-top:10px;">
-				<?php
-				$classes=array("all","item");
-				$sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily order by log_date desc";
-				$headers=array("tik","Station Name","Station Assignee","Date","Time","Weather","Signal Status");
-				loadtable($sql,$headers,true,false,$classes);
-				
-				?>
+				<table class="disasters" id="hf_daily_log_table" style="margin-bottom:5px;margin-top:10px;">
+					<?php
+					$classes=array("all","item");
+					$sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily where log_date=CURRENT_DATE order by log_time desc";
+					$headers=array("tik","Station Name","Station Assignee","Date","Time","Weather","Signal Status");
+					loadtable($sql,$headers,true,false,$classes);
+					
+					?>
 				</table>
 				</div>
 			</div>
@@ -517,7 +517,7 @@
 
 		// alert(formatted);
 		// alert(str_date);
-		//  $("#get_time").val($(formatted).text());
+		//  $("#get_time").val($(formatted).text());	
 		//  $("#get_date").val(str_date());
 		
 		$("#get_time").val((formatted));
@@ -620,7 +620,9 @@
 				function(data){
 						//alert(data);
 						if(data=="New record created!"){
-							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);								
+							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
+							load_hf_daily_table("#hf_daily_log_table","all%item","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
+							$("#clear").click();
 						}else{
 							alert("All fields are required to be filled with input.");
 							}
@@ -640,6 +642,15 @@
 
 	$("#clear").click(function(){
 		// $("select#signal_value").prop()
+			$("#station_name").val("");
+			$("#station_assignee").val("");
+			$("#get_date").val("");
+			$("#get_time").val("");
+			$("#get_Sunny").dblclick();
+			$("#get_Rainy").dblclick();
+			$("#get_Cloudy").dblclick();
+			$("#signal_value").val("0");
+
 	});
 
 
@@ -675,20 +686,23 @@
 
 	});
 
-	$("#search_region").change(function(){
+		$("#search_region").change(function(){
 			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"regional",$(this).val());
-
-
-			
-			// var str="select hf_id, station_name, region, province from hf_locations where station_name= '"+$(this).val()+"'";
-			// 	var headers="Tik%Station Name%Region%Province%";
-			// 	var classes ="all%item";
-			// 	global_load_table(str,headers,true,false,classes,".disasters",".item",".disasters td:nth-child(11)",".disasters td:nth-child(10)");	
 		});
 
 		$("#search_station").keyup(function(){
 			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"open",$(this).val());
-			//alert($(this).val());
+		});
+
+		//for HF daily log table na ito 
+		$("#search_station_logged").keyup(function(){
+			load_hf_daily_table("#hf_daily_log_table","all%item","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name,station_assignee, log_date, log_time, weather, signal_status",'true','false',"open",$(this).val());
+		
+		});
+
+		$("#filter_type_selection").change(function(){
+			load_hf_daily_table("#hf_daily_log_table","all%item","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"weather",$(this).val());
+		
 		});
 
 		$(".item").click(function(){
@@ -698,7 +712,6 @@
 			var numberNotChecked = totalCheckboxes - numberOfChecked;
 
 			alert(numberOfChecked);
-
 
 		});
 
@@ -719,5 +732,22 @@
 					});
 				}
 
+		function load_hf_daily_table(target,classes,header,columns,with_checkbox,with_header_chk,filter,mydata){
+					$.post("AJAX/load_hf_daily_table.php",
+					{
+						filter_type: filter,
+						data:mydata,
+						my_head:header,
+						my_classes:classes,
+						my_columns:columns,
+						chk: with_checkbox,
+						all_chk: with_header_chk
+
+					},
+					function(data){
+						//alert(data);
+						$(target).html(data);
+					});
+				}
 });
 </script>
