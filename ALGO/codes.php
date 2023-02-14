@@ -95,6 +95,7 @@ class Database{
         //return $result."<br>";
         return $result;
     }
+
     function is_empty($query){
         $query=linig($query);
         $result=mysqli_query($this->con,$query);
@@ -107,6 +108,7 @@ class Database{
         //return $result."<br>";
         
     }
+
     function selectrows($query, $n){//0 will select all rows
         $query=linig($query);
         $data=array();
@@ -130,6 +132,37 @@ class Database{
                 return null;
             }     
     }
+
+    function selectcount($query, $params = []) {
+        $db = new Database();
+        $db->connect();
+        
+        $stmt = $db->con->prepare($query);
+        if (!empty($params)) {
+            $types = str_repeat("s", count($params));
+            $stmt->bind_param($types, ...$params);
+        }
+        
+        $result = $stmt->execute();
+        if (!$result) {
+            error_log("Query failed: " . $stmt->error);
+            return false;
+        }
+        $count = 0;
+        $stmt->store_result();
+        if ($stmt->num_rows === 0) {
+            $stmt->free_result();
+            return 0;
+        }
+        
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->free_result();
+        
+        return $count;
+    }
+    
+
     function select_one($query, $key){
         $data=mysqli_query($this->con,$query);
         $result=0;
@@ -915,6 +948,27 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
         echo "";
     }
 }
+
+// taga count sana
+// function counter_hf_data_fn($table_name, $column_name, $where_clause = "") {
+//     $db = new Database();
+//     $db->connect();
+    
+//     $sql = "SELECT COUNT($column_name) FROM $table_name";
+//     if (!empty($where_clause)) {
+//         $sql .= " WHERE $where_clause";
+//     }
+    
+//     $result = selectcount($sql);
+    
+//     if ($result !== false) {
+//         return $result;
+//     } else {
+//         return false;
+//     }
+// }
+
+
 function office_combobox(){
 	echo "<select id='office' name='office' >";
 							
@@ -942,17 +996,35 @@ function loadropdown1($str,$col1,$col2){//the second  dropdown has others
     echo"<option value='others'>Others</option>";
     
 }
-function loadstationlist($str,$col1,$col2,$from){
+function loadstationlist($str,$col1,$col2,$col3,$from){
     
     $db = new Database();
     $db->connect();
     $data=$db->selectrows($str,0);
-   
+        
     if($data!=null){
         //echo"<option value=0>Select from Options Below</option>";
         foreach($data as $d){
-            echo "<option value='".$d[$col1]."'>".$d[$col2]."</option>";
+            echo "<option value='".$d[$col1]."' name='".encrypt($d[$col3])."'>".$d[$col2]."</option>";
         }
+    }
+    else{
+        echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
+
+
+function loadstationlist_edit($str,$col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+        
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            echo "<option value='".$d[$col1]."' name='".encrypt($d[$col3])."'>".$d[$col2]. "," . $d[$col4] . "," . $d[$col5] . "," . $d[$col6] . "," . $d[$col7] ."," . encrypt($d[$col8]) . "</option>";
+        }   
     }
     else{
         echo"<option value='0'>Select from ".$from."</option>";
@@ -963,7 +1035,7 @@ function loadropdown($str,$col1,$col2,$from){
     
     $db = new Database();
     $db->connect();
-    $data=$db->selectrows($str,0);
+    $data=$db->selectrows($str,0);  
    
     if($data!=null){
         echo"<option value=0>Select from Options Below</option>";

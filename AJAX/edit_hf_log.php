@@ -9,15 +9,24 @@
         $get_date=($_POST["get_date"]);
         $get_time=($_POST["get_time"]);
         $weather_status=($_POST["weather_status"]);
+        $check_hf_id=decrypt($_POST["check_hf_id"]);
         $signal_status=($_POST["signal_status"]);
 
         $db = new Database();
         $db->connect();
-        $sql="insert into hf_daily (station_name, station_assignee, log_date, log_time, weather, signal_status,date_date) values
-        ('".$station_name."', '".$station_assignee."', '".$get_date."', '".$get_time."', '".$weather_status."', '".$signal_status."', '".$get_date."')";
+
+        $sql="update hf_daily set 
+        station_name = ".$check_hf_id.",
+        station_assignee = '".$station_assignee."',
+        log_date = '".$get_date."',
+        log_time = '".$get_time."',
+        weather = '".$weather_status."',
+        signal_status= '".$signal_status."', 
+        date_date= ".$get_date."
+        where hf_log_id=".$station_name;
 
         $msg=$db->insert($sql);
-          if( $msg=="New record created!"){
+          if($msg=="New record created!"){
             echo $msg;
             //update_session($data);
          }else{

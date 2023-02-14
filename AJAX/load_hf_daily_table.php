@@ -18,23 +18,23 @@
         //switch case for filtration
         switch($filter_type){
             case "default":
-                $sql = "Select $table_columns from hf_daily where log_date= '$today' order by log_time desc";
+                $sql = "Select $table_columns from hf_daily_log where log_date= '$today' order by log_time desc";
                 break;
 
             case "weather":
-                $sql = "Select $table_columns from hf_daily where log_date='$today' AND weather='$data'";
+                $sql = "Select $table_columns from hf_daily_log where log_date='$today' AND weather='$data'";
                 break;
 
             case "signal":
-                $sql = "Select $table_columns from hf_daily where log_date='$today' AND signal_status='$data'";
+                $sql = "Select $table_columns from hf_daily_log where log_date='$today' AND signal_status='$data'";
                 break;
 
             case "time":
-                $sql = "Select $table_columns from hf_daily where log_date='$today' AND log_time=$data";
+                $sql = "Select $table_columns from hf_daily_log where log_date='$today' AND log_time=$data";
                 break;
 
             case "open":
-                $sql = "Select $table_columns from hf_daily where log_date='$today' AND station_name like '%$data%'";
+                $sql = "Select $table_columns from hf_daily_log where log_date='$today' AND station_name like '%$data%'";
                 break;
         }
        // echo $sql;

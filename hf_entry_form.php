@@ -451,8 +451,6 @@
 			<div class="imgform-container " id="hf_station_table_dynamic">
 				<div class="imgform-img">
 					<div class="inner-wrapper" id="hf_station_table">
-			
-
 					<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 					</div>
 				</div>

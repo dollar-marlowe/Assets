@@ -185,12 +185,40 @@
 			margin:auto;
 			margin-bottom:30px;				
 		}
+
+		/* #list_station option:after {
+			content: "";
+			visibility: hidden;
+		} */
+
+
+        @media (max-width:1366px){
+			.imgform-container{
+				display:block;
+				
+			}
+            th:nth-child(1),td:nth-child(1){
+				display:none;
+            }
+            
+			.align_center{
+			margin:auto;
+			
+			width:fit-content;
+			
+			
+		}
+    }
 		
 		@media (max-width:1267px){
 			.imgform-container{
 				display:block;
 				
 			}
+            th:nth-child(1),td:nth-child(1){
+				display:none;
+            }
+            
 			.align_center{
 			margin:auto;
 			
@@ -285,31 +313,19 @@
 		
 
 </style>
-
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="station_entry_form">
 	<br>
  <div class="pannel_con">
 	<div class="pannel" onclick="slide('#station_form_div')">
-            <p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
-	</div>
+            <p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Logged Modifier Form</p></div>
 			
-			<div class="input_wrapper" style="margin:auto">
-				<!--this div is for single or group log entry-->
-				<p class="label"><label >Logging Option:</label></p>
-					<select id="log_option">
-						<option value="Single">Single Station Daily Log</option>
-						<option value="Group">Group Station Daily Log</option>
-					</select>		
-			</div>
-			<br>
-		<div class="pannel">
-		
+        <div class="pannel">
         <div class="imgform-container " id="station_form_div">
 	        <div class="imgform-img">
 				<div class="inner-wrapper top">	
 				    <div class="input_wrapper entry" id="single_log_div">
-	                    <p class="label"><label for="disaster" id="label_log_option">Single HF Station Log</label></p>
+	                    <p class="label"><label for="disaster" id="label_log_option">Single HF Station Log Details</label></p>
 					
 						<!--<p class="label"><label for="disaster" id="label_log_option2">...</label></p>-->
                         <br><br>
@@ -319,43 +335,13 @@
 								
 							<datalist id="list_station" name="list_station" hidden>	
 									<?php
-										$str="SELECT distinct hf_id, station_name, region FROM hf_locations";
-										loadstationlist($str,"station_name","region","hf_id","station_name");
-									?>			
+                                        $today =date("Y-m-d");				
+										$str="SELECT distinct station_name,log_date,hf_log_id,log_time,station_assignee, weather, signal_status, hf_id FROM hf_daily_log where log_date='$today' order by log_time desc";
+										loadstationlist_edit($str,"station_name","log_date","hf_log_id","log_time","station_assignee","weather","signal_status","hf_id","station_name");
+									?>			    
 								</datalist>
 
-
-						<div class="input_wrapper entry" id="group_log_div">
-							<!--<p class="label"><label for="disaster">Group HF Station Log</label></p><br><br>
-							<p class="label"><label>Search Stations:</label></p>-->
-						
-							<input type="text" id="search_station" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
-							<select id="search_scope" style="width: fit-content;">
-								<option value="national">National </option>
-								<option value="regional">Regional </option>
-								<option value="provincial">Provincial</option>
-							</select>
-
-							<select id="search_region"  onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#search_provincial','id','name','')">
-								<?php 
-									$str="SELECT id,name FROM region";	
-									loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
-								?>
-							</select>
-
-							<select id="search_provincial" style="width: fit-content;">
-								
-							</select>	
-			
-							<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
-								<?php
-									$classes=array("all","item");
-									$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations";
-									$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
-									loadtable($sql,$headers,true,true,$classes);
-								?>
-							</table>
-						</div>
+                            
 						
 						<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
 						<input type="text" id="station_assignee" placeholder="Optional *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
@@ -399,8 +385,8 @@
 						<br><br>
 
 						<div class="input_wrapper" style="margin:auto">
-							<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
-							<input type='submit' Value='Submit All' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_all">
+							<input type='submit' Value='Update' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
+							<!--<input type='submit' Value='Submit All' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_all">-->
 							<input type='submit' Value='Clear' class="btn btn-primary" style="background-color:white;color:black;font-weight:800;" id="clear"> 
 						</div>
 					</div>
@@ -409,20 +395,11 @@
             </div>
         </div>
 
-		<!--for Group ito na div -->
-		
-		<div class="imgform-container " id="station_form_div">
-	        <div class="imgform-img">
-				<div class="inner-wrapper top">	
+	</div> 
 
-					</div>
-				</div>
-			</div>
-		</div> 
- 	</div>
- </div>
 
- <div class="pannel_con">
+    <!--//table par lng makita kung may data si logged stations na dapat ay meron din si datalist kasi iisa lng sila ng source eh-->
+     <div class="pannel_con">
 			<div class="pannel" onclick="slide('#station_table_div')" >
            		<p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Today's Logs</p>
         	</div>
@@ -444,19 +421,35 @@
 					$classes=array("all","item");
 					$sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily_log where log_date=CURRENT_DATE order by log_time desc";
 					$headers=array("tik","Station Name","Station Assignee","Date","Time","Weather","Signal Status");
-					loadtable($sql,$headers,true,false,$classes);
+					loadtable($sql,$headers,false,false,$classes);
 					?>
 				</table>
 				</div>
 			</div>
 		</div>
 	</div>
- <!-- </section> -->
+</div>
 
-<script>
+
+
+
+
+ <script>
     function slide(target){
 		$(target).slideToggle("slow");
 		}
+
+
+		function loadstationlist_edit() {
+   	 	$.ajax({
+			type: "POST",
+			url: "loadstation_list.php",
+			data: { today: "<?php echo date("Y-m-d"); ?>" },
+			success: function(data) {
+				$("#list_station").html(data);
+			}
+    });
+}
 
     $(document).ready(function(){
 
@@ -465,8 +458,14 @@
 		//then encrypt ulit
 	// $("#station_name_label").css("visibility","hidden");
 	// $("#station_name").css("visibility","hidden");
+	
+	
+
+    var chk_id_hf;
 	var stn_cd;
 	var stn_cd_grp;
+
+	loadstationlist_edit();
 	$("#search_provincial").css("display","none");
 	$("#search_region").css("display","none");
 	$("#group_log_div").css("display","none");
@@ -481,6 +480,22 @@
 		var alt=false;
 
     //kung tama ako, ito ay para sa shortcut key
+
+	// $("#list_station option").each(function(){
+	// 	var value = $(this).text();
+	// 	var date = value.split(',')[0];
+	// 	$(this).text(date);
+	// });
+
+	// $("#list_station option").each(function(){
+	// 	var value = $(this).text();
+	// 	var date = value.split(',')[0];
+	// 	var truncatedText = date.substring(0, 10) + "...";
+	// 		$(this).text(truncatedText);
+
+	// });
+	
+	
 	$(document).keyup(function(e) {
 		if(e.key === "Alt"){
 		alt=false;
@@ -567,112 +582,67 @@
 	});
 
 
-	//current task
-	$("#station_name").keyup(function(){
-	//alert($("#station_name").val());		
-		var hidden_gem;
-		hidden_gem = $("#list_station").find("option[value='" + $(this).val() + "']").attr("name");
-		//alert(hidden_gem);
-		stn_cd=hidden_gem;
+	//to get value of selected station_name in the datalist
+    $("#station_name").on("change", function() {
 
-	});	
+        //explode data then fetch sa target elements
+
+        var hidden_gem2 = $("#list_station option[value='" + $(this).val() + "']").text();
+        if (hidden_gem2) {
+            var str_explode = hidden_gem2.split(",");
+
+           // alert(str_explode[4]);
+            $("#get_date").val(str_explode[0]);
+            $("#get_time").val(str_explode[1]);
+            $("#station_assignee").val(str_explode[2]);
+            $("#signal_value").val(str_explode[4]);
+
+			chk_id_hf =str_explode[5];
+
+            var weather_look=str_explode[3];
+            //alert(chk_id_hf);
+            
+            if(weather_look=="Sunny"){
+                //alert("maaraw!");
+                $("#get_Sunny").click();
+            }else if(weather_look=="Cloudy"){
+               // alert("maulap");
+               $("#get_Cloudy").click();
+            }else if(weather_look=="Rainy"){
+                //alert("maulan");
+                $("#get_Rainy").click();
+
+            }else{
+                alert("WALANG GANUN besh!");
+            }
+            
+
+            var hidden_gem;
+            hidden_gem = $("#list_station").find("option[value='" + $(this).val() + "']").attr("name");
+            //alert(hidden_gem);
+            
+            stn_cd=hidden_gem;
+            //alert($("#get_date").val());
+           //alert(stn_cd);
+
+        } else {
+            alert("No matching option found");
+        }
+    }); 
+
+    
+	// $("#station_name").keyup(function(){
+	// //alert($("#station_name").val());		
+	// 	var hidden_gem;
+	// 	hidden_gem = $("#list_station").find("option[value='" + $(this).val() + "']").attr("name");
+	// 	//alert(hidden_gem);
+        
+	// 	stn_cd=hidden_gem;
+
+	// });	
 	
 
-	//add mulitple HF ID under reg/prov
-	$("#submit_all").click(function(){
-		$.each($(".item:checked"),function(){
-			hf_collected+=$(this).val() + " % ";
-     		//alert($(this).text());
-		});
-		stn_cd_grp = hf_collected.trim();
-		//alert(stn_cd_grp);
-		// const array_hf_collected= hf_collected.split("  ");
-		// alert(array_hf_collected);
-		// const myArray = text.split(" ");
-		// let word = myArray[1];
-		// $.each($(".item:checked").parent().siblings(),function(){
-		// alert($(this).text());
-		//alert($("checkbox.item").text());
 
-		$("#err_lbl").remove();
-		$("div#weather_div").css({'border':'none'});
-		$("select#signal_value").css({'border':'none'});
-
-		var weather_stat="";
-			
-				let btn1_value = document.getElementById("get_Sunny").style.backgroundColor;
-				let btn2_value = document.getElementById("get_Cloudy").style.backgroundColor;
-				let btn3_value = document.getElementById("get_Rainy").style.backgroundColor;
-				// alert(btn1_value);
-				// alert(btn2_value);
-				// alert(btn3_value);
-
-				if(btn1_value=="green") {
-					// alert("Sunny");
-					weather_stat="Sunny";
-					//alert(weather_status);
-				}else if(btn2_value=="green"){
-					// alert("Cloudy");
-					weather_stat="Cloudy";
-					//alert(weather_status);
-				}else if(btn3_value=="green"){
-					// alert("Rainy");
-					weather_stat="Rainy";
-					//alert(weather_status);
-				}else{
-					//alert("PILI KA Weather");
-					weather_stat="none";
-					$("div#weather_div").css({'border':'2px solid red','padding':'1em'});
-				}
-
-		var signal_val = $("select#signal_value").val();
-		var no_weather = "";	
-
-		var select_input = is_empty_class("input.station_multi","");
-		var select_select = is_empty_class("select#signal_value","0");
-		var select_weather = no_weather == weather_stat ? true:false;
-		//condition ? exprIfTrue : exprIfFalse
-
-		// alert(select_input);
-		// alert(select_select);
-		// alert(select_weather);
-
-		if(select_input==false && select_select==false  && select_weather==false) {
-			//alert("May value");
-			$("#err_lbl").remove();
-			 //alert($("select#signal_value").val());
-			// alert($("input.station_log").val());
-			$.post("AJAX/add_hf_log_multi.php", 
-			{
-					station_name_grp: 	stn_cd_grp, //all selected checkboxes--
-					station_assignee: 	"REGION Entry",
-					get_date: 			$("#get_date").val(),
-					get_time:			$("#get_time").val(),
-					weather_status:		weather_stat,
-					signal_status:		signal_val				
-			},
-				function(data){
-						//alert(data);	
-						if(data=="New records created!"){
-							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b> Multiple New record has been created!</b>",600);
-							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
-							$("#clear").click();
-							window.location.reload();	
-						}else{
-							alert("All fields are required to be filled with input.");
-							}
-			});		
-	
-		
-		}else{
-			//alert("Empty");
-			$("#err_lbl").remove();
-			$(".top").before("<p  style='color \
-			:red;text-align:center' id='err_lbl'>Required fields cannot be empty!</p>");
-			$("select#signal_value").css({'border':'1px solid red'});
-		}
-
-	});
 
 	$("#submit").click(function(){
 		//pag save ng log sa DB heheheh
@@ -728,7 +698,7 @@
 			$("#err_lbl").remove();
 			 //alert($("select#signal_value").val());
 			// alert($("input.station_log").val());
-			$.post("AJAX/add_hf_log.php", 
+			$.post("AJAX/edit_hf_log.php", 
 			
 			{
 					station_name: 		stn_cd,
@@ -736,13 +706,14 @@
 					get_date: 			$("#get_date").val(),
 					get_time:			$("#get_time").val(),
 					weather_status:		weather_stat,
+					check_hf_id:		chk_id_hf,
 					signal_status:		signal_val				
 			},
 				function(data){
 						alert(data);
 						if(data=="New record created!"){
-							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
-							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
+							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Selected HF Station Updated!</b>",600);
+							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'false','false',"default","");								
 							$("#clear").click();
 							window.location.reload();
 						}else{
@@ -905,6 +876,25 @@
 					});
 				}
 
+				
+				document.getElementById("station_list").addEventListener("change", function() {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "update_station_list.php?value=" + this.value, true);
+					xhr.onreadystatechange = function() {
+						if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						var data = JSON.parse(this.responseText);
+						var options = "";
+						for (var i = 0; i < data.length; i++) {
+							options += "<option value='" + data[i].col1 + "' name='" + encrypt(data[i].col3) + "'>" + data[i].col2 + "," + data[i].col4 + "," + data[i].col5 + "," + data[i].col6 + "," + data[i].col7 + "," + encrypt(data[i].col8) + "</option>";
+						}
+						document.getElementById("station_list").innerHTML = options;
+						}
+					};
+					xhr.send();
+				});
 
+				function encrypt(data) {
+  					return encrypted_data;		
+				}			
 });
 </script>

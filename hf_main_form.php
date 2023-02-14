@@ -107,8 +107,11 @@
 			margin-bottom:0px;
 			text-align:center;
 			border:solid 1px #ddd;
-			padding:10px 0px 10px 0px;
+			padding:0px;
 			background-color:white;
+            justify-content: center;
+
+            
 		}
 		.pannel h2{
 			display:inline;
@@ -118,8 +121,7 @@
 		
 		}
 		.lbl_wrap{
-			margin-left: 10px;
-			margin-bottom: 10px;
+			margin:10px;
 			font-size: 18px;
 			transition: transform .2s; 
 		}
@@ -178,12 +180,15 @@
 		} */
 
 		.pannel_con{
-			-webkit-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
-			-moz-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
-			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
+			-webkit-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
+			-moz-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
+			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
 			width:80%;
 			margin:auto;
-			margin-bottom:30px;				
+			border-radius:0 0 30px 30px;
+            
+        
+
 		}
 		
 		@media (max-width:1267px){
@@ -281,179 +286,269 @@
 		input[type=submit]{
 			width:200px;
 			
-		}	
-		
+		}
+        
+        .nav-panel {
+        width: 100%;
+        border-bottom: 2px solid navy;
+        }
+
+        .nav-panel ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        margin-top: 20px;
+        }
+
+        .nav-panel li {
+        padding: 10px 20px;
+        border-right: 1px solid navy;
+        }
+
+        .nav-panel li:last-child {
+        border-right: none;
+        }
+
+        .nav-panel li a {
+        color: navy;
+        text-decoration: none;
+        font-weight: bold;
+        }
+
+        .nav-panel li a:hover {
+        color: white;
+        background-color: navy;
+        }
+
+        .halfcol{
+				width:100%;
+				display:block;
+				border:solid 1px #ddd;
+				border-radius:10px;
+				margin-top:5px;
+				margin-bottom:10px;
+		}
+
+        .cols{
+		display:inline-block;
+		width:49.5%;
+			
+		border-radius:10px;
+		border:solid 1px #ddd;
+		margin-top:0px;
+		margin-bottom:10px;
+		}
+		.cols1{
+			float:left;
+		}
+		.cols2{
+			
+			float:right;
+			padding:20px;
+			padding-top:0px;
+        }
+
+        .label_show_card {
+            color: white;
+            display: inline-block;
+            padding: 20px 80px;
+            border-radius: 15px;
+            background-color: navy;
+            text-align: center;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            width:90%;
+            margin-top: 10px;
+            box-shadow: -2px 2px 26px -12px rgba(220,120,0,.87);
+
+        }
+
+        .pannel_show_card{
+			margin:auto;
+			margin-top:0px;
+			margin-bottom:0px;
+			text-align:center;
+			border:solid 1px #ddd;
+			padding:10px 0px 10px 0px;
+			background-color:white;
+            padding-bottom: 10px;
+            display: flex;
+            overflow:auto;
+            float:left;
+            width: 50%;
+
+        }
+
+        .pannel_holder{
+			width:auto;
+			margin-top:5px;
+            overflow: hidden;
+            justify-content: center;
+            
+		}
+
+
+        .pannel_holder .pannel_show_card{
+			width:45%;
+			margin:1%;
+            padding:20px 50px;
+            justify-content: center;
+            box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);  
+		}
+
+        #station_form_div {
+            margin: 20px;
+            width:100%;    
+        }
 
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
- <section id="station_entry_form">
-	<br>
- <div class="pannel_con">
-	<div class="pannel" onclick="slide('#station_form_div')">
-            <p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
-	</div>
-			
-			<div class="input_wrapper" style="margin:auto">
-				<!--this div is for single or group log entry-->
-				<p class="label"><label >Logging Option:</label></p>
-					<select id="log_option">
-						<option value="Single">Single Station Daily Log</option>
-						<option value="Group">Group Station Daily Log</option>
-					</select>		
-			</div>
-			<br>
-		<div class="pannel">
-		
-        <div class="imgform-container " id="station_form_div">
-	        <div class="imgform-img">
-				<div class="inner-wrapper top">	
-				    <div class="input_wrapper entry" id="single_log_div">
-	                    <p class="label"><label for="disaster" id="label_log_option">Single HF Station Log</label></p>
-					
-						<!--<p class="label"><label for="disaster" id="label_log_option2">...</label></p>-->
-                        <br><br>
-						<p class="label" id="station_name_label"><label for="disaster">Station Name:</label></p>				       
-							<input type="text" name="city" id="station_name" placeholder="Station Name *" list="list_station" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
-							
-								
-							<datalist id="list_station" name="list_station" hidden>	
-									<?php
-										$str="SELECT distinct hf_id, station_name, region FROM hf_locations";
-										loadstationlist($str,"station_name","region","hf_id","station_name");
-									?>			
-								</datalist>
+<div class="nav-panel">
+  <ul>
+    <?php
+        $pages = array("HF Daily Log Form" => "hf_daily.php", "HF Stations Data Entry" => "hf_entry.php");
+        foreach ($pages as $page => $url) {
+            echo "<li><a href='$url'>$page</a></li>";
+        }
+    ?>
+  </ul>
+</div>
 
-
-						<div class="input_wrapper entry" id="group_log_div">
-							<!--<p class="label"><label for="disaster">Group HF Station Log</label></p><br><br>
-							<p class="label"><label>Search Stations:</label></p>-->
-						
-							<input type="text" id="search_station" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
-							<select id="search_scope" style="width: fit-content;">
-								<option value="national">National </option>
-								<option value="regional">Regional </option>
-								<option value="provincial">Provincial</option>
-							</select>
-
-							<select id="search_region"  onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#search_provincial','id','name','')">
-								<?php 
-									$str="SELECT id,name FROM region";	
-									loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
-								?>
-							</select>
-
-							<select id="search_provincial" style="width: fit-content;">
-								
-							</select>	
-			
-							<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
-								<?php
-									$classes=array("all","item");
-									$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations";
-									$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
-									loadtable($sql,$headers,true,true,$classes);
-								?>
-							</table>
-						</div>
-						
-						<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
-						<input type="text" id="station_assignee" placeholder="Optional *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
-						<br><br>
-						
-						<p class="label"><label for="disaster">Date:</label></p>
-						<input type="date" id="get_date"  class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;">
-						
-						<p class="label"><label for="disaster">Time:</label></p>
-						<input type="time" id="get_time"  class="station_log station_multi" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px;">
-						
-							<div class="input_wrapper" style="margin:auto">
-								<input type='submit' Value='Timestamp' class="btn btn-primary" id="get_Timestamp" style="color:white;font-weight:800;">
-							</div>	
-						<br>
-							
-						<div class="input_wrapper" style="margin:auto" id="weather_div">
-						<p class="label"><label >Weather</label></p>		
-								<input type='submit' Value='Sunny' 	class="btn btn-primary" id="get_Sunny" style="color:white;font-weight:800;">
-								<input type='submit' Value='Cloudy' class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;">
-								<input type='submit' Value='Rainy' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;">
-						</div>
-						<br>
-						<div class="input_wrapper" style="margin:auto">
-						<p class="label"><label >Signal Status</label></p>
-						<select id="signal_value">
-							<option value="0">Select from below</option>
-							<option value="1x1">1 x 1</option>
-							<option value="2x2">2 x 2</option>
-							<option value="3x3">3 x 3</option>
-							<option value="4x4">4 x 4</option>
-							<option value="5x5">5 x 5</option>
-						</select>		
-								<!-- <input type='submit' Value='5x5' 	class="btn btn-primary" id="get_Sunny" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='4x4' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='3x3' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='2x2' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='1x1' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;"> -->
-						</div>
-						
-						<br><br>
-
-						<div class="input_wrapper" style="margin:auto">
-							<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
-							<input type='submit' Value='Submit All' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_all">
-							<input type='submit' Value='Clear' class="btn btn-primary" style="background-color:white;color:black;font-weight:800;" id="clear"> 
-						</div>
-					</div>
+<br>
+<section id="station_entry_form">
+    <div class="pannel_con">
+        <div class="pannel">
+            <p class="lbl_wrap" id="accounts" onclick="slide('#station_form_div')"><img src="images\compass4.png"><u>H</u>F Analytics Per DAY</p>
+                <div class="pannel_holder" id = "station_form_div">
+                    
+                    <div class="pannel_show_card">
+                        <div>
+                            <p class="label"><label >HF Station Today's Log Counts:</label></p>
+                            <p class="label_show_card"><label ><span style="font-size: 40px;">19</span> ENTRIES</label></p>
+                        </div>
+                    </div>
+                      
+                    <div class="pannel_show_card">
+                        <div>
+						<!-- <button onclick="getTotalCount()">Get Total Count</button> -->
+                            <p class="label"><label >Recorded HF Station Counts:</label></p>
+                            <p class="label_show_card"><label ><span style="font-size: 40px;" id="span_counter_total">21</span> ENTRIES</label></p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="pannel_show_card">
+                        <div>
+                            <p class="label"><label >HF Station Today's Log Counts:WEATHER</label></p>
+                            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+                        </div>
+                    </div>
+                      
+                    <div class="pannel_show_card">
+                        <div>
+                            <p class="label"><label >Operational HF Station Counts:STATUS</label></p>
+                            <canvas id="myChart2" style="width:100%;max-width:700px"></canvas>
+                        </div>
+                    </div>
                 </div>
-				<br>
+ 	    </div>      
+    </div>
+<br>
+    <div class="pannel_con">
+                <div class="pannel" onclick="slide('#station_table_div')" >
+                    <p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Today's Logs</p>
+                </div>
+            
+            <div class="imgform-container " id="station_table_div">
+                <div class="imgform-img">
+                <div class="inner-wrapper">
+                    <input type="text" id="search_station_logged" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
+                    <select id="filter_type_selection">
+                        <?php 
+                        $today =date("Y-m-d");				
+                        $str="SELECT distinct weather FROM hf_daily where log_date='$today'";
+                        loadropdown($str,"weather","weather","weather");
+                        ?>
+                    </select>
+                    
+                    <table class="disasters" id="hf_daily_log_table" style="margin-bottom:5px;margin-top:10px;">
+                        <?php
+                        $classes=array("all","item");
+                        $sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily_log where log_date=CURRENT_DATE order by log_time desc";
+                        $headers=array("tik","Station Name","Station Assignee","Date","Time","Weather","Signal Status");
+                        loadtable($sql,$headers,true,false,$classes);
+                        ?>
+                    </table>
+                    </div>
+                </div>
             </div>
         </div>
-
-		<!--for Group ito na div -->
-		
-		<div class="imgform-container " id="station_form_div">
-	        <div class="imgform-img">
-				<div class="inner-wrapper top">	
-
-					</div>
-				</div>
-			</div>
-		</div> 
- 	</div>
- </div>
-
- <div class="pannel_con">
-			<div class="pannel" onclick="slide('#station_table_div')" >
-           		<p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Today's Logs</p>
-        	</div>
- 		
-		<div class="imgform-container " id="station_table_div">
-			<div class="imgform-img">
-			<div class="inner-wrapper">
-				<input type="text" id="search_station_logged" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
-				<select id="filter_type_selection">
-					<?php 
-					$today =date("Y-m-d");				
-					$str="SELECT distinct weather FROM hf_daily where log_date='$today'";
-					loadropdown($str,"weather","weather","weather");
-					?>
-				</select>
-				
-				<table class="disasters" id="hf_daily_log_table" style="margin-bottom:5px;margin-top:10px;">
-					<?php
-					$classes=array("all","item");
-					$sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily_log where log_date=CURRENT_DATE order by log_time desc";
-					$headers=array("tik","Station Name","Station Assignee","Date","Time","Weather","Signal Status");
-					loadtable($sql,$headers,true,false,$classes);
-					?>
-				</table>
-				</div>
-			</div>
-		</div>
-	</div>
  <!-- </section> -->
+<br>
 
-<script>
+ </section>
+ 
+
+ <script>
+
+// function getTotalCount() {
+//                     $.post("AJAX/counter_hf_data.php", {
+//                         filter_type: "count_total",
+//                         my_columns: "hf_id"
+//                     }, function(data) {
+//                         $("#span_counter_total").html(data);
+//                     });
+//                 }
+	
+        var xValues = ["Sunny", "Cloudy", "Rainy"];
+		var yValues = [10, 3, 6];
+		var barColors = ["orange", "lightblue","navy"];
+
+		new Chart("myChart", {
+		type: "bar",
+		data: {
+			labels: xValues,
+			datasets: [{
+			backgroundColor: barColors,
+			data: yValues
+			}]
+		},
+		options: {
+			legend: {display: false},
+			title: {
+			display: true,
+			text: "Expected Representation of reported HF Station by Weather"
+			}
+		}
+		});
+
+        var x1Values = ["Operational", "Under Repair", "Non-Operational"];
+		var y1Values = [12, 6, 3];
+		var bar1Colors = ["green", "blue","red"];
+
+		new Chart("myChart2", {
+		type: "bar",
+		data: {
+			labels: x1Values,
+			datasets: [{
+			backgroundColor: bar1Colors,
+			data: y1Values
+			}]
+		},
+		options: {
+			legend: {display: false},
+			title: {
+			display: true,
+			text: "Expected Representation of reported HF Station by Status"
+			}
+		}
+		});
+
     function slide(target){
 		$(target).slideToggle("slow");
 		}
@@ -465,6 +560,10 @@
 		//then encrypt ulit
 	// $("#station_name_label").css("visibility","hidden");
 	// $("#station_name").css("visibility","hidden");
+
+	//(target,columns,filter,mydata)
+	//load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
+	//var total_hf_recorded = counter_hf_data("#span_counter_total","hf_id","count_total","")
 	var stn_cd;
 	var stn_cd_grp;
 	$("#search_provincial").css("display","none");
@@ -657,7 +756,6 @@
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b> Multiple New record has been created!</b>",600);
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
 							$("#clear").click();
-							window.location.reload();	
 						}else{
 							alert("All fields are required to be filled with input.");
 							}
@@ -744,7 +842,6 @@
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
 							$("#clear").click();
-							window.location.reload();
 						}else{
 							alert("All fields are required to be filled with input.");
 							}
@@ -904,6 +1001,25 @@
 						enrycpt_each(".item_log");
 					});
 				}
+
+	
+
+				
+
+				// function counter_hf_data(target,columns,filter,mydata){
+				// 	$.post("AJAX/counter_hf_data.php",
+				// 	{
+				// 		filter_type: filter,
+				// 		data:mydata,
+				// 		my_columns:columns
+				// 	},
+				// 	function(data){
+				// 		//alert(data);
+				// 		$(target).html(data);
+				// 		//enrycpt_each(".item_log");
+				// 	});
+				// }
+
 
 
 });
