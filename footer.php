@@ -167,8 +167,8 @@
             
         }
 
-        function global_load_table_paginate(my_cols,headers,chkbox,allchk,classes,target,item,href,next_word,table_n,cold_id){
-            $.post("AJAX/loadtable.php", 
+        function global_load_table_paginate(my_cols,headers,chkbox,allchk,classes,target,item,href,next_word,table_n,cold_id){//item is for the elemnt to be encrypted
+            $.post("AJAX/loadtable_paginate.php", 
             {
                 cols:my_cols,
                 
@@ -182,7 +182,7 @@
             function(data){
                 var arr_data=to_array(data,"%");
                 $(target).html(arr_data[0]); 
-                $(target).after(create_pagination(my_cols,table,col_name,arr_data[0]));
+                $(target).after(create_pagination(my_cols,table,col_name,arr_data[1]));
                 
                 if(item!=""){
                     enrycpt_each(item);

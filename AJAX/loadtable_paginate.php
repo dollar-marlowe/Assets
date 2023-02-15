@@ -1,7 +1,7 @@
 <?php
     include "../ALGO/codes.php";
     
-    if(isset($_POST["cols"])){
+    if(isset($_POST["col"])){
         $db= new Database();
         $db->connect();
        
@@ -13,7 +13,8 @@
         $col=$_POST["col"];
         $cols=$_POST["cols"];
         $table=$_POST["table"];
-        $sql="Select $cols from $table limit 0,10 ";
+        $sql="Select $cols from $table limit 0,5 ";
+       // echo $sql;
         
 
         $headers=explode("%",$header);
@@ -24,13 +25,14 @@
         $bd->connect();
         $sql2="Select count($col) as `count` from $table";
         $number_cols=$db->select_one($sql2,"count"); */
+        $sql2="Select $col from $table";
         $data=$db->selectrows($sql2,0);
        
         $ids="";
         if($data!=null){
             $i=0;
           while($i<sizeof($data)){
-            $ids.=encrypt($data[$i][$col])." ";
+            $ids.=$data[$i][$col]." ";
            $i+=10;
           }
         }

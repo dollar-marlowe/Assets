@@ -597,20 +597,34 @@
 			$("#status, #category").change(function(){
 				var status =$("#status").val();
 				var headers=" %ASSET NUMBER%SERIAL%ITEM NAME%CATEGORY%BRAND%DATE AQUIRED%STATUS";	
-				var str="select `assetowner`.`id` as id,`assets`.`assetid` as `assetid`, `assets`.`serial` as `serial`, assets.name as name, assets.category as category, assets.brand as brand, assetowner.date_aquired as `date`, `assets`.`status` as `status` from assets, assetowner where assetowner.assets_id=assets.id and assetowner.office_id =";
+				var table_cols="`assetowner`.`id` as id,`assets`.`assetid` as `assetid`, \
+				 `assets`.`serial` as `serial`, assets.name as name, assets.category as \
+				 category, assets.brand as brand, assetowner.date_aquired as `date`, \
+				 `assets`.`status` as `status`";
+				 var table_source="assets, assetowner \
+				 where assetowner.assets_id=assets.id and assetowner.office_id =";
+
+				var str="select `assetowner`.`id` as id,`assets`.`assetid` as `assetid`, \
+				 `assets`.`serial` as `serial`, assets.name as name, assets.category as \
+				 category, assets.brand as brand, assetowner.date_aquired as `date`, \
+				 `assets`.`status` as `status` from assets, assetowner \
+				 where assetowner.assets_id=assets.id and assetowner.office_id =";
 				if(status=="all"){
 					$("#category").attr("disabled","disabled");
 					$("#category").val(0);
 					str=str+$("#office").val()+" order by assets.category";
+					table_source=table_source+$("#office").val()+" order by assets.category";
 				}	
 				else{
 					
 					$("#category").removeAttr("disabled");
 					if($("#category").val()==0){
 						str=str+$("#office").val()+" and assets.status='"+status+"' order by assets.category";
+						table_source=table_source+$("#office").val()+" and assets.status='"+status+"' order by assets.category";
 					}
 					else{
 						str=str+$("#office").val()+" and assets.status='"+status+"' and assets.category='"+$("#category").val()+"'";
+						table_source=table_source+$("#office").val()+" and assets.status='"+status+"' and assets.category='"+$("#category").val()+"'";
 					}
 				}
 				if(status=="deployed"){
@@ -625,6 +639,16 @@
 						  and assets.id=assetowner.assets_id and deployment.deployment_stat='Active'  \
 						  and assetowner.office_id="+$("#office").val()+" order by `assets`.`category`";
 						$("#sbdemove").css("display","inline-block");
+						table_source="deployment,region,province,municipality,\
+						  barangay,assetowner,assets where deployment.reg_id=region.id and \
+						  deployment.prov_id=province.id and deployment.muni_id=municipality.id \
+						  and deployment.brgy_id=barangay.id and assetowner.id=deployment.asset_owner_id \
+						  and assets.id=assetowner.assets_id and deployment.deployment_stat='Active'  \
+						  and assetowner.office_id="+$("#office").val()+" order by `assets`.`category`";
+						  table_cols="deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name,  assets.category as `category`, \
+						 province.name as province, municipality.name as muni, barangay.name as brgy,deployment.datemobilized\
+						  as `datedep`, deployment.deployment_stat as depstat";
+
 					}
 					else{
 						$("#sbdemove").css("display","none");
@@ -635,7 +659,8 @@
 				else{
 					$("#receive").css("display","none");
 				}
-				loadtable(str,headers,1,0);				
+				global_load_table_paginate(table_cols,headers,1,0,"all%item",".asset","","","",table_source,"id");
+				//loadtable(str,headers,1,0);				
 			});
 			//events for input elements change 			
 			$(".item").click(function(){			
