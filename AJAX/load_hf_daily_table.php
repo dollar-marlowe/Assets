@@ -7,6 +7,7 @@
 
         $filter_type = $_POST["filter_type"];
         $data = $_POST["data"]; 
+        $data2= $_POST["data2"]; 
         $table_header = explode("%",$_POST["my_head"]);
         $table_columns = $_POST["my_columns"];
         $table_classes = explode("%",$_POST["my_classes"]);
@@ -31,6 +32,12 @@
 
             case "time":
                 $sql = "Select $table_columns from hf_daily_log where log_date='$today' AND log_time=$data";
+                break;
+            case "region":
+                $sql = "Select $table_columns from trial_daily_log where log_date='$today' AND location_region=$data";
+                break;
+            case "date":
+                $sql = "Select $table_columns from trial_daily_log where date_logged between '$data' AND '$data2'";
                 break;
 
             case "open":

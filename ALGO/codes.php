@@ -941,7 +941,7 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
             }
             $chkbox=$chk;
             $j++;
-            echo "</tr>";
+            echo "</tr>";       
         }
     }
     else{
@@ -1030,6 +1030,38 @@ function loadstationlist_edit($str,$col1,$col2,$col3,$col4,$col5,$col6,$col7,$co
         echo"<option value='0'>Select from ".$from."</option>";
     }
 }
+
+
+function loadstationlist_region_log($str, $col1, $col2, $col3, $from)
+{
+    $db = new Database();
+    $db->connect();
+    $data = $db->selectrows($str, 0);
+
+    if ($data) {
+        foreach ($data as $d) {
+            echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$d[$col1]."</li>";
+        }   
+    } else {
+        $today = date("Y-m-d");
+        $str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'"; 
+        $data = $db->selectrows($str, 0);
+
+        if ($data) {
+            foreach ($data as $d) {
+                echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$d[$col1]."</li>";
+            }
+        } else {
+            echo "<option value='0'>Select from ".$from."</option>";
+        }
+    }
+}
+
+
+
+
+
+
 
 function loadropdown($str,$col1,$col2,$from){
     

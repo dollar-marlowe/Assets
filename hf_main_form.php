@@ -67,13 +67,15 @@
 			width:fit-content;
 			overflow: scroll;
 			font-size:9px;
+			
 		}
+		
 
 		table tr td{
 			padding-bottom:10px;
 			padding-top:10px;
 		}
-
+		#hf_table tr th:nth-child(1),
 		#hf_table tr th:nth-child(4),
 		#hf_table tr th:nth-child(6),
 		#hf_table tr th:nth-child(8),
@@ -87,6 +89,7 @@
 		#hf_table tr th:nth-child(16){
 			display:none;
 		}
+		#hf_table tr td:nth-child(1),
 		#hf_table tr td:nth-child(4),
 		#hf_table tr td:nth-child(6),
 		#hf_table tr td:nth-child(8),
@@ -193,16 +196,14 @@
 		
 		@media (max-width:1267px){
 			.imgform-container{
-				display:block;
-				
+				display:block;	
 			}
 			.align_center{
 			margin:auto;
-			
 			width:fit-content;
-			
-			
 		}
+		
+
 			
 			
 		}
@@ -405,8 +406,22 @@
             width:100%;    
         }
 
+		#region{
+			display:block;
+			width: 90%;
+			word-wrap:break-word;
+			font-size: 12px;
+		}
+
+		#date_range_con{
+			justify-content: center;
+			display:flex;
+		}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
 <div class="nav-panel">
@@ -430,15 +445,16 @@
                     <div class="pannel_show_card">
                         <div>
                             <p class="label"><label >HF Station Today's Log Counts:</label></p>
-                            <p class="label_show_card"><label ><span style="font-size: 40px;">19</span> ENTRIES</label></p>
+							<p class="label_show_card"><label ><span style="font-size: 40px;" id="span_counter_total"></span> ENTRIES</label></p>
+							
                         </div>
-                    </div>
+                    </div>	
                       
                     <div class="pannel_show_card">
                         <div>
 						<!-- <button onclick="getTotalCount()">Get Total Count</button> -->
                             <p class="label"><label >Recorded HF Station Counts:</label></p>
-                            <p class="label_show_card"><label ><span style="font-size: 40px;" id="span_counter_total">21</span> ENTRIES</label></p>
+                            <p class="label_show_card"><label ><span style="font-size: 40px;" id="span_counter_total_2">21</span> ENTRIES</label></p>
                         </div>
                     </div>
                     <br>
@@ -455,41 +471,101 @@
                             <canvas id="myChart2" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
+					<br>
+
+					<!-- //for 2nd filter container -->
+					<div class="pannel_show_card">
+                        <div>
+                            <p class="label"><label >HF Station <span id="span_date"></span>'s Log Filter by Region</label></p>
+                            <!-- <canvas id="myChart3" style="width:100%;max-width:700px"></canvas> -->
+							<select id="filter_type_selection" style="width:90%;">
+								<?php 
+								$today =date("Y-m-d");				
+								$str="SELECT distinct location_region FROM trial_daily_log where log_date='$today'";
+								loadropdown($str,"location_region","location_region","region");
+								?>
+							</select>
+							
+							<div class="label_show_card">
+								<label>
+									<span style="font-size: 40px;" id="span_counter_total_2">
+									<ul id="list_station_log" style="font-size:16px; text-align:left;"> 
+										<?php
+											$today = date("Y-m-d");
+											$str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'"; 
+											loadstationlist_region_log($str, "station_name", "location_region", "hf_log_id", "station_name");
+										?>          
+									</ul>
+									</span>
+								</label>
+							</div>
+                        </div>
+                    </div>
+                      
+                    <div class="pannel_show_card">
+                        <div>
+                            <p class="label"><label >HF Station Today's Log: per Region</label></p>
+                            <canvas id="myChart4" style="width:100%;max-width:700px"></canvas>
+                        </div>
+                    </div>
                 </div>
+				
  	    </div>      
     </div>
 <br>
     <div class="pannel_con">
-                <div class="pannel" onclick="slide('#station_table_div')" >
-                    <p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Today's Logs</p>
-                </div>
+        <div class="pannel" onclick="slide('#station_table_div')" >
+        	<p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Logs Filter by Date</p>
+        	</div>
             
             <div class="imgform-container " id="station_table_div">
                 <div class="imgform-img">
-                <div class="inner-wrapper">
-                    <input type="text" id="search_station_logged" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
-                    <select id="filter_type_selection">
-                        <?php 
-                        $today =date("Y-m-d");				
-                        $str="SELECT distinct weather FROM hf_daily where log_date='$today'";
-                        loadropdown($str,"weather","weather","weather");
-                        ?>
-                    </select>
-                    
-                    <table class="disasters" id="hf_daily_log_table" style="margin-bottom:5px;margin-top:10px;">
-                        <?php
-                        $classes=array("all","item");
-                        $sql="select hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily_log where log_date=CURRENT_DATE order by log_time desc";
-                        $headers=array("tik","Station Name","Station Assignee","Date","Time","Weather","Signal Status");
-                        loadtable($sql,$headers,true,false,$classes);
-                        ?>
-                    </table>
-                    </div>
-                </div>
+					<div class="inner-wrapper">
+						<div id="date_range_con">
+							<p class="label"><label for="disaster">Start Date:</label></p>
+							<input type="date" id="get_start_date"  class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;">
+							<!--end date -->
+							<p class="label"><label for="disaster">End Date:</label></p>
+							<input type="date" id="get_end_date" class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;">
+							<input type='submit' Value='Filter' class="btn btn-primary" id="enter_date_range" style="color:white;font-weight:800;">
+							<!-- <p id="enter_date_range" class="label_show_card" style="padding:2px; margin:2px; width:fit-content"><label style="padding:2px; margin:2px; width:fit-content"> FILTER</label></p> -->
+						</div>	
+							<table class="disasters" id="hf_daily_log_table" style="margin-bottom:5px;margin-top:10px;">
+								<?php
+								$classes=array("all","item");
+								$sql="select station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily_log where log_date=CURRENT_DATE order by log_time desc";
+								$headers=array("Station Name","Station Assignee","Date","Time","Weather","Signal Status");
+								loadtable($sql,$headers,false,false,$classes);
+								?>
+							</table>
+					</div>
+                </div>	
             </div>
-        </div>
- <!-- </section> -->
+    </div>
+
 <br>
+
+	<div class="pannel_con">
+			<div class="pannel" onclick="slide('#group_log_div')" >
+				<p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Stations</p>
+				</div>
+				
+				<div class="imgform-container " id="group_log_div">
+					<div class="imgform-img">
+					<div class="inner-wrapper">
+
+						<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
+									<?php
+										$classes=array("all","item");
+										$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations";
+										$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
+										loadtable($sql,$headers,false,false,$classes);
+									?>
+								</table>
+						</div>
+					</div>
+				</div>
+	</div>
 
  </section>
  
@@ -505,49 +581,7 @@
 //                     });
 //                 }
 	
-        var xValues = ["Sunny", "Cloudy", "Rainy"];
-		var yValues = [10, 3, 6];
-		var barColors = ["orange", "lightblue","navy"];
-
-		new Chart("myChart", {
-		type: "bar",
-		data: {
-			labels: xValues,
-			datasets: [{
-			backgroundColor: barColors,
-			data: yValues
-			}]
-		},
-		options: {
-			legend: {display: false},
-			title: {
-			display: true,
-			text: "Expected Representation of reported HF Station by Weather"
-			}
-		}
-		});
-
-        var x1Values = ["Operational", "Under Repair", "Non-Operational"];
-		var y1Values = [12, 6, 3];
-		var bar1Colors = ["green", "blue","red"];
-
-		new Chart("myChart2", {
-		type: "bar",
-		data: {
-			labels: x1Values,
-			datasets: [{
-			backgroundColor: bar1Colors,
-			data: y1Values
-			}]
-		},
-		options: {
-			legend: {display: false},
-			title: {
-			display: true,
-			text: "Expected Representation of reported HF Station by Status"
-			}
-		}
-		});
+       
 
     function slide(target){
 		$(target).slideToggle("slow");
@@ -564,11 +598,128 @@
 	//(target,columns,filter,mydata)
 	//load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
 	//var total_hf_recorded = counter_hf_data("#span_counter_total","hf_id","count_total","")
+
+
+	var rowCount = $("#hf_daily_log_table tr").length;
+			//alert(rowCount);
+
+			if(rowCount==0){
+				$("#span_counter_total").text(rowCount);
+			}else{
+           		$("#span_counter_total").text(rowCount-1);
+			}
+	
+	var rowCount_sta = $("#hf_table tr").length;
+			//alert(rowCount);
+			if(rowCount_sta==0){
+				$("#span_counter_total_2").text(rowCount_sta);
+			}else{
+				$("#span_counter_total_2").text(rowCount_sta-1);	
+			}
+			
+
+	var rowCount_log_sunny = $("#hf_daily_log_table tr").filter(function() {
+    	return $(this).find("td:eq(4)").text() === "Sunny";
+		}).length;
+			//alert(rowCount_log_sunny);
+
+	var rowCount_log_cloudy = $("#hf_daily_log_table tr").filter(function() {
+    	return $(this).find("td:eq(4)").text() === "Cloudy";
+		}).length;
+			//alert(rowCount_log_cloudy);
+
+	var rowCount_log_rainy = $("#hf_daily_log_table tr").filter(function() {
+    	return $(this).find("td:eq(4)").text() === "Rainy";
+		}).length;
+			//alert(rowCount_log_rainy);
+			
+
+			var xValues = ["Sunny", "Cloudy", "Rainy"];
+			var yValues = [rowCount_log_sunny, rowCount_log_cloudy, rowCount_log_rainy];
+			var barColors = ["orange", "lightblue","navy"];
+
+			new Chart("myChart", {
+			type: "bar",
+			data: {
+				labels: xValues,
+				datasets: [{
+				backgroundColor: barColors,
+				data: yValues
+				}]
+			},
+			options: {
+				scales: {
+				yAxes: [{	
+					ticks: {
+					beginAtZero: true,
+					suggestedMin: 1 // Set the minimum value of the y-axis to 1
+					}
+				}]
+				},
+				legend: {display: false},
+				title: {
+				display: true,
+				text: "Expected Representation of reported HF Station by Weather"
+				}
+			}
+			});
+
+		
+		var rowCount_hf_operational= $("#hf_table tr").filter(function() {
+			return $(this).find("td:eq(11)").text() === "Operational";
+			}).length;
+			//alert(rowCount_hf_operational);
+
+		var rowCount_hf_intermittent= $("#hf_table tr").filter(function() {
+			return $(this).find("td:eq(11)").text() === "Intermittent";
+			}).length;
+			//alert(rowCount_hf_intermittent);
+
+		var rowCount_hf_rehabilitation= $("#hf_table tr").filter(function() {
+			return $(this).find("td:eq(11)").text() === "Rehabilitation";
+			}).length;
+			//alert(rowCount_hf_rehabilitation);
+
+		var rowCount_hf_inactive= $("#hf_table tr").filter(function() {
+			return $(this).find("td:eq(11)").text() === "Inactive";
+			}).length;
+			//alert(rowCount_hf_rehabilitation)
+
+
+		var x1Values = ["Operational", "Intermittent", "Rehabilitation","Inactive"];
+		var y1Values = [(rowCount_hf_operational), (rowCount_hf_intermittent), (rowCount_hf_rehabilitation), (rowCount_hf_inactive) ];
+		var bar1Colors = ["green","yellow","orange","red"];
+
+		new Chart("myChart2", {
+		type: "bar",
+		data: {
+			labels: x1Values,
+			datasets: [{
+			backgroundColor: bar1Colors,
+			data: y1Values
+			}]
+		},
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+					beginAtZero: true,
+					suggestedMin: 1 // Set the minimum value of the y-axis to 1
+					}
+				}]
+				},
+			legend: {display: false},
+			title: {
+			display: true,
+			text: "Expected Representation of reported HF Station by Status"
+			}
+		}
+		});
+
+
 	var stn_cd;
 	var stn_cd_grp;
-	$("#search_provincial").css("display","none");
-	$("#search_region").css("display","none");
-	$("#group_log_div").css("display","none");
+
 	$("#submit_all").css("display","none");
 	$("#log_option").val("Single");
 		var hf_collected="";
@@ -666,7 +817,7 @@
 	});
 
 
-	//current task
+
 	$("#station_name").keyup(function(){
 	//alert($("#station_name").val());		
 		var hidden_gem;
@@ -754,7 +905,7 @@
 						//alert(data);	
 						if(data=="New records created!"){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b> Multiple New record has been created!</b>",600);
-							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
+							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'false','false',"default","");								
 							$("#clear").click();
 						}else{
 							alert("All fields are required to be filled with input.");
@@ -936,22 +1087,39 @@
 		});
 
 		
-		$("#search_station").keyup(function(){
-			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','true',"open",$(this).val());
+		// $("#search_station").keyup(function(){
+		// 	load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','true',"open",$(this).val());
+		// });
+
+		 
+		$("#enter_date_range").click(function(){
+			
+			var start_date_val = ($("#get_start_date").val() !== '');
+			var end_date_val = ($("#get_end_date").val() !== '');
+
+			// alert(start_date_val);
+			// alert(end_date_val);
+
+			if (start_date_val && end_date_val) {
+				load_hf_daily_table("#hf_daily_log_table","all%item_log","Station Name%Station Assignee%Date%Time%Weather%Signal Status%","station_name,station_assignee, log_date, log_time, weather, signal_status",'false','false',"date",$("#get_start_date").val(),$("#get_end_date").val());
+			}else{
+				alert("Select a Start and/or End date first.");
+			}
+			// alert($('#get_end_date').val());
 		});
 
-		//for HF daily log table na ito 
-		$("#search_station_logged").keyup(function(){
-			load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name,station_assignee, log_date, log_time, weather, signal_status",'true','false',"open",$(this).val());
-		
+
+		$("#filter_type_selection").change(function() {
+			var filterValue = $(this).val();
+			
+			var url = "AJAX/load_stations_DA.php?filter=" + filterValue;
+			$.get(url, function(data) {
+				$("#list_station_log").html(data);
+				
+			});
+			//alert(filterValue);
 		});
 
-		$("#filter_type_selection").change(function(){
-			load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"weather",$(this).val());
-		
-		});
-
-	
 
 		// $(".item").click(function(){
 
@@ -963,7 +1131,7 @@
 
 
 		// });
-
+		 //load_hf_daily_table("#hf_daily_log_table","all%item_log","Station Name%Station Assignee%Date%Time%Weather%Signal Status%","station_name,station_assignee, log_date, log_time, weather, signal_status",'false','false',"date",$("#get_start_date").val(),$("#get_end_date").val());
 		function load_hf_table(target,classes,header,columns,with_checkbox,with_header_chk,filter,mydata){
 					$.post("AJAX/load_hf_table.php",
 					{
@@ -983,11 +1151,12 @@
 					});
 				}
 
-		function load_hf_daily_table(target,classes,header,columns,with_checkbox,with_header_chk,filter,mydata){
+		function load_hf_daily_table(target,classes,header,columns,with_checkbox,with_header_chk,filter,mydata,mydata2){
 					$.post("AJAX/load_hf_daily_table.php",
 					{
 						filter_type: filter,
 						data:mydata,
+						data2:mydata2,
 						my_head:header,
 						my_classes:classes,
 						my_columns:columns,
