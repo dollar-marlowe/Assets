@@ -948,6 +948,135 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
         echo "";
     }
 }
+function load_news($sql) {
+    $db= new Database();
+    $db->connect();
+    $result = $db->selectrows($sql, 0);
+    if($result){
+      $html = "";
+      foreach($result as $row){
+        $html .= '<div class="news-container" style="border: solid  2px lightblue">';
+        $html .= '<label class="container" style="text-align:left;">Add this news to the Daily Report
+                    <input type="checkbox" class="selected_news" data-news-title="'.$row["news_title"].'" data-news-desc="'.$row["news_desc"].'" data-news-url="'.$row["news_url"].'" data-news-ref="'.$row["news_ref"].'">
+                    <span class="checkmark"></span>
+                  </label>';
+        $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
+        $html .= '<div class="news-name">'.$row["news_title"].'</div>';
+        $html .= '<div class="news-description">'.$row["news_desc"].'</div>';
+        $html .= '</div><br>';
+      }
+      return $html;
+    }
+    else{
+      return null;
+    }     
+  }
+
+  function load_news_to_print($sql) {
+    $db= new Database();
+    $db->connect();
+    $result = $db->selectrows($sql, 0);
+    if($result){
+      $html = "";
+      foreach($result as $row){
+        $html .= '<div class="news-container">';
+        $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
+        $html .= '<div><p class="news-name">'.$row["news_title"].'</p>';
+        $html .= '<p class="news-description">'.$row["news_desc"].'</p>';
+        $html .= '</div></div><br>';
+      }
+      return $html;
+    }
+    else{
+      return null;
+    }     
+  }
+
+// function load_news($str) {
+//     $db = new Database();
+//     $db->connect();
+//     $data = $db->selectrows($str, 0);
+
+//     if ($data != null) {
+//         foreach ($data as $elem) {
+//             echo '<div class="news-container">';
+//             echo '<img class="news-image" src="' . $elem['news_url'] . '" alt="news Image" title="Double click to proceed on the reference">';
+//             echo '<div class="news-name">' . $elem['news_title'] . '</div>';
+//             echo '<div class="news-description">' . $elem['news_desc'] . '</div>';
+//             echo '</div><br>';
+//         }
+//     } else {
+//         echo "";
+//     }
+// }
+
+// function load_news($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
+//     //$str is the sql command, 
+//     //$headers(array): are the header that shows on the table column head 
+//     //$chkbox is a boolean to add checkboxes at the begiining of each row
+//       //$all is a  boolean variable if true will add check all at the very first table header cell
+//     //the $class is an array with 2 elements: 
+//     //1st elem is the class header of checkbox for check all and the second elem 
+//     //is the class name for each checkbox in the table rows
+//    $db =new Database();
+//     $db->connect();
+//     $data=$db->selectrows($str,0);
+//     if($data!=null){
+//         echo "<tr>";
+//         $chk=$chkbox;
+//         foreach($headers as $header){
+//             if($header==" "){
+//                 echo"<th>";
+//                 if($all){
+//                     echo"<input type='checkbox' 
+//                     class='".$class[0]."' >";
+//                 }
+               
+//             }
+//             else{
+//                 echo "<th>".$header;
+//             } 
+//             echo"</th>";
+//         } 
+//         echo "</tr>";
+//         $j=1;
+//         foreach($data as $elem){
+//            $i=0;
+          
+//             echo "<tr id='".$j."'>";
+//             $size=sizeof($elem);
+           
+//             foreach($elem as $e){
+                
+//                 if($chkbox){
+//                     if($i==0){
+//                         echo"<td><input type='checkbox' 
+//                         class='".$class[1]."'  value='".$e."' ></td>";    
+//                     }
+//                     $chkbox=false; 
+//                 }
+//                 else{
+//                     if($e=='activation'){
+//                         $e="For ".$e;
+//                     }
+                       
+//                     if($i==$size-1){
+//                         echo"<td class='last'>".$e."</td>";
+//                     }else{
+//                         echo"<td>".$e."</td>";
+//                     }
+//                 }
+//                 $i++;          
+//             }
+//             $chkbox=$chk;
+//             $j++;
+//             echo "</tr>";       
+//         }
+//     }
+//     else{
+//         echo "";
+//     }
+// }
 
 // taga count sana
 // function counter_hf_data_fn($table_name, $column_name, $where_clause = "") {

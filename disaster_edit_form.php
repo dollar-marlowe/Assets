@@ -297,12 +297,10 @@
 					
 
 					<div class="input_wrapper"><p class="label">
-					<label for="datestarted ">Date Started:</label></p>
+						<label for="datestarted ">Date Started:</label></p>
 					<input type="date" name="admission_date" id="date_added" class="form-control">
 					</div>
-							
-				
-						
+	
 					<div class="input_wrapper"><p class="label">
 					<label for="status">Attachment</label></p>
 					<input type="file" id="myFile" name="myFile" />
@@ -512,7 +510,7 @@ $(document).ready(function(){
 						ajax_src="AJAX/edit_disaster.php";
 					}
 
-					//alert(result);
+					// alert(result);
 						if(result!="error"){
 							$.post(ajax_src,{
 								disaster_id:item_id,

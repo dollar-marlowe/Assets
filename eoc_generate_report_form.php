@@ -114,8 +114,8 @@
 			background-color:white;
             justify-content: center;
 
-
 		}
+
 		.pannel h2{
 			display:inline;
 			padding-left:20px;
@@ -182,17 +182,7 @@
 			background-color:#cfc9c9;
 		} */
 
-		.pannel_con{
-			-webkit-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
-			-moz-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
-			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
-			width:80%;
-			margin:auto;
-			border-radius:0 0 30px 30px;
 
-
-
-		}
 
 		@media (max-width:1267px){
 			.imgform-container{
@@ -429,24 +419,61 @@
         }
 
         .pannel_holder{
-			width:auto;
+			width:100%;
+			/* display: flex; */
+			/* height: 20%; */
 			margin-top:5px;
-            overflow: hidden;
+            /* overflow: hidden; */
             justify-content: center;
 
 		}
 
 
         .pannel_holder .pannel_show_card{
-			width:45%;
+			width:65%;
+			min-height: 400px;
+			max-height: 400px;
 			margin:1%;
             padding:20px 50px;
             justify-content: center;
             box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
 		}
+		.pannel_holder_frame{
+			width:100%;
+			display: flex;
+			align-items: baseline;
+			/* margin-top:5px; */
+            justify-content: center;
+
+		}
+
+		.pannel_holder_frame .pannel_show_iframe{
+			width:45%;
+			margin:1%;
+			justify-content: center;
+            /* box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57); */
+		}
+
+		.pannel_holder .pannel_holder_hf{
+			margin:1%;
+			display: flex;
+			/* justify-content: center; */
+			overflow: hidden;
+			align-items:flex-start;
+
+		}
+
+	.pannel_show_card .join_con{
+			width: fit-content;
+			display: block;
+			justify-content: center;
+			/* overflow:auto; */
+			min-height: 100%;
+
+		}
 
         #station_form_div {
-            margin: 20px;
+            /* margin: 20px; */
             width:100%;
         }
 
@@ -478,29 +505,63 @@
             max-height: 300px;
             box-sizing: border-box;
             white-space: pre-wrap;
-
-
         }
 
+
+        @page {
+            size: A4 portrait;
+        }
+
+        .pannel_con{
+			-webkit-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
+			-moz-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
+			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
+			width: 95%;
+			margin:auto;
+			border-radius:0 0 30px 30px;
+            display: flex;
+            align-items: flex-start;
+		}
+
 		.news-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        /* display: inline-flex; */
+        width: fit-content;
+        /* flex-direction: row; */
+        padding: 5px;
+        margin-bottom: 5px;
+        /* max-height: 300px; */
+        justify-content:center;
+        margin: 2px;
+        max-height:10%;
       }
 
       .news-image {
-        max-width: 50%;
-        margin-bottom: 10px;
+        width: 300px;
+		/* height: 30%; */
+		float: left;
+		margin: 0px 10px;
+
+        /* height: 25%; */
+        /* max-width: 30%; */
+        /* margin-bottom: 10px; */
       }
 
       .news-name {
-        font-size: 24px;
+        font-size: 16px;
         font-weight: bold;
         margin-bottom: 5px;
+		text-align: left;
+
       }
 
       .news-description {
-        font-size: 16px;
+        font-size: 12px;
+        text-align: left;
+        white-space: pre-wrap;
+        /* width: fit-content; */
+        padding: 10px;
+		text-align: justify;
+
       }
 
 	  .container {
@@ -515,14 +576,22 @@
 		user-select: none;
 	}
 
-/* Hide the browser's default checkbox */
-.container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+	#list_station_log{
+    list-style-type: disc;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    columns: 2;
+    list-style-position: inside;
 }
+
+    /* Hide the browser's default checkbox */
+    .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    }
 
 	.checkmark {
 		position: absolute;
@@ -533,40 +602,40 @@
 		background-color: #eee;
 		border-radius: 5px;
 	}
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+    background-color: #ccc;
+    }
 
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
-  background-color: #2196F3;
-}
+    /* When the checkbox is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+    background-color: #2196F3;
+    }
 
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    }
 
-/* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
+    /* Show the checkmark when checked */
+    .container input:checked ~ .checkmark:after {
+    display: block;
+    }
 
-/* Style the checkmark/indicator */
-.container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
+    /* Style the checkmark/indicator */
+    .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    }
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -574,86 +643,121 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
-<div class="nav-panel">
-	<ul>
-		<?php
-			$pages = array("HOME" => "home.php", "Generate EOC Daily Reports" => "eoc_generate_report.php");
-			foreach ($pages as $page => $url) {
-				echo "<li><a href='$url'>$page</a></li>";
-			}
-		?>
-	</ul>
-</div>
-<br>
-	<section id="station_entry_form">
+<section id="station_entry_form" style="size: letter;">
 		<div class="pannel_con">
 			<div class="pannel">
-				<p class="lbl_wrap" id="accounts" onclick="slide('#station_form_div')"><img src="images\compass4.png"><u>E</u>OC News Log Form</p>
-					<div class="pannel_holder" id = "station_form_div">
-						<div class="pannel_con">
-							<p class="label "><label >Incident Category:</label></p>
-								<select id="news_option" class="news_val_checker">
-									<option value="0">			Select from option below</option>
-									<option value="Typhoon">	Typhoon</option>
-									<option value="Earthquake">	Earthquake</option>
-									<option value="Flood">		Flood</option>
-									<option value="Covid19">	Covid19</option>
-									<option value="Fire">		Fire</option>
-									<option value="LPA">		LPA</option>
-								</select>
-								<br><br>
-							<p>News Details Entry</p>
-								<div class="flat_con">
-									<p class="label"><label for="disaster">News Incident Title/Headline:</label></p>
-										<textarea type="text" id="get_news_title"  class="long_content news_val_checker" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;"></textarea>
-											<br><br>
-									<p class="label"><label for="disaster">News Description</label></p>
-										<textarea type="text" id="get_news_desc"  class="long_content news_val_checker" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;"></textarea>
-											<br><br>
-									<p class="label"><label for="disaster">Reference</label></p>
-										<textarea type="text" id="get_news_ref"  class="long_content news_val_checker" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;"></textarea>
-										<br><br>
-										<div class="pannel_con" style="border: solid 1px grey; width:60%; justify-content:center;">
-											<p class="label"><label for="status">Attachment</label></p>
-											<input type="file" id="myFile" name="myFile" style="border: solid 1px grey;" class="news_val_checker"/>
-											<p class="label"><label for="disaster"><i>JPG or PNG no larger than 5 MB</i></label></p>
+                <br><br><br>
+                <p class="label "><label style="font-size:40px; width:100%;">DAILY MONITORING REPORT</label></p>
+                <p class="label "><label style="font-size:36px; width:100%;">Emergency Operation Center</label></p>
+                <p class="label "><label style="font-size:21px; width:100%;">Disaster Risk Reduction and Management Division </label></p>
+
+                        <!-- for News Log -->
+						<div class="pannel_holder" id = "eoc_news_div">
+							<p class="label" style="color:white; background-color:lightcoral"><label style="font-size:21px; width:100%;">Todays News	</label></p>
+                            <div class="pannel_con">
+                                <div class="news-container" id="news-container"></div>
+                            </div>
+                        </div>
+						<br>
+
+						<!-- for HF Log -->
+						<div class="pannel_holder" id = "hf_log_div">
+							<p class="label" style="color:white; background-color:lightcoral"><label style="font-size:21px; width:100%;">HF Stations Log</label></p>
+								<div class="pannel_holder_hf">
+									<div class="pannel_show_card" style="width: 35%;">
+										<div class="join_con">
+											<div>
+												<p class="label"><label><b>HF Station Today's Log Counts</b></label></p>
+												<p class="label_show_card"><label ><span style="font-size: 20px;" id="span_counter_total"></span> ENTRIES</label></p>
+											</div>
+												<br>
+											<div>
+												<p class="label"><label><b>HF Station Bar Chart by Weather</b></label></p>
+												<canvas id="myChart" style="width:90%;max-width:250px"></canvas>
+											</div>
 										</div>
-								</div>
-									<p class="err_msg"></p>
-									<input type='submit' Value='Save' class="btn btn-primary" id="btn_save_news" style="color:white;font-weight:800;">
-									<input type='submit' Value='Clear' class="btn btn-primary" id="btn_cancel_news" style="color:white;font-weight:800;background-color:grey">
-								</div>
-								
-					</div>
-			</div>
-		</div>
-		<br>
-		<div class="pannel_con">
-			<div class="pannel">
-				<p class="lbl_wrap" id="accounts" onclick="slide('#news_form_div')"><img src="images\compass4.png"><u>E</u>OC News Log Selector</p>
+									</div>
 
-				<div class="pannel_holder" id = "news_form_div">
-						<div class="pannel_con" id="news_div">
-							<div class="news-container" id="news-container"></div>
+									<div class="pannel_show_card"  style="width: 30%; display:block; padding: 20px 10px" >
+										<p class="label"><label ><b>HF Station Today's Log List</b></label></p>
+										<ul id="list_station_log" class="columns"style="font-size:12px; text-align:left; margin: 1px;">
+											<?php
+												$today = date("Y-m-d");
+												$str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'";
+												loadstationlist_region_log($str, "station_name", "location_region", "hf_log_id", "station_name");
+											?>
+										</ul>
+									</div>
+
+									<div class="pannel_show_card"  style="width: 30%; display:block;" >
+										<p class="label"><label ><b>HF Map</b></label></p>
+
+									</div>
+								</div>
 						</div>
-					</div>
-			</div>
+						<!-- for DAM Log -->
+						<div class="pannel_holder" id = "dam_log_div" >
+							<p class="label" style="color:white; background-color:lightcoral"><label style="font-size:21px; width:100%;">External Sites</label></p>
+							<div class="pannel_holder_frame">		
+								<div class="pannel_show_iframe" >
+									<iframe title="RDAMSDashboard" width="600" height="500" src="https://app.powerbi.com/view?r=eyJrIjoiYjQ1YmY4YjMtYzAxMi00ZTk1LTg4OGEtYTdhY2MwNDQ3N2RkIiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+								</div>
+								<div class="pannel_show_iframe" >
+									<iframe title="RDAMSDashboard" width="600" height="500" src="https://app.powerbi.com/view?r=eyJrIjoiYjQ1YmY4YjMtYzAxMi00ZTk1LTg4OGEtYTdhY2MwNDQ3N2RkIiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+								</div>
+								<!-- <div class="pannel_show_iframe" style="width:40%; margin:10px;">
+									<iframe title="RDAMSDashboard" width="600" height="636" src="https://app.powerbi.com/view?r=eyJrIjoiYjQ1YmY4YjMtYzAxMi00ZTk1LTg4OGEtYTdhY2MwNDQ3N2RkIiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+								</div> -->
+							</div>
 
+
+						</div>
+             </div>
+        </div>
+
+		<div>
+			<table hidden class="disasters" id="hf_daily_log_table" style="margin-bottom:5px;margin-top:10px;">
+									<?php
+									$classes=array("all","item");
+									$sql="select station_name, station_assignee, log_date, log_time, weather, signal_status from hf_daily_log where log_date=CURRENT_DATE order by log_time desc";
+									$headers=array("Station Name","Station Assignee","Date","Time","Weather","Signal Status");
+									loadtable($sql,$headers,false,false,$classes);
+									?>
+								</table>
 		</div>
 
-	</section>
+</section>
 
 
 <script>
 
     function slide(target){
 		$(target).slideToggle("slow");
+
 		}
 
+
+
     $(document).ready(function(){
+        $("#showcase").hide();
+		$("#about").hide();
+        $("#footer").hide();
 	generateNewsQuery("#news-container","default","news_title, news_desc, news_url, news_ref","");
 
-		
+
+
+
+		//decrypt
+		//filter-- for each checkbox
+		//then encrypt ulit
+	// $("#station_name_label").css("visibility","hidden");
+	// $("#station_name").css("visibility","hidden");
+
+	//(target,columns,filter,mydata)
+	//load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");
+	//var total_hf_recorded = counter_hf_data("#span_counter_total","hf_id","count_total","")
+
+
 	var rowCount = $("#hf_daily_log_table tr").length;
 			//alert(rowCount);
 
@@ -1138,7 +1242,10 @@
 		});
 
 
+
+
 		$("#enter_date_range").click(function(){
+
 			var start_date_val = ($("#get_start_date").val() !== '');
 			var end_date_val = ($("#get_end_date").val() !== '');
 
@@ -1205,8 +1312,8 @@
 			// $("#profile").attr("src",file["name"]);
 			// console.log(file);
 		});
-		
-		
+
+
 		//submit BUTTON
 		$("#btn_save_news").click(function(){
 
@@ -1260,37 +1367,26 @@
 			}
 		});
 
-		$(document).on("click", ".selected_news", function() {
-		if ($(this).prop("checked")) {
-			$(this).closest(".news-container").css("background-color", "lightblue");
-			var news_selected_title = $(this).closest(".news-container").find(".news-name").text();
-			var news_selected_value = "Checked";
-				//alert(news_selected_title);
-				$.post("AJAX/update_news_selected.php",
-				{
-					news_selected_title: news_selected_title,
-					news_selected_value: news_selected_value,
-				},
-				function(data){
-					alert(data);
-					//if(data=="New record created!"){
-						//Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
-						//$("#clear").click();
-						//load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
-									 
-					//}else{
-					//	alert("All fields are required to be filled with input.");
-					
-				});
 
-		} else {
-			$(this).closest(".news-container").css("background-color", "white");
-			var news_selected_value = "Unchecked";
-		}
-});
+		$(document).on("click", ".selected_news", function() {
+            if ($(this).prop("checked")) {
+                $(this).closest(".news-container").css("background-color", "lightblue");
+
+
+            } else {
+                $(this).closest(".news-container").css("background-color", "white");
+            }
+        });
+
+		$(".logo").click(function(){
+			// alert("tae");
+			window.location = "eoc_monitor.php";
+
+		});
+
 
 		function generateNewsQuery(target, filter, columns, mydata) {
-		$.post("AJAX/load_news_to_select.php", {
+		$.post("AJAX/load_news_to_print.php", {
 			filter_type: filter,
 			my_columns: columns,
 			data: mydata
@@ -1304,6 +1400,7 @@
 			});
 		});
 		}
+
 
 });
 </script>
