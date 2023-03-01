@@ -1,0 +1,29 @@
+[33mcommit 8dba414f70fdced765ead4bf8148d2554151c1d9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: dollar-marlowe <loue.mayores@dict.gov.ph>
+Date:   Tue Mar 29 16:12:42 2022 +0800
+
+    added ENHANCEMENT algorithm for removing injected sqls
+
+[33mcommit 59180dc9cfe8c31f5af043e06714fabcbe4104d3[m
+Author: dollar-marlowe <loue.mayores@dict.gov.ph>
+Date:   Tue Mar 29 15:43:13 2022 +0800
+
+    added algorithm for removing injected sqls
+
+[33mcommit 32ff16c48eb77f51e3ff5c42346109f8d1c117f5[m
+Author: dollar-marlowe <loue.mayores@dict.gov.ph>
+Date:   Tue Mar 29 11:42:56 2022 +0800
+
+    updated asset_entry_form updated category values
+
+[33mcommit cd077fd5b9511d1f4e1d8b5f362eeacf4bc5030a[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: dollar-marlowe <loue.mayores@dict.gov.ph>
+Date:   Mon Mar 28 17:44:26 2022 +0800
+
+    added login functionalities and inserted data to assests and asset owners
+
+[33mcommit e54115e5d97d8a09b475c05c446a69f70e36a52d[m
+Author: dollar-marlowe <loue.mayores@dict.gov.ph>
+Date:   Mon Mar 28 10:30:55 2022 +0800
+
+    1st update on the system
