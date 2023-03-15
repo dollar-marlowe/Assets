@@ -130,6 +130,10 @@
 				
 			
 			}
+			.center_fit{
+				width:fit-content;
+				margin:auto;
+			}
 			#summary #lbl_sum{
 				width:fit-content;
 			
@@ -143,7 +147,7 @@
 				
 				width:fit-content;
 			
-				margin:auto;
+				
 				
 			}
 			#total_all, #lbl_total_all, #lbl_office_tag, #office_tag, #total_avail, #total_deloyed, #lbl_total_avail, #lbl_total_deployed{
@@ -154,9 +158,45 @@
 			.lbl_img{
 				width:25px;
 			}
+			.avail_sum, .dep_sum{
+				border-collapse:collapse;
+			}
 			.avail_sum tr td, .dep_sum tr td{
-				border: 1px solid #ddd;
+				border-bottom:solid 1px #C6C6C6;
 				padding:5px;
+			}
+			.avail_sum tr, .dep_sum tr{
+				
+				font-size:1.4vh;
+
+			}
+			.class_avail{
+				background-color:#eaeaeaab;
+			}
+			.avail_sum tr{
+			
+				font-size:1.4vh;
+
+			}
+			.class_dep, .class_filter_pannel{
+				background-color:#eaeaeaab;
+			}
+			.dep_sum tr{
+				
+				font-size:1.4vh;
+
+			}
+			
+			.avail_sum tr th, .avail_sum tr.tr_head,
+			.avail_sum tr:last-child td,
+			
+			.dep_sum tr th, .dep_sum tr.tr_head,
+			.dep_sum tr:last-child td{
+				
+				padding:8px;
+				border-bottom:1px black solid;
+				border-top:1px black solid;
+
 			}
 			.avail_sum, .dep_sum{
 				width:100%;
@@ -269,7 +309,7 @@
 	  	<div class="sidebar">
 		 
 				<div class="imgform-img radiusnone top pannel_con" id="select_pannel" >
-					<h3 onclick="test('#panel1','pannel')" class="sidehead">DICT <u>A</u>SSETS MAP<?php echo  "-".date("Y/m/d");?></h3>
+					<h3 onclick="test('#panel1','pannel')" class="sidehead class_filter_pannel">DICT <u>A</u>SSETS MAP<?php echo  "-".date("Y/m/d");?></h3>
 						<DIV id="panel1" class="pannel">
 							<table class="table" >
 							<tr><td>
@@ -302,25 +342,26 @@
 						</table>
 						
 						
-						<div id="summary">							
-							<p id="lbl_sum">Map Legend</p>
-							<div class="p_row"><p id="lbl_office_tag">&nbsp<img src="images/office.PNG" >DICT Office</p></div>
-							<div class="p_row"><p id="lbl_total_avail"><img src="images/avail.PNG" style="width:20px;height:20px;margin-bottom:-3px;">Available:</p><p id="total_avail">####</p></div>
-							<div class="p_row"><p id="lbl_total_deployed"><img src="images/deplopyed.PNG" style="width:20px;height:20px;margin-bottom:-3px;">Deployed:</p><p id="total_deloyed">#### </p></div>
-							<div class="p_row"><p id="lbl_total_all"><img src="images/avail.PNG" style="width:20px;height:20px;margin-bottom:-3px;"><img src="images/deplopyed.PNG" style="width:20px;height:20px;margin-bottom:-3px;">&nbsp Total:</p><p id="total_all">#### </p></div>
-						
+						<div id="summary">
+							<div class="center_fit">
+								<p id="lbl_sum">Map Legend</p>
+								<div class="p_row"><p id="lbl_office_tag">&nbsp<img src="images/office.PNG" >DICT Office</p></div>
+								<div class="p_row"><p id="lbl_total_avail"><img src="images/avail.PNG" style="width:20px;height:20px;margin-bottom:-3px;">Available:</p><p id="total_avail">####</p></div>
+								<div class="p_row"><p id="lbl_total_deployed"><img src="images/deplopyed.PNG" style="width:20px;height:20px;margin-bottom:-3px;">Deployed:</p><p id="total_deloyed">#### </p></div>
+								<div class="p_row"><p id="lbl_total_all"><img src="images/avail.PNG" style="width:20px;height:20px;margin-bottom:-3px;"><img src="images/deplopyed.PNG" style="width:20px;height:20px;margin-bottom:-3px;">&nbsp Total:</p><p id="total_all">#### </p></div>
+							</div>
 						</div>
 					</DIV>
 				</div>
 				
 				<div class="imgform-img radiusnone marginleft pannel_con" id="pannel_dep">
-					<h3  onclick="test('#panel2','pannel')" class="sidehead">SUMMARY OF DE<u>P</u>LOYED ASSETS</h3>
+					<h3  onclick="test('#panel2','pannel')" class="sidehead class_dep">SUMMARY OF DE<u>P</u>LOYED ASSETS</h3>
 						<div id="panel2" class="pannel">
 						<p style="font-size:30px;">Select from DICT Offices drop down to view summary of deployed assets</p>
 						</div>
 				</div>
 				<div class="imgform-img radiusnone marginleft pannel_con" id="pannel_avail">
-					<h3  onclick="test('#panel3','pannel')" class="sidehead">SUMMARY OF A<u>V</u>AILABLE ASSETS</h3>
+					<h3  onclick="test('#panel3','pannel')" class="sidehead class_avail">SUMMARY OF A<u>V</u>AILABLE ASSETS</h3>
 						<DIV id="panel3" class="pannel">
 						<p style="font-size:30px;">Select from DICT Offices drop down to view summary of available assets</p>
 						</DIV>
@@ -339,6 +380,17 @@
     </section>
 
     <script>
+		<?php
+		echo "function on_each_region(){
+		var dd=". $_SESSION["region_id"].";
+			$.each($('#regions option'),function(){
+				decrypt_one_compare_retrieve($(this).val(),'.butwa',dd,'regions');
+				
+			});
+			//alert($('.butwa').val());
+		}";
+
+		?>
 		
 		function test(target,from){//this function if for hiding and showing the contecnt of the pannel 
 			var l=$(window).width();
@@ -365,6 +417,7 @@
 		get_loc("manila"); */
 
       $(document).ready(function(){
+		
 		$(".table_lbl2").hide();
 		var map = L.map('map');
 		var marker;
@@ -466,7 +519,8 @@
 
 			} 
 		}*/
-		
+		on_each_region();
+	
 		
 		function change_map(info){
 			//alert(info);
@@ -500,6 +554,7 @@
 				
 			//var map = new L.map('map').setView([lat, long],focus);
 		}	
+	
 		function loadmap(info){
 			var h=$(window).height();
 			
@@ -763,6 +818,25 @@
 						var arr_data=to_array(data,"%");
 						//alert(arr_data[0]);
 						$("#dict_offices").html(arr_data[0]);
+							 $.each($('#dict_offices option'),function(){
+                               // console.log($(this).text()+" ");
+								//console.log($(".niyan").val());
+                              //  decrypt_one_compare_retrieve($('#dict_offices option').val(),'.butwa',$(".niyan").val(),'offices');
+							  if($(this).text().toUpperCase()==$(".niyan").val().toUpperCase()){
+								
+								$("#dict_offices").val($(this).val());
+								$("#dict_offices").change();
+								$("#assets").val("all");
+								$("#assets").change();
+								//$("#dict_offices").val()
+
+							  }
+							  else{
+								$("#assets").val(0);
+							  }
+							
+                            
+                        });
 						//alert(arr_data[1]+" "+arr_data[2]+" "+arr_data[3]);
 						 change_map(arr_data[1]+"%"+arr_data[2]+"%6%"+arr_data[3]);
 						$("#assets").val(0);
@@ -797,7 +871,7 @@
 
 		$("#dict_offices").change(function(){
 			//alert($("#dict_offices").val());
-			$("#assets").val(0);
+			
 			if($(this).val()!=0){
 				
 			

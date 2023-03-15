@@ -214,19 +214,83 @@ border:solid 1px #33bbff;
       text-align:center;
      }
      
+   .my_ribbon_hide{
+    width:60px;
+    height:60px;
+    background:url('images/ribbon_shadow5.png')   no-repeat;
+    
+    background-position: center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+    position:absolute;
+    left:96.5%;
+    margin-left:-5px;
+    transition: transform 0.4s;
    
+    
+   }
+   .my_ribbon_hide:hover {
+     
+    transform: scale(1.09);
+    }
+   .filler{
+    width:100%;
+   
+    height:50px;
+    display:none;
+   }
+   .ribbon_label{
+      color:white;
+      font-weight: bold;
+      text-align:center;
+      font-size:12px;
+      margin-top:13px;
+   }
+   @media (max-width:1665px){
+    .my_ribbon_hide{
+      left:96%;
+    }
+     
+ 
+  }
+  @media (max-width:1310px){
+    .my_ribbon_hide{
+      left:95%;
+    }
+     
+ 
+  }
+  @media (max-width:1030px){
+    .my_ribbon_hide{
+      left:94%;
+    }
+     
+ 
+  }
    @media (max-width:900px){
      
      .modal-content {
        margin:20% auto;
      }
  
+     .my_ribbon_hide{
+      left:93%;
+    }
   }
   @media (max-width:800px){
      
      .modal-content {
        margin:30% auto;
      }
+ 
+  }
+  @media (max-width:740px){
+     
+    .my_ribbon_hide{
+      left:92%;
+    }
  
   }
   @media (max-width:700px){
@@ -236,12 +300,21 @@ border:solid 1px #33bbff;
      }
  
   }
+  @media (max-width:650px){
+     
+     .my_ribbon_hide{
+       left:91%;
+     }
+  
+   }
   @media (max-width:600px){
      
      .modal-content {
        margin:45% auto;
      }
- 
+     .my_ribbon_hide{
+       left:90%;
+     }
   }
   @media (max-width:600px){
      
@@ -255,18 +328,33 @@ border:solid 1px #33bbff;
         margin:60% auto;
        
       }
+      .my_ribbon_hide{
+       left:87%;
+     }
    }
    @media (max-width:400px){
     .modal-content {
         margin:70% auto;
         width:100%;
       }
+      .my_ribbon_hide{
+       left:85%;
+     }
+   }
+   @media (max-width:350px){
+    
+      .my_ribbon_hide{
+       left:83%;
+     }
    }
    @media (max-width:300px){
     .modal-content {
         margin:80% auto;
         width:100%;
       }
+      .my_ribbon_hide{
+       left:80%;
+     }
    }
    .logo{
     height:50px;
@@ -322,7 +410,7 @@ border:solid 1px #33bbff;
   </head>
   <body>
   
-          <img class="logo" src="images/dict_banner.png">
+          <img class="logo" src="images/dict_label2.png">
 <nav class="navbar">
       
         <?php
@@ -353,7 +441,7 @@ border:solid 1px #33bbff;
 
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
+         echo       "<label for='ac-1' id='home'><a href='home.php'><u>H</u>ome</a></label>";
          echo  "</div>";
 
          echo   "<div>";
@@ -439,13 +527,18 @@ border:solid 1px #33bbff;
         <img src="images/ger_small.png" class="img_right_gear4 rotate_counter">
         <img src="images/ger_small.png" class="img_right_gear5  rotate_clockwise">
         <img src="images/gear4.png" class="img_left_gear rotate_counter">
-        <img src="images/ger_small2.png" class="img_left_gear2 rotate_clockwise">
+        <img src="images/gear7.png" class="img_left_gear2 rotate_clockwise rotate">
         <img src="images/gear4.png" class="img_right_gear3 rotate_clockwise">
         <img src="images/small_dict_shadow.png" class="img_left_dict">
         
      
       </div>
     </section>
+    <div class="filler">
+      </div>
+    <div class="my_ribbon_hide" onclick="hide_show('#showcase','fast','filler')" >
+        <p class='ribbon_label'>HIDE</p>
+      </div>
     <div id="myModal" class="modal">
 
   <!-- Modal content -->

@@ -155,13 +155,73 @@ div.item p img{
 				margin-right:15px;
 				
 			}
-			#summary{
-				margin:auto;
-				margin-top:10px;
-			}
-			#summary p  {
 			
-				margin-bottom:5px;
+			
+			.welcome{
+				width:100%;
+				text-align:center;
+			}
+			.user_href{
+				text-decoration:none;
+				color:black;
+			}
+			.user_href:hover{
+				
+				color:#3C5B76;
+			}
+			.sum_box{
+				
+				
+				display:inline-block;
+				width:47%;
+			
+				height:45%;
+				
+				margin:4px;
+			}
+			.sum_box:nth-of-type(2):hover , .sum_box:nth-of-type(4):hover{
+				
+				background-color:#A0B2C4;
+				color:#0000;
+			}
+			.sum_box:nth-of-type(1):hover, .sum_box:nth-of-type(3):hover{
+				color:#0000;
+				background-color:#D9E0E7;
+			}
+			.sum_box p{
+				margin:0;
+				width:100%;
+				text-align:center;
+				
+			}
+			.sum_box p{
+				color:white;
+				font-weight: bold;
+			}
+			.sum_box p:nth-child(1){
+				margin-top:15px;
+				font-size:2.5vh;
+				
+				font-family: Arial;
+				
+			}
+			.sum_box p:nth-child(2){
+				margin-top:5px;
+				font-size:1.4vh;
+				
+				font-family: Arial;
+			}
+			.sum_box:nth-of-type(2), .sum_box:nth-of-type(4){
+				background-color:#627F9D;
+			}
+			.sum_box:nth-of-type(1),.sum_box:nth-of-type(3){
+				background-color:#8199B1;
+			}
+			.sidehead{
+				background-color:#DFEBDF;
+			}
+			.pannel{
+				background-color:#ffff;
 			}
 
 
@@ -175,7 +235,7 @@ div.item p img{
 .modal {
   display: none;
       }
-@media (max-width:1467px){
+@media (max-width:1583px){
 			.side{
 				display:inline-flex;
 			}
@@ -204,8 +264,16 @@ div.item p img{
 				display:block;
 			}
 		}
+		@media (max-width:1000px){
+			.sum_box{
+				
+				width:44%;
+				margin:4px;
+			}
+		}
 		@media (max-width:820px){
 			
+
 			.imgform-img p.iframhead, .imgform-img  select, input[type=text]{
 			font-size:95%;
 					}
@@ -215,6 +283,7 @@ div.item p img{
 			.sidebar{
 				display:block;
 			}
+			
 			.marginleft{
 				margin-left:0px;
 				
@@ -254,22 +323,39 @@ div.item p img{
 					echo $final_name;
 					?>
 					</h3>
-						<div id="panel3" class="pannel">
-						<h4 id="user"><?php echo "Welcome back ".$_SESSION["fname"]." ".$_SESSION["lname"]."!";  ?></h4>
+						<div id="panel3" class="pannel"><p class="welcome">Welcome back</p>
+						<h4 id="user"><a class="user_href" href="userprofile.php"><?php echo $_SESSION["fname"]." ".$_SESSION["lname"]."!";  ?></a></h4>
 						</div>
 				</div>
 
 				<div class="imgform-img radiusnone marginleft pannel_con">
 					<h3  onclick="test('#panel2','pannel')" class="sidehead">Assets Overview</h3>
-						<div id="panel2" class="pannel">
+						<div id="panel2" class="pannel" style="padding:5px;margin:auto;">
 							<?php echo "<input id='office_en' type='hidden' value='".encrypt($_SESSION["officeid"])."'>";?>
-							<table id="summary">
+							<div class="sum_box to_assetsmg">
+								
+								<p id="total_avail">####</p>
+								<p  >Available</p>
+							</div>
+							<div class="sum_box to_map" style="float:left">
+								
+								<p id="total_deloyed" >#### </p>
+								<p  >Deployed</p>
+								
+							</div>
+							<div class="sum_box to_assetsmg" style="float:left">
+								
+								<p id="total_receive">#### </p>
+								<p  >To be Received</p>
+								
+							</div>
+							<div class="sum_box to_assetsmg_total" >
+								
+								<p id="total_all">#### </p>
+								<p>Total</p>
 							
-								<tr><td><p class="lbls" id="lbl_total_avail">Available:</p><td><p id="total_avail">####</p>
-								<tr><td><p class="lbls"  id="lbl_total_deployed">Deployed:</p><td><p id="total_deloyed">#### </p>
-								<tr><td><p class="lbls"  id="lbl_total_receive">To be Received:</p><td><p id="total_receive">#### </p>
-								<tr><td><p class="lbls"  id="lbl_total_all"><b>Total:</b></p><td><b><p id="total_all">#### </p></b>
-							</table>
+							</div>
+							
 						
 						</div>
 				</div>
@@ -334,7 +420,7 @@ div.item p img{
 
         <div class="imgform-img" id="group2"style='border:none;'>
               <div class="imgform-img" id="georiskpannel">
-              <p onclick="test('#georisk','iframe')"  class="iframhead">PHIVOLCS GOERISK LIVE MONITORING</p>
+              <p onclick="test('#georisk','iframe')"  class="iframhead">PHIVOLCS GEORISK LIVE MONITORING</p>
                 <iframe id="georisk" style="border:none;width:100%; " src="https://www.pagasa.dost.gov.ph" ></iframe>
                 
               </iframe>
@@ -359,7 +445,7 @@ div.item p img{
 		function test(target,from){
 			var l=$(window).width();
 			if(from=="pannel"){
-				if(l<=1467 && l>820){
+				if(l<=1583 && l>820){
 			
 					$(".pannel").slideToggle("slow");
 				}else{
@@ -439,13 +525,23 @@ div.item p img{
 					
 		}
 
-
       $(document).ready(function(){
 	
 		var kk="";
 		 var alt=false;
 		 var ctrl=false;
-		 
+		
+		 $(".to_map").click(function(){
+			window.location="assetsmap.php";
+		 });
+		 $(".to_assetsmg").click(function(){
+			window.location="assets_mgt.php";
+		 });
+		 $(".to_assetsmg_total").click(function(){
+			window.location="assets_mgt.php#con_total";
+		 });
+			
+			
 		/* $(document).keydown(function(e) {
 			alert(e.key);
 		}); */

@@ -8,8 +8,11 @@
         </div>
         <div><img src="images/transparency-seal.png" class="footer-img"></div>
     </div>
+    <input type="hidden" class="butwa">
+    <input type="hidden" class="niyan" value=<?php echo"'".$_SESSION["officename"]."'";?>>
     </footer>
     <script>
+       hide_header_panel();
          <?php echo"/*".encrypt("THIS IS A COMMENT-The function is_true_false evaluates true or 
          false if there is a result in a given query.
          the function calls a function eval() which evaluate the string value passed inside eval,
@@ -166,12 +169,38 @@
             });
             
         }
+        function load_next_paginate(){
+           // console.log ($(".hd1").val());
+            var arr_data=to_array($(".hd1").text(),"sunod");
+            //console.log("From load next paginate cols: "+arr_data[0]);
+            //alert("From load next paginate "+arr_data[0]);
+            //console.log("From load next paginate table: "+arr_data[1]);
+           // alert(arr_data[1]);
+            var target=arr_data[5];
+            $.post("AJAX/loadtable_paginate.php", 
+            {
+                cols:arr_data[0],
+                start: $(".pag_opt").val(),
+                hdr:arr_data[3],
+                class:arr_data[4],
+                check: 1,
+                all:0,
+                col:arr_data[2],
+                table:arr_data[1]
+            }, function(data){
 
-        function global_load_table_paginate(my_cols,headers,chkbox,allchk,classes,target,item,href,next_word,table_n,cold_id){//item is for the elemnt to be encrypted
+                var arr_data=to_array(data,"sunod");
+                    $(target).html(arr_data[0]); 
+            });
+        }
+
+        function global_load_table_paginate(my_cols,headers,chkbox,allchk,classes,target,item,href,next_word,table_n,cold_id,my_start){//item is for the elemnt to be encrypted
+            //console.log("from  global loadt table paginate cols: "+my_cols);
+            //console.log("from  global loadt table paginate table: "+table_n);
             $.post("AJAX/loadtable_paginate.php", 
             {
                 cols:my_cols,
-                
+                start: my_start,
                 hdr:headers,
                 class:classes,
                 check: chkbox,
@@ -180,9 +209,10 @@
                 table:table_n
             }, 
             function(data){
-                var arr_data=to_array(data,"%");
+                var arr_data=to_array(data,"sunod");
                 $(target).html(arr_data[0]); 
-                $(target).after(create_pagination(my_cols,table,col_name,arr_data[1]));
+               //console.log(arr_data);
+                $(target).before(create_pagination(my_cols,table_n,cold_id,arr_data[1],headers,classes,target));
                 
                 if(item!=""){
                     enrycpt_each(item);
@@ -248,7 +278,8 @@
                    $("#disaster_affected").empty();
                     
                 }
-                if(  $("#form").val()!="0"){
+                if(  $("#form").val()!=
+                "0"){
                     enable_affected();
                   
                    }else{
@@ -407,6 +438,47 @@
                 }
             });
         }
+        function decrypt_one(source,target){
+            $.post("AJAX/mycodes.php",
+                   {
+                    command:"decrypt",
+                    values:source
+                   },
+                   function(data){
+                  var arr_data=to_array(data,"%");
+                    $(target).val(arr_data[0]);
+                  
+                    
+                   });    
+        }
+        function decrypt_one_compare_retrieve(source,target,val,what_to){
+            $.post("AJAX/mycodes.php",
+                   {
+                    command:"decrypt",
+                    values:source
+                   },
+                   function(data){
+                    //console.log(data);
+                  var arr_data=to_array(data,"%");
+                    if(val==arr_data[0]){
+                        var size=sizeof(arr_data);
+                        $(target).val(arr_data[size-1]);
+                        if(what_to=='regions'){
+                            $("#regions").val(source);
+                            $("#regions").change();
+                           // console.log($('#dict_offices option'));
+                           
+
+                        }
+                        if(what_to=='offices'){
+                            $("#dict_offices").val(source);
+                            $("#dict_offices").change();
+                        }
+                       
+                    }                
+                 
+                   });    
+        }
 
         function enrycpt_each(target){
 
@@ -426,6 +498,33 @@
                    });    
             }); 
         }
+        function hide_header_panel(){
+            var arr_data=to_array(window.location.href,"/");
+            if(arr_data[4]!="home.php"){
+                $(".filler").show();
+                $(".ribbon_label").text("SHOW");
+                $("#showcase").hide();
+            }
+                
+           
+        }
+        function hide_show(target,speed,execute){
+            if(execute=="filler"){
+            if($(target).is(":hidden")){
+                console.log("true");
+                $(".filler").hide("fast");
+                $(".ribbon_label").text("HIDE");
+            }
+            else{
+                console.log("false");
+                $(".filler").show("fast");
+                $(".ribbon_label").text("SHOW");
+            }
+          }
+          $(target).toggle(speed);
+         
+          
+      }
         function slide(target){
           
 			$(target).slideToggle("slow");
@@ -439,9 +538,7 @@
                 image.fadeOut("fast",function(){
                     $(imganimate).attr("src",imgtrue);
                     image.fadeIn("fast");
-                });
-				
-			
+                });		
 			}
 			else{
                 var image=$(imganimate);
@@ -572,20 +669,23 @@
         }
         
 
-        function create_pagination(my_cols,table,col_name,arr_ids){
+        function create_pagination(my_cols,table,col_name,arr_ids, headers,classes,target){
+            //console.log("From create Pagination table source: "+table);
+            //console.log("From create Pagination table source: "+my_cols);
+            $(".paginate").remove();
             var ids=to_array(arr_ids," ");
-            var body="<div class='input_wrapper'>\
-                            <input type='button' value='Prevous' class='prev_paginate'>\
-                            <input type='button' value='Prevous' class='next_paginate'> \
+            var body="<div class='input_wrapper paginate'>\
+                            <input type='button' value='<<' class='prev_paginate sub-bttn'> Page \
                             <select class='pag_opt'>";
                             var content_select="";
                             var size=sizeof(ids);
                             for(let i=0; i<size;i++){
-                                content_select+="<option value="+ids[i]+">page "+(i+1)+"</option>";
+                                content_select+="<option value="+ids[i]+">"+(i+1)+"</option>";
                             }
-                            var body2="</select> <p> of "+size+"\
-                            <input type hidden class='hd1' value='"+my_cols+"%"+table+"%"+col_name+"'><div>";
-                           return body+contect_select+body2;
+                            var body2="</select><p>of "+size+"\
+                             <input type='button' value='>>' class='next_paginate sub-bttn'>\
+                             <p  class='hd1' style='display:none;' >"+my_cols+" sunod "+table+" sunod "+col_name+" sunod "+headers+" sunod "+classes+" sunod "+target+"<p><div>";
+                           return body+content_select+body2;
 
         }
         function loadtable_decrypt(str,headers,chkbox,allchk, target,chkbox_name,with_chkbox,elem_chk){
@@ -611,6 +711,21 @@
 			}
 			);
 		}
+       // console.log(generate_colors(7));
+        function generate_colors(size){
+            var arr_col=[];
+            
+            for(let i=0;i<size;i++){
+                    var colorR=Math.floor((Math.random() *256));
+                    var colorG=Math.floor((Math.random() *256));
+                    var colorB=Math.floor((Math.random() *256));
+                    var color="rgb("+colorR+","+colorG+","+colorB+")";
+                    arr_col.push(color);
+
+                
+            }
+            return arr_col;
+        }
         function ajax(values){
             var params=to_array(values);
             $.post(params[0],{
@@ -658,7 +773,43 @@
         }
         ";
         ?>
-      
+      $(document).on("click",".next_paginate",function(){
+           var pag_opt=parseInt($(".pag_opt option:selected").text());
+           var paginate_size=0
+            $.each($(".pag_opt option"),function(){
+                paginate_size++;
+            });
+            var next;
+           if(pag_opt < paginate_size){
+            next=$(".pag_opt option:selected").next().val();
+           // alert(next);
+           $(".pag_opt").val(next);
+           load_next_paginate();
+           }
+          
+      });
+
+      $(document).on("click",".prev_paginate",function(){
+           var pag_opt=parseInt($(".pag_opt option:selected").text());
+           var paginate_size=0
+            
+            var prev;
+           if(pag_opt > 1){
+            prev=$(".pag_opt option:selected").prev().val();
+           // alert(next);
+           $(".pag_opt").val(prev);
+           load_next_paginate();
+          
+           }
+           
+      });
+      $(document).on("change",".pag_opt",function(){
+          
+           load_next_paginate();
+          
+           
+           
+      });
         
     </script>
     

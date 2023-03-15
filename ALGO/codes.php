@@ -754,8 +754,8 @@ function loadlist($str, $col, $header,$label){
         echo "<li id='".$header."' style='list-style-type: none; font-weight: bold;'><p>".$label."</p></li>";
         $keys=",%.%:%/%\%-%_%)%(";
         foreach($data as $row){
-           echo "<li> ".replace($keys,shorten($row[$col[0]]))."<br>
-           (".replace($keys,shorten($row[$col[1]]))."):&nbsp".replace($keys,shorten($row[$col[2]]))."</li>";
+           echo "<li> 
+           ".replace($keys,shorten($row[$col[1]])).":&nbsp".replace($keys,shorten($row[$col[2]]))."</li>";
         }
     
     }
@@ -767,7 +767,7 @@ function total($str, $col){
     
     if($data!=null){
         foreach($data as $row){
-          echo "<p style=' width:100%;margin: auto; text-align:center;'>Total: ".$row[$col]."</p>";
+          echo "<p class='assetstotal' style=' width:100%;margin: auto; text-align:center;'>Total: ".$row[$col]."</p>";
         }
     
     }

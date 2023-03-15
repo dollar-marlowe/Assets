@@ -244,7 +244,7 @@ echo "var sess_id='".$_SESSION["id"]."';";
 ?>
           // Listener for page 
           $(document).ready(function(){
-
+          
             $("#footer").hide(); 
             
             // Checks whether an image is selected
