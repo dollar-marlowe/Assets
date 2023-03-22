@@ -6,6 +6,7 @@
     $frmsubmit=isset($_POST['submit']);
     include "COMPONENTS/reroute.php";
     
+    auth_validatation(2);
     include "header.php";
     include "officeform.php";//body
     include "about.php";

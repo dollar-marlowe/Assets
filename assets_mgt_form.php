@@ -147,8 +147,16 @@
 				
 			}
 			.form-container{
-				width:50%;
+				width:100%;
 				font-size:18px;
+			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
+				width:50%;
+				margin:auto;
 			}
 			
 			table.asset{
@@ -191,9 +199,13 @@
 			p.head{
 				font-size:23px;
 			}
-			.form-container{
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
 				width:70%;
-				font-size:18px;
+				margin:auto;
 			}
 			
 		}
@@ -213,9 +225,13 @@
 			p.head{
 				font-size:23px;
 			}
-			.form-container{
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
 				width:75%;
-				
+				margin:auto;
 			}
 		}
 		@media (min-width:453px){
@@ -239,9 +255,13 @@
 			table.asset th:nth-child(6), table.asset td:nth-child(6)				{
 				display:none;
 			}
-			.form-container{
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
 				width:90%;
-				
+				margin:auto;
 			}
 			.hidden_list{
 				display:block;
@@ -252,16 +272,19 @@
 			.charts, .lbl_canvas{
 				display:none;
 			}
-
 		}
 		@media (max-width:390px){
 			table.asset {
 				
 				font-size:10px;	
 			}
-			.form-container{
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
 				width:100%;
-				
+				margin:auto;
 			}
 			
 		}
@@ -369,6 +392,10 @@
 			width:fit-content;
 			margin:auto;
 		}
+		article.new_pannel_body{
+			padding:10px;
+		}
+		
 		
 	
 		
@@ -516,10 +543,7 @@
 		  
 				
 				
-				<br>
-					<!-- this ection if for table--> 
-				
-				<br>
+			
         </div>
 		<!-- this section is for the form transfer and deploy--> 
 		<div class="form-container">
@@ -585,7 +609,7 @@
 			$(".assetstotal,.divide2").hide();
 			$("#category option:nth-child(1)").text("All");
 			$("#status").val("available");
-			status_cat_change()
+			status_cat_change();
 			$('#acc2').slideUp("slow");
 		
 			$(".transfer").css("display","none");
@@ -648,38 +672,80 @@
 				var xValues=[];
 				var yValues=[];
 				var size=sizeof(data);
-				var bar_colors=generate_colors(size-1);
+				
 				for(let i=1;i<size;i++){
 					total+=parseInt(data[i][1]);
 					yValues.push(data[i][1]);
 					xValues.push(data[i][1]+" "+data[i][0]);
 
 				}
+				var start_at_0=false;
+				var bar_colors=generate_colors(sizeof(xValues));
+				if(chart_type=="bar" || chart_type=="line" || chart_type=="scatter" || chart_type=="bubble" ){
+							
 				
-				new Chart(target,{
-					type:chart_type,
-					data:{
-						labels: xValues,
-						datasets:[{
-							backgroundColor:bar_colors,
-							data: yValues
+					new Chart(target,{
+						type:chart_type,
+						data:{
+							labels: xValues,
+							datasets:[{
+								backgroundColor:bar_colors,
+								data: yValues
 
-						}]
-					},
-					options: {
-						legend: {display: show_legend},
-						title: {
-						display: false,
-						text: title1
+							}]
+						},
+						options: {
+							legend: {display: show_legend},
+							title: {
+							display: false,
+							text: title1,
+							
+							},
+							
+							scales: {
+								yAxes: [{
+									ticks: {
+									beginAtZero: true
+									}
+								}]
+								
+								}
 						}
-					}
-				});
-				var add="<div style='width:100%;display:block;margin:atuo;margin-bottom:20px;' onclick=slide('#"+target+"')><label class='lbl_canvas'> \
+						
+						
+					});
+			}else{
+				new Chart(target,{
+						type:chart_type,
+						data:{
+							labels: xValues,
+							datasets:[{
+								backgroundColor:bar_colors,
+								data: yValues
+
+							}]
+						},
+						options: {
+							legend: {display: show_legend},
+							title: {
+							display: false,
+							text: title1,
+							
+							}
+						}
+						
+						
+					});
+
+			}
+			
+				var add="<div class='Div_"+title1.replace(" ","_")+"' style='width:100%;display:block;margin:atuo;margin-bottom:20px;')><label class='lbl_canvas'> \
 				"+total+" " +title1+"</label></div>";
 							
 				$("#"+target).css({"width":"95%","border":"1px solid #ddd","margin":"auto"}).before(add);
 
 			}
+
 			function get_li(target){
 				var size=0;
 				var arr_data=[];
@@ -772,6 +838,12 @@
 				function(data){
 					$(idname).empty();
 					$(idname).html(data);
+					make_chart("availCharts",get_li("#listavail li"),"Available Assets","doughnut",true);
+					make_chart("deployedCharts",get_li("#listdep li"),"Deployed Assets","doughnut",true);
+					make_chart("totalassetsCharts",total_assets_to_array(),"Total Assets","bar",false);
+					make_chart("receiveCharts",get_li("#listreceive li"),"Receivable Assets","doughnut",true);
+			
+
 				});
 
 			}
@@ -791,16 +863,11 @@
 				tblbl=0;
 				$("#errlbl").remove();
 				$("#errtbl").remove();
-				var headers=" %ASSET NUMBER%SERIAL%ITEM NAME%CATEGORY%BRAND%DATE AQUIRED%STATUS";
-				var str="select `assetowner`.`id` as id,`assets`.`assetid` as  `assetid`, \
-				`assets`.`serial` as `serial`, assets.name as name, assets.category as category,\
-				 assets.brand as brand, assetowner.date_aquired as `date`, \
-				 `assets`.`status` as `status` from assets, assetowner \
-				 where assetowner.assets_id=assets.id and `assets`.`status`='Available' and assetowner.office_id ="+$("#office").val();				
 				$("#category").val(0);
-				$("#category").attr("disabled","disabled");
-				$("#status").val("available");
-				loadtable(str,headers,1,0);
+				
+				
+				status_cat_change();
+				//status_cat_change();
 				
 			}
 			function itemselected(){
@@ -815,6 +882,30 @@
 					return true;
 				}
 			}
+			$(document).on("click",".all",function(){
+				if($(".all").is(":checked")){
+					$(".item").prop("checked",true);
+				}else{
+					$(".item").prop("checked",false);
+				}
+			
+			});
+			$(document).on("click",".Div_Deployed_Assets",function(){
+				hide_show_partner("#deployedCharts","#availCharts",1600,"slow");
+				
+			});
+			$(document).on("click",".Div_Available_Assets",function(){
+				hide_show_partner("#availCharts","#deployedCharts",1600,"slow");
+				
+			});
+			$(document).on("click",".Div_Receivable_Assets",function(){
+				hide_show_partner("#receiveCharts","#totalassetsCharts",1600,"slow");
+				
+			});
+			$(document).on("click",".Div_Total_Assets",function(){
+				hide_show_partner("#totalassetsCharts","#receiveCharts",1600,"slow");
+				
+			});
 			//events for retrieving locations: region, province, municipalit, brgy
 			$("#region").change(function(){
 				if($("#region").val()!='0'){
@@ -952,7 +1043,7 @@
 						else{
 							$("#receive").css("display","none");
 						}
-						global_load_table_paginate(table_cols,headers,1,0,"all%item",".asset","","","",table_source,"id",0);
+						global_load_table_paginate(table_cols,headers,1,1,"all%item",".asset","","","",table_source,"id",0);
 						//console.log("Asfter call "+table_source);
 						//loadtable(str,headers,1,0);	
 			}
@@ -1025,10 +1116,7 @@
 						loadlist(str,cols,"#listreceive","toreceive","To Receive");
 						calculate_total("select count(id) as id from assetowner where office_id="+$("#office").val(),"id");
 						clear_mgt_forms();	
-						make_chart("availCharts",get_li("#listavail li"),"Available Assets","doughnut",true);
-						make_chart("deployedCharts",get_li("#listdep li"),"Deployed Assets","doughnut",true);
-			
-
+					
 			}
 			$("#sbmmgt").click(function(){
 				var reload=false;

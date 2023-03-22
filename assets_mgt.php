@@ -6,7 +6,7 @@
 
     include "COMPONENTS/reroute.php";
 
-
+    auth_validatation(1);
     include "header.php";
     include "assets_mgt_form.php";//content
     include "about.php";

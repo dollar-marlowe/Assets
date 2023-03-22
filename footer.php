@@ -501,23 +501,44 @@
         function hide_header_panel(){
             var arr_data=to_array(window.location.href,"/");
             if(arr_data[4]!="home.php"){
-                $(".filler").show();
+                $(".home_filler").show();
                 $(".ribbon_label").text("SHOW");
                 $("#showcase").hide();
             }
                 
            
         }
-        function hide_show(target,speed,execute){
-            if(execute=="filler"){
+        function hide_show_partner(target1,target2,leght,speed){
+				var l=$(window).width();
+				
+					if(l>1600){
+						if($(target1).is(":hidden")){
+							$(target2).show(speed);
+							$(target1).show(speed);
+						}
+						else{
+							$(target2).hide(speed);
+							$(target1).hide(speed);
+						}
+					}
+					else{
+						$(target1).toggle(speed);
+					}
+			}
+        function hide_show_ony(target,speed){
+            $(target).toggle(speed);
+        }
+        function hide_show_execute(target,speed,execute){
+            if(execute=="filler"){//the filler execute value is specific to the header pannel
+                //'can still add a code here to be executed specific for an element
             if($(target).is(":hidden")){
                 console.log("true");
-                $(".filler").hide("fast");
+                $(".home_filler").hide("fast");
                 $(".ribbon_label").text("HIDE");
             }
             else{
                 console.log("false");
-                $(".filler").show("fast");
+                $(".home_filler").show("fast");
                 $(".ribbon_label").text("SHOW");
             }
           }

@@ -50,6 +50,7 @@
       .showcase-area{
         height:250px;
        background:none;
+      
       }
 
       
@@ -216,8 +217,8 @@ border:solid 1px #33bbff;
      
    .my_ribbon_hide{
     width:60px;
-    height:60px;
-    background:url('images/ribbon_shadow5.png')   no-repeat;
+    height:20px;
+    background:url('images/ribbon_shadow7.png')   no-repeat;
     
     background-position: center;
   -webkit-background-size: contain;
@@ -227,18 +228,23 @@ border:solid 1px #33bbff;
     position:absolute;
     left:96.5%;
     margin-left:-5px;
-    transition: transform 0.4s;
+   overflow:hidden;
+    transition: transform 1s;
    
     
    }
    .my_ribbon_hide:hover {
-     
-    transform: scale(1.09);
+    height:60px;
+   
     }
-   .filler{
+    .my_ribbon_hide:hover  .ribbon_label{
+  display:block;
+   
+    }
+   .home_filler{
     width:100%;
    
-    height:50px;
+    height:47px;
     display:none;
    }
    .ribbon_label{
@@ -247,7 +253,33 @@ border:solid 1px #33bbff;
       text-align:center;
       font-size:12px;
       margin-top:13px;
+      display:none;
+      transition: transform 1s;
    }
+   .navbar-container input[type="checkbox"]{
+    top:0px;
+   }
+   .imgform-container{
+    border:none;
+    background-color:#eee;
+   }
+   #imgform{
+    background-color:#eee;
+   }
+   .imgform-img{
+    margin-right:20px;
+    background-color:#ffff;
+   }
+   .form-container{
+    border: solid 1px #C6C6C6;
+    background-color:#ffff;
+   }
+   .new_pannel{
+    border: solid 1px #C6C6C6;
+   }
+   .bg_white{
+			background-color:#fff;
+		}
    @media (max-width:1665px){
     .my_ribbon_hide{
       left:96%;
@@ -330,6 +362,7 @@ border:solid 1px #33bbff;
       }
       .my_ribbon_hide{
        left:87%;
+       margin-top:-10px;
      }
    }
    @media (max-width:400px){
@@ -462,7 +495,7 @@ border:solid 1px #33bbff;
          echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
-
+         if($_SESSION["auth_level"]>=3){
          echo "<div>";
          echo       "<input id='ac-5' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-5'><u>E</u>TC</label>";
@@ -472,14 +505,15 @@ border:solid 1px #33bbff;
                           <a href=''>ETC <u>D</u>eactivation</a>"; 
          echo       "</article>";
          echo   "</div>";
+         }
         
-
+          if($_SESSION["auth_level"]>=3){
         
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
-         if( $_SESSION["auth_level"]>2){
+     
          echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
          echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
          echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
@@ -534,9 +568,9 @@ border:solid 1px #33bbff;
      
       </div>
     </section>
-    <div class="filler">
+    <div class="home_filler">
       </div>
-    <div class="my_ribbon_hide" onclick="hide_show('#showcase','fast','filler')" >
+    <div class="my_ribbon_hide" onclick="hide_show_execute('#showcase','fast','filler')" >
         <p class='ribbon_label'>HIDE</p>
       </div>
     <div id="myModal" class="modal">
@@ -557,6 +591,8 @@ border:solid 1px #33bbff;
 
 </div>
       <script>
+        <?php echo "
+        var lvl=".$_SESSION["auth_level"].";";?>
         var luwas=false;
           var idleMax = 15; // Logout after 10 minutes of IDLE
           var idleTime = 0;
@@ -760,6 +796,7 @@ border:solid 1px #33bbff;
                     }
                    
                     if (e.key === "O" || e.key === "o"){
+                      if(lvl>=3){
                       $(id_assets).prop("checked",false);
                       $(id_etc).prop("checked",false);
                       $(id_profile).prop("checked",false);
@@ -768,8 +805,11 @@ border:solid 1px #33bbff;
                         }else{
                           $(id_office).prop("checked",true);
                         }
+                      }
                     }
+                  
                     if (e.key === "E" || e.key === "e"){
+                      if(lvl>=3){
                       $(id_assets).prop("checked",false);
                       $(id_office).prop("checked",false);
                       $(id_profile).prop("checked",false);
@@ -779,6 +819,7 @@ border:solid 1px #33bbff;
                           $(id_etc).prop("checked",true);
                         }
                     }
+                  }
                  
                     if (e.key === "l" || e.key === "L"){
                       window.location="logout.php";

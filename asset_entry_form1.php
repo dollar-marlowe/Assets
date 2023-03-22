@@ -31,9 +31,9 @@
 		
 		.imgform-img{
 			width:100%;
-			margin-top:20px;
-			padding-left:10px;
-			padding-right:10px;
+			
+			padding:10px;
+			border: solid 1px #C6C6C6;
 			
 
 		}
@@ -42,9 +42,9 @@
 		}
 		
 		.imgform-img img{
-			width:90%;
+			width:100%;
 			margin:auto;
-			height:300px;
+			
 		}
 		.form-container{
 			width:60%;
@@ -133,12 +133,19 @@
 	}
 	.new_sub{
 		width:95%;	
+		margin:auto;
 	}
 	
 
 		/*Media Queries */
 	
+		.input_wrapper{
 			
+			width:fit-content;
+			margin-top:5px;
+			margin:auto;
+			padding-bottom:10px;
+		}
 			.imgform-img p{
 				display:inline;
 				width:fit-content;
@@ -150,8 +157,32 @@
 				display:block;
 				
 			}
+			
+			.form-container{
+				width:100%;
+			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea
+						{
+				width:65%;
+				margin:auto;
+			}
 			.imgform-img{
-				padding-top:40px;
+				padding:0px;
+			}
+			.divide2 {
+				margin:auto;
+			}
+			#assetheader{
+				margin:auto;
+				text-align:center;
+				
+			}
+			#imgform h2{
+				font-size: 1.9rem;
 			}
 		}
 		@media (max-width:820px){
@@ -171,11 +202,28 @@
 				padding-left:10px;
 				padding-right:10px;
 			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea
+						{
+				width:80%;
+				
+			}
 			
 			
 		}
 		@media (max-width:600px){
-			
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea
+						{
+				width:100%;
+				
+			}
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:15px;
 			}
@@ -193,7 +241,27 @@
 				text-align:left;
 			}
 			
+			.input_wrapper > *{
+				display:block;
+				margin:auto;
 
+			}
+			.input_wrapper div {
+				width:fit-content;
+				margin:auto;
+			}
+		}
+		@media (min-width:601px){
+			.input_wrapper > *{
+				display:inline-block;
+				margin:auto;
+
+			}
+			.input_wrapper div {
+				width:fit-content;
+				margin:auto;
+			}
+			
 		}
 		@media (max-width:763px){
 			.new_pannel_body > *{
@@ -276,11 +344,12 @@
 					</article>	
 				</div>
 			</div>
-			
-			<input type="submit" value="Save" id='save-items' class='set sub-bttn'/>
+			<div class="input_wrapper" >
+			<div><input type="submit" value="Save" id='save-items' class='set sub-bttn'/>
 			<input type="submit" value="Clear" id='clear-sub' class='set sub-bttn'/>
-			<p class="set">All sub items has same data &nbsp <input type="checkbox" id="allinput" ></p>
-			<br><br>
+			</div>
+			<div class="set">All sub items has same data &nbsp <input type="checkbox" id="allinput" ></div>
+	</div>
 		
 	</div >
 		<!-- is for asset inventory--> 
@@ -1008,18 +1077,24 @@
 			function windsize(){
 				var l=$(window).width();
 				if(l<1267){
+					$("#img").hide();
 					$(".mainhead").remove();
-					$(".divide2").remove();
+					
 					$("#assetsub").before("<h2 class='mainhead'>Assets Data Entry</h2>");
-					$(".mainhead").after(" <hr class='divide2' style='margin-bottom:15px;'>");
-					$("#clear-sub").after(" <hr class='divide2' style='margin-top:15px'>");
+				
 						if($("#type").val()=="single"){
 							$("#assetheader").text("");
 						}
 						if($("#type").val()=="set"){
+							$(".divide2").remove();
+							$(".mainhead").after(" <hr class='divide2 set' style='margin-bottom:15px;'>");
+					
 							$("#assetheader").text("Inventory Set Form");
 						}
 				}else{
+					if($("#type").val()=="single"){
+					$("#img").show();
+					}
 					$(".mainhead").remove();
 					$(".divide2").remove();
 					$("#assetheader").text("Assets Data Entry");

@@ -9,7 +9,9 @@
 			font-weight:700;
 		}
 		
-	
+		.imgform-img,.pannel_con {
+			border: solid 1px #c6c6c6;
+		}
 		.imgform-img p{
 			margin-left:10px;
 			margin-bottom:10px;
@@ -27,10 +29,12 @@
       
 
 		}
-		
+		#imgform {
+			padding-top:3.8rem;
+		}
     .imgform-img #map{
       height:800px;
-	  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+	  
     }
 		.imgform-img img{
 			width:15px;
@@ -51,7 +55,7 @@
 		.sidebar{
 			width:50%;
 		padding:10px;
-     
+		padding-top:0px;
 		display:inline-block;
 		margin:auto;
 		margin-top:0px;
@@ -162,7 +166,7 @@
 				border-collapse:collapse;
 			}
 			.avail_sum tr td, .dep_sum tr td{
-				border-bottom:solid 1px #C6C6C6;
+				border-bottom: 1px #C6C6C6;
 				padding:5px;
 			}
 			.avail_sum tr, .dep_sum tr{
@@ -179,7 +183,8 @@
 
 			}
 			.class_dep, .class_filter_pannel{
-				background-color:#eaeaeaab;
+				background-color:#fff;
+				border-bottom: solid 1px #C6C6C6;
 			}
 			.dep_sum tr{
 				
@@ -204,7 +209,9 @@
 			#print{
 				margin-left:10px;
 			}
-
+			.tr_head th{
+				text-align:left;
+			}
 		@media (max-width:1200px){
 			.side{
 				display:inline-flex;
@@ -368,7 +375,7 @@
 				</div>
 			</div>
     
-        <div class="imgform-img" style='border:none;'>
+        <div class="imgform-img" >
               <div class="imgform-img " id="map">
               <p>Assets map</p>
                
@@ -729,6 +736,8 @@
 			$("#select_pannel").hide();
 			$("#footer").hide();
 			$(".leaflet-tooltip").hide();
+			$(".home_filler,.my_ribbon_hide").hide();
+
 			var final_w=0;
 			//$("#filler").remove();
 			var map_height=$(".imgform-img #map").css("height");
@@ -800,7 +809,8 @@
 			$("#select_pannel").show();
 			$("#footer").show();
 			$(".filler").remove();
-
+			$(".my_ribbon_hide").show();
+			hide_header_panel();
 		});
 
 		$("#regions").change(function(){

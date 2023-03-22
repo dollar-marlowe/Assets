@@ -11,6 +11,8 @@
 	
 		.imgform-img p.iframhead{
 			margin-left:10px;
+			width:100%;
+			text-align:center;
 			margin-bottom:10px;
 		
 			font-size:18px;
@@ -22,10 +24,20 @@
 		.imgform-img,.imgform-img1{
 			width:100%;
 		padding:10px;
-      border:1px solid #ddd;
-      border-radius:20px;
-
+      border:1px solid #c6c6c6;
+    background-color:#eee;
 		}
+		.pannel_con{
+			background-color:#fff;
+		}
+		.iframes{
+			background-color:#fff;
+			margin-bottom:15px;
+		}
+		.iframes p:hover{
+			text-decoration:underline;
+		}
+		
 		
     .imgform-img iframe{
       height:600px;
@@ -79,21 +91,33 @@
 				
 			}
 			#hide_show {
-    border: 1px solid #ddd;
-	background-color:white;
+				background:url('images/ribbon_shadow7.png')   no-repeat;
+    
+    background-position: center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
     padding: .5em;
-  width:fit-content;
+  width:60px;
+  height:60px;
+  text-align:center;
+  
+  color:white;
 
 position:absolute;
-	  transform: rotate(90deg);
+	  transform: rotate(-90deg);
 	  
 	  margin:auto;
 	  margin-top:25px;
-	  margin-left:-9px;
+	  margin-left:-40px;
+	  transition:  0.4s;
+	  
 
 }
 #hide_show:hover{
-	background-color:#ddd;
+	color:#4dff4d;
+	margin-left:-9px;
 }
 div.item{
 	display:inline-block;
@@ -218,14 +242,12 @@ div.item p img{
 				background-color:#8199B1;
 			}
 			.sidehead{
-				background-color:#DFEBDF;
+				background-color:#fff;
+				border-bottom:solid 0.8px #ddd;
 			}
 			.pannel{
 				background-color:#ffff;
 			}
-
-
-
 		
 #user{
 	margin:auto;
@@ -262,6 +284,9 @@ div.item p img{
 			}
 			.block{
 				display:block;
+			}
+			.imgform-img{
+				margin-right:0PX;
 			}
 		}
 		@media (max-width:1000px){
@@ -361,7 +386,7 @@ div.item p img{
 				</div>
 
 				<div class="imgform-img radiusnone  marginleft pannel_con" >
-					<h3 onclick="test('#panel1','pannel')" class="sidehead">Tracker Pannels</h3>
+					<h3 onclick="test('#panel1','pannel')" class="sidehead">Tracker Panels</h3>
 					<div id="panel1" class="pannel">
 							<div class="item_container">
 								<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
@@ -396,8 +421,8 @@ div.item p img{
 
       <div class="imgform-img " id="group1" style='border:none;'>
 	  
-              <div class="imgform-img block" id="windypannel">
-                <p onclick="test('#windy','iframe')" class="iframhead">&nbsp &nbsp WINDY.COM LIVE MONITORING</p>
+              <div class="imgform-img block iframes" id="windypannel">
+                <p onclick="test('#windy','iframe')" class="iframhead">WINDY.COM LIVE MONITORING</p>
 			
                 <iframe style="border:none;width:100%; " src="https://embed.windy.com/embed2.html?lat=9.709&lon=123.750&
                   detailLat=9.709&detailLon=123.750&width=650&height=450&zoom=5&level=surface&overlay=rain&product
@@ -408,7 +433,7 @@ div.item p img{
 
               </div>
 
-              <div class="imgform-img block" id="floodpannel">
+              <div class="imgform-img block iframes" id="floodpannel">
               <p onclick="test('#flood','iframe')"  class="iframhead">DOST FLOOD DAM INFROMATION LIVE MONITORING</p>
 			  
                 <iframe id="flood"style="border:none;width:100%; " src="https://bagong.pagasa.dost.gov.ph/flood#dam-information" ></iframe>
@@ -419,14 +444,14 @@ div.item p img{
         </div>
 
         <div class="imgform-img" id="group2"style='border:none;'>
-              <div class="imgform-img" id="georiskpannel">
+              <div class="imgform-img iframes" id="georiskpannel">
               <p onclick="test('#georisk','iframe')"  class="iframhead">PHIVOLCS GEORISK LIVE MONITORING</p>
                 <iframe id="georisk" style="border:none;width:100%; " src="https://www.pagasa.dost.gov.ph" ></iframe>
                 
               </iframe>
 
               </div>
-              <div class="imgform-img" id="covidpannel">
+              <div class="imgform-img iframes" id="covidpannel">
               <p onclick="test('#covid','iframe')"  class="iframhead">DOH-COVID19 LIVE MONITORING</p>
                 <iframe id="covid"style="border:none;width:100%;"
                 src="https://public.tableau.com/views/COVID-19CasesandDeathsinthePhilippines_15866705872710/Home?

@@ -4,7 +4,7 @@
     include "ALGO/codes.php";
    
     include "COMPONENTS/reroute.php";
-
+    auth_validatation(1);
     include "header.php";
     include "assetsmap_body.php";
     include "about.php";
