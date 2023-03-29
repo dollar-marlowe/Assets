@@ -428,7 +428,6 @@
 
 		}
 
-
         .pannel_holder .pannel_show_card{
 			width:65%;
 			min-height: 400px;
@@ -438,27 +437,31 @@
             justify-content: center;
             box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
 		}
+
 		.pannel_holder_frame{
 			width:100%;
+			/* margin: 1%; */
 			display: flex;
-			align-items: baseline;
+			align-items:baseline;
 			/* margin-top:5px; */
             justify-content: center;
-
+			overflow:auto;
 		}
 
 		.pannel_holder_frame .pannel_show_iframe{
 			width:45%;
-			margin:1%;
+			margin: 1% 1%;
+			padding: 10px;
 			justify-content: center;
-            /* box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57); */
+            box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
+			overflow: hidden;
 		}
 
 		.pannel_holder .pannel_holder_hf{
 			margin:1%;
 			display: flex;
 			/* justify-content: center; */
-			overflow: hidden;
+			/* overflow: hidden; */
 			align-items:flex-start;
 
 		}
@@ -467,8 +470,9 @@
 			width: fit-content;
 			display: block;
 			justify-content: center;
-			/* overflow:auto; */
-			min-height: 100%;
+			overflow:hidden;
+			height: inherit;
+			/* min-height: 100%; */
 
 		}
 
@@ -636,11 +640,22 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     }
+	
+	#map-container2 {
+		position: relative;
+		width: 100%;
+		height: 700px;
+		justify-content: center;
+		}
+	#map2 {position: absolute; top: 0; right: 0; bottom: 0; left:0; margin: 2px; }
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+<script src="https://cdn.maptiler.com/maplibre-gl-js/v2.4.0/maplibre-gl.js"></script>
+  <link href="https://cdn.maptiler.com/maplibre-gl-js/v2.4.0/maplibre-gl.css" rel="stylesheet" />
 
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
 <section id="station_entry_form" style="size: letter;">
@@ -662,57 +677,59 @@
 
 						<!-- for HF Log -->
 						<div class="pannel_holder" id = "hf_log_div">
-							<p class="label" style="color:white; background-color:lightcoral"><label style="font-size:21px; width:100%;">HF Stations Log</label></p>
-								<div class="pannel_holder_hf">
-									<div class="pannel_show_card" style="width: 35%;">
-										<div class="join_con">
+							<p class="label" style="color:white; background-color:lightcoral;"><label style="font-size:21px; width:100%;">HF Stations Log</label></p>
+								<div class="pannel_holder_hf" style="width:97.5%;height:800px;">
+									<div class="pannel_show_card" style="width:50%; min-height:750px; max-height:750px;">
+										<div class="join_con" style="height:700px;">
 											<div>
-												<p class="label"><label><b>HF Station Today's Log Counts</b></label></p>
-												<p class="label_show_card"><label ><span style="font-size: 20px;" id="span_counter_total"></span> ENTRIES</label></p>
+												<p class="label"><label><b>HF Stations Daily Monitoring</b></label></p>
+												<p class="label_show_card"><label ><span style="font-size: 20px;" id="span_counter_total"></span> REPORTED</label></p>
 											</div>
 												<br>
 											<div>
-												<p class="label"><label><b>HF Station Bar Chart by Weather</b></label></p>
-												<canvas id="myChart" style="width:90%;max-width:250px"></canvas>
+												<p class="label"><label><b>HF Stations Bar Chart by Weather</b></label></p>
+												<canvas id="myChart" style="width:100%; max-width:100%"></canvas>
+											</div>
+											<br>
+											<div style="border:solid 2px lightblue;">
+												<p class="label"><label ><b>Monitored HF Stations</b></label></p>
+												<ul id="list_station_log" class="columns"style="font-size:11px; text-align:left; margin: 1px;">
+													<?php
+														$today = date("Y-m-d");
+														$str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'";
+														loadstationlist_count_log($str, "station_name", "location_region", "hf_log_id", "station_name");
+													?>
+												</ul>
 											</div>
 										</div>
 									</div>
-
-									<div class="pannel_show_card"  style="width: 30%; display:block; padding: 20px 10px" >
-										<p class="label"><label ><b>HF Station Today's Log List</b></label></p>
-										<ul id="list_station_log" class="columns"style="font-size:12px; text-align:left; margin: 1px;">
-											<?php
-												$today = date("Y-m-d");
-												$str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'";
-												loadstationlist_region_log($str, "station_name", "location_region", "hf_log_id", "station_name");
-											?>
-										</ul>
-									</div>
-
-									<div class="pannel_show_card"  style="width: 30%; display:block;" >
+									<!-- Map of HF -->
+									<div class="pannel_show_card"  style="display:block; width:50%;min-height:750px; max-height:750px;">
 										<p class="label"><label ><b>HF Map</b></label></p>
-
+										<div id="map-container2" style="width: 100%;">
+											<div id="map2" style="width: 100%;"></div>
+										</div>
 									</div>
 								</div>
 						</div>
 						<!-- for DAM Log -->
 						<div class="pannel_holder" id = "dam_log_div" >
 							<p class="label" style="color:white; background-color:lightcoral"><label style="font-size:21px; width:100%;">External Sites</label></p>
-							<div class="pannel_holder_frame">		
-								<div class="pannel_show_iframe" >
-									<iframe title="RDAMSDashboard" width="600" height="500" src="https://app.powerbi.com/view?r=eyJrIjoiYjQ1YmY4YjMtYzAxMi00ZTk1LTg4OGEtYTdhY2MwNDQ3N2RkIiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
-								</div>
-								<div class="pannel_show_iframe" >
-									<iframe title="RDAMSDashboard" width="600" height="500" src="https://app.powerbi.com/view?r=eyJrIjoiYjQ1YmY4YjMtYzAxMi00ZTk1LTg4OGEtYTdhY2MwNDQ3N2RkIiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
-								</div>
-								<!-- <div class="pannel_show_iframe" style="width:40%; margin:10px;">
-									<iframe title="RDAMSDashboard" width="600" height="636" src="https://app.powerbi.com/view?r=eyJrIjoiYjQ1YmY4YjMtYzAxMi00ZTk1LTg4OGEtYTdhY2MwNDQ3N2RkIiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
-								</div> -->
-							</div>
 
+								<div class="pannel_holder_frame">
+									<div class="pannel_show_iframe" >
+										<iframe title="RDAMSDashboard" width="600" height="486" src="https://app.powerbi.com/view?r=eyJrIjoiYWQwMDMxZTktNmQzZi00NDQ5LWI1OWMtMWM0ODJmNjZmOWY3IiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="1" allowFullScreen="true"></iframe>
+									</div>
+									<div class="pannel_show_iframe" >
+										<iframe title="RDAMSDashboard" width="600" height="486" src="https://app.powerbi.com/view?r=eyJrIjoiYWQwMDMxZTktNmQzZi00NDQ5LWI1OWMtMWM0ODJmNjZmOWY3IiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="1" allowFullScreen="true"></iframe>
+									</div>
+									<!-- <div class="pannel_show_iframe" style="width:40%; margin:10px;">
+										<iframe title="RDAMSDashboard" width="600" height="636" src="https://app.powerbi.com/view?r=eyJrIjoiYjQ1YmY4YjMtYzAxMi00ZTk1LTg4OGEtYTdhY2MwNDQ3N2RkIiwidCI6IjQ5NmEyNDg2LTkwN2UtNDIxZS1iZmExLWY0ZGNiOTU2ZDIyNSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+									</div> -->
+								</div>
 
 						</div>
-             </div>
+            </div>
         </div>
 
 		<div>
@@ -743,6 +760,101 @@
 		$("#about").hide();
         $("#footer").hide();
 	generateNewsQuery("#news-container","default","news_title, news_desc, news_url, news_ref","");
+
+ // Initialize the Leaflet map and tile layer
+
+	var map2 = L.map('map2').setView([12.028207262012298, 121.38914521809126], 5.5);
+			L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=ZNeVZYfFRnG1aR4nhFB6', {
+				tileSize: 512,
+				zoomOffset: -1,
+				minZoom: 1,
+				attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+				crossOrigin: true
+			}).addTo(map2);
+
+   
+			function load_hf_stations_map_2(filter) {
+			$.post("AJAX/load_hf_stations_map_2.php", {
+				filter_type:filter
+			},
+			function(data) {
+				try {
+					var stations = (typeof data === "object") ? data : JSON.parse(data);
+
+					for (var i = 0; i < stations.length; i++) {
+						var station = stations[i];
+
+						function getIconOptions(weather) {
+							var shadowUrl;
+							switch (station.weather) {
+								case 'Sunny':
+								shadowUrl = 'images/icon_HF_Sunny.png';
+								break;
+								case 'Cloudy':
+								shadowUrl = 'images/icon_HF_Cloudy_2.png';
+								break;
+								case 'Rainy':
+								shadowUrl = 'images/icon_HF_Rainy.png';
+								break;
+								default:
+								shadowUrl = 'images/icon_HF_Cloudy_default.png';
+								break;
+							}
+							
+							return {
+								shadowUrl: shadowUrl,
+								iconSize: [20, 20],
+								shadowSize: [20, 20],
+								iconAnchor: [0, 0],
+								shadowAnchor: [0,0],
+								shadowClass: 'leaflet-marker-icon_2',
+								popupAnchor: [12, 2]
+							};
+							}
+								var iconOptions = getIconOptions(status);
+								var HF_Icon = L.Icon.extend({
+								options: iconOptions
+								});
+
+
+						var HF_icon_5x5 = new HF_Icon({iconUrl: 'images/5x5.png'}),
+							HF_icon_4x4 = new HF_Icon({iconUrl: 'images/4x4.png'}),
+							HF_icon_3x3 = new HF_Icon({iconUrl: 'images/3x3.png'});
+							HF_icon_2x2 = new HF_Icon({iconUrl: 'images/2x2.png'});
+							HF_icon_1x1 = new HF_Icon({iconUrl: 'images/1x1.png'});
+				
+
+							if(station.signal_status=="5x5"){
+								var marker = L.marker([station.station_lat, station.station_long],{icon: HF_icon_5x5}).addTo(map2);
+							}else if(station.signal_status=="4x4"){
+								var marker = L.marker([station.station_lat, station.station_long],{icon: HF_icon_4x4}).addTo(map2);
+							}else if(station.signal_status=="3x3"){
+								var marker = L.marker([station.station_lat, station.station_long],{icon: HF_icon_3x3}).addTo(map2);
+							}else if(station.signal_status=="2x2"){
+								var marker = L.marker([station.station_lat, station.station_long],{icon: HF_icon_2x2}).addTo(map2);
+							}else if(station.signal_status=="1x1"){
+								var marker = L.marker([station.station_lat, station.station_long],{icon: HF_icon_1x1}).addTo(map2);
+							}else{
+								var marker = L.marker([station.station_lat, station.station_long]).addTo(map2);
+							}
+						// marker.bindPopup(station.station_name); // add a popup with the station name
+						marker.bindPopup("<b>"+ station.station_name + "<br>Signal Strength: </b>" + station.signal_status + "<br><b>Weather: </b>" + station.weather);
+						marker._icon.classList.add(station.weather.replace(" ", "_"));
+						marker._icon.classList.add(station.weather.replace(" ", "_")+"_marker_2");
+						var circle = L.circle([station.station_lat, station.station_long], {radius: 100000}).addTo(map2);
+						circle.getElement().classList.add("radius-icon_2");
+						circle.getElement().classList.add(station.station_status +"_radius_2");
+							$(".radius-icon_2").hide();
+
+					}
+				} catch (error) {
+					console.log(error); // Log any JSON parsing errors
+					return null;
+				}
+			});
+		}
+
+		load_hf_stations_map_2("all_2");
 
 
 
@@ -1381,7 +1493,6 @@
 		$(".logo").click(function(){
 			// alert("tae");
 			window.location = "eoc_monitor.php";
-
 		});
 
 

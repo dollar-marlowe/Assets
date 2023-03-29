@@ -378,7 +378,8 @@
 						<option value="Operational">Operational</option>
 						<option value="Intermittent">Intermittent</option>
 						<option value="Rehabilitation">Rehabilitation</option>
-						<option value="Inactive">Inactive</option>			
+						<option value="No Communication">No Communication</option>
+						<option value="Proposed">Proposed</option>			
 						</select>
                     </div>
 
@@ -426,12 +427,12 @@
 						$str="SELECT id,name FROM region";
 						loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
 					?>
-				</select>
+					</select>
 				<div id="hr_radio_container">
 					<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
 						<?php
 							$classes=array("all","item");
-							$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations";
+							$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations order by hf_id desc";
 							$headers=array("tik","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
 							loadtable($sql,$headers,true,false,$classes);
 						?>
@@ -443,7 +444,7 @@
 	</div>
 
 		<!-- Division for HF Station Table using ajax to load datas-->
-		<div class="pannel_con">
+		<!-- <div class="pannel_con">
 			<div class="pannel" onclick="slide('#hf_station_table_dynamic')" >
 				<p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Visuals</p>
 			</div>
@@ -455,7 +456,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 </section>
 
@@ -463,27 +464,27 @@
 <script>
 
 
-		var xValues = ["Luzon", "Visayas", "MIndanao"];
-		var yValues = [55, 49, 44];
-		var barColors = ["red", "green","blue"];
+		// var xValues = ["Luzon", "Visayas", "MIndanao"];
+		// var yValues = [55, 49, 44];
+		// var barColors = ["red", "green","blue"];
 
-		new Chart("myChart", {
-		type: "bar",
-		data: {
-			labels: xValues,
-			datasets: [{
-			backgroundColor: barColors,
-			data: yValues
-			}]
-		},
-		options: {
-			legend: {display: false},
-			title: {
-			display: true,
-			text: "Expected Representation of reported HF Station by LUZVIMINDA"
-			}
-		}
-		});
+		// new Chart("myChart", {
+		// type: "bar",
+		// data: {
+		// 	labels: xValues,
+		// 	datasets: [{
+		// 	backgroundColor: barColors,
+		// 	data: yValues
+		// 	}]
+		// },
+		// options: {
+		// 	legend: {display: false},
+		// 	title: {
+		// 	display: true,
+		// 	text: "Expected Representation of reported HF Station by LUZVIMINDA"
+		// 	}
+		// }
+		// });
 
 		function slide(target){
 			$(target).slideToggle("slow");
@@ -631,10 +632,11 @@
 								//alert(data);
 								if(data=="New record created!"){
 									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
-									$("#clear").click();
-									
 									load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
-									
+									setTimeout(function() {
+										$("#clear").click();
+										window.location.reload();
+									}, 2000);
 									 
 								}else{
 									alert("All fields are required to be filled with input.");
@@ -658,12 +660,14 @@
 								description: 		$("#description").val()						
 							},
 							function(data){
-								alert(data);
+								// alert(data);
 								if(data=="New record created!"){
 									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
-									$("#clear").click();
 									load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
-									
+									setTimeout(function() {
+										$("#clear").click();
+										window.location.reload();
+									}, 2000);
 									
 									 
 								}else{
@@ -687,12 +691,14 @@
 								description: 		$("#description").val()						
 							},
 							function(data){
-								alert(data);
+								// alert(data);
 								if(data=="New record created!"){
 									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
-									$("#clear").click();
 									load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
-									
+									setTimeout(function() {
+										$("#clear").click();
+										window.location.reload();
+									}, 2000);
 								  
 								}else{
 									alert("All fields are required to be filled with input.");
@@ -738,6 +744,11 @@
 		// 	alert("click");
 		// });
 
+		$(".logo").click(function(){
+			// alert("tae");
+			window.location = "hf_main.php";
+		});
+
 		$(".item").click(function(){
 			//$("#myModal").css("display","none");
 			$("#clear").click();
@@ -776,7 +787,7 @@
 				}else if(chk_size==1){
 					$("#err_2").remove();
 							
-					Popup_modal_show("<b>WARNING!</b><br><br><p>Modifications will also reflect accross all etc records, please ensure that data entegrity is preserved!</p>",300);
+					Popup_modal_show("<b>Updating HF Station</b><br><br><p>Selected HF Station's details loaded!</p>",300);
 					$('span.close').css('display','block');
 					
 					$(".item").attr("disabled", true);
@@ -786,6 +797,7 @@
 					$("html, body").animate({scrollTop:0,}, 500, 'swing');
 					$("#submit").val("Update");
 					$('#msg').remove();
+					
 					//$(".entry").before("<p id='msg' style='width:100%;text-align:center;'><b>Edit Module</b></p>");
 					
 					// $.each($(".item:checked").parent().siblings(),function(){

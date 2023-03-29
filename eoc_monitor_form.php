@@ -651,9 +651,15 @@
 		}
 
     $(document).ready(function(){
-	generateNewsQuery("#news-container","default","news_title, news_desc, news_url, news_ref","");
-
 		
+
+	generateNewsQuery("#news-container","default","news_selected, news_title, news_desc, news_url, news_ref","");
+
+	$('input.selected_news:checked').each(function() {
+		$(this).closest('.news-container').css('background-color', 'lightblue');
+	});
+
+	
 	var rowCount = $("#hf_daily_log_table tr").length;
 			//alert(rowCount);
 
@@ -1243,7 +1249,7 @@
 								alert(data);
 								if(data=="New record created!"){
 									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
-									generateNewsQuery("#news-container","default","news_title, news_desc, news_url, news_ref","");
+									generateNewsQuery("#news-container","default","news_selected, news_title, news_desc, news_url, news_ref","");
 									//load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");
 									$("#btn_cancel_news").click();
 								}else{
@@ -1265,29 +1271,50 @@
 			$(this).closest(".news-container").css("background-color", "lightblue");
 			var news_selected_title = $(this).closest(".news-container").find(".news-name").text();
 			var news_selected_value = "Checked";
-				//alert(news_selected_title);
+				alert("News selected added to EOC report.");
 				$.post("AJAX/update_news_selected.php",
 				{
 					news_selected_title: news_selected_title,
 					news_selected_value: news_selected_value,
 				},
 				function(data){
-					alert(data);
-					//if(data=="New record created!"){
-						//Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
-						//$("#clear").click();
-						//load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
+					//alert(data);
+					// if(data=="New record created!"){
+					// 	Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
+					// 	$("#clear").click();
+					// 	load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
 									 
-					//}else{
-					//	alert("All fields are required to be filled with input.");
-					
+					// }else{
+					// 	alert("All fields are required to be filled with input.");
+					// }
 				});
 
 		} else {
 			$(this).closest(".news-container").css("background-color", "white");
+			var news_selected_title = $(this).closest(".news-container").find(".news-name").text();
 			var news_selected_value = "Unchecked";
+				alert(news_selected_title);
+				$.post("AJAX/update_news_selected.php",
+				{
+					news_selected_title: news_selected_title,
+					news_selected_value: news_selected_value,
+				},
+				function(data){
+					//alert(data);
+					// if(data=="New record created!"){
+					// 	Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
+					// 	$("#clear").click();
+					// 	load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
+									 
+					// }else{
+					// 	alert("All fields are required to be filled with input.");
+					// }
+				});
 		}
 });
+
+
+		
 
 		function generateNewsQuery(target, filter, columns, mydata) {
 		$.post("AJAX/load_news_to_select.php", {

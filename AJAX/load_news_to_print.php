@@ -13,7 +13,7 @@
        //switch case for filtration
        switch($filter_type){
          case "default":        
-           $sql = "SELECT $news_columns FROM eoc_news_log WHERE DATE(date_logged) = '$today' ORDER BY date_logged DESC";
+           $sql = "SELECT $news_columns FROM eoc_news_log WHERE DATE(date_logged) = '$today' AND news_selected ='Checked' ORDER BY date_logged DESC";
            break;
    
          case "asc":

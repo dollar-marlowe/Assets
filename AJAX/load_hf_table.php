@@ -17,15 +17,15 @@
         //switch case for filtration
         switch($filter_type){
             case "national":
-                $sql = "Select $table_columns from hf_locations order by station_region desc";
+                $sql = "Select $table_columns from hf_locations WHERE NOT station_status ='Proposed' order by hf_id desc";
                 break;
 
             case "regional":
-                $sql = "Select $table_columns from hf_locations where station_region=$data";
+                $sql = "Select $table_columns from hf_locations where station_region=$data AND NOT station_status ='Proposed'";
                 break;
 
             case "provincial":
-                $sql = "Select $table_columns from hf_locations where station_province=$data";
+                $sql = "Select $table_columns from hf_locations where station_province=$data AND NOT station_status ='Proposed'";
                 break;
 
             case "status":
@@ -33,7 +33,7 @@
                 break;
 
             case "open":
-                $sql = "Select $table_columns from hf_locations where station_name like '%$data%'";
+                $sql = "Select $table_columns from hf_locations where station_name like '%$data%' AND NOT station_status ='Proposed'";
                 break;
         }
        // echo $sql;

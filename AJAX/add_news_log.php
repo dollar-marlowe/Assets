@@ -5,8 +5,8 @@
     if(isset($_POST["news_title"])){
 
         $news_cat=removepecialchars($_POST["news_cat"]);
-        $news_title=($_POST["news_title"]);
-        $news_desc=($_POST["news_desc"]);
+        $news_title=removepecialchars($_POST["news_title"]);
+        $news_desc=removepecialchars($_POST["news_desc"]);
         $news_ref=($_POST["news_ref"]);
         $news_url=($_POST["news_url"]);
 

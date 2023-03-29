@@ -9,9 +9,11 @@ $str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_dail
 
 // Load the list of stations using the loadstationlist_region_log function
 ob_start();
-loadstationlist_region_log($str, "station_name", "location_region", "hf_log_id", "region");
+loadstationlist_count_log($str, "station_name", "location_region", "hf_log_id", "region");
 $stationList = ob_get_clean();
 
 // Return the list of stations as HTML
+
+//bali add ang case where region code and/or sttation sataus is match the display sa map.
 echo $stationList;
 ?>

@@ -291,9 +291,8 @@
 	<br>
  <div class="pannel_con">
 	<div class="pannel" onclick="slide('#station_form_div')">
-            <p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
+        <p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
 	</div>
-			
 			<div class="input_wrapper" style="margin:auto">
 				<!--this div is for single or group log entry-->
 				<p class="label"><label >Logging Option:</label></p>
@@ -319,7 +318,7 @@
 								
 							<datalist id="list_station" name="list_station" hidden>	
 									<?php
-										$str="SELECT distinct hf_id, station_name, region FROM hf_locations";
+										$str="SELECT distinct hf_id, station_name, region FROM hf_locations WHERE NOT station_status ='Proposed'";
 										loadstationlist($str,"station_name","region","hf_id","station_name");
 									?>			
 								</datalist>
@@ -350,7 +349,7 @@
 							<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
 								<?php
 									$classes=array("all","item");
-									$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations";
+									$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations WHERE NOT station_status ='Proposed'";
 									$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
 									loadtable($sql,$headers,true,true,$classes);
 								?>
@@ -458,6 +457,7 @@
 		$(target).slideToggle("slow");
 		}
 
+		
     $(document).ready(function(){
 
 		//decrypt
@@ -465,6 +465,7 @@
 		//then encrypt ulit
 	// $("#station_name_label").css("visibility","hidden");
 	// $("#station_name").css("visibility","hidden");
+	
 	var stn_cd;
 	var stn_cd_grp;
 	$("#search_provincial").css("display","none");
@@ -656,8 +657,10 @@
 						if(data=="New records created!"){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b> Multiple New record has been created!</b>",600);
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
+							setTimeout(function() {
 							$("#clear").click();
-							window.location.reload();	
+							window.location.reload();
+							}, 2000);	
 						}else{
 							alert("All fields are required to be filled with input.");
 							}
@@ -739,12 +742,14 @@
 					signal_status:		signal_val				
 			},
 				function(data){
-						alert(data);
+						// alert(data);
 						if(data=="New record created!"){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
+							setTimeout(function() {
 							$("#clear").click();
 							window.location.reload();
+							}, 2000);
 						}else{
 							alert("All fields are required to be filled with input.");
 							}
@@ -774,6 +779,11 @@
 			$("#signal_value").val("0");
 
 	});
+
+	$(".logo").click(function(){
+			// alert("tae");
+			window.location = "hf_main.php";
+		});
 
 
 	$("#log_option").change(function(){

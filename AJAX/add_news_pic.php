@@ -15,7 +15,7 @@
     
     if(move_uploaded_file($src, $destination)) {
         echo $destination1;
-        $_SESSION["url"] = $destination1;
+        // $_SESSION["url"] = $destination1;
     } else {
         echo "error";
     }

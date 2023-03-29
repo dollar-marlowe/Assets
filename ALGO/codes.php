@@ -948,29 +948,36 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
         echo "";
     }
 }
-function load_news($sql) {
+
+
+
+function load_news($sql) {  
     $db= new Database();
     $db->connect();
     $result = $db->selectrows($sql, 0);
     if($result){
-      $html = "";
-      foreach($result as $row){
-        $html .= '<div class="news-container" style="border: solid  2px lightblue">';
-        $html .= '<label class="container" style="text-align:left;">Add this news to the Daily Report
-                    <input type="checkbox" class="selected_news" data-news-title="'.$row["news_title"].'" data-news-desc="'.$row["news_desc"].'" data-news-url="'.$row["news_url"].'" data-news-ref="'.$row["news_ref"].'">
-                    <span class="checkmark"></span>
-                  </label>';
-        $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
-        $html .= '<div class="news-name">'.$row["news_title"].'</div>';
-        $html .= '<div class="news-description">'.$row["news_desc"].'</div>';
-        $html .= '</div><br>';
-      }
-      return $html;
-    }
-    else{
-      return null;
+        $html = "";
+        foreach($result as $row){
+            $checked = "";
+            if (array_key_exists("news_selected", $row)) {
+                $checked = ($row["news_selected"] == "Checked") ? "checked" : "";
+            }
+            $bg_color = ($checked == "checked") ? "lightblue" : "white";
+            $html .= '<div class="news-container" style="padding:2px;border: solid 2px '.$bg_color.';background-color:'.$bg_color.'">';
+            $html .= '<label class="container" style="text-align:left;">Add this news to the Daily Report
+                        <input type="checkbox" class="selected_news" name="'.$row["news_selected"].'" data-news-title="'.$row["news_title"].'" data-news-desc="'.$row["news_desc"].'" data-news-url="'.$row["news_url"].'" data-news-ref="'.$row["news_ref"].'" '.$checked.'>
+                        <span class="checkmark"></span>
+                    </label>';
+            $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
+            $html .= '<div class="news-name">'.$row["news_title"].'</div>';
+            $html .= '<div class="news-description">'.$row["news_desc"].'</div>';
+            $html .= '</div><br>';
+        }
+        return $html;
+    } else{
+        return null;
     }     
-  }
+}
 
   function load_news_to_print($sql) {
     $db= new Database();
@@ -979,7 +986,7 @@ function load_news($sql) {
     if($result){
       $html = "";
       foreach($result as $row){
-        $html .= '<div class="news-container">';
+        $html .= '<br><div class="news-container">';
         $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
         $html .= '<div><p class="news-name">'.$row["news_title"].'</p>';
         $html .= '<p class="news-description">'.$row["news_desc"].'</p>';
@@ -991,111 +998,48 @@ function load_news($sql) {
       return null;
     }     
   }
+  
+  function load_hf_map($db, $sql) {
+    $result = $db->selectrows($sql, 0);
+    if ($result) {
+      $stations = array();
+      foreach ($result as $row) {
+        $station = array(
+          "station_name" => $row["station_name"],
+          "station_lat" => $row["station_lat"],
+          "station_long" => $row["station_long"],
+          "station_status" => $row["station_status"],
+          "station_desc" => $row["station_desc"]
+        );
+        array_push($stations, $station);
+      }
+        return $stations;
+    } else {
+         return null;
+    }
+  }
 
-// function load_news($str) {
-//     $db = new Database();
-//     $db->connect();
-//     $data = $db->selectrows($str, 0);
-
-//     if ($data != null) {
-//         foreach ($data as $elem) {
-//             echo '<div class="news-container">';
-//             echo '<img class="news-image" src="' . $elem['news_url'] . '" alt="news Image" title="Double click to proceed on the reference">';
-//             echo '<div class="news-name">' . $elem['news_title'] . '</div>';
-//             echo '<div class="news-description">' . $elem['news_desc'] . '</div>';
-//             echo '</div><br>';
-//         }
-//     } else {
-//         echo "";
-//     }
-// }
-
-// function load_news($str,$headers,$chkbox,$all,$class){//paramerters are as follows:
-//     //$str is the sql command, 
-//     //$headers(array): are the header that shows on the table column head 
-//     //$chkbox is a boolean to add checkboxes at the begiining of each row
-//       //$all is a  boolean variable if true will add check all at the very first table header cell
-//     //the $class is an array with 2 elements: 
-//     //1st elem is the class header of checkbox for check all and the second elem 
-//     //is the class name for each checkbox in the table rows
-//    $db =new Database();
-//     $db->connect();
-//     $data=$db->selectrows($str,0);
-//     if($data!=null){
-//         echo "<tr>";
-//         $chk=$chkbox;
-//         foreach($headers as $header){
-//             if($header==" "){
-//                 echo"<th>";
-//                 if($all){
-//                     echo"<input type='checkbox' 
-//                     class='".$class[0]."' >";
-//                 }
-               
-//             }
-//             else{
-//                 echo "<th>".$header;
-//             } 
-//             echo"</th>";
-//         } 
-//         echo "</tr>";
-//         $j=1;
-//         foreach($data as $elem){
-//            $i=0;
-          
-//             echo "<tr id='".$j."'>";
-//             $size=sizeof($elem);
-           
-//             foreach($elem as $e){
-                
-//                 if($chkbox){
-//                     if($i==0){
-//                         echo"<td><input type='checkbox' 
-//                         class='".$class[1]."'  value='".$e."' ></td>";    
-//                     }
-//                     $chkbox=false; 
-//                 }
-//                 else{
-//                     if($e=='activation'){
-//                         $e="For ".$e;
-//                     }
-                       
-//                     if($i==$size-1){
-//                         echo"<td class='last'>".$e."</td>";
-//                     }else{
-//                         echo"<td>".$e."</td>";
-//                     }
-//                 }
-//                 $i++;          
-//             }
-//             $chkbox=$chk;
-//             $j++;
-//             echo "</tr>";       
-//         }
-//     }
-//     else{
-//         echo "";
-//     }
-// }
-
-// taga count sana
-// function counter_hf_data_fn($table_name, $column_name, $where_clause = "") {
-//     $db = new Database();
-//     $db->connect();
     
-//     $sql = "SELECT COUNT($column_name) FROM $table_name";
-//     if (!empty($where_clause)) {
-//         $sql .= " WHERE $where_clause";
-//     }
-    
-//     $result = selectcount($sql);
-    
-//     if ($result !== false) {
-//         return $result;
-//     } else {
-//         return false;
-//     }
-// }
+  function load_hf_map_2($db, $sql) {
+    $result = $db->selectrows($sql, 0);
+    if ($result) {
+      $stations = array();
+      foreach ($result as $row) {
+        $station = array(
+          "station_name" => $row["station_name"],
+          "station_lat" => $row["station_lat"],
+          "station_long" => $row["station_long"],
+          "weather" => $row["weather"],
+          "signal_status" => $row["signal_status"]
+        );
+        array_push($stations, $station);
+      }
+        return $stations;
+    } else {
+         return null;
+    }
+  }
+  
 
 
 function office_combobox(){
@@ -1181,14 +1125,47 @@ function loadstationlist_region_log($str, $col1, $col2, $col3, $from)
                 echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$d[$col1]."</li>";
             }
         } else {
-            echo "<option value='0'>Select from ".$from."</option>";
+            echo "<option value='0'>No Data ".$from."</option>";
         }
     }
 }
 
 
 
+function loadstationlist_count_log($str, $col1, $col2, $col3, $from)
+{
+    $db = new Database();
+    $db->connect();
+    $data = $db->selectrows($str, 0);
 
+    if ($data) {
+        $count = array();
+        foreach ($data as $d) {
+            $station_name = $d[$col1];
+            $count[$station_name] = isset($count[$station_name]) ? $count[$station_name] + 1 : 1;
+        }
+        foreach ($count as $station_name => $occurrences) {
+            echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$station_name." (Frequency: ".$occurrences.")</li>";
+        }   
+    } else {
+        $today = date("Y-m-d");
+        $str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'"; 
+        $data = $db->selectrows($str, 0);
+
+        if ($data) {
+            $count = array();
+            foreach ($data as $d) {
+                $station_name = $d[$col1];
+                $count[$station_name] = isset($count[$station_name]) ? $count[$station_name] + 1 : 1;
+            }
+            foreach ($count as $station_name => $occurrences) {
+                echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$station_name." (Frequency: ".$occurrences.")</li>";
+            }
+        } else {
+            echo "<option value='0'>No Data ".$from."</option>";
+        }
+    }
+}
 
 
 
@@ -1206,6 +1183,24 @@ function loadropdown($str,$col1,$col2,$from){
     }
     else{
         echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
+
+function loadlist_withcheck($str,$col1,$col2,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);  
+   
+    if($data!=null){
+        echo"<dt value=0><input type='checkbox' id='all_checker'> Select/Unselect all</dt>";
+       
+        foreach($data as $d){
+            echo "<dt value='".$d[$col1]."' class='HF_Status_dynamic'><input type='checkbox' class='hf_look4_checked' id='".str_replace(" ","_",$d[$col1])."_checker'> ".$d[$col2]."</dt>";
+        }
+    }
+    else{
+        echo"<dt value='0'>Select from ".$from."</dt>";
     }
 }
 
