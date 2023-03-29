@@ -50,6 +50,7 @@
       .showcase-area{
         height:250px;
        background:none;
+      
       }
 
       
@@ -214,19 +215,114 @@ border:solid 1px #33bbff;
       text-align:center;
      }
      
+   .my_ribbon_hide{
+    width:60px;
+    height:20px;
+    background:url('images/ribbon_shadow7.png')   no-repeat;
+    
+    background-position: center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+    position:absolute;
+    left:96.5%;
+    margin-left:-5px;
+   overflow:hidden;
+    transition: transform 1s;
    
+    
+   }
+   .my_ribbon_hide:hover {
+    height:60px;
+   
+    }
+    .my_ribbon_hide:hover  .ribbon_label{
+  display:block;
+   
+    }
+   .home_filler{
+    width:100%;
+   
+    height:47px;
+    display:none;
+   }
+   .ribbon_label{
+      color:white;
+      font-weight: bold;
+      text-align:center;
+      font-size:12px;
+      margin-top:13px;
+      display:none;
+      transition: transform 1s;
+   }
+   .navbar-container input[type="checkbox"]{
+    top:0px;
+   }
+   .imgform-container{
+    border:none;
+    background-color:#eee;
+   }
+   #imgform{
+    background-color:#eee;
+   }
+   .imgform-img{
+    margin-right:20px;
+    background-color:#ffff;
+   }
+   .form-container{
+    border: solid 1px #C6C6C6;
+    background-color:#ffff;
+   }
+   .new_pannel{
+    border: solid 1px #C6C6C6;
+   }
+   .bg_white{
+			background-color:#fff;
+		}
+   @media (max-width:1665px){
+    .my_ribbon_hide{
+      left:96%;
+    }
+     
+ 
+  }
+  @media (max-width:1310px){
+    .my_ribbon_hide{
+      left:95%;
+    }
+     
+ 
+  }
+  @media (max-width:1030px){
+    .my_ribbon_hide{
+      left:94%;
+    }
+     
+ 
+  }
    @media (max-width:900px){
      
      .modal-content {
        margin:20% auto;
      }
  
+     .my_ribbon_hide{
+      left:93%;
+    }
   }
   @media (max-width:800px){
      
      .modal-content {
        margin:30% auto;
      }
+ 
+  }
+  @media (max-width:740px){
+     
+    .my_ribbon_hide{
+      left:92%;
+    }
  
   }
   @media (max-width:700px){
@@ -236,12 +332,21 @@ border:solid 1px #33bbff;
      }
  
   }
+  @media (max-width:650px){
+     
+     .my_ribbon_hide{
+       left:91%;
+     }
+  
+   }
   @media (max-width:600px){
      
      .modal-content {
        margin:45% auto;
      }
- 
+     .my_ribbon_hide{
+       left:90%;
+     }
   }
   @media (max-width:600px){
      
@@ -255,18 +360,34 @@ border:solid 1px #33bbff;
         margin:60% auto;
        
       }
+      .my_ribbon_hide{
+       left:87%;
+       margin-top:-10px;
+     }
    }
    @media (max-width:400px){
     .modal-content {
         margin:70% auto;
         width:100%;
       }
+      .my_ribbon_hide{
+       left:85%;
+     }
+   }
+   @media (max-width:350px){
+    
+      .my_ribbon_hide{
+       left:83%;
+     }
    }
    @media (max-width:300px){
     .modal-content {
         margin:80% auto;
         width:100%;
       }
+      .my_ribbon_hide{
+       left:80%;
+     }
    }
    .logo{
     height:50px;
@@ -322,7 +443,7 @@ border:solid 1px #33bbff;
   </head>
   <body>
   
-          <img class="logo" src="images/dict_banner.png">
+          <img class="logo" src="images/dict_label2.png">
 <nav class="navbar">
       
         <?php
@@ -353,7 +474,7 @@ border:solid 1px #33bbff;
 
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1' id='home'><a href=''><u>H</u>ome</a></label>";
+         echo       "<label for='ac-1' id='home'><a href='home.php'><u>H</u>ome</a></label>";
          echo  "</div>";
 
          echo   "<div>";
@@ -374,7 +495,7 @@ border:solid 1px #33bbff;
          echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
-
+         if($_SESSION["auth_level"]>=3){
          echo "<div>";
          echo       "<input id='ac-5' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-5'><u>E</u>TC</label>";
@@ -384,14 +505,15 @@ border:solid 1px #33bbff;
                           <a href=''>ETC <u>D</u>eactivation</a>"; 
          echo       "</article>";
          echo   "</div>";
+         }
         
-
+          if($_SESSION["auth_level"]>=3){
         
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
-         if( $_SESSION["auth_level"]>2){
+     
          echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
          echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
          echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
@@ -439,13 +561,18 @@ border:solid 1px #33bbff;
         <img src="images/ger_small.png" class="img_right_gear4 rotate_counter">
         <img src="images/ger_small.png" class="img_right_gear5  rotate_clockwise">
         <img src="images/gear4.png" class="img_left_gear rotate_counter">
-        <img src="images/ger_small2.png" class="img_left_gear2 rotate_clockwise">
+        <img src="images/gear7.png" class="img_left_gear2 rotate_clockwise rotate">
         <img src="images/gear4.png" class="img_right_gear3 rotate_clockwise">
         <img src="images/small_dict_shadow.png" class="img_left_dict">
         
      
       </div>
     </section>
+    <div class="home_filler">
+      </div>
+    <div class="my_ribbon_hide" onclick="hide_show_execute('#showcase','fast','filler')" >
+        <p class='ribbon_label'>HIDE</p>
+      </div>
     <div id="myModal" class="modal">
 
   <!-- Modal content -->
@@ -464,6 +591,8 @@ border:solid 1px #33bbff;
 
 </div>
       <script>
+        <?php echo "
+        var lvl=".$_SESSION["auth_level"].";";?>
         var luwas=false;
           var idleMax = 15; // Logout after 10 minutes of IDLE
           var idleTime = 0;
@@ -667,6 +796,7 @@ border:solid 1px #33bbff;
                     }
                    
                     if (e.key === "O" || e.key === "o"){
+                      if(lvl>=3){
                       $(id_assets).prop("checked",false);
                       $(id_etc).prop("checked",false);
                       $(id_profile).prop("checked",false);
@@ -675,8 +805,11 @@ border:solid 1px #33bbff;
                         }else{
                           $(id_office).prop("checked",true);
                         }
+                      }
                     }
+                  
                     if (e.key === "E" || e.key === "e"){
+                      if(lvl>=3){
                       $(id_assets).prop("checked",false);
                       $(id_office).prop("checked",false);
                       $(id_profile).prop("checked",false);
@@ -686,6 +819,7 @@ border:solid 1px #33bbff;
                           $(id_etc).prop("checked",true);
                         }
                     }
+                  }
                  
                     if (e.key === "l" || e.key === "L"){
                       window.location="logout.php";

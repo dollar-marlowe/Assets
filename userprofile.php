@@ -206,6 +206,7 @@
   <script>
           // Listener for Edit Your Profile button  
           $(document).ready(function(){
+           
             $("#editprofile").click(function(){
               window.location = "editprofile.php";
 

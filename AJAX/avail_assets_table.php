@@ -21,7 +21,7 @@
        $data=$mydb->selectrows($sql,0);
       
        if($data!=null){
-        echo "<table class='".$class."'><tr>";
+        echo "<table class='".$class."'><tr class='tr_head'>";
             foreach($headers as $content){
             echo "<th>".$content;
             }

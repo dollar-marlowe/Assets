@@ -102,6 +102,10 @@
 			border:solid 1px #ddd;
 			padding:10px 0px 10px 0px;
 			background-color:#eaeaeaab;
+			
+		}
+		.pannel:hover{
+			background-color:#b3b3b3a3;
 		}
 		.pannel h2{
 			display:inline;
@@ -167,13 +171,11 @@
 			background-color:#cfc9c9;
 		} */
 		.pannel_con{
-			-webkit-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
-			-moz-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
-			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.57);
+			
 			width:80%;
 			margin:auto;
-			
-			border-radius:0 0 30px 30px;
+			background-color:#fff;
+			border:solid 1px #c6c6c6;
 			
 		}
 		
@@ -658,8 +660,8 @@
  <section id="imgform">
 	<div class="pannel_con">
 			<div class="pannel 1stpannel" onclick="slide('#hazard_form')" ><div  id="accounts"  class="lbl_wrap"><img src="images\hazard.png"> <p id="lbl_disaster_header"><u>D</u>isaster and Impact</p></div></div>		
-				<div class="imgform-container " id="hazard_form">
-					<div class="imgform-img">
+				<div class="imgform-container bg_white" id="hazard_form">
+					<div class="imgform-img bg_white">
 									<div class="inner-wrapper" >
 										<div class="cols cols1" >
 											<p class="box_label me"><span>Disaster/Calamity</span></p>
@@ -888,7 +890,7 @@
 	</div>
 	<div class="pannel_con">
 			<div class="pannel" onclick="slide('#incident_areas')"><p id="pass_reset"  class="lbl_wrap"><img src="images\logs.png"> <u>E</u>mergency Telecoms Cluster Activation</p></div>
-					<div class="imgform-container " id="incident_areas"> 						
+					<div class="imgform-container bg_white" id="incident_areas"> 						
 						<div class="imgform-img">
 							<div class="inner-wrapper" >
 							<div class="cols cols1" >

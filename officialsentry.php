@@ -4,6 +4,8 @@
     include "ALGO/codes.php";
    
     include "COMPONENTS/reroute.php";
+  
+    auth_validatation(3);
     include "header.php";
     include "officialsform.php";
     include "about.php";

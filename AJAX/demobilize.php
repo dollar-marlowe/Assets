@@ -19,18 +19,14 @@
         }
         
         $deployid=0;
-        $deploy_data=$mydb->select("SELECT id FROM deployment where  asset_owner_id=".$assetowned."and deployment_stat='Active'");
-        if($deploy_data!=null){
-            $row=mysqli_fetch_assoc($asset_data);
-            $deployid=$row["id"];
-          
-        } 
+        $deployid=$mydb->select_one("SELECT id FROM deployment where  asset_owner_id=".$assetowned." and `deployment_stat`='Active'","id");
+       
       
        
         $str="update assetowner set status='Available' where id=".$assetowned.";update assets set `status`='Available' where id=".$assetid.";".
-        "update deployment set deployment_stat='Demobilized', datedemove='".$today."' where deployment_stat='Active' and asset_owner_id=".$assetowned;
-       
-       if($mydb->insertmultiple($str)=="New records created!"){
+        "update deployment set `deployment_stat`='Demobilized', datedemove='".$today."' where `deployment_stat`='Active' and asset_owner_id=".$assetowned;
+       $msg=$mydb->insertmultiple($str);
+       if(  $msg=="New records created!"){
            echo "<p id='tblmsg'>Inventory item(s) is/are now taged as demobilized and available</p>";
        }else{
         echo "Error executing query!";
@@ -38,7 +34,7 @@
        
     }
     else{
-        echo "<script>window.location='../login.php';</script>";
+        echo $msg;
     }
 
 ?>

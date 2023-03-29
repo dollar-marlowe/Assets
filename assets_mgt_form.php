@@ -2,15 +2,19 @@
 <style>
 	
 		.container{
-			width:fit-content;
+			width:100%;
 			margin:auto;
+			padding:10px;
+			
+			
 		}
 		.sum{
-			width:fit-content;
+			
+			width:49%;
+			
 			display:inline-flex;
 			margin:auto;
 			margin-top:0px;
-			margin-left:50px;
 			text-align: left;
 						
 		}
@@ -49,32 +53,32 @@
 			margin:auto;
 			width:50%;
 		}
-		table tr th{
+		table.asset tr th{
 			text-transform:uppercase;
 			font-weight:600;
 			background-color:rgb(45, 44, 46);
 			color:white;	
 		}
 		
-		tr:nth-child(odd){
+		table.asset tr:nth-child(odd){
 			background-color:rgb(232,232,232);
 			color:black;
 		}
-		td, th{
+		table.asset td, th{
 			text-align:left;
 			padding-left:10px;
 			text-transform:capitalize;			
 		}
-		table{
+		table.asset{
 			border-collapse: collapse;
-			width:fit-content;
+			width:98%;
 			margin-left:10px;
 			margin-right:10px;
 			border-style:none;
 			font-size:16px;		
 		
 		}
-		table tr td{
+		table.asset tr td{
 			padding-bottom:10px;
 			padding-top:10px;
 		}
@@ -88,6 +92,7 @@
 		.imgform-container{
 			width:95%;
 			margin:auto;
+			margin-top:20px;
 		}
 		p.head{
 			display:block;
@@ -98,29 +103,94 @@
 			font-size:23px;
 		}
 		#sbdemove, #receive{
-			margin-left:12px;
+			margin:auto;
 			margin-top:10px;
-			display:inline-block;
+			display:block;
+		}
+		.paginate{
+			width:fit-content;
+			margin:auto;
+		}
+		.lbl_canvas{
+			margin:auto;
+			margin-top:0;
+			width:fit-content;
+			text-align:center;
+			height:40px;
+			padding:10px;
+			font-size:20px;
+			display:block;
+			
+		}
+		.lbl_canvas:hover{
+			border-bottom:solid 5px #ddd;
+			
+		}
+		.charts{
+			width:100%;
+			
+		}
+		
+		.form-container input, .form-container label, .form-container select
+		{
+			font-size:12px;
+		}
+		
+		@media (min-width:1268px){
+			.form-container{
+			width:30%;
+			}
 		}
 		@media (max-width:1267px){
 			.imgform-container{
 				display:block;
 				
 			}
+			.form-container{
+				width:100%;
+				font-size:18px;
+			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
+				width:50%;
+				margin:auto;
+			}
 			
-			table{
-				width:fit-content;
+			table.asset{
+				
 				font-size:12px;
 				margin:auto;
 			}
 		}
-	
+		@media (min-width:1600px){
+			.float_left{
+			float:left;
+			}
+			.float_right{
+				float:right;
+			}
+		}
+		@media (max-width:1600px){
+			.sum{
+				margin:auto;
+				display:block;
+				margin-bottom:10px;
+				width:90%;
+			}
+			.container{
+				width:100%;
+				display:block;
+			}
+		}
 		@media (max-width:820px){
-			table{
-				width:fit-content;
+			table.asset{
+				
 				font-size:13px;
 			}
-			th:nth-child(6), td:nth-child(6){
+			table.asset th:nth-child(6), table.asset td:nth-child(6){
 				display:none;
 			}
 			.imgform-img p, .imgform-img  select, input[type=text]{
@@ -129,16 +199,24 @@
 			p.head{
 				font-size:23px;
 			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
+				width:70%;
+				margin:auto;
+			}
 			
 		}
 		@media (max-width:700px){
 			
-			table{
-				width:fit-content;
+			table.asset{
+				
 				font-size:9px;
 			}
-			th:nth-child(5), td:nth-child(5),
-				th:nth-child(6), td:nth-child(6){
+			table.asset th:nth-child(5), table.asset td:nth-child(5),
+			table.asset th:nth-child(6), table.asset td:nth-child(6){
 				display:none;
 			}
 			.imgform-img p, .imgform-img  select, input[type=text]{
@@ -147,43 +225,81 @@
 			p.head{
 				font-size:23px;
 			}
-			.sum{
-				display:block;
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
+				width:75%;
+				margin:auto;
+			}
+		}
+		@media (min-width:453px){
+			.hidden_list{
+			display:none;
+			margin:auto;
+				width:fit-content;
 			}
 		}
 		
 		@media (max-width:452px){
 			.sum{
 				display:block;
+
 			}
 			table{
 				width:fit-content;
 			}
 			
-			th:nth-child(2), td:nth-child(2), th:nth-child(5), td:nth-child(5),
-				th:nth-child(6), td:nth-child(6)				{
+			table.asset th:nth-child(2),table.asset td:nth-child(2), table.asset th:nth-child(5), table.asset td:nth-child(5),
+			table.asset th:nth-child(6), table.asset td:nth-child(6)				{
+				display:none;
+			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
+				width:90%;
+				margin:auto;
+			}
+			.hidden_list{
+				display:block;
+				margin:auto;
+				width:fit-content;
+				
+			}
+			.charts, .lbl_canvas{
 				display:none;
 			}
 		}
 		@media (max-width:390px){
-			table{
-				width:fit-content;
+			table.asset {
+				
 				font-size:10px;	
+			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea{
+				width:100%;
+				margin:auto;
 			}
 			
 		}
 			@media (max-width:358px){
-				table{
-					width:fit-content;
+				table.asset{
+					
 					font-size:8px;	
 				}
 				
-			th:nth-child(2), td:nth-child(2), th:nth-child(5), td:nth-child(5),
-				th:nth-child(6), td:nth-child(6),
-				th:nth-child(7), td:nth-child(7){
+				table.asset th:nth-child(2), table.asset td:nth-child(2), table.asset th:nth-child(5), table.asset td:nth-child(5),
+				table.asset th:nth-child(6), table.asset td:nth-child(6),
+				table.asset th:nth-child(7), table.asset td:nth-child(7){
 				display:none;
 			}
-			th:nth-child(2), td:nth-child(2){
+			table.asset th:nth-child(2),table.asset  td:nth-child(2){
 				color:red;
 			}
 		}
@@ -256,7 +372,32 @@
 			background-color:white;
 			color:black;
 		}
+		.filters {
+			width:fit-content;
+			margin:auto;
+		}
+		hr.divider{
+			margin:auto;
+			margin-top:10px;
+			margin-bottom:10px;
+			background-color:#ddd;
+			width:90%;
+			opacity:0.5;
+		}
+		.paginate{
+			margin-top:5px;
+			margin-bottom:10px;
+		}
+		.lower_bottons{
+			width:fit-content;
+			margin:auto;
+		}
+		article.new_pannel_body{
+			padding:10px;
+		}
 		
+		
+	
 		
 
 </style>
@@ -267,47 +408,90 @@
 		<!-- this section if for the summary--> 
 	  	<div class="imgform-img" >
 		<div class="new_pannel">
-			<label class="label_new" onclick="slide('#acc1')">Assets Summary</label>
+			<label class="label_new lbl1" onclick="slide('#acc1')">Assets Summary</label>
 			<article class="new_pannel_body" id="acc1">
 					<p class='head' style="margin-bottom:10px;margin-top:10px;"></p>
 						
-						<div class="container" >
+						<div class="container"  style="display:none;">
 								<?php 
 								  //echo $_SESSION["status"];
 									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='available' group by category";
 									$cols=  array("name","category","quantity");
 								
 									echo"<div class='sum' style='background-color:white;color:black'>";
-										echo"<ul id='listavail'>";
-										loadlist($str,$cols,"availhead","Available");	
-										echo"</ul>";
+									
 									echo"</div>";
 									echo"<div class=' sum'>";
-									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='deployed' group by category";
-										echo"<ul id='listdep'>";
-										loadlist($str,$cols,"dephead","Deployed");	
-										echo"</ul>";
+									
 									echo"</div>";
 									echo"<div class=' sum'>";
-									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='To Receive' group by category";
-										echo"<ul id='listreceive'>";
-										loadlist($str,$cols,"toreceive","To Receive");	
-										echo"</ul>";
+									
 									echo"</div>";
 								?>
 							</div >
-							<hr class="divide2" style="margin-top:5px;margin-bottom:10px;">
-						<h3 id='total' style='width:100%;'>
-						<?php
+							<div class="container">
+									
+								<div class='sum ' id='con_avail' >
+									<?php
+									$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='available' group by category";
+									$cols=  array("name","category","quantity");
+								
+										echo"<ul id='listavail' class='hidden_list'>";
+										loadlist($str,$cols,"availhead","Available");	
+										echo"</ul>";
+										?>
+									<div style="width:100%;display:block">
+										<canvas id="availCharts" class="charts">
+										</canvas>
+									</div>
+								</div>
+								<div class='sum ' id='con_dep'>
+										<?php
+										$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='deployed' group by category";
+										$cols=  array("name","category","quantity");
+								
+										echo"<ul id='listdep'  class='hidden_list'>";
+										loadlist($str,$cols,"availhead","Deployed");	
+										echo"</ul>";
+										?>
+										<div style="width:100%;display:block">
+											<canvas id="deployedCharts" class="charts">
+											</canvas>
+										</div>
+								</div>
+							<div>
+							<div class="container">
+								<div class='sum' id='con_receive' >
+								<?php
+										$cols=  array("name","category","quantity");
+										$str="select name, category, count(*) as quantity, status from owned_assets where office_id=".$_SESSION["officeid"]."  and status='To Receive' group by category";
+										echo"<ul id='listreceive' class='hidden_list'>";
+										loadlist($str,$cols,"toreceive","To Receive");	
+										echo"</ul>";
+										?>
+									<div style="width:100%;display:block">
+										<canvas id="receiveCharts" class="charts">
+											</canvas>
+									</div>
+								</div>
+								<div class='sum' id='con_total'>
+									<div style="width:100%;display:block">
+										<canvas id="totalassetsCharts" class="charts">
+											</canvas>
+										</div>
+								</div>
+							<div>
+							<hr class="divide2 hidden_list" style="background-color:#ddd;margin-top:5px;margin-bottom:10px;">
+							<?php
 								echo total("select count(id) as id from assetowner where office_id=".$_SESSION["officeid"],"id");
 						?>
-						</h3>
-						<hr class="divide2" style="margin-top:2px">
+						<hr class="divide2 hidden_list"   style="background-color:#ddd;margin-top:2px">
 			</article>
 		</div>
 		<div class="new_pannel">
-			<label class="label_new" onclick="slide('#acc2')">Inventory Table</label>
+			<label class="label_new lbl2" onclick="slide('#acc2')">Inventory Table</label>
 			<article class="new_pannel_body" id="acc2">
+			<div class="input_wrapper filters">
 			<p class='head'></p>
 						<p>Status: 
 						<select id='status'>
@@ -331,6 +515,8 @@
 								?>
 							</select>
 							</p>
+							</div>
+							<hr class="divider">
 							<table class="asset">
 											
 										<?php
@@ -346,18 +532,18 @@
 											loadtable($str,$headers,true, false, $elem);		
 										?>
 								</table>
+								<div class="input_wrapper lower_bottons">
 								<input   id="sbdemove" type='submit' Value='Demobilize' class='sub-bttn' >
 								<input   id="receive" type='submit' Value='Receive' class='sub-bttn'>
+								</div>
+
 								
 			</article>
 		</div>
 		  
 				
 				
-				<br>
-					<!-- this ection if for table--> 
-				
-				<br>
+			
         </div>
 		<!-- this section is for the form transfer and deploy--> 
 		<div class="form-container">
@@ -408,10 +594,24 @@
         </div>
       </div>
     </section>
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+	</script>
 	<script>
+		
 		$(document).ready(function(){
-			$('#acc2').slideUp("slow");
+			$(".assetstotal").addClass("hidden_list");
+		
+			$(window).resize(function(){
+				hide_show_charts();
+          	});
+			
+			$(".assetstotal,.divide2").hide();
+			$("#category option:nth-child(1)").text("All");
 			$("#status").val("available");
+			status_cat_change();
+			$('#acc2').slideUp("slow");
+		
 			$(".transfer").css("display","none");
 			$("#sbdemove, #receive").css("display","none");
 			var isokmgt={
@@ -421,6 +621,149 @@
 			var lbl=0;
 			var tblbl=0;
 			//defined functions 
+			//$("#listavail, #listdep, #listreceive").hide();
+			$(".lbl1").click(function(){
+				//alert("click");
+				if($("#acc1").is(":visible")){
+					//alert("true");
+					$("#acc2").slideDown();
+				}
+			});
+			function hide_show_charts(){
+				var lenght=$(window).width();
+				if(lenght<=451){
+					$(".hidden_list").show();
+					$(".charts").hide();
+					$(".lbl_canvas").hide();
+				}
+				else{
+					$(".hidden_list").hide();
+					$(".charts").show();
+					$(".lbl_canvas").show();
+				}
+			}
+			function get_total(element){
+				var arr_elem=get_li(element);
+				//console.log(arr_elem);
+				var size=sizeof(arr_elem);
+				var total=0;
+				for(let i=1;i<size;i++){
+					total+=parseInt(arr_elem[i][1]);
+				}
+				return total;
+			}
+			function total_assets_to_array(){
+
+				return [["total"],["Available",get_total("#listavail li")], ["Deployed",get_total("#listdep li")]];
+
+			}
+			//var arr_totals=;
+			//console.log(total_assets_to_array());
+			make_chart("totalassetsCharts",total_assets_to_array(),"Total Assets","bar",false);
+			//console.log(get_total("#listavail li"));
+			make_chart("availCharts",get_li("#listavail li"),"Available Assets","doughnut",true);
+			make_chart("deployedCharts",get_li("#listdep li"),"Deployed Assets","doughnut",true);
+			make_chart("receiveCharts",get_li("#listreceive li"),"Receivable Assets","doughnut",true);
+			hide_show_charts();
+			function make_chart(target,data,title1,chart_type,show_legend){
+				var total=0;
+				$("#"+target).empty();
+				$("#"+target).parent().find(".lbl_canvas").remove();
+				var xValues=[];
+				var yValues=[];
+				var size=sizeof(data);
+				
+				for(let i=1;i<size;i++){
+					total+=parseInt(data[i][1]);
+					yValues.push(data[i][1]);
+					xValues.push(data[i][1]+" "+data[i][0]);
+
+				}
+				var start_at_0=false;
+				var bar_colors=generate_colors(sizeof(xValues));
+				if(chart_type=="bar" || chart_type=="line" || chart_type=="scatter" || chart_type=="bubble" ){
+							
+				
+					new Chart(target,{
+						type:chart_type,
+						data:{
+							labels: xValues,
+							datasets:[{
+								backgroundColor:bar_colors,
+								data: yValues
+
+							}]
+						},
+						options: {
+							legend: {display: show_legend},
+							title: {
+							display: false,
+							text: title1,
+							
+							},
+							
+							scales: {
+								yAxes: [{
+									ticks: {
+									beginAtZero: true
+									}
+								}]
+								
+								}
+						}
+						
+						
+					});
+			}else{
+				new Chart(target,{
+						type:chart_type,
+						data:{
+							labels: xValues,
+							datasets:[{
+								backgroundColor:bar_colors,
+								data: yValues
+
+							}]
+						},
+						options: {
+							legend: {display: show_legend},
+							title: {
+							display: false,
+							text: title1,
+							
+							}
+						}
+						
+						
+					});
+
+			}
+			
+				var add="<div class='Div_"+title1.replace(" ","_")+"' style='width:100%;display:block;margin:atuo;margin-bottom:20px;')><label class='lbl_canvas'> \
+				"+total+" " +title1+"</label></div>";
+							
+				$("#"+target).css({"width":"95%","border":"1px solid #ddd","margin":"auto"}).before(add);
+
+			}
+
+			function get_li(target){
+				var size=0;
+				var arr_data=[];
+				$.each($(target),function(){
+					
+					var val_arr=to_array($(this).text(),":");
+					val_arr[0]=val_arr[0].replace(/\s+/g," ").trim();
+					if(size>=1){
+						val_arr[1]=val_arr[1].trim();
+					}
+					//
+					arr_data.push(val_arr);
+					
+					size++;
+
+				});
+				return arr_data;
+			}
 			function fetch_loc(str, tofill, c1, c2, frm){
 				$.post("AJAX/dropdown.php",
 				{
@@ -495,6 +838,12 @@
 				function(data){
 					$(idname).empty();
 					$(idname).html(data);
+					make_chart("availCharts",get_li("#listavail li"),"Available Assets","doughnut",true);
+					make_chart("deployedCharts",get_li("#listdep li"),"Deployed Assets","doughnut",true);
+					make_chart("totalassetsCharts",total_assets_to_array(),"Total Assets","bar",false);
+					make_chart("receiveCharts",get_li("#listreceive li"),"Receivable Assets","doughnut",true);
+			
+
 				});
 
 			}
@@ -514,16 +863,11 @@
 				tblbl=0;
 				$("#errlbl").remove();
 				$("#errtbl").remove();
-				var headers=" %ASSET NUMBER%SERIAL%ITEM NAME%CATEGORY%BRAND%DATE AQUIRED%STATUS";
-				var str="select `assetowner`.`id` as id,`assets`.`assetid` as  `assetid`, \
-				`assets`.`serial` as `serial`, assets.name as name, assets.category as category,\
-				 assets.brand as brand, assetowner.date_aquired as `date`, \
-				 `assets`.`status` as `status` from assets, assetowner \
-				 where assetowner.assets_id=assets.id and `assets`.`status`='Available' and assetowner.office_id ="+$("#office").val();				
 				$("#category").val(0);
-				$("#category").attr("disabled","disabled");
-				$("#status").val("available");
-				loadtable(str,headers,1,0);
+				
+				
+				status_cat_change();
+				//status_cat_change();
 				
 			}
 			function itemselected(){
@@ -538,6 +882,30 @@
 					return true;
 				}
 			}
+			$(document).on("click",".all",function(){
+				if($(".all").is(":checked")){
+					$(".item").prop("checked",true);
+				}else{
+					$(".item").prop("checked",false);
+				}
+			
+			});
+			$(document).on("click",".Div_Deployed_Assets",function(){
+				hide_show_partner("#deployedCharts","#availCharts",1600,"slow");
+				
+			});
+			$(document).on("click",".Div_Available_Assets",function(){
+				hide_show_partner("#availCharts","#deployedCharts",1600,"slow");
+				
+			});
+			$(document).on("click",".Div_Receivable_Assets",function(){
+				hide_show_partner("#receiveCharts","#totalassetsCharts",1600,"slow");
+				
+			});
+			$(document).on("click",".Div_Total_Assets",function(){
+				hide_show_partner("#totalassetsCharts","#receiveCharts",1600,"slow");
+				
+			});
 			//events for retrieving locations: region, province, municipalit, brgy
 			$("#region").change(function(){
 				if($("#region").val()!='0'){
@@ -593,49 +961,96 @@
 				$("#msg1").remove();
 				clear_mgt_forms();
 			});
+			function status_cat_change(){
+					var category =$("#category").val();
+					
+						var status =$("#status").val();
+						var headers=" %ASSET NUMBER%SERIAL%ITEM NAME%CATEGORY%BRAND%DATE AQUIRED%STATUS";	
+						var table_cols="`assetowner`.`id` as id,`assets`.`assetid` as `assetid`, \
+						`assets`.`serial` as `serial`, assets.name as name, assets.category as \
+						category, assets.brand as brand, assetowner.date_aquired as `date`, \
+						`assets`.`status` as `status`";
+						var table_source=" assets, assetowner \
+						where assetowner.assets_id=assets.id and assetowner.office_id ="+$("#office").val();
+
+						/* //var str="select `assetowner`.`id` as id,`assets`.`assetid` as `assetid`, \
+						`assets`.`serial` as `serial`, assets.name as name, assets.category as \
+						category, assets.brand as brand, assetowner.date_aquired as `date`, \
+						`assets`.`status` as `status` from assets, assetowner \
+						where assetowner.assets_id=assets.id and assetowner.office_id ="; */
+						if(category!=0){
+							table_source+=" and category ='"+category+"' ";
+						}
+						if(status=="all"){
+							
+							//str=str+$("#office").val()+" order by assets.category";
+							table_source+=" order by assets.category";
+						}	
+						
+						else if(status=="To Receive"){
+							
+							table_source=table_source+" and `assets`.`status`='To Receive'";
+						}
+						else if (status=="deployed"){
+							//alert($("#office").val());
+							
+							//console.log(status);
+								headers=" %Asset id%Assets%Category%Province%Municipality%Brgy.%Date deployed%Deployment Status";	
+								/* //str="SELECT deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name,  assets.category as `category`, \
+								province.name as province, municipality.name as muni, barangay.name as brgy,deployment.datemobilized\
+								as `datedep`, deployment.deployment_stat as depstat FROM deployment,region,province,municipality,\
+								barangay,assetowner,assets where deployment.reg_id=region.id and \
+								deployment.prov_id=province.id and deployment.muni_id=municipality.id \
+								and deployment.brgy_id=barangay.id and assetowner.id=deployment.asset_owner_id \
+								and assets.id=assetowner.assets_id and deployment.deployment_stat='Active'  \
+								and assetowner.office_id="+$("#office").val()+" order by `assets`.`category`"; */
+								$("#sbdemove").css("display","inline-block");
+								table_source="deployment, region, province, municipality, \
+								barangay, assetowner, assets where deployment.reg_id=region.id and \
+								deployment.prov_id=province.id and deployment.muni_id=municipality.id \
+								and deployment.brgy_id=barangay.id and assetowner.id=deployment.asset_owner_id \
+								and assets.id=assetowner.assets_id and deployment.deployment_stat='Active' and assetowner.office_id="+$("#office").val();
+								if(category!=0){
+									table_source+=" and category ='"+category+"' ";
+									} 
+									table_source+=" order by `assets`.`category`";
+								table_cols="deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name,  assets.category as `category`, \
+								province.name as province, municipality.name as muni, barangay.name as brgy,deployment.datemobilized\
+								as `datedep`, deployment.deployment_stat as depstat";
+								// alert(table_source);
+								//alert(table_cols);
+
+							}
+							else{
+								$("#sbdemove").css("display","none");
+								
+							
+								$("#category").removeAttr("disabled");
+							
+								/* 	str=str+$("#office").val()+" and assets.status='"+status+"' order by `assets`.`category`"; */
+									table_source+=" and `assets`.`status`='"+status+"'";
+									if(category!=0){
+									table_source+=" and category ='"+category+"' ";
+									} 
+									table_source+="order by `assets`.`category`";
+								
+					
+							}
+						if(status=="To Receive"){
+							$("#receive").css("display","block");
+							$("#sbdemove").css("display","none");
+						}
+						else{
+							$("#receive").css("display","none");
+						}
+						global_load_table_paginate(table_cols,headers,1,1,"all%item",".asset","","","",table_source,"id",0);
+						//console.log("Asfter call "+table_source);
+						//loadtable(str,headers,1,0);	
+			}
 			//events for table filter
 			$("#status, #category").change(function(){
-				var status =$("#status").val();
-				var headers=" %ASSET NUMBER%SERIAL%ITEM NAME%CATEGORY%BRAND%DATE AQUIRED%STATUS";	
-				var str="select `assetowner`.`id` as id,`assets`.`assetid` as `assetid`, `assets`.`serial` as `serial`, assets.name as name, assets.category as category, assets.brand as brand, assetowner.date_aquired as `date`, `assets`.`status` as `status` from assets, assetowner where assetowner.assets_id=assets.id and assetowner.office_id =";
-				if(status=="all"){
-					$("#category").attr("disabled","disabled");
-					$("#category").val(0);
-					str=str+$("#office").val()+" order by assets.category";
-				}	
-				else{
-					
-					$("#category").removeAttr("disabled");
-					if($("#category").val()==0){
-						str=str+$("#office").val()+" and assets.status='"+status+"' order by assets.category";
-					}
-					else{
-						str=str+$("#office").val()+" and assets.status='"+status+"' and assets.category='"+$("#category").val()+"'";
-					}
-				}
-				if(status=="deployed"){
-					//alert($("#office").val());
-						headers=" %Asset id%Assets%Category%Province%Municipality%Brgy.%Date deployed%Deployment Status";	
-						str="SELECT deployment.asset_owner_id as id, assets.assetid as aid, assets.name as name,  assets.category as `category`, \
-						 province.name as province, municipality.name as muni, barangay.name as brgy,deployment.datemobilized\
-						  as `datedep`, deployment.deployment_stat as depstat FROM deployment,region,province,municipality,\
-						  barangay,assetowner,assets where deployment.reg_id=region.id and \
-						  deployment.prov_id=province.id and deployment.muni_id=municipality.id \
-						  and deployment.brgy_id=barangay.id and assetowner.id=deployment.asset_owner_id \
-						  and assets.id=assetowner.assets_id and deployment.deployment_stat='Active'  \
-						  and assetowner.office_id="+$("#office").val()+" order by `assets`.`category`";
-						$("#sbdemove").css("display","inline-block");
-					}
-					else{
-						$("#sbdemove").css("display","none");
-					}
-				if(status=="To Receive"){
-					$("#receive").css("display","block");
-				}
-				else{
-					$("#receive").css("display","none");
-				}
-				loadtable(str,headers,1,0);				
+				status_cat_change()
+							
 			});
 			//events for input elements change 			
 			$(".item").click(function(){			
@@ -701,6 +1116,7 @@
 						loadlist(str,cols,"#listreceive","toreceive","To Receive");
 						calculate_total("select count(id) as id from assetowner where office_id="+$("#office").val(),"id");
 						clear_mgt_forms();	
+					
 			}
 			$("#sbmmgt").click(function(){
 				var reload=false;
@@ -729,7 +1145,7 @@
 										brgy:$("#brgy").val(),
 										remarks:$("#remarks").val()
 										},function(data){
-											alert(data);
+											//alert(data);
 											if(c==chk_size){
 												var plural="";
 												var helping="is";
@@ -817,7 +1233,7 @@
 								{
 								assetowned:elem
 								},function(data){
-									
+									//console.log(data);
 									if(i==chk_size){
 												var plural="";
 												var helping="is";
@@ -830,8 +1246,7 @@
 												Popup_modal_show(i+" item"+plural+" "+helping1+" demobilized!",600);
 												updatealllistandtables();
 												clear_mgt_forms();
-									}
-											
+									}											
 										i++;
 							});
 						});

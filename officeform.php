@@ -20,10 +20,8 @@
 		
 		.imgform-img{
 			width:100%;
-			margin-top:20px;
-			padding-left:10px;
-			padding-right:10px;
-
+			padding:10px;
+			border: solid 1px #c6c6c6;
 		}
 		.imgform-img img{
 			width:90%;
@@ -78,6 +76,7 @@
 						<select id="category" name='category' onchange="revertcss('#category')">
 						<option value=0>Select from Options</option>
 						<option value="Regional Office">Regional Office</option>
+						<option value="Provincial Office">Provincial Office</option>
 						<option value="Satellite Office">Satellite Office</option>
 						<option value="Main Office">Main Office</option>
 											

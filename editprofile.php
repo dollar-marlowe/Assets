@@ -105,7 +105,10 @@ body{
     <?php
         include "ALGO/codes.php";
         include "header.php";
+        include "COMPONENTS/reroute.php";
+    auth_validatation(1);
         include "footer.php";
+        
 
         
     ?>
@@ -246,7 +249,7 @@ echo "var sess_id='".$_SESSION["id"]."';";
 ?>
           // Listener for page 
           $(document).ready(function(){
-
+          
             $("#footer").hide(); 
             
             // Checks whether an image is selected

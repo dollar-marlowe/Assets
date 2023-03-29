@@ -76,6 +76,10 @@
 			border:solid 1px #ddd;
 			padding:10px 0px 10px 0px;
 			background-color:#eaeaeaab;
+			
+		}
+		.pannel:hover{
+			background-color:#b3b3b3a3;
 		}
 		.pannel h2{
 			display:inline;
@@ -138,13 +142,14 @@
 		/* #imgform{
 			background-color:#cfc9c9;
 		} */
-
+		
 		.pannel_con{
-			-webkit-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
-			-moz-box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
-			box-shadow: -2px 2px 26px -12px rgba(0,0,0,0.75);
+			
 			width:80%;
 			margin:auto;
+			background-color:#fff;
+			border:solid 1px #c6c6c6;
+			
 					
 		}
 		.dstr_con{
@@ -263,15 +268,15 @@
  <div class="pannel_con">
 		<div class="pannel" onclick="slide('#hazard_form')" ><p class="lbl_wrap" id="accounts" ><img src="images\hazard.png"> <u>H</u>azard Data Log</p></div>
       
-      <div class="imgform-container " id="hazard_form">
-	   <div class="imgform-img">
-					<div class="inner-wrapper">
+      <div class="imgform-container bg_white" id="hazard_form">
+	   <div class="imgform-img bg_white">
+					<div class="inner-wrapper bg_white">
 					
-					<div class="input_wrapper entry"><p class="label"><label for="disaster">Name</label></p>
+					<div class="input_wrapper  bg_white entry"><p class="label"><label for="disaster">Name</label></p>
 					<input type="text" placeholder="Disaster's Name*" id="disaster" /></div>
 					
 					
-					<div class="input_wrapper"><p class="label"><label for="naturedisaster">Nature of Disaster</label></p>
+					<div class="input_wrapper "><p class="label"><label for="naturedisaster">Nature of Disaster</label></p>
 					<select id="category">
 							<option value="0">Select from below</option>
 							<option value="Cyclone%Meteorological">Cyclone</option>
@@ -325,11 +330,11 @@
 	</div>
 	</div>
 	<div class="pannel_con">
-	<div class="pannel" style="margin-top:10px;" onclick="slide('#incident_log')"><p class="lbl_wrap" id="pass_reset" ><img src="images\logs.png"> <u>I</u>ncident Logs</p></div>
+	<div class="pannel "  onclick="slide('#incident_log')"><p class="lbl_wrap" id="pass_reset" ><img src="images\logs.png"> <u>I</u>ncident Logs</p></div>
     
-      <div class="imgform-container " id="incident_log"> 
+      <div class="imgform-container bg_white" id="incident_log"> 
 			
-        <div class="imgform-img">
+        <div class="imgform-img bg_white">
 			<div class="inner-wrapper">
 				<input type="text" id="search_disaster" Placeholder="Search Disaster" style="font-size: 18px;margin-right:10px;margin-left:5px;">
 				<select id='search_category'>

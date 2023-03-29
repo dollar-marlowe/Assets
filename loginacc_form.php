@@ -20,14 +20,23 @@
 		
 		.imgform-img{
 			width:100%;
-			margin-top:20px;
+			
 			padding-left:10px;
 			padding-right:10px;
+			margin-right:0px;
 
+		}
+		.left_pannel{
+			background-color:#fff;
+			border:solid 1px #c6c6c6;
+			margin-right:20px;
+			padding:20px;
+			margin-top:0px;
 		}
 		.imgform-img img{
 			width:90%;
 			margin:auto;
+			
 		}
 		.form-container{
 			width:60%;
@@ -66,14 +75,21 @@
 			padding-bottom:10px;
 			padding-top:10px;
 		}
+		.pannel_con{
+			border: solid 1px #c6c6c6;
+		}
 		.pannel{
 			width:90%;
 			margin:auto;
 			margin-top:0px;
-			margin-bottom:0px;
+			margin-bottom:15px;
 			text-align:center;
-			border:solid 1px #ddd;
+			border:solid 1px #c6c6c6;
 			padding:10px 0px 10px 0px;
+			background-color:#eaeaeaab;
+		}
+		.pannel:hover{
+			background-color:#b3b3b3a3;
 		}
 		.pannel h2{
 			display:inline;
@@ -104,20 +120,30 @@
 			width:30px;
 			margin-bottom:-6px;
 		}
-		.header2{
-			font-size: 2.7rem;
-			font-weight: 500;
-			color: #444;
-			margin-bottom: 1rem;
-			margin-top: -1.2rem;
-			text-align:center;
-		}
+		
 		.align_center{
 			margin:auto;
 			
 			width:fit-content;
 			
 			
+		}
+		.header2{
+			font-size: 1.8rem;
+			font-weight: 500;
+			color: #444;
+			margin-bottom: 1rem;
+			margin-top: 5px;
+			text-align:center;
+		}
+		.form-container h2{
+			font-size: 1.8rem;
+		}
+		.left_pannel select{
+			width:250px;
+		}
+		.wrap_me{
+			display:inline-block;
 		}
 		@media (max-width:1267px){
 			.imgform-container{
@@ -126,13 +152,44 @@
 			}
 			.align_center{
 			margin:auto;
-			
 			width:fit-content;
 			
+			}
+			.form-container{
+				width:100%;
+				margin-top:15px;
+
+			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea
+						{
+				width:40%;
+				margin:auto;
+			}
+			.align_center{
+			margin:auto;
+			width:fit-content;
+			
+			}
+
 			
 		}
-			
-			
+		@media (max-width:1246px){
+			.align_center > *{
+				margin-bottom:5px;
+			}
+			.align_center{
+				width:fit-content;
+				margin:auto;
+			}
+		}
+		@media (min-width:821px){
+			.align_center input{
+				margin-right:10px;
+			}
 		}
 		@media (max-width:820px){
 			table{
@@ -141,6 +198,30 @@
 			}
 			.imgform-img p, .imgform-img  select, input[type=text]{
 			font-size:95%;
+			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea
+						{
+				width:60%;
+				margin:auto;
+			}
+			.align_center{
+			margin:auto;
+			width:100%;
+			
+			}.align_center > *{
+				margin-left:0px;
+				margin:auto;
+				display:block;
+				margin-bottom:5px;
+			
+			}
+			.wrap_me{
+				width:fit-content;
+				margin:auto;
 			}
 		}
 		@media (max-width:600px){
@@ -176,6 +257,18 @@
 			border-top:solid 1px #ddd;
 			
 			}
+			.form-container input,
+			.form-container label,
+			.form-container select,
+			.form-container .wrap,
+			.form-container textarea
+						{
+				width:100%;
+				margin:auto;
+			}
+			.left_pannel select,.imgform-img select{
+			width:180px;
+		}
 		}
 
 		@media(max-width:320px){
@@ -195,11 +288,25 @@
 </style>
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="imgform">
- <div class="pannel"><div class="wrapper"><p class="lbl_wrap"  id="accounts" ><img src="images\activate.png">Accounts Activation</p><p class="lbl_wrap" id="pass_reset"><img src="images\reset.png">Password Reset</p></div></div>
+ <div class="pannel"><div class="wrapper"><p class="lbl_wrap"  id="accounts" ><img src="images\activate.png">Accounts Activation</p><p class="lbl_wrap" id="pass_reset"><img src="images\reset2.png">Password Reset</p></div></div>
       <div class="imgform-container " id="accounts_form">
 		
-        <div class="imgform-img">
-		
+        <div class="imgform-img left_pannel">
+		<p>	
+		<label for="status">Status</label>
+					<select id="status">
+						<option value="active">Active</option>
+						<option value="activation">For activation</option>
+						<option value="deactivated">Deactivated</option>
+						<option value="change_pass">For password changing</option>
+					</select></p>
+		<p><label for="office">Office Designation: *</label>
+                <select id="office" name="off_designation" >
+                        <?php
+                        $str="SELECT * FROM office";
+                        loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
+                        ?>
+                </select> </p>
 		<table class="users">
 			<?php //THIS IS THE PHP CODE FOR LOADING THE TABLE FROM FUNCTION CALL LOCATED IN CODES
 			$str="SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where `status`='activation'";
@@ -211,14 +318,8 @@
         </div>
 
         <div class="form-container">
-          <h2 id='officialheader'>Accounts Activation and Deactivation</h2>
-				<label for="status">Status</label>
-					<select id="status">
-						<option value="active">Active</option>
-						<option value="activation">For activation</option>
-						<option value="deactivated">Deactivated</option>
-						<option value="change_pass">For password changing</option>
-					</select>
+          <h2 id='officialheader' class="header2">Accounts Activation and Deactivation</h2>
+				
 				<label for="auth_level" id="lbllevel">User Access Level</label>
 					<select id="auth_level">
 						<option value="1">Regular User</option>
@@ -233,13 +334,7 @@
 					</select>	
 				</lable>		
 
-                <label for="office">Office Designation: *</label>
-                <select id="office" name="off_designation" >
-                        <?php
-                        $str="SELECT * FROM office";
-                        loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
-                        ?>
-                </select>                    
+                                 
                 <input type='submit' Value='Activate' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_account">
                 <input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear">            
         </div>
@@ -247,17 +342,17 @@
 	 
       <div class="imgform-container " id="resets_form"> 
 			
-        <div class="imgform-img">
+        <div class="imgform-img bg_white pannel_con">
 		<h2 id='officialheader' class="header2">Password Reset</h2>
-			<div  class="align_center"><input type="text" id="search_uname" Placeholder="Username"> &nbsp <input type="text" id="search_fname" Placeholder="First Name">
-			&nbsp <input type="text" id="search_lname" Placeholder="Last Name">
-			<label for="office">Office Designation: *</label>
+			<div  class="align_center"><input type="text" id="search_uname" Placeholder="Username"> <input type="text" id="search_fname" Placeholder="First Name">
+			 <input type="text" id="search_lname" Placeholder="Last Name">
+			<div class="wrap_me"><label for="office">Office Designation: *</label>
                 <select id="office_search" name="office_search" >
                         <?php
                         $str="SELECT * FROM office";
                         loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
                         ?>
-                </select>   
+                </select>  </div> 
 			</div>	
 			
 			<table class="table_search" style="margin-top:10px;margin-bottom:10px">
@@ -298,14 +393,17 @@
 		 var acc_mgt_str_complete='".encrypt("SELECT official_id,fname,lname,`username`,`position`,auth_level,`status` FROM personnelogiinfo where office_id=")."';
 		 var acc_headers='".encrypt("%First Name%Last Name%User Name%Position%Level%Status")."';
 		 
-		 ";?>
+		 var cur=".$_SESSION["officeid"].";";?>
 		//$("#reset_pass").hide();
 		
 		
 
 $(document).ready(function(){
+	$("#office").val(cur);
+	
 	enrycpt_each(".item");	
 	enrycpt_each(".item_pass_res");	
+	office_change("#office",".users",".item","all%item");
 		//check_url(window.location.href);
 		//alert(window.location.href);
 		//call_php_code("check_url",window.location.href,"reroute()","do_nothing()");
@@ -337,13 +435,19 @@ $(document).ready(function(){
 			var headers=" %First Name%Last Name%User Name%Position%Level%Status";
 			loadtable(str,headers,1,0,".users",".item",1,"all%item");
 			if($(this).val()=="activation"){
+				$("#submit_account").show();
 				$("#submit_account").val("Activate");
 			}
 			else if($(this).val()=="active"){
+				$("#submit_account").show();
 				$("#submit_account").val("Deactivate");
 			}
 			else if($(this).val()=="deactivated"){
+				$("#submit_account").show();
 				$("#submit_account").val("Reactivate");
+			}
+			else if($(this).val()=="change_pass"){
+				$("#submit_account").hide();
 			}
 			is_true_false(str,"elem_hide('#auth_level, #lbllevel')", "elem_show('#auth_level, #lbllevel')");
 
