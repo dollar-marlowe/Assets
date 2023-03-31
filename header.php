@@ -518,6 +518,18 @@ border:solid 1px #33bbff;
          echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
          echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
         }
+        if($_SESSION["auth_level"]>=3){
+        
+          echo   "<div>";
+          echo       "<input id='ac-7' name='accordion-1' type='checkbox' >";
+          echo       "<label for='ac-7'><u>H</u>F Management</label>";
+          echo       "<article class='ac-medium'>";
+      
+          echo           "<a href='hf_main'>HF Stations Main <u>P</u>age</a>";
+          echo           "<a href='hf_daily'><u>H</u>F Stations Daily Log</a>"; 
+          echo           "<a href='hf_entry'>HF Station Data <u>E</u>ntry</a>";
+          echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
+         }
      
 
          echo       "</article>";
