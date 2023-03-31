@@ -516,7 +516,10 @@ border:solid 1px #33bbff;
      
          echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
          echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
-         echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
+         echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";
+         
+         echo       "</article>";
+         echo   "</div>";        
         }
         if($_SESSION["auth_level"]>=3){
         
