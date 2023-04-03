@@ -10,6 +10,7 @@ session_start();
     session_unset(); 
     session_destroy(); 
    
+    
 } */
 $_SESSION['start'] = time();
 
@@ -979,9 +980,10 @@ function load_label_input($str, $div2,$class,$col1,$col2,$col3){
         echo "";
     }
 }
-function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deafult value of the combo box if data is null, $col1 ar ethe column names form the db 
-    //these column names depends on the table examle regions table and i selected id and name, the id and name data will be encypted however it needs
-    // a data in option tag that is not encrypted so that is why there is $col2 variable so it couls show like this <option>Region 1</option>
+function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deafult value of the combo box 
+    //if data is null, $col1 are the column names form the db 
+    //these column names depends on the table examle regions table, I selected id and name, the id and name data will be encypted however it needs
+    // a data in option tag that is not encrypted so that is why there is $col2 variable so it could show like this <option>Region 1</option>
     
     $db = new Database();
     $db->connect();

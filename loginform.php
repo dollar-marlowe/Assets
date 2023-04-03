@@ -1,6 +1,6 @@
 
 	 <section id="imgform" style="width:100%;height:100%;margin:auto;
-	 display:flex;background:fit-content;position:fixed;z-index:2;padding-bottom:150px;padding-top:150px;" >
+	 display:flex;background:fit-content;z-index:2;padding-bottom:150px;padding-top:150px;" >
       <div class="imgform-container container" style="width:350px;margin:auto;box-shadow:5px 5px 25px #3f4240;">
         
         <div class="form-container" style="width:100%;margin:auto;" >

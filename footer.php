@@ -286,7 +286,7 @@
                     disable_affected()
                    }
             }
-            loaddropdown(slect_log,disaster_id,"id","log","disaster",".impact_log",".impact_log option:nth-child(1)","New/Escalation");
+            //loaddropdown(slect_log,disaster_id,"id","log","disaster",".impact_log",".impact_log option:nth-child(1)","New/Escalation");
             //this is the dropdown for impact log it's sql is encrypted 
 
         
@@ -301,6 +301,7 @@
 		$(".inputs2, .item_area").attr("disabled","disabled");
 	}
      function loaddropdown(str,myid, mycol1,mycol2,myfrom,tofill,change_child,child_val){
+        //alert(myid);
         $.post("AJAX/dropdown_decrypt.php",
 				{
 				
@@ -311,6 +312,7 @@
 					from:myfrom
 				},
 				function(data){
+                    //alert(data);
 					$(tofill).removeAttr("disabled");
 					$(tofill).html(data);
                     if(change_child!=""){
@@ -330,6 +332,7 @@
      }
 
      function FetchRegion(id,str,tofill,c1,c2,frm){
+       
 		if(id!=0 || id==""){
       $("#region, #province, #municipality, #barangay").css("border-bottom-color","#ddd");
 				if(frm==""){
@@ -385,6 +388,64 @@
 		}
 		
 	}
+    function FetchRegion_encrypt(id,str,tofill,c1,c2,frm){
+       
+       if(id!=0 || id==""){
+     $("#region, #province, #municipality, #barangay").css("border-bottom-color","#ddd");
+               if(frm==""){
+         $("#province").css("border-bottom-color","red");
+                   $("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");					
+
+               }
+               if(frm=="Region"){
+         $("#municipality").css("border-bottom-color","red");
+                   $("#barangay").html("<option value=0>Select from Municipality</option>").attr("disabled","disabled").css("border-bottom-color","red");
+
+               }
+       if(frm=="Municipality"){
+         $("#barangay").css("border-bottom-color","red");
+
+       }
+       
+               $.post("AJAX/dropdown.php",
+               {
+               
+                   sql:str+""+id+" order by name",
+                   col1:c1,
+                   col2:c2,
+                   from:frm
+               },
+               function(data){
+                   $(tofill).removeAttr("disabled");
+                   $(tofill).html(data);
+                   enrycpt_each(tofill+ " option");
+               }
+           );
+
+       }
+       else{
+           if(frm==""){
+       $("#region").css("border-bottom-color","red");
+                   $("#province, #municipality, #barangay").html("<option value=0>Select from Region</option>").attr("disabled","disabled").css("border-bottom-color","red");
+                   
+
+               }
+               if(frm=="Region"){
+                 $("#province").css("border-bottom-color","red");
+                   $("#municipality, #barangay").html("<option value=0>Select from Province</option>").attr("disabled","disabled").css("border-bottom-color","red");
+
+               }
+
+       if(frm=="Municipality"){
+                 $("#municipality").css("border-bottom-color","red");
+       $(" #barangay").html("<option value=0>Select from Municipality</option>").attr("disabled","disabled").css("border-bottom-color","red");
+
+     }
+
+       
+       }
+       
+   }
     function disable_inactive(item,next_for,val_check){// this is a function which lets you select a value within the same row checks it if it satisfies the condition
         //then disables the radio button
 		$.each($(item),function(){
@@ -451,6 +512,22 @@
                     
                    });    
         }
+        function decrypt_load_dowp_break(id,str,tofill,c1,c2,frm){
+
+            $.post("AJAX/mycodes.php",
+                   {
+                    command:"decrypt",
+                    values:id
+                   },
+                   function(data){
+                   // alert(data);
+                  var arr_data=to_array(data,"%");
+                    
+                  FetchRegion_encrypt(arr_data[0],str,tofill,c1,c2,frm)
+               
+                   });
+        }
+
         function decrypt_one_compare_retrieve(source,target,val,what_to){
             $.post("AJAX/mycodes.php",
                    {

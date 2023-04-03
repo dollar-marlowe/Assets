@@ -34,14 +34,26 @@
         //this is for slectign the max id
         $str="select max(id) as id from assets";
         $data=$mydb->selectrows($str,1);
+        try{
+    
         if($data!=null){
             $aid=$data[0]["id"];
             $aid=intval($aid)+1;
          }
+        } catch(Exception  $e){
+            $aid=1;
+        }
 
          $qrcode="1";
          $str="select max(qrcode) as id from assetowner where office_id=".$officeid;
-         $data=$mydb->selectrows($str,1);
+
+         try{
+            $data=$mydb->selectrows($str,1);
+         }
+         catch(Exception  $e){
+            $data=null;
+        }
+        
          if($data!=null){
              $qrcode=$data[0]["id"]; 
              $qrint=(int)get_string_at($qrcode,3);

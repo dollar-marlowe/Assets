@@ -507,7 +507,7 @@ border:solid 1px #33bbff;
          echo   "</div>";
          }
         
-          if($_SESSION["auth_level"]>=3){
+          if($_SESSION["auth_level"]>=4){
         
          echo   "<div>";
          echo       "<input id='ac-3' name='accordion-1' type='checkbox' >";
@@ -517,11 +517,12 @@ border:solid 1px #33bbff;
          echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
          echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
          echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
-        }
+        
      
 
          echo       "</article>";
          echo   "</div>";
+          }
          echo   "<div>";
          echo       "<input id='ac-4' name='accordion-1' type='checkbox' />";
          echo       "<label for='ac-4'><a href='Logout'><u>L</u>ogout</a></label>";

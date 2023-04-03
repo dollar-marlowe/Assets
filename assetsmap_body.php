@@ -321,7 +321,8 @@
 							<table class="table" >
 							<tr><td>
 							<label for="regions" id="regionslbl" class="table_lbl1">Regions</label>
-							<td><label for="regionslbl"  class="table_lbl2">Regions</label><select id="regions" class="pannel-input">
+							<td><label for="regionslbl"  class="table_lbl2">Regions</label><select id="regions" class="pannel-input"
+							onchange="decrypt_load_dowp_break(this.value,'SELECT * FROM province where reg_id=','#province','id','name','')">
 								<?php 
 									$cols1=array("id","lat","long");
 									$str="SELECT * FROM region r order by reg_code asc";
@@ -344,6 +345,11 @@
 								<option value="deployed">Deployed</option>
 								<option value="all">All</option>
 							</select>
+							
+							<tr><td><label id="assetslbl1" for="assets" class="table_lbl1">Show Assets/Province</label>
+							<td><label id="assetslbl1" for="assets" class="table_lbl2">Show Assets/Province</label><select id="province" class="pannel-input">
+								</select>
+							
 
 							<tr><td><td><input type="submit" id="print" value="Print"> &nbsp <input type="checkbox" id="show_tool_tip"> Show tool tip
 						</table>

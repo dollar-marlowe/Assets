@@ -23,11 +23,14 @@
       /*background-position: 50% 11%;*/
       /* width:auto;
       height:100%; */
+      background-size: cover;
        -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
+      -moz-background-size: cover;
+      -moz-background-size: 100% 100%; /* used for firefox */
+      -o-background-size: cover;
+      background-size: cover;
+    /*  background-size: auto; */
+    
 
     }
     
