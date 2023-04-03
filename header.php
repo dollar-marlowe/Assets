@@ -487,7 +487,7 @@ border:solid 1px #33bbff;
          echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
          echo       "</article>";
          echo   "</div>";
-
+         if($_SESSION["auth_level"]>=1 && $_SESSION["auth_level"]!=2.5){
          echo   "<div>";
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-2'><u>A</u>ssets</label>";
@@ -497,6 +497,7 @@ border:solid 1px #33bbff;
          echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
+         }
          if($_SESSION["auth_level"]>=3){
          echo "<div>";
          echo       "<input id='ac-5' name='accordion-1' type='checkbox' >";
@@ -523,7 +524,7 @@ border:solid 1px #33bbff;
          echo       "</article>";
          echo   "</div>";        
         }
-        if($_SESSION["auth_level"]>=3){
+        if($_SESSION["auth_level"]>=3 || $_SESSION["auth_level"]==2.5){
         
           echo   "<div>";
           echo       "<input id='ac-7' name='accordion-1' type='checkbox' >";
@@ -534,11 +535,12 @@ border:solid 1px #33bbff;
           echo           "<a href='hf_daily'><u>H</u>F Stations Daily Log</a>"; 
           echo           "<a href='hf_entry'>HF Station Data <u>E</u>ntry</a>";
           echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
-         }
+         
      
 
          echo       "</article>";
          echo   "</div>";
+        }
           
          echo   "<div>";
          echo       "<input id='ac-4' name='accordion-1' type='checkbox' />";

@@ -4,7 +4,9 @@
 <body>
 
 <?php
-libxml_use_internal_errors(true);
+include "ALGO/codes.php";
+echo $_SESSION["auth_level"];
+/* libxml_use_internal_errors(true);
 $myXMLData =
 "<?xml version='1.0' encoding='UTF-8'?>
 <document>
@@ -28,7 +30,7 @@ if ($xml === false) {
     
      // echo (string)$item->model;
   }
-}
+} */
 ?>
 
 </body>
