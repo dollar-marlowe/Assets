@@ -232,7 +232,9 @@ body{
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" style="border: none" type="submit" id="update_profile_btn">Save changes</button>
+                            <button class="btn btn-primary" style="border: none" type="button" id="changepass_btn">Change Password</button>
                             <button class="btn btn-danger"  style="border: none" type="button" id="backbutton">Back</button>
+                           
                         
                     </div>
                 </div>
@@ -333,27 +335,8 @@ echo "var sess_id='".$_SESSION["id"]."';";
         // }
 
             $("#update_profile_btn").click(function(){
-                //risk management ine 1278-1296
                  if(!is_empty_class("input.form-control","")){
-			// 	var arr_attributes="";
-			// 	var arr_keys=["%","?","&","^","<",">","$","@","'"];
-			// 	var length=$("input.form-control").length;
-			// 	var index=1;
-			// 	//alert(length);
-			// 	$.each($("input.form-control"),function(){
-			// 		arr_attributes+=str_replace(arr_keys,$(this).parent().find("p").text())+" isog "+str_replace(arr_keys,$(this).val())+" isog "+$(this).prev().val();
-			// 		if(index<length){
-			// 			arr_attributes+=" msunod ";
-			// 		}
-			// 		index++;
-			// 	});
-            //     $.each($("select.form-control"),function(){
-            //     arr_attributes+=" msunod "+str_replace(arr_keys,$(this).parent().find("p").text())+" isog "+str_replace(arr_keys,$(this).val())+" isog "+$(this).prev().val();
-					
-			// 	});
-             
-                //footer: global triggered
-                
+			
                 //ajax post
 
                 $.post("AJAX/user_update.php",
@@ -398,11 +381,68 @@ echo "var sess_id='".$_SESSION["id"]."';";
             // [Button] Substitute for the input form
             $("#fileChoose").click(function(){
                 $("#myFile").click();
-            });        
+            });     
+            
+            $("#changepass_btn").click(function(){
+                var elem="<div class='input_wrapper'> \
+		                <p class='label'>Current Password:</p> \
+		                <input class='label' type='password' id='currentPass' value=''>\
+		                \
+                        <p class='label'>New Password:</p> \
+		                <input class='label' type='password' id='newPass'>\
+		                \
+                        <p class='label'>Confirm Password:</p> \
+		                <input class='label' type='password' id='confirmPass'>\
+		                </div> \
+		                <br>\
+		                <div class='input_wrapper'> \
+		                <input class='label1' type='submit' value='Change Password' id='pass_change' style='width:66%;'> \
+		                </div> \
+		                ";
+		
+		        $(".big").css("height","fit-content");
+		
+                Popup_modal_show(elem,100);
+                $(".big div div .label").css("text-align","left");
+            });
+
+                $(document).on("click","#pass_change",function(){
+                
+                    if(!is_empty_class("input.label","")){
+
+                        if ($("#newPass").val()==$("#confirmPass").val()) {
+                  
+                            $.post("AJAX/change_pass.php",
+                             { 
+                                currentPass:    $("#currentPass").val(),
+                                newPass:        $("#newPass").val(),
+                             },
+                            function(data) {
+                                //pop up message
+                                alert(data); 
+                                if(data=="Entered Old Password mismatched."){
+                                    $("input#currentPass").css("border-color","red");
+                                }else{
+                                    //$("input#currentPass").css("border-color","green");
+                                }
+
+                                //alert( $("#newPass").val());
+                        }
+
+                )      
+                        } else {
+                            $("input#newPass").css("border-color","red");
+                            $("input#confirmPass").css("border-color","red");
+                            alert("New Password and Confirm Password mismatched."); 
+                        }
+                       };
+   
+
+            });
+
           });  
 
-          
-
+    
 
         </script>
    

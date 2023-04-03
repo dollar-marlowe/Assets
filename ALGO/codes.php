@@ -96,6 +96,7 @@ class Database{
         //return $result."<br>";
         return $result;
     }
+
     function is_empty($query){
         $query=linig($query);
         $result=mysqli_query($this->con,$query);
@@ -108,6 +109,7 @@ class Database{
         //return $result."<br>";
         
     }
+
     function selectrows($query, $n){//0 will select all rows
         $query=linig($query);
         $data=array();
@@ -131,6 +133,37 @@ class Database{
                 return null;
             }     
     }
+
+    function selectcount($query, $params = []) {
+        $db = new Database();
+        $db->connect();
+        
+        $stmt = $db->con->prepare($query);
+        if (!empty($params)) {
+            $types = str_repeat("s", count($params));
+            $stmt->bind_param($types, ...$params);
+        }
+        
+        $result = $stmt->execute();
+        if (!$result) {
+            error_log("Query failed: " . $stmt->error);
+            return false;
+        }
+        $count = 0;
+        $stmt->store_result();
+        if ($stmt->num_rows === 0) {
+            $stmt->free_result();
+            return 0;
+        }
+        
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->free_result();
+        
+        return $count;
+    }
+    
+
     function select_one($query, $key){
         $data=mysqli_query($this->con,$query);
         $result=0;
@@ -909,13 +942,107 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
             }
             $chkbox=$chk;
             $j++;
-            echo "</tr>";
+            echo "</tr>";       
         }
     }
     else{
         echo "";
     }
 }
+
+
+
+function load_news($sql) {  
+    $db= new Database();
+    $db->connect();
+    $result = $db->selectrows($sql, 0);
+    if($result){
+        $html = "";
+        foreach($result as $row){
+            $checked = "";
+            if (array_key_exists("news_selected", $row)) {
+                $checked = ($row["news_selected"] == "Checked") ? "checked" : "";
+            }
+            $bg_color = ($checked == "checked") ? "lightblue" : "white";
+            $html .= '<div class="news-container" style="padding:2px;border: solid 2px '.$bg_color.';background-color:'.$bg_color.'">';
+            $html .= '<label class="container" style="text-align:left;">Add this news to the Daily Report
+                        <input type="checkbox" class="selected_news" name="'.$row["news_selected"].'" data-news-title="'.$row["news_title"].'" data-news-desc="'.$row["news_desc"].'" data-news-url="'.$row["news_url"].'" data-news-ref="'.$row["news_ref"].'" '.$checked.'>
+                        <span class="checkmark"></span>
+                    </label>';
+            $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
+            $html .= '<div class="news-name">'.$row["news_title"].'</div>';
+            $html .= '<div class="news-description">'.$row["news_desc"].'</div>';
+            $html .= '</div><br>';
+        }
+        return $html;
+    } else{
+        return null;
+    }     
+}
+
+  function load_news_to_print($sql) {
+    $db= new Database();
+    $db->connect();
+    $result = $db->selectrows($sql, 0);
+    if($result){
+      $html = "";
+      foreach($result as $row){
+        $html .= '<br><div class="news-container">';
+        $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
+        $html .= '<div><p class="news-name">'.$row["news_title"].'</p>';
+        $html .= '<p class="news-description">'.$row["news_desc"].'</p>';
+        $html .= '</div></div><br>';
+      }
+      return $html;
+    }
+    else{
+      return null;
+    }     
+  }
+  
+  function load_hf_map($db, $sql) {
+    $result = $db->selectrows($sql, 0);
+    if ($result) {
+      $stations = array();
+      foreach ($result as $row) {
+        $station = array(
+          "station_name" => $row["station_name"],
+          "station_lat" => $row["station_lat"],
+          "station_long" => $row["station_long"],
+          "station_status" => $row["station_status"],
+          "station_desc" => $row["station_desc"]
+        );
+        array_push($stations, $station);
+      }
+        return $stations;
+    } else {
+         return null;
+    }
+  }
+
+    
+  function load_hf_map_2($db, $sql) {
+    $result = $db->selectrows($sql, 0);
+    if ($result) {
+      $stations = array();
+      foreach ($result as $row) {
+        $station = array(
+          "station_name" => $row["station_name"],
+          "station_lat" => $row["station_lat"],
+          "station_long" => $row["station_long"],
+          "weather" => $row["weather"],
+          "signal_status" => $row["signal_status"]
+        );
+        array_push($stations, $station);
+      }
+        return $stations;
+    } else {
+         return null;
+    }
+  }
+  
+
+
 function office_combobox(){
 	echo "<select id='office' name='office' >";
 							
@@ -943,11 +1070,111 @@ function loadropdown1($str,$col1,$col2){//the second  dropdown has others
     echo"<option value='others'>Others</option>";
     
 }
-function loadropdown($str,$col1,$col2,$from){
+function loadstationlist($str,$col1,$col2,$col3,$from){
     
     $db = new Database();
     $db->connect();
     $data=$db->selectrows($str,0);
+        
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            echo "<option value='".$d[$col1]."' name='".encrypt($d[$col3])."'>".$d[$col2]."</option>";
+        }
+    }
+    else{
+        echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
+
+
+function loadstationlist_edit($str,$col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+        
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            echo "<option value='".$d[$col1]."' name='".encrypt($d[$col3])."'>".$d[$col2]. "," . $d[$col4] . "," . $d[$col5] . "," . $d[$col6] . "," . $d[$col7] ."," . encrypt($d[$col8]) . "</option>";
+        }   
+    }
+    else{
+        echo"<option value='0'>Select from ".$from."</option>";
+    }
+}
+
+
+function loadstationlist_region_log($str, $col1, $col2, $col3, $from)
+{
+    $db = new Database();
+    $db->connect();
+    $data = $db->selectrows($str, 0);
+
+    if ($data) {
+        foreach ($data as $d) {
+            echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$d[$col1]."</li>";
+        }   
+    } else {
+        $today = date("Y-m-d");
+        $str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'"; 
+        $data = $db->selectrows($str, 0);
+
+        if ($data) {
+            foreach ($data as $d) {
+                echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$d[$col1]."</li>";
+            }
+        } else {
+            echo "<option value='0'>No Data ".$from."</option>";
+        }
+    }
+}
+
+
+
+function loadstationlist_count_log($str, $col1, $col2, $col3, $from)
+{
+    $db = new Database();
+    $db->connect();
+    $data = $db->selectrows($str, 0);
+
+    if ($data) {
+        $count = array();
+        foreach ($data as $d) {
+            $station_name = $d[$col1];
+            $count[$station_name] = isset($count[$station_name]) ? $count[$station_name] + 1 : 1;
+        }
+        foreach ($count as $station_name => $occurrences) {
+            echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$station_name." (Frequency: ".$occurrences.")</li>";
+        }   
+    } else {
+        $today = date("Y-m-d");
+        $str = "SELECT distinct hf_log_id, station_name, location_region FROM trial_daily_log WHERE log_date='$today'"; 
+        $data = $db->selectrows($str, 0);
+
+        if ($data) {
+            $count = array();
+            foreach ($data as $d) {
+                $station_name = $d[$col1];
+                $count[$station_name] = isset($count[$station_name]) ? $count[$station_name] + 1 : 1;
+            }
+            foreach ($count as $station_name => $occurrences) {
+                echo "<li value='".$d[$col2]."' name='".encrypt($d[$col3])."'>".$station_name." (Frequency: ".$occurrences.")</li>";
+            }
+        } else {
+            echo "<option value='0'>No Data ".$from."</option>";
+        }
+    }
+}
+
+
+
+function loadropdown($str,$col1,$col2,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);  
    
     if($data!=null){
         echo"<option value=0>Select from Options Below</option>";
@@ -959,6 +1186,25 @@ function loadropdown($str,$col1,$col2,$from){
         echo"<option value='0'>Select from ".$from."</option>";
     }
 }
+
+function loadlist_withcheck($str,$col1,$col2,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);  
+   
+    if($data!=null){
+        echo"<dt value=0><input type='checkbox' id='all_checker'> Select/Unselect all</dt>";
+       
+        foreach($data as $d){
+            echo "<dt value='".$d[$col1]."' class='HF_Status_dynamic'><input type='checkbox' class='hf_look4_checked' id='".str_replace(" ","_",$d[$col1])."_checker'> ".$d[$col2]."</dt>";
+        }
+    }
+    else{
+        echo"<dt value='0'>Select from ".$from."</dt>";
+    }
+}
+
 function load_label_input($str, $div2,$class,$col1,$col2,$col3){
     $db = new Database();
     $db->connect();
@@ -1202,7 +1448,7 @@ function decrypt($data) {
     }
 }
 function reroute($level,$destination){//$level is for the access level, 2nd paramenter is for the destination of reroute if $_SESSION["auth_level"]<=$elvel 
-   
+    $statusCode="";
     if(intval($_SESSION["auth_level"])<=$level){
       
         header('Location: ' . $destination, true, $statusCode);
