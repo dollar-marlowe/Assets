@@ -67,7 +67,7 @@
         <br>
         This is a system generated email.<br>
         <br>
-        We are glad to inform you that your AMIS account has been successfully created, please change your password.<br>
+        We are glad to inform you that your SAMP account has been successfully created, please change your password.<br>
         <br>
         Please go to this link http://localhost/assets/login and login to your AMIS account using the provided username and password:<br>
         <br>
