@@ -1110,7 +1110,7 @@ $(document).ready(function(){
 		//alert($("#new_attr").val());
 	});
 	$(document).on("change",".dst_item",function(){
-		
+		//alert("test");
 		var cat=$(this).parent().next().next().text();	
 		var name=$(this).parent().next().text();
 		$(".disaster_name").html("Disater: "+"<b>"+name+"</b>");
@@ -1463,10 +1463,11 @@ $(document).ready(function(){
 				});
 
 				//alert(arr_attributes);
-				var ajax="";
+				ajax="AJAX/add_etc_disaster.php";
 				if($(".impact1").val()=="0"){
 					ajax="AJAX/add_etc_disaster.php";
 				}
+				//alert(ajax);
 				$.post(ajax,
 				{
 					disaster:$(".dst_item:checked").val(),
@@ -1654,7 +1655,7 @@ $(document).ready(function(){
 	}
 	$("#save_etc").click(function(){
 		var validate_d=validate_date("#date_activated");
-		alert('click');
+		//alert('click');
 		if(is_empty_class(".etc_input","")==false && validate_d==false ){
 			var date= new Date($("#date_activated").val());
 			var str_date=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -1683,6 +1684,7 @@ $(document).ready(function(){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>"+data+"</b>",600);
 							get_etc("activating",".etc_pannel");	
 							get_etc_active("active",".all_active_etc");	
+							$("#err_etc").remove();
 
 						});
 					}				
