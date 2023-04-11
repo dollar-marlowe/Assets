@@ -533,6 +533,7 @@ border:solid 1px #33bbff;
           echo           "<a href='hf_entry'>HF Station Data <u>E</u>ntry</a>";
           echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
          }
+         
      
 
          echo       "</article>";
