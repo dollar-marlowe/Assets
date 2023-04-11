@@ -297,6 +297,8 @@
 			#hf_table tr td:nth-child(3){
 			display:none;
 			}
+
+
 		}
 
 		@media(max-width:320px){
