@@ -5,7 +5,8 @@
 
 <?php
 include "ALGO/codes.php";
-echo $_SESSION["auth_level"];
+$today=date("H:m:s");    
+echo $today." ";
 /* libxml_use_internal_errors(true);
 $myXMLData =
 "<?xml version='1.0' encoding='UTF-8'?>

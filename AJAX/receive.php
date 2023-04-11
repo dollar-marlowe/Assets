@@ -7,7 +7,7 @@
         $mydb = new Database();
         $mydb->connect();
         
-        $today=date("Y-m-d");
+        $today=date("Y-m-d H:m:s");
 
     
        

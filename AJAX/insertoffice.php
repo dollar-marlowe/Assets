@@ -9,7 +9,7 @@
         $prov=removepecialchars($_POST["prov"]);
         $muni=removepecialchars($_POST["muni"]);
         $brgy=removepecialchars($_POST["brgy"]);
-        $today=date("Y-m-d");
+        $today=date("Y-m-d H:m:s");    
         $str="insert into office (office_name,category,region_id,province_id,muni_id,brgy_id,date) values (
             '".$name."','".$cat."',".$region.",".$prov.",".$muni.",".$brgy.",'".$today."')";
        $mydb = new Database();

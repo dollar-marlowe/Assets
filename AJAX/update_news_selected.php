@@ -5,7 +5,7 @@
     if(isset($_POST["news_selected_title"])){
         $news_selected_title=($_POST["news_selected_title"]);
         $news_selected_value=($_POST["news_selected_value"]);
-        $today =date("Y-m-d");
+        $today =date("Y-m-d H:m:s");
         $db = new Database();
         $db->connect();
     

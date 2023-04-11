@@ -8,7 +8,8 @@
         $category_array=explode("%", $category);
         $myFile=$_POST["myFile"];
         $description=removepecialchars($_POST["description"]);
-        $datestart=removepecialchars($_POST["datestart"]);
+        $time=date("H:m:s"); 
+        $datestart=removepecialchars($_POST["datestart"])." ".$time;
         $db = new Database();
         $db->connect();
         $sql="Insert into disaster 

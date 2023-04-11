@@ -3,8 +3,8 @@
       if(isset($_POST["etc"])){
     
   
-
-        $date=$_POST["date"];   
+        $time=date("H:m:s"); 
+        $date=$_POST["date"]." ".$time;   
         $etc_disaster=$_POST["etc"];    
         $attchfileurl=$_POST["attchfileurl"];
         $db = new Database();

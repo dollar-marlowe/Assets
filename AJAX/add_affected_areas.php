@@ -5,14 +5,14 @@
     if(isset($_POST["disaster"])){
          $db = new Database();
         $db->connect();
-
+        $time=date("H:m:s"); 
         $disaster=decrypt($_POST["disaster"]);
         $areas=$_POST["areas"];
         $scale=removepecialchars($_POST["scale"]);
         $epr=removepecialchars($_POST["epr"]);
         $l_impact=$_POST["l_impact"];
         $scale=$_POST["scale"];
-        $date=$_POST["date"];
+        $date=$_POST["date"]." ".$time;
         $arr_areas=explode("msunod",$areas);
         $etc=$_POST["etc"];
 

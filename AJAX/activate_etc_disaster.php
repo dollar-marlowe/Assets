@@ -3,9 +3,9 @@
     include "../ALGO/codes.php";
     
     if(isset($_POST["reso"])){
-      
+      $time=date("H:m:s"); 
       $etc_id=decrypt($_POST["etc_id"]);
-      $date_activated=$_POST["date_activated"];
+      $date_activated=$_POST["date_activated"]." ".$time;
       $file=$_POST["file"];
       $reso=removepecialchars($_POST["reso"]);
       $etc_stat=removepecialchars($_POST["etc_stat"]);

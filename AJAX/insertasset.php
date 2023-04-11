@@ -20,7 +20,7 @@
         $set_info=removepecialchars($_POST["set"]);
         $type=removepecialchars($_POST["type"]);
         $new_asset=$_POST["new_asset"];
-        $today=date("y-m-d h:m:sa");
+        $today=date("y-m-d H:m:s");
         $month=date("ymdhms");
         $aid=1;
 

@@ -13,7 +13,7 @@
         $mydb = new Database();
         $mydb->connect();
         $etc_disaster=0;
-        $today=date("Y-m-d");
+        $today=date("Y-m-d H:m:s");    
        
             $status="deployed under normal circumstances";
         
