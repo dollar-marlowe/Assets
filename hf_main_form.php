@@ -499,6 +499,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
 
 
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
@@ -533,6 +535,20 @@
 								</div>
 								<br>
 								<div class="label_show_card" style="padding:20px 5px;">
+									<label>
+										<span>
+										<p class="label"><label >Reported Concerns</label></p>
+											<ul id="list_station_remarks" style="font-size:12px; text-align:left;  padding:5px 20px;">
+												<?php
+													$today = date("Y-m-d");
+													$str = "SELECT distinct hf_log_id, station_name, remarks FROM trial_daily_log WHERE log_date='$today' AND remarks!='N/A'  AND remarks!='' ORDER BY station_name DESC";
+													loadstationlist_remarks($str, "station_name", "station_name", "remarks", "Recorded");
+												?>
+											</ul>
+										</span>
+									</label>
+								</div>
+								<div class="label_show_card" style="padding:20px 5px;">
 									<p class="label"><label >HF Station <span id="span_date"></span>'s Log Filter by Region</label></p>
 									<select id="filter_type_selection" style="width:100%;">
 										<?php
@@ -553,8 +569,6 @@
 										</span>
 									</label>
 								</div>
-							
-								
 							</div>
 					</div>
 			</div>
@@ -1052,33 +1066,63 @@
 
 			var xValues = ["Sunny", "Cloudy", "Rainy"];
 			var yValues = [rowCount_log_sunny, rowCount_log_cloudy, rowCount_log_rainy];
-			var barColors = ["orange", "#FF1493","navy"];
+			var barColors = ["orange", "#FF1493", "navy"];
 
-			new Chart("myChart", {
-			type: "bar",
-			data: {
-				labels: xValues,
-				datasets: [{
+			var data = {
+			labels: xValues,
+			datasets: [{
 				backgroundColor: barColors,
-				data: yValues
-				}]
-			},
-			options: {
-				scales: {
-				yAxes: [{
-					ticks: {
-					beginAtZero: true,
-					suggestedMin: 1 // Set the minimum value of the y-axis to 1
-					}
-				}]
-				},
-				legend: {display: false},
-				title: {
+				data: yValues,
+				label: 'Number of Reports'
+			}]
+			};
+
+			var options = {
+			title: {
 				display: true,
-				text: "Bar Graph based on Reported Weather"
+				text: 'Pie Chart based on Reported Weather'
+			},
+			legend: {
+				display: true,
+				position: 'top',
+				labels: {
+				boxWidth: 20,
+				padding: 10,
+				usePointStyle: false,
+				generateLabels: function(chart) {
+					var data = chart.data;
+					var labels = data.labels;
+					var datasets = data.datasets;
+					var legendItems = [];
+
+					for (var i = 0; i < datasets[0].data.length; i++) {
+					legendItems.push({
+						text: labels[i] + ": " + datasets[0].data[i],
+						fillStyle: datasets[0].backgroundColor[i],
+						hidden: false,
+						lineCap: 'butt',
+						lineDash: [],
+						lineDashOffset: 0,
+						lineJoin: 'miter',
+						lineWidth: 1,
+						strokeStyle: datasets[0].backgroundColor[i],
+						pointStyle: 'rect',
+						index: i
+					});
+					}
+
+					return legendItems;
+				}
 				}
 			}
+			};
+
+			new Chart(document.getElementById('myChart'), {
+			type: 'pie',
+			data: data,
+			options: options
 			});
+
 
 
 		var rowCount_hf_operational= $("#hf_table tr").filter(function() {

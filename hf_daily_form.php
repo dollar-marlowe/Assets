@@ -361,7 +361,7 @@
 						</div>
 						
 						<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
-						<input type="text" id="station_assignee" placeholder="Optional *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
+						<input type="text" id="station_assignee" placeholder="Call Sign" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
 						<br><br>
 						
 						<p class="label"><label for="disaster">Date:</label></p>
@@ -384,7 +384,7 @@
 						<br>
 						<div class="input_wrapper" style="margin:auto">
 						<p class="label"><label >Signal Status</label></p>
-						<select id="signal_value">
+						<select id="signal_value" class="station_log">
 							<option value="0">Select from below</option>
 							<option value="1x1">1 x 1</option>
 							<option value="2x2">2 x 2</option>
@@ -397,9 +397,14 @@
 								<input type='submit' Value='3x3' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;">
 								<input type='submit' Value='2x2' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
 								<input type='submit' Value='1x1' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;"> -->
-						</div>
-						
 						<br><br>
+						<p class="label"><label for="disaster" id="station_assignee_label">Remarks</label></p>
+							<textarea id="station_remarks" placeholder="type 'N/A' if no reported concern" class="station_log" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;" ></textarea>
+	
+						</div>
+
+						
+						<br>
 
 						<div class="input_wrapper" style="margin:auto">
 							<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
@@ -688,6 +693,7 @@
 
 		$("div#weather_div").css({'border':'none'});
 		$("select#signal_value").css({'border':'none'});
+		
 		var weather_stat="";
 			
 				let btn1_value = document.getElementById("get_Sunny").style.backgroundColor;
@@ -721,7 +727,8 @@
 		var no_weather = "";
 
 		var select_input = is_empty_class("input.station_log","");
-		var select_select = is_empty_class("select#signal_value","0");
+		var select_remarks = is_empty_class("textarea.station_log","");
+		var select_select = is_empty_class("select.station_log",0); // change class name
 		
 		var select_weather = no_weather == weather_stat ? true:false;
 		//condition ? exprIfTrue : exprIfFalse
@@ -730,7 +737,7 @@
 		// alert(select_select);
 		// alert(select_weather);
 
-		if(select_input==false && select_select==false  && select_weather==false) {
+		if(select_input==false && select_select==false  && select_weather==false && select_remarks==false) {
 			//alert("May value");
 			$("#err_lbl").remove();
 			 //alert($("select#signal_value").val());
@@ -742,11 +749,12 @@
 					station_assignee: 	$("#station_assignee").val(),
 					get_date: 			$("#get_date").val(),
 					get_time:			$("#get_time").val(),
+					hf_remarks:			$("#station_remarks").val(),
 					weather_status:		weather_stat,
 					signal_status:		signal_val				
 			},
 				function(data){
-						alert(data);
+						// alert(data);
 						if(data=="New record created!"){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								

@@ -1167,6 +1167,23 @@ function loadstationlist_count_log($str, $col1, $col2, $col3, $from)
     }
 }
 
+function loadstationlist_remarks($str,$col1,$col2,$col3,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+        
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            echo "<li value='".$d[$col1]."'style='background-color:darkred;' name='".encrypt($d[$col3])."'>".$d[$col2].":  " .$d[$col3]."</li>";
+        }
+    }
+    else{
+        echo"<li value='0'>None ".$from.".</li>";
+    }
+}
+
 
 
 function loadropdown($str,$col1,$col2,$from){
