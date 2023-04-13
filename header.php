@@ -19,7 +19,9 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/rubio.css" />
+   <?php clearstatcache(true,'CSS/rubio.css'); ?>
+   <link rel="stylesheet" href="CSS/rubio.css?rnd=132">
+   <!-- https://wpreset.com/force-reload-cached-css/  references for forcing the browser to reload the file isntead of using the stubborn cache-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>
@@ -424,6 +426,12 @@ border:solid 1px #33bbff;
    animation-iteration-count: infinite;
    animation-direction: forward;
  }
+ .paginate{
+  margin:auto;
+			margin-top:5px;
+			margin-bottom:10px;
+      width:fit-content;
+		}
 
 @keyframes clockwise {
   0% {transform:rotate(0deg);}
@@ -559,11 +567,11 @@ border:solid 1px #33bbff;
           
        <div class="back">
           <div class="back_div" id="back_div1"><br>
-              <h3>ETC ACTIVATED-DECEMBVER 15, 2022 TINEG ABRA</h3>
+              <h3>ETC ACTIVATED-DECEMBER 15, 2022 TINEG ABRA</h3>
           </div>
 
           <div class="back_div" id="back_div2"><br>
-          <img src="images/label_head2.png" class="back-img large">
+          <img src="images/label_head1.png" class="back-img large">
           <img src="images/label_head4.png" class="back-img mid">
           </div>
           

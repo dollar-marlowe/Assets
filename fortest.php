@@ -5,8 +5,23 @@
 
 <?php
 include "ALGO/codes.php";
-$today=date("H:m:s");    
-echo $today." ";
+
+$row = 1;
+if (($handle = fopen("attributes.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $num = count($data);
+        echo "<p> $num fields in line $row: <br /></p>\n";
+        $row++;
+        for ($c=0; $c < $num; $c++) {
+            echo $data[$c] . " |";
+        }
+        echo "<br>";
+    }
+    fclose($handle);
+}
+
+/* $today=date("H:m:s");    
+echo $today." "; */
 /* libxml_use_internal_errors(true);
 $myXMLData =
 "<?xml version='1.0' encoding='UTF-8'?>

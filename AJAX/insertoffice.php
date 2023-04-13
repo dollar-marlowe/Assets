@@ -9,9 +9,11 @@
         $prov=removepecialchars($_POST["prov"]);
         $muni=removepecialchars($_POST["muni"]);
         $brgy=removepecialchars($_POST["brgy"]);
+        $lat=removepecialchars($_POST["lat"]);
+        $long=removepecialchars($_POST["long"]);
         $today=date("Y-m-d H:m:s");    
-        $str="insert into office (office_name,category,region_id,province_id,muni_id,brgy_id,date) values (
-            '".$name."','".$cat."',".$region.",".$prov.",".$muni.",".$brgy.",'".$today."')";
+        $str="insert into office (office_name,category,region_id,province_id,muni_id,brgy_id,date,`lat`,`long`) values (
+            '".$name."','".$cat."',".$region.",".$prov.",".$muni.",".$brgy.",'".$today."','". $lat."','". $long."')";
        $mydb = new Database();
        $mydb->connect();
        echo "<h4 id='msg1' style='font:bold'>".$mydb->insert($str)."</h4>";

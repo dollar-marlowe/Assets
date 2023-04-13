@@ -13,7 +13,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"          
     />
-    <link rel="stylesheet" href="CSS/rubio.css" />
+    <?php clearstatcache(true,'CSS/rubio.css'); ?>
+    <link rel="stylesheet" href="CSS/rubio.css?rnd=132"> 
 	
   </head>
   <style>
