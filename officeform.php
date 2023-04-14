@@ -273,9 +273,17 @@
 			else{
 				gb=true;
 			}
-			if(validate()){
+			var validate_val;
+			if($('#submitoffice').val()=="ADD NEW"){
+				validate_val =validate();
+			}else{
+				validate_val =validate() && $(".office_item").is(":checked") ;
+				
+			}
+			if(validate_val){
 				$.post("AJAX/insertoffice.php",
 					{
+						id:$(".office_item:checked").val(),
 						name:$("#oname").val(),
 						cat:$("#category").val(),
 						reg:$("#region").val(),
@@ -283,7 +291,8 @@
 						muni:$("#municipality").val(),
 						brgy:$("#barangay").val(),
 						lat:$("#lat").val(),
-						long:$("#long").val()
+						long:$("#long").val(),
+						operations:$('#submitoffice').val()
 
 					},
 					function(data){
@@ -298,6 +307,7 @@
 			
 		});
 		$(document).on("click",".office_item",function(){
+			//alert($(".office_item:checked").val());
 			if($(".office_item").is(":checked")){
 				$("#submitoffice").val("SAVE EDITS");
 			}else{
@@ -340,6 +350,7 @@
 			$("#oname, #lat, #long").val("").css("border-bottom-color","#ddd");
 			$("#category, #region").val("0").css("border-bottom-color","#ddd");
 			$(".office_item ").prop("checked",false);
+			$("#submitoffice").val("ADD NEW");
 		});
 		
 		$("#lat").change(function(){
