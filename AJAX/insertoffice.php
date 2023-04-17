@@ -13,7 +13,7 @@
         $lat=removepecialchars($_POST["lat"]);
         $long=removepecialchars($_POST["long"]);
         $operations=removepecialchars($_POST["operations"]);
-        $today=date("Y-m-d H:m:s"); 
+        $today=date("Y-m-d H:m:s");     
         $str="";   
         if($operations=="ADD NEW"){
         $str="insert into office (office_name,category,region_id,province_id,muni_id,brgy_id,date,`lat`,`long`) values (
