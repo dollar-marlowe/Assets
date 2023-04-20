@@ -43,8 +43,8 @@ class Database{
     //WHEN MIGRATING TO POSTGRE THIS IS THE CLASS THAT NEEDS TO BE CHANGED
     
     public $servername="localhost";
-    public $username="lowe";
-    public $pass="admin123";
+    public $username="root";
+    public $pass="rdamsmalakas";
     public $db="assets";
     public $con;
 

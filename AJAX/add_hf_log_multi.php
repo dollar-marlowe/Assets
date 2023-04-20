@@ -34,8 +34,7 @@
     }
     
     else{
-        echo "<script>window.git location='../login.php';</script>";
-  
+      include "ajax_out.php";
     }
 
 
