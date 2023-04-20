@@ -490,6 +490,14 @@
 			list-style-position: inside;
 		} */
 
+		#list_station_suggestions{
+			list-style-type: disc;
+			-webkit-columns: 3;
+			-moz-columns: 3;
+			columns: 3;
+			list-style-position: inside;
+		}
+
 
 </style>
 
@@ -564,10 +572,10 @@
 				<p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>A</u>ctive HF Stations List by Time</p>
 				</div>
 				<div class="imgform-container " id="station_time_div">
-					<div class="imgform-img">
+					<div class="imgform-img" style="width:100%;">
 						<div class="label_show_card" style="width:100%;">
-                                <p class="label"><label>Possible Active Stations</label></p>
-                                <ul id="list_station_remarks" style="font-size:12px; text-align:left;  padding:5px 20px;">
+                                <p class="label"><label>Frequently Active Stations</label></p>
+                                <ul id="list_station_suggestions" style="font-size:12px; text-align:left;  padding:5px 20px;">
                                     <?php
 										$timezone = new DateTimeZone('GMT+8');
 										$start = new DateTime('now', $timezone);

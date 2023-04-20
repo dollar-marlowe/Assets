@@ -12,7 +12,7 @@
         loadropdown($sql,$col1,$col2,$from);
     }
     else{
-        echo "<script>window.location='../login.php';</script>";
-    }
+        include "ajax_out.php";
+      }
 
 ?>

@@ -343,16 +343,16 @@
       <div class="imgform-container " id="resets_form"> 
 			
         <div class="imgform-img bg_white pannel_con">
-		<h2 id='officialheader' class="header2">Password Reset</h2>
+			<h2 id='officialheader' class="header2">Password Reset</h2>
 			<div  class="align_center"><input type="text" id="search_uname" Placeholder="Username"> <input type="text" id="search_fname" Placeholder="First Name">
-			 <input type="text" id="search_lname" Placeholder="Last Name">
-			<div class="wrap_me"><label for="office">Office Designation: *</label>
-                <select id="office_search" name="office_search" >
-                        <?php
-                        $str="SELECT * FROM office";
-                        loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
-                        ?>
-                </select>  </div> 
+				<input type="text" id="search_lname" Placeholder="Last Name">
+				<div class="wrap_me"><label for="office">Office Designation: *</label>
+					<select id="office_search" name="office_search" >
+							<?php
+							$str="SELECT * FROM office";
+							loadropdown($str,"id","office_name","Office");//function for loading values into the dropdown accepts sql command and name of columns 
+							?>
+					</select>  </div> 
 			</div>	
 			
 			<table class="table_search" style="margin-top:10px;margin-bottom:10px">
@@ -365,8 +365,9 @@
 				?>
 		
 		 	</table>
-			 <input type="Submit" id="reset_pass" value="Reset Password" style="margin-bottom:10px;color:white;" class="btn btn-primary">
-
+			<div style="display:flex;justify-content:right; width:100%; padding-right:40px;">
+			 	<input type="Submit" id="reset_pass" value="Reset Password" style="margin-bottom:10px;color:white;" class="btn btn-primary">
+			</div>
         </div>
 
        

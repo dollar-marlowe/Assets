@@ -1066,7 +1066,7 @@
 
 			var xValues = ["Sunny", "Cloudy", "Rainy"];
 			var yValues = [rowCount_log_sunny, rowCount_log_cloudy, rowCount_log_rainy];
-			var barColors = ["orange", "#FF1493", "navy"];
+			var barColors = ["#FFA500", "#2596be", "#2eb619"];
 
 			var data = {
 			labels: xValues,
