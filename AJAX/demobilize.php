@@ -8,7 +8,7 @@
         $mydb = new Database();
         $mydb->connect();
         
-        $today=date("Y-m-d");
+        $today=date("Y-m-d H:m:s");    
 
         $assetid=0;
         $asset_data=$mydb->select("SELECT asset_id FROM owned_assets where ownerid=".$assetowned);

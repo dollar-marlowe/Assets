@@ -103,6 +103,7 @@
 		#hf_table tr td:nth-child(16){
 			display:none;
 		}
+
 		.pannel{
 
 			margin:auto;
@@ -193,6 +194,15 @@
 
 
 		}
+		#hf_info_only{
+			width:30%;
+			}
+		
+		#myChart{  
+				padding:20px 5px;
+			
+				
+			}
 
 		@media (max-width:1267px){
 			.imgform-container{
@@ -248,6 +258,22 @@
 			th:nth-child(5),td:nth-child(5){
 				display:none;
 			}
+			#map_hf_all{
+			display:block;
+			}
+			#hf_info_only{
+			width:25%;
+			}
+			#hf_filter_status{
+				display: block;
+			}
+			#hf_tables{
+				display: block;
+			}
+			
+			#myChart{
+				padding:20px 5px;
+			}
 		}
 		@media(max-width:400px){
 			th:nth-child(3),td:nth-child(3){
@@ -271,6 +297,20 @@
 			.input_wrapper{
 				margin:auto;
 				margin-top:10px;
+			}
+
+			#map_hf_all{
+				display:none;
+
+			}
+			#hf_info_only{
+				width:100%;
+			}
+			#hf_filter_status{
+				display: none;
+			}
+			#hf_tables{
+				display: none;
 			}
 		}
 
@@ -479,7 +519,7 @@
 	<div>
 	<p class="lbl_wrap"  style="text-align:center; margin:0px; width:100%; justify-content:center;" onclick="slide('#daily_HF_main_DIV')">HF MODULE MAIN PAGE</p>
 	<div id="daily_HF_main_DIV" style=" width:100%; display:flex; flex-direction: row; align-content: flex-start;">
-		<div style="width:25%; align-self:stretch;">
+		<div style="align-self:stretch;" id="hf_info_only">
 			<!-- first Panel -->
 			<div class="pannel">
 				<p class="lbl_wrap" id="hf_daily_summary_lbl" onclick="slide('#station_daily_DA_div')" ><img src="images\compass4.png">Daily Monitoring</p>
@@ -529,7 +569,7 @@
 									<canvas id="myChart2" style="width:100%; margin-top:10px; max-height:300px; background-color:white;"></canvas>
 									<br>
 								</div>
-								<div class="label_show_card" style="padding:20px 5px;">
+								<div class="label_show_card" style="padding:20px 5px;" id="hf_filter_status">
 									<p class="label"><label >FILTER HF STATIONS by STATUS</label></p>
 									<dl id="status_hf_filter" style="width:90%;text-align:left;">
 										<?php
@@ -547,7 +587,7 @@
 			
 
 			<!-- second Panel MAP Daily -->
-		<div style="width:75%; padding:0px;">
+		<div style="width:70%; padding:0px;" id="map_hf_all">
 			<div class="pannel" style="width:100%; padding:0px;">
 				<p class="lbl_wrap" id="hf_daily_map_lbl" onclick="slide('#hf_map_div')"><img src="images\compass4.png"><u>H</u>F Daily Monitored MAP</p>
 				<div id="hf_map_div" class="inner-wrapper" style="width: 98%;">
@@ -573,7 +613,7 @@
 
 	
 	<br>
-	<div style=" width:100%;  display: block ; flex-direction: row; align-content: flex-start;">
+	<div style=" width:100%; flex-direction: row; align-content: flex-start;" id="hf_tables">
 		<div class="pannel_con">
 			<div class="pannel" onclick="slide('#station_table_div')" >
 				<p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Logs Filter by Date</p>
@@ -626,7 +666,7 @@
 						</div>
 					</div>
 		</div>
-		</div>
+	</div>
  </section>
 
 

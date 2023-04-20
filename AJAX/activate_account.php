@@ -52,7 +52,7 @@
             break;
         }
 
-        $today=date("Y-m-d");       
+        $today=date("Y-m-d H:m:s");       
         $staff_id=str_replace("<br>","",$staff_id);
         $str="update login set `status`='change_pass', date_activated='".$today."', auth_level=".$auth_level.", auth_desc='". $auth_desc."' where official_id=". $staff_id;
         $msg= $mydb->insert($str);
@@ -97,6 +97,6 @@
        }   
     }
     else{
-        echo "<script>window.location='../login.php';</script>";
+       include "ajax_out.php";
     }
 ?>

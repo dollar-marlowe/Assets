@@ -330,6 +330,26 @@
 				}
 			);
      }
+     function Fetch_data_select(id,str,tofill,c1,c2,frm,select){
+       
+       
+               $.post("AJAX/dropdown.php",
+               {
+               
+                   sql:str+""+id+" order by name",
+                   col1:c1,
+                   col2:c2,
+                   from:frm
+               },
+               function(data){
+                   $(tofill).removeAttr("disabled");
+                   $(tofill).html(data);
+                   $(tofill).val(select);
+               }
+           );
+
+    
+   }
 
      function FetchRegion(id,str,tofill,c1,c2,frm){
        
@@ -543,8 +563,7 @@
                         if(what_to=='regions'){
                             $("#regions").val(source);
                             $("#regions").change();
-                           // console.log($('#dict_offices option'));
-                           
+                           // console.log($('#dict_offices option'));                          
 
                         }
                         if(what_to=='offices'){

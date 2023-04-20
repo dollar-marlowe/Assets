@@ -19,7 +19,9 @@
       referrerpolicy="no-referrer"          
     />
     <link rel="icon" href="images/DICT.png">
-    <link rel="stylesheet" href="CSS/rubio.css" />
+   <?php clearstatcache(true,'CSS/rubio.css'); ?>
+   <link rel="stylesheet" href="CSS/rubio.css?rnd=132">
+   <!-- https://wpreset.com/force-reload-cached-css/  references for forcing the browser to reload the file isntead of using the stubborn cache-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <!-- <link rel="stylesheet" href="https://cdn.maptiler.com/maptiler-geocoder/v1.1.0/maptiler-geocoder.css" /> -->
 	  <style>
@@ -424,6 +426,12 @@ border:solid 1px #33bbff;
    animation-iteration-count: infinite;
    animation-direction: forward;
  }
+ .paginate{
+  margin:auto;
+			margin-top:5px;
+			margin-bottom:10px;
+      width:fit-content;
+		}
 
 @keyframes clockwise {
   0% {transform:rotate(0deg);}
@@ -483,8 +491,8 @@ border:solid 1px #33bbff;
          echo       "<input id='ac-6' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-6'>My <u>P</u>rofile</label>";
          echo       "<article class='ac-small'>";
-         echo           "<a href='userprofile'><u>V</u>iew Profile</a>";
-         echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
+         echo           "<a href='userprofile.php'><u>V</u>iew Profile</a>";
+         echo           "<a href='editprofile.php'>E<u>d</u>it Profile</a>"; 
          echo       "</article>";
          echo   "</div>";
          if($_SESSION["auth_level"]>=1 && $_SESSION["auth_level"]!=2.5){
@@ -492,9 +500,9 @@ border:solid 1px #33bbff;
          echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-2'><u>A</u>ssets</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='assets'>Assets <u>D</u>ata Entry</a>";
-         echo           "<a href='assets_mgt'>A<u>s</u>sets Management</a>"; 
-         echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
+         echo           "<a href='assets.php'>Assets <u>D</u>ata Entry</a>";
+         echo           "<a href='assets_mgt.php'>A<u>s</u>sets Management</a>"; 
+         echo           "<a href='assetsmap.php'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
          }
@@ -503,8 +511,8 @@ border:solid 1px #33bbff;
          echo       "<input id='ac-5' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-5'><u>E</u>TC</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='disaster_edit'><u>H</u>azards Management</a>";
-         echo           "<a href='risk_management'><u>R</u>isk Management</a>
+         echo           "<a href='disaster_edit.php'><u>H</u>azards Management</a>";
+         echo           "<a href='risk_management.php'><u>R</u>isk Management</a>
                           <a href=''>ETC <u>D</u>eactivation</a>"; 
          echo       "</article>";
          echo   "</div>";
@@ -517,9 +525,9 @@ border:solid 1px #33bbff;
          echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
      
-         echo           "<a href='officesentry'>Office Data <u>E</u>ntry</a>";
-         echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
-         echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";
+         echo           "<a href='officesentry.php'>Office <u>D</u>ata Entry</a>";
+         echo           "<a href='officialsentry.php'><u>P</u>ersonnel Data Entry</a>"; 
+         echo           "<a href='loginaccount.php'>Personnel's <u>U</u>ser Account</a>";
          
          echo       "</article>";
          echo   "</div>";        
@@ -531,10 +539,10 @@ border:solid 1px #33bbff;
           echo       "<label for='ac-7'><u>H</u>F Management</label>";
           echo       "<article class='ac-medium'>";
       
-          echo           "<a href='hf_main'>HF Stations Main <u>P</u>age</a>";
-          echo           "<a href='hf_daily'><u>H</u>F Stations Daily Log</a>"; 
-          echo           "<a href='hf_entry'>HF Station Data <u>E</u>ntry</a>";
-          echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";           
+          echo           "<a href='hf_main.php'>HF Stations Main <u>P</u>age</a>";
+          echo           "<a href='hf_daily.php'><u>H</u>F Stations Daily Log</a>"; 
+          echo           "<a href='hf_entry.php'>HF Station Data <u>E</u>ntry</a>";
+          echo           "<a href='loginaccount.php'>Personnel's <u>U</u>ser Account</a>";           
          
      
 
@@ -544,7 +552,7 @@ border:solid 1px #33bbff;
           
          echo   "<div>";
          echo       "<input id='ac-4' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-4'><a href='Logout'><u>L</u>ogout</a></label>";
+         echo       "<label for='ac-4'><a href='logout.php'><u>L</u>ogout</a></label>";
          echo  "</div>";
          echo "</section>";
         }
@@ -559,11 +567,11 @@ border:solid 1px #33bbff;
           
        <div class="back">
           <div class="back_div" id="back_div1"><br>
-              <h3>ETC ACTIVATED-DECEMBVER 15, 2022 TINEG ABRA</h3>
+              <h3>ETC ACTIVATED-DECEMBER 15, 2022 TINEG ABRA</h3>
           </div>
 
           <div class="back_div" id="back_div2"><br>
-          <img src="images/label_head2.png" class="back-img large">
+          <img src="images/label_head1.png" class="back-img large">
           <img src="images/label_head4.png" class="back-img mid">
           </div>
           
@@ -860,7 +868,7 @@ border:solid 1px #33bbff;
                
                     if($(id_office).is(":checked")){
                       
-                        if (e.key === "E" || e.key === "e"){
+                        if (e.key === "D" || e.key === "d"){
                         window.location="officesentry.php";
                         }
                         if (e.key === "p" || e.key === "P"){

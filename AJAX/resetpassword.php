@@ -26,7 +26,7 @@
         }      
      
         $pass=encrypt(generate_password(8));
-        $today=date("Y-m-d");       
+        $today=date("Y-m-d H:m:s");       
         $staff_id=str_replace("<br>","",$staff_id);
         $str="update login set `status`='change_pass', `password`='".$pass."' where official_id=". $staff_id;
         $msg= $mydb->insert($str);

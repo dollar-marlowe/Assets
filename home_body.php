@@ -391,22 +391,22 @@ div.item p img{
 							<div class="item_container">
 								<div class="item" id="btnwindy" onclick="hide_show('#windypannel')">
 									<p ><img src="images/windy.png" ></p>
-									<p><u>W</u>indy Pannel></p>
+									<p><u>W</u>indy Panel></p>
 								</div>
 								<div class="item" id="btnphil" onclick="hide_show('#georiskpannel')">
 									<p><img src="images/philvolcs.png"></p>
-									<p><u>G</u>eorisk Pannel</p>
+									<p><u>G</u>eorisk Panel</p>
 								</div>
 
 								<div class="item" id="btpagasa" onclick="hide_show('#floodpannel')">
 									<p><img src="images/pagasa.png"></p>
-									<p>F<u>l</u>ood Pannel</p>
+									<p>F<u>l</u>ood Panel</p>
 								
 								</div>
 								
 								<div class="item" id="btncovid" onclick="hide_show('#covidpannel')">
 									<p><img src="images/covid.png"></p>
-									<p><u>C</u>ovid Pannel</p>
+									<p><u>C</u>ovid Panel</p>
 								</div>
 							</div>	
 							

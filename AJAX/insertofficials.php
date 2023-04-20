@@ -22,7 +22,7 @@
             $id++;
         }
 
-        $today=date("Y-m-d h:m:sa");
+        $today=date("Y-m-d H:m:s");
         $str="insert into officials (id,office_id,fname,mname,lname,position,contact,email,date_added,gender)
         values(".$id.",".$office.",'".$fname."','".$mname."','".$lname."','".$position."','".$contact."','".$email."','".$today."','".$gender."')";
         $username=strtolower($fname.$lname);

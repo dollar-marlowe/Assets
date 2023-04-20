@@ -242,6 +242,10 @@
 			th:nth-child(5),td:nth-child(5){
 				display:none;
 			}
+
+			#list_station{
+				display: none;
+			}
 		}
 		@media(max-width:400px){
 			th:nth-child(3),td:nth-child(3){
@@ -742,7 +746,7 @@
 					signal_status:		signal_val				
 			},
 				function(data){
-						// alert(data);
+						alert(data);
 						if(data=="New record created!"){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								

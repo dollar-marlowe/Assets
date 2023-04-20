@@ -4,7 +4,7 @@
   }
 
   function auth_validatation($level){
-    if($_SESSION["auth_level"]<$level){
+    if($_SESSION["auth_level"]<$level && isset($_SESSION["auth"])){
      // echo "
     //  <script>alert('ok');</script>";
       header("Location:home.php");

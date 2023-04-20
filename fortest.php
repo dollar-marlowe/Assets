@@ -5,7 +5,26 @@
 
 <?php
 include "ALGO/codes.php";
-echo $_SESSION["auth_level"];
+function read_csv(){
+
+
+    $row = 1;
+    if (($handle = fopen("attributes.csv", "r")) !== FALSE) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $num = count($data);
+            echo "<p> $num fields in line $row: <br /></p>\n";
+            $row++;
+            for ($c=0; $c < $num; $c++) {
+                echo $data[$c] . " |";
+            }
+            echo "<br>";
+        }
+        fclose($handle);
+    }
+}
+echo decrypt("aPNV8nU8V/Yq7DKzECTUYU+ax8qG9tvy9yKIoEqxTv9emaF4oUphc5TN7XkjN52JdPVbGo8VZKW97l8byw2bxA==");
+/* $today=date("H:m:s");    
+echo $today." "; */
 /* libxml_use_internal_errors(true);
 $myXMLData =
 "<?xml version='1.0' encoding='UTF-8'?>
