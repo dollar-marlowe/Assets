@@ -553,13 +553,22 @@
 							<option value='1'>Deploy</option>
 							<option value='2'>Transfer Ownership</option>
 						</select>
-					<label for="office" class="transfer">Select from Regional Offices:*</label>
+						<label for="mgtetc" >Emergency Telecoms Activation related?</label>
+						<select id="mgtetc" name="etc" >
+						<?php
+							$str="SELECT id, concat(disaster,'-', date_start) as `etc_disaster` FROM etc_disaster_view";
+							loadropdown($str,"id","etc_disaster","Active ETC");//function for loading values into the dropdown accepts sql command and name of columns 
+							?>
+						</select>
+						<label for="office" class="transfer">Select from Regional Offices:*</label>
 						<select id="mgtoffice" name="office" class="transfer">
 							<?php
 							$str="SELECT id,office_name FROM office";
 							loadropdown($str,"id","office_name","Offices");//function for loading values into the dropdown accepts sql command and name of columns 
 							?>
+							
 						</select>
+						
 						<!-- this section is for transfer form idenfied by transfer class on each of the element defined--> 
 					<label for="remarks" class="transfer">Remarks:</label>	
 					
@@ -1189,7 +1198,7 @@
 									},function(data){
 										//alert($("#mgtoffice").val()+ " "+$("#office").val())
 									
-										//alert(data);
+										alert(data);
 										
 										 
 											if(c==chk_size){
