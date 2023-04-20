@@ -291,8 +291,8 @@
 							<option value="Pandemic%Biological">Pandemic</option>
 							<option value="Insect/Animal Plagues%Biological">Insect/Animal Plagues</option>
 							<option value="El-Niño%Climatological">El-Niño</option>
-							<option value="Wildfires%Climatological">Fires/Wildfires"</option>
-							<option value="Fires%Man-made">Fires"</option>										
+							<option value="Wildfires%Climatological">Fires/Wildfires</option>
+							<option value="Fires%Man-made">Fires</option>										
 							<option value="Human Induced%Man-made">Human Induced</option>
 					</select>
 					</div>
@@ -302,7 +302,7 @@
 					
 
 					<div class="input_wrapper"><p class="label">
-						<label for="datestarted ">Date Started:</label></p>
+						<label for="datestarted ">Date Created:</label></p>
 					<input type="date" name="admission_date" id="date_added" class="form-control">
 					</div>
 	
@@ -355,7 +355,7 @@
 					</table>
 				</div>
 				<div class="input_wrapper" style="margin:auto">
-					<input type="submit" value="Mofidy" id="modify" class="btn btn-primary" style="color:white;font-weight:800;">
+					<input type="submit" value="Modify" id="modify" class="btn btn-primary" style="color:white;font-weight:800;">
 					<input type='submit' Value='Clear' class="btn btn-primary" style="color:white;font-weight:800;" id="clear2"> 
 				</div>
 					
