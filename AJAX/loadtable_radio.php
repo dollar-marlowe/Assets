@@ -15,7 +15,7 @@
         loadtable_radio($sql,$headers,$check,$all,$class, $func);
     }
     else{
-        echo "<script>window.location='../login.php';</script>";
-    }
+        include "ajax_out.php";
+      }
 
 ?>

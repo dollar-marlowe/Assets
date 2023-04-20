@@ -32,5 +32,7 @@
         }
         
     } 
-    
+    else{
+        include "ajax_out.php";
+      }
 ?>

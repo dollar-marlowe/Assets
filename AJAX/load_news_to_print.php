@@ -24,6 +24,6 @@
        echo load_news_to_print($sql);
      }
      else{
-       echo "<script>window.location='../login.php';</script>";
-     }
+      include "ajax_out.php";
+    }
 ?>

@@ -15,7 +15,7 @@
        echo "<h4 id='msg1' style='font:bold'>".$mydb->insert($str)."</h4>";
     }
     else{
-        echo "<script>window.location='../login.php';</script>";
-    }
+        include "ajax_out.php";
+      }
 
 ?>

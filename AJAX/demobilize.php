@@ -34,7 +34,7 @@
        
     }
     else{
-        echo $msg;
-    }
+        include "ajax_out.php";
+      }
 
 ?>
