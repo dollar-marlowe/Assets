@@ -525,7 +525,7 @@ border:solid 1px #33bbff;
          echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
      
-         echo           "<a href='officesentry.php'>Office Data <u>E</u>ntry</a>";
+         echo           "<a href='officesentry.php'>Office <u>D</u>ata Entry</a>";
          echo           "<a href='officialsentry.php'><u>P</u>ersonnel Data Entry</a>"; 
          echo           "<a href='loginaccount.php'>Personnel's <u>U</u>ser Account</a>";
          
@@ -866,7 +866,7 @@ border:solid 1px #33bbff;
                
                     if($(id_office).is(":checked")){
                       
-                        if (e.key === "E" || e.key === "e"){
+                        if (e.key === "D" || e.key === "d"){
                         window.location="officesentry.php";
                         }
                         if (e.key === "p" || e.key === "P"){
