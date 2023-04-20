@@ -445,48 +445,12 @@
 		</div>
 	</div>
 
-		<!-- Division for HF Station Table using ajax to load datas-->
-		<!-- <div class="pannel_con">
-			<div class="pannel" onclick="slide('#hf_station_table_dynamic')" >
-				<p class="lbl_wrap" id="accounts"><img src="images\compass4.png">H<u>F</u> Station Visuals</p>
-			</div>
-			
-			<div class="imgform-container " id="hf_station_table_dynamic">
-				<div class="imgform-img">
-					<div class="inner-wrapper" id="hf_station_table">
-					<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
 </section>
 
 
 <script>
 
 
-		// var xValues = ["Luzon", "Visayas", "MIndanao"];
-		// var yValues = [55, 49, 44];
-		// var barColors = ["red", "green","blue"];
-
-		// new Chart("myChart", {
-		// type: "bar",
-		// data: {
-		// 	labels: xValues,
-		// 	datasets: [{
-		// 	backgroundColor: barColors,
-		// 	data: yValues
-		// 	}]
-		// },
-		// options: {
-		// 	legend: {display: false},
-		// 	title: {
-		// 	display: true,
-		// 	text: "Expected Representation of reported HF Station by LUZVIMINDA"
-		// 	}
-		// }
-		// });
 
 		function slide(target){
 			$(target).slideToggle("slow");
@@ -548,29 +512,32 @@
 
 		$("#barangay").change(function(){
 			
-			//for auto station name input
-			var hf_name_add = $("select#municipality.station_input").find(":selected").text();
-			var hf_name_add_del_extra1 = hf_name_add.split("(Capital)").join("");
-			var hf_name_add_del_extra2 = hf_name_add_del_extra1.split("CITY").join("");
-			var hf_name_add_del_extra3 = hf_name_add_del_extra2.split(" OF ").join("");
-			var hf_name_add_to_input = "DICT" + " " + hf_name_add_del_extra3;
-			$("input#hf_name.station_input").val(hf_name_add_to_input);
-			
-			//for auto station code input
-			var hf_code_add = $("select#region.station_input").val();
-			var hf_code_add_to_input ="HF-"+hf_code_add + "-" +$("select#municipality.station_input").val();
-			//alert(hf_code_add_to_input);
-			$("input#hf_code.station_input").val(hf_code_add_to_input);
-			$("input#hf_name.station_input").prop("disabled",false);
-
-		});
+			// alert($("#submit").val());
+			//if($("#submit").val()=="Update"){
 		
+				//for auto station name input
+				var hf_name_add = $("select#municipality.station_input").find(":selected").text();
+				var hf_name_add_del_extra1 = hf_name_add.split("(Capital)").join("");
+				var hf_name_add_del_extra2 = hf_name_add_del_extra1.split("CITY").join("");
+				var hf_name_add_del_extra3 = hf_name_add_del_extra2.split(" OF ").join("");
+				var hf_name_add_to_input = "DICT" + " " + hf_name_add_del_extra3;
+				$("input#hf_name.station_input").val(hf_name_add_to_input);
 
-		// $("#description").keyup(function(){
+				//for auto station code input
+				// var hf_code_add = $("select#region.station_input").val(); +hf_code_add +
+				var hf_code_for_mod = $("select#barangay.station_input").val();
+				if(hf_code_for_mod.length<5){
+					hf_code_for_mod=hf_code_for_mod.padStart(5, 0);
+					var hf_code_add_to_input ="HF-" + hf_code_for_mod;
+					//alert(hf_code_add_to_input);
+				}else{
+					var hf_code_add_to_input ="HF-" + $("select#barangay.station_input").val();
+				}
 			
-		// 	//alert($(this).val());
-		// 	validate("#description","")
-		// });
+				$("input#hf_code.station_input").val(hf_code_add_to_input);
+				$("input#hf_name.station_input").prop("disabled",false);
+			
+		});
 		
 		function validate(target,value){
 			if($(target).val().trim()==value){
@@ -719,7 +686,7 @@
 		});
 
 		$("#search_region").change(function(){
-			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"regional",$(this).val());
+			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"regional_all",$(this).val());
 			// var str="select hf_id, station_name, region, province from hf_locations where station_name= '"+$(this).val()+"'";
 			// 	var headers="Tik%Station Name%Region%Province%";
 			// 	var classes ="all%item";
@@ -727,7 +694,7 @@
 		});
 
 		$("#search_station").keyup(function(){
-			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"open",$(this).val());
+			load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"open_all",$(this).val());
 			//alert($(this).val());
 		});
 
@@ -752,6 +719,28 @@
 		});
 
 		$(".item").click(function(){
+			//$("#myModal").css("display","none");
+			$("#clear").click();
+			$("span.close").css("display","none");
+			//$("#station_form_div").onclick=(slide('#station_form_div'));
+			
+			
+			var elem="<div class='input_wrapper' style='width:100%' id='modify_div'> \
+							<p class='label' style='width:100%'>Do you want to modify selected station?</p> <br>\
+							\
+							<input class='label' type='submit' value='MODIFY' id='modify_station' style='width:100%;'> \
+							<input class='uael-close-modal' type='submit' value='Cancel' id='modify_cancel' style='width:100%'> \
+							\
+						</div>\
+							";
+			
+					$(".big").css("height");
+			
+					Popup_modal_show(elem,200);
+					$(".big div div .label").css("text-align","center");
+
+		});	
+		$(document).on("click",".item",function(){
 			//$("#myModal").css("display","none");
 			$("#clear").click();
 			$("span.close").css("display","none");
@@ -849,6 +838,8 @@
 					$("#hf_lat").val($(latitude).text());
 					$("#hf_long").val($(longitude).text());
 					$("#description").val($(description).text());
+
+					$("input#hf_name.station_input").prop("disabled",false);
 						
 				}else{
 					$("#err_2").remove();

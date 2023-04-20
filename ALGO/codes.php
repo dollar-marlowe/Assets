@@ -923,7 +923,7 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
                 if($chkbox){
                     if($i==0){
                         echo"<td><input type='checkbox' 
-                        class='".$class[1]."'  value='".$e."' ></td>";    
+                        class='".$class[1]."'  value='".encrypt($e)."' ></td>";    
                     }
                     $chkbox=false; 
                 }
@@ -1165,6 +1165,40 @@ function loadstationlist_count_log($str, $col1, $col2, $col3, $from)
         } else {
             echo "<option value='0'>No Data ".$from."</option>";
         }
+    }
+}
+
+function loadstationlist_remarks($str,$col1,$col2,$col3,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+        
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            echo "<li value='".$d[$col1]."'style='background-color:darkred;' name='".encrypt($d[$col3])."'>".$d[$col2].":  " .$d[$col3]."</li>";
+        }
+    }
+    else{
+        echo"<option value='0'>No Data  ".$from."</option>";
+    }
+}
+
+function loadstationlist_time($str,$col1,$col2,$col3,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+        
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        foreach($data as $d){
+            echo "<li value='".$d[$col1]." name='".encrypt($d[$col3])."'>".$d[$col2].":  " .$d[$col3]."</li>";
+        }
+    }
+    else{
+        echo"<option value='0'>No Data  ".$from."</option>";
     }
 }
 

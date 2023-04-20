@@ -34,7 +34,7 @@
     }
     
     else{
-        echo "<script>window.location='../login.php';</script>";
+        echo "<script>window.git location='../login.php';</script>";
   
     }
 
