@@ -335,6 +335,7 @@
 										$end_time = $end->format("H:i");
 
 										// Format start and end time for SQL query
+										//added coment here
 										$start_time_sql = $start->format("H:i");
 										$end_time_sql = $end->format("H:i");
                                         $str = "SELECT hf_log_id, station_name, log_time FROM trial_daily_log WHERE log_time BETWEEN '$start_time_sql' AND '$end_time_sql'  GROUP BY station_name";
