@@ -43,8 +43,8 @@ class Database{
     //WHEN MIGRATING TO POSTGRE THIS IS THE CLASS THAT NEEDS TO BE CHANGED
     
     public $servername="localhost";
-    public $username="root";
-    public $pass="rdamsmalakas";
+    public $username="lowe";
+    public $pass="admin123";
     public $db="assets";
     public $con;
 
@@ -1194,7 +1194,7 @@ function loadstationlist_time($str,$col1,$col2,$col3,$from){
     if($data!=null){
         //echo"<option value=0>Select from Options Below</option>";
         foreach($data as $d){
-            echo "<li value='".$d[$col1]." name='".encrypt($d[$col3])."'>".$d[$col2].":  " .$d[$col3]."</li>";
+            echo "<li value='".$d[$col1]." name='".encrypt($d[$col3])."'>".$d[$col2]."</li>";
         }
     }
     else{

@@ -322,7 +322,7 @@
 					<div class="label_show_card" style="width:100%;background-color:lightblue;">
 					
                                 <p class="label" style="width:100%;"><label>Recommended Stations</label></p>
-								<p class="label" style="width:100%;"><label>From <span ></span></label></p>
+								<p class="label" style="width:100%;"><label>From <span id="curtime_display"></span> -  <span id="nexttime_display"></span></label></p>
                                 <ul id="list_station_suggestions" style="font-size:12px; text-align:left;  padding:5px 20px;">
                                     <?php
 										$timezone = new DateTimeZone('GMT+8');
@@ -340,6 +340,7 @@
 										$end_time_sql = $end->format("H:i");
                                         $str = "SELECT hf_log_id, station_name, log_time FROM trial_daily_log WHERE log_time BETWEEN '$start_time_sql' AND '$end_time_sql'  GROUP BY station_name";
                                         loadstationlist_time($str, "station_name", "station_name", "log_time", "Recorded");
+										
 
 										// $start = new DateTime(); // current time
 										// $diffInMinutes = 60 - $start->format('i'); // calculate difference to nearest hour
@@ -521,6 +522,29 @@
 		//then encrypt ulit
 	// $("#station_name_label").css("visibility","hidden");
 	// $("#station_name").css("visibility","hidden");
+
+
+  // get references to the HTML elements
+  var curtime_display = document.getElementById("curtime_display");
+  var nexttime_display = document.getElementById("nexttime_display");
+
+  // create Date objects from the time values
+  var startTime = new Date();
+  startTime.setHours(<?php echo (int) substr($start_time_sql, 0, 2); ?>);
+  startTime.setMinutes(<?php echo (int) substr($start_time_sql, 3, 2); ?>);
+  var endTime = new Date();
+  endTime.setHours(<?php echo (int) substr($end_time_sql, 0, 2); ?>);
+  endTime.setMinutes(<?php echo (int) substr($end_time_sql, 3, 2); ?>);
+
+  // format the time values as strings in 12-hour format with AM/PM
+  var startTimeStr = startTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+  var endTimeStr = endTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+
+  // set the text content of the HTML elements to the formatted time values
+  curtime_display.textContent = startTimeStr;
+  nexttime_display.textContent = endTimeStr;
+
+
 	
 	var stn_cd;
 	var stn_cd_grp;
