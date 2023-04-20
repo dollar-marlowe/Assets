@@ -287,6 +287,13 @@
 			
 		}	
 		
+		#list_station_suggestions{
+			list-style-type: disc;
+			-webkit-columns: 3;
+			-moz-columns: 3;
+			columns: 3;
+			list-style-position: inside;
+		}
 
 </style>
 
@@ -312,6 +319,44 @@
 	        <div class="imgform-img">
 				<div class="inner-wrapper top">	
 				    <div class="input_wrapper entry" id="single_log_div">
+					<div class="label_show_card" style="width:100%;background-color:lightblue;">
+					
+                                <p class="label" style="width:100%;"><label>Recommended Stations</label></p>
+								<p class="label" style="width:100%;"><label>From <span ></span></label></p>
+                                <ul id="list_station_suggestions" style="font-size:12px; text-align:left;  padding:5px 20px;">
+                                    <?php
+										$timezone = new DateTimeZone('GMT+8');
+										$start = new DateTime('now', $timezone);
+                                        // $start = new DateTime(); // current time
+										$diffInMinutes = 60 - $start->format('i'); // calculate difference to nearest hour
+										$end = clone $start;
+										$end->add(new DateInterval('PT' . $diffInMinutes . 'M')); // add difference to current time
+										$start_time = $start->format("H:i");
+										$end_time = $end->format("H:i");
+
+										// Format start and end time for SQL query
+										$start_time_sql = $start->format("H:i");
+										$end_time_sql = $end->format("H:i");
+                                        $str = "SELECT hf_log_id, station_name, log_time FROM trial_daily_log WHERE log_time BETWEEN '$start_time_sql' AND '$end_time_sql'  GROUP BY station_name";
+                                        loadstationlist_time($str, "station_name", "station_name", "log_time", "Recorded");
+
+										// $start = new DateTime(); // current time
+										// $diffInMinutes = 60 - $start->format('i'); // calculate difference to nearest hour
+										// $end = clone $start;
+										// $end->add(new DateInterval('PT' . $diffInMinutes . 'M')); // add difference to current time
+										// $start_time = $start->format("H:i");
+										// $end_time = $end->format("H:i");
+										// $str = "SELECT hf_log_id, station_name, log_time 
+										// 		FROM trial_daily_log 
+										// 		WHERE STR_TO_DATE(log_time, '%H:%i') BETWEEN '$start_time' AND '$end_time'
+										// 		GROUP BY station_name";
+										// loadstationlist_time($str, "station_name", "station_name", "log_time", "Recorded");
+										// 	echo $start_time_sql;
+										// 	echo $end_time_sql;
+                                    ?>
+                                </ul>
+						</div>
+						<br>
 	                    <p class="label"><label for="disaster" id="label_log_option">Single HF Station Log</label></p>
 					
 						<!--<p class="label"><label for="disaster" id="label_log_option2">...</label></p>-->
@@ -361,7 +406,7 @@
 						</div>
 						
 						<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
-						<input type="text" id="station_assignee" placeholder="Optional *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
+						<input type="text" id="station_assignee" placeholder="Call Sign *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
 						<br><br>
 						
 						<p class="label"><label for="disaster">Date:</label></p>
@@ -397,7 +442,13 @@
 								<input type='submit' Value='3x3' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;">
 								<input type='submit' Value='2x2' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
 								<input type='submit' Value='1x1' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;"> -->
-						</div>
+								<br><br>
+                        <p class="label"><label for="disaster" id="station_assignee_label">Remarks</label></p>
+                            <textarea id="station_remarks" placeholder="type 'N/A' if none" class="station_log" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;" ></textarea>
+    
+                        </div>
+						
+							</div>
 						
 						<br><br>
 
@@ -721,6 +772,7 @@
 		var no_weather = "";
 
 		var select_input = is_empty_class("input.station_log","");
+		var select_remarks = is_empty_class("textarea.station_log","");
 		var select_select = is_empty_class("select#signal_value","0");
 		
 		var select_weather = no_weather == weather_stat ? true:false;
@@ -730,7 +782,7 @@
 		// alert(select_select);
 		// alert(select_weather);
 
-		if(select_input==false && select_select==false  && select_weather==false) {
+		if(select_input==false && select_select==false  && select_weather==false && select_remarks==false) {
 			//alert("May value");
 			$("#err_lbl").remove();
 			 //alert($("select#signal_value").val());
@@ -742,11 +794,12 @@
 					station_assignee: 	$("#station_assignee").val(),
 					get_date: 			$("#get_date").val(),
 					get_time:			$("#get_time").val(),
+					hf_remarks:			$("#station_remarks").val(),
 					weather_status:		weather_stat,
 					signal_status:		signal_val				
 			},
 				function(data){
-						alert(data);
+						// alert(data);
 						if(data=="New record created!"){
 							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								

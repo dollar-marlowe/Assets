@@ -24,6 +24,10 @@
                 $sql = "Select $table_columns from hf_locations where station_region=$data AND NOT station_status ='Proposed'";
                 break;
 
+            case "regional_all":
+                $sql = "Select $table_columns from hf_locations where station_region=$data";
+                break;
+
             case "provincial":
                 $sql = "Select $table_columns from hf_locations where station_province=$data AND NOT station_status ='Proposed'";
                 break;
@@ -34,6 +38,10 @@
 
             case "open":
                 $sql = "Select $table_columns from hf_locations where station_name like '%$data%' AND NOT station_status ='Proposed'";
+                break;
+
+            case "open_all":
+                $sql = "Select $table_columns from hf_locations where station_name like '%$data%'";
                 break;
         }
        // echo $sql;
