@@ -528,7 +528,7 @@
   var curtime_display = document.getElementById("curtime_display");
   var nexttime_display = document.getElementById("nexttime_display");
 
-  // create Date objects from the time values
+  // create Date objects from the time valuess
   var startTime = new Date();
   startTime.setHours(<?php echo (int) substr($start_time_sql, 0, 2); ?>);
   startTime.setMinutes(<?php echo (int) substr($start_time_sql, 3, 2); ?>);

@@ -595,7 +595,7 @@
 					<textarea	
 						cols="30"
 						rows="6"
-						placeholder="Descreption/Remarks"
+						placeholder="Description/Remarks"
 						id="remarks">
 					</textarea>
 					<input   id="sbmmgt" type='submit' Value='Submit' class="btn btn-primary " style="color:white;font-weight:800;" >

@@ -497,11 +497,11 @@ border:solid 1px #33bbff;
          echo   "</div>";
          if($_SESSION["auth_level"]>=1 && $_SESSION["auth_level"]!=2.5){
          echo   "<div>";
-         echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
+         echo       "<input id='ac-2' name='accordion-1' type='checkbox'>";
          echo       "<label for='ac-2'><u>A</u>ssets</label>";
          echo       "<article class='ac-medium'>";
          echo           "<a href='assets'>Assets <u>D</u>ata Entry</a>";
-         echo           "<a href='assets_mgt>A<u>s</u>sets Management</a>"; 
+         echo           "<a href='assets_mgt'>A<u>s</u>sets Management</a>"; 
          echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";

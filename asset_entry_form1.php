@@ -337,7 +337,7 @@
 							<textarea
 								cols='25'
 								rows='2'
-								placeholder='Descreption/Remarks'
+								placeholder='Description/Remarks'
 								id='remarks1'
 								class=' pp'
 							></textarea>
@@ -426,7 +426,7 @@
 					<textarea
 						cols="30"
 						rows="6"
-						placeholder="Descreption/Remarks"
+						placeholder="Description/Remarks"
 						id="remarks"
 					></textarea>
 					<input type='submit' Value='Submit' class="btn btn-primary " style="color:white;font-weight:800;" id="submitasset">
@@ -1044,7 +1044,7 @@
 				 id='serial"+elemid+"' class='subset pp sserial'></textarea>\
 				<textarea cols='25' rows='2'placeholder='IMEI:* for multiple input, place / in between each imei' \
 				id='ime"+elemid+"' class='pp sime'></textarea>\
-				<textarea cols='25' rows='2'placeholder='Descreption/Remarks'id='remarks"+elemid+"' class='pp sremarks'></textarea>";
+				<textarea cols='25' rows='2'placeholder='Description/Remarks'id='remarks"+elemid+"' class='pp sremarks'></textarea>";
 				var elem="<div id='subitem1"+elemid+"' ><input id='ac-"+acid+"' name='accordion-"+acid+"' \
 				type='checkbox' ><label for='ac-"+acid+"' class='acc-label'>Sub-item"+elemid+"</label>\
 				<article class='sizeauto'>"+forms+"</article></div>";
