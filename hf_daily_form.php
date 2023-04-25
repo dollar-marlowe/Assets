@@ -221,6 +221,14 @@
 			font-size:12px;
 		}
 
+		#search_station_logged{
+			font-size: 18px;
+			margin-right:10px;
+			margin-left:5px;
+		}
+
+		
+
 		@media (max-width:1343px){
 			.imgform-container{
 				display:block;
@@ -340,6 +348,16 @@
 			list-style-position: inside;
 			font-size:10px;
 		}
+		#search_station_logged{
+			width: 100%;
+			margin: 0px 5px;
+		}
+		#filter_type_selection{
+			width: 100%;
+			margin: 0px 5px;
+		}
+		
+
 		}
 		@media(max-width:400px){
 			th:nth-child(3),td:nth-child(3){
@@ -575,7 +593,7 @@
 		<div class="imgform-container " id="station_table_div">
 			<div class="imgform-img">
 			<div class="inner-wrapper">
-				<input type="text" id="search_station_logged" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
+				<input type="text" id="search_station_logged" Placeholder="Search HF Station">
 				<select id="filter_type_selection">
 					<?php 
 					$today =date("Y-m-d");				
