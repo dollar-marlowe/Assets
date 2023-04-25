@@ -788,6 +788,40 @@
 				crossOrigin: true
 			}).addTo(map2);
 
+						// Create a legend control
+			var legend = L.control({position: 'topright'});
+
+			// Function to generate HTML for the legend
+			legend.onAdd = function (map) {
+				var div = L.DomUtil.create('div', 'legend');
+				div.innerHTML += 'SIGNAL STRENGTH:<br>';
+				div.innerHTML += '<img src="images/5x5_color.png"  style="width:15px;"> 5x5 <br>';
+				div.innerHTML += '<img src="images/4x4_color.png"  style="width:15px;"> 4x4 <br>';
+				div.innerHTML += '<img src="images/3x3_color.png"  style="width:15px;"> 3x3 <br>';
+				div.innerHTML += '<img src="images/2x2_color.png"  style="width:15px;"> 2x2 <br>';
+				div.innerHTML += '<img src="images/1x1_color.png"  style="width:15px;"> 1x1 <br><br>';
+				
+				div.innerHTML += 'WEATHER:<br>';
+				div.innerHTML += '<img src="images/HF_weather_sunny.png" style="width:20px;"> Sunny <br>';
+				div.innerHTML += '<img src="images/HF_weather_cloudy.png" style="width:20px;"> Cloudy <br>';
+				div.innerHTML += '<img src="images/HF_weather_rainy.png" style="width:20px;"> Rainy <br>';
+				return div;
+			};
+
+			var legend_dir = L.control({position: 'topleft'});
+			// Function to generate HTML for the legend
+			legend_dir.onAdd = function (map) {
+				var div2 = L.DomUtil.create('div', 'legend');
+				div2.innerHTML += '<img src="images/compass4.png" style="width:100px;"><br><br>';
+				return div2;
+			};
+
+			// Add the legend to the map
+			legend.addTo(map2);
+
+			// Add the legend to the map
+			legend_dir.addTo(map2);
+
    
 			function load_hf_stations_map_2(filter) {
 			$.post("AJAX/load_hf_stations_map_2.php", {
