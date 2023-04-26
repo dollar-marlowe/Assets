@@ -1235,7 +1235,7 @@ function loadstationlist_time($str,$col1,$col2,$col3,$from){
     }
 }
 
-function count_comparizon($str, $from) {
+function count_comparizon($str) {
     $db = new Database();
     $db->connect();
     $data = $db->select_two($str, "count_logs", "max_date");
@@ -1245,7 +1245,7 @@ function count_comparizon($str, $from) {
         $max_date = date("F j", strtotime($data["max_date"]));
         echo "<label><span style='font-size: 16px;text-decoration:underline; color:orange;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
     } else {
-        echo "<span>No Data " . $from . " to be compared.</span>";
+        echo "<span>No Previous Data To Be Compared.</span>";
     }
 }
 
