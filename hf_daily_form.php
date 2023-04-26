@@ -32,10 +32,7 @@
 		.form-container{
 			width:60%;
 		}
-		.imgform-container{
-			
-			margin:auto;
-		}
+		
 		/*table*/
 		table tr th{
 			text-transform:uppercase;
@@ -185,6 +182,68 @@
 			margin:auto;
 			margin-bottom:30px;				
 		}
+
+		#signal_value{
+			width: 70%;
+			padding: 5px;
+			margin: 0px 10px;
+
+
+		}
+
+		#station_remarks{
+			width: 70%;
+			padding: 5px;
+		}
+
+		#weather_div{
+			display: block;
+			margin:auto;
+			/* border:solid 1px black; */
+			width: inherit;
+			align-items:center;
+			
+		}
+		#weather_div input[type="submit"] {
+		display: inline-block;
+		margin: 5px;
+		}
+
+		#log_option{
+			width: 50%;
+		}
+		#list_station_suggestions{
+			list-style-type: disc;
+			-webkit-columns: 3;
+			-moz-columns: 3;
+			columns: 3;
+			list-style-position: inside;
+			font-size:12px;
+		}
+
+		#search_station_logged{
+			font-size: 18px;
+			margin-right:10px;
+			margin-left:5px;
+		}
+
+		
+
+		@media (max-width:1343px){
+			.imgform-container{
+				display:block;
+				
+			}
+			.align_center{
+			margin:auto;
+			
+			width:fit-content;
+			
+		}
+		
+		.input_wrapper input, .input_wrapper textarea, .input_wrapper select{
+			width:70%;}
+		}
 		
 		@media (max-width:1267px){
 			.imgform-container{
@@ -196,9 +255,13 @@
 			
 			width:fit-content;
 			
-			
 		}
-			
+		.input_wrapper input, .input_wrapper textarea, .input_wrapper select{
+			width:70%;}
+		
+		#log_option{
+			width: 70%;
+		}
 			
 		}
 		@media (max-width:820px){
@@ -207,20 +270,38 @@
 				font-size:13px;
 			}
 			.imgform-img p, .imgform-img  select, input[type=text]{
-			font-size:95%;
+				font-size:95%;
 			}
+
+			#weather_div{
+				width: inherit;
+			}
+
+			#log_option{
+				font-size: inherit;
+				width: 100%;;
+			}
+
+			#list_station_suggestions{
+			list-style-type: disc;
+			-webkit-columns: 3;
+			-moz-columns: 3;
+			columns: 3;
+			list-style-position: inside;
+			font-size:10px;
+		}
+
 		}
 		@media (max-width:600px){
 			table{
-				
 				font-size:9px;
 			}
 			.imgform-img p, .imgform-img  select, input[type=text]{
-			font-size:15px;
+				font-size:15px;
 			}
 			.pannel h2{
 			
-			font-size:13px;		
+				font-size:13px;		
 			}
 			.pannel h2 img{
 				width:20px;
@@ -237,7 +318,7 @@
 				display:block;
 			}
 			.input_wrapper input, .input_wrapper textarea, .input_wrapper select{
-			width:200px;
+				width:90%;
 			}
 			th:nth-child(5),td:nth-child(5){
 				display:none;
@@ -246,21 +327,55 @@
 			#list_station{
 				display: none;
 			}
+
+			#signal_value{
+				width: 90%;
+			}
+
+			#station_remarks{
+				width: 90%;
+			}
+
+			.imgform-img{
+				width:100%;
+			}
+
+			#list_station_suggestions{
+			list-style-type: disc;
+			-webkit-columns: 2;
+			-moz-columns: 2;
+			columns: 2;
+			list-style-position: inside;
+			font-size:10px;
+		}
+		#search_station_logged{
+			width: 100%;
+			margin: 0px 5px;
+		}
+		#filter_type_selection{
+			width: 100%;
+			margin: 0px 5px;
+		}
+		
+
 		}
 		@media(max-width:400px){
 			th:nth-child(3),td:nth-child(3){
 				display:none;
 			}
 			.pannel h2{
-			display:block;	
+				display:block;	
+			}
+			.pannel{
+				width: inherit;
 			}
 			.pannel h2#accounts{
-			border-right:solid 1px white;
-			margin-bottom:5px;
+				border-right:solid 1px white;
+				margin-bottom:5px;
 			
 			}
 			.pannel h2#pass_reset{
-			border-top:solid 1px #ddd;
+				border-top:solid 1px #ddd;
 			
 			}
 			.input_wrapper, .inner-wrapper{
@@ -270,6 +385,16 @@
 				margin:auto;
 				margin-top:10px;
 			}
+			#list_station_suggestions{
+			list-style-type: disc;
+			-webkit-columns: 1;
+			-moz-columns: 1;
+			columns: 1;
+			list-style-position: inside;
+			font-size:8px;
+			}
+			
+			
 		}
 
 		@media(max-width:320px){
@@ -287,183 +412,165 @@
 			
 		}	
 		
-		#list_station_suggestions{
-			list-style-type: disc;
-			-webkit-columns: 3;
-			-moz-columns: 3;
-			columns: 3;
-			list-style-position: inside;
-		}
+		
 
 </style>
 
 <?PHP //THERE ARE TWO MODULES IN THIS VIEW 1 IN EACH DIV ELEM, ACCOUNT ACTIVATION AND PASSWORD RESET ?>
  <section id="station_entry_form">
 	<br>
- <div class="pannel_con">
-	<div class="pannel" onclick="slide('#station_form_div')">
-        <p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
-	</div>
-			<div class="input_wrapper" style="margin:auto">
-				<!--this div is for single or group log entry-->
-				<p class="label"><label >Logging Option:</label></p>
-					<select id="log_option">
-						<option value="Single">Single Station Daily Log</option>
-						<option value="Group">Group Station Daily Log</option>
-					</select>		
-			</div>
-			<br>
+ 	<div class="pannel_con">
+		<div class="pannel" onclick="slide('#station_form_div')">
+			<p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
+		</div>
+
+		<div class="input_wrapper" style=" display:flex; padding:1%; width:100%; align-items:baseline;">
+			<!--this div is for single or group log entry-->
+			<p class="label"><label >Logging Option:</label></p>
+				<select id="log_option">
+					<option value="Single">Single Station Daily Log</option>
+					<option value="Group">Group Station Daily Log</option>
+				</select>		
+		</div>
+	
 		<div class="pannel">
-		
-        <div class="imgform-container " id="station_form_div">
-	        <div class="imgform-img">
-				<div class="inner-wrapper top">	
-				    <div class="input_wrapper entry" id="single_log_div">
-					<div class="label_show_card" style="width:100%;background-color:lightblue;">
-					
-                                <p class="label" style="width:100%;"><label>Recommended Stations</label></p>
-								<p class="label" style="width:100%;"><label>From <span id="curtime_display"></span> -  <span id="nexttime_display"></span></label></p>
-                                <ul id="list_station_suggestions" style="font-size:12px; text-align:left;  padding:5px 20px;">
-                                    <?php
-										$timezone = new DateTimeZone('GMT+8');
-										$start = new DateTime('now', $timezone);
-                                        // $start = new DateTime(); // current time
-										$diffInMinutes = 60 - $start->format('i'); // calculate difference to nearest hour
-										$end = clone $start;
-										$end->add(new DateInterval('PT' . $diffInMinutes . 'M')); // add difference to current time
-										$start_time = $start->format("H:i");
-										$end_time = $end->format("H:i");
+			<div class="imgform-container" id="station_form_div" style="width:100%;">
+				<div class="imgform-img">
+					<div>	
+								<div class="input_wrapper entry" id="single_log_div" style="width:100%;">
+									<div class="label_show_card" style="width:100%;background-color:lightblue;">
+												<p class="label" style="width:100%;"><label>Recommended Stations</label></p>
+												<p class="label" style="width:100%;"><label>From <span id="curtime_display"></span> -  <span id="nexttime_display"></span></label></p>
+												<ul id="list_station_suggestions" style="text-align:left;  padding:5px 20px;">
+													<?php
+														$timezone = new DateTimeZone('GMT+8');
+														$start = new DateTime('now', $timezone);
+														// $start = new DateTime(); // current time
+														$diffInMinutes = 60 - $start->format('i'); // calculate difference to nearest hour
+														$end = clone $start;
+														$end->add(new DateInterval('PT' . $diffInMinutes . 'M')); // add difference to current time
+														$start_time = $start->format("H:i");
+														$end_time = $end->format("H:i");
 
-										// Format start and end time for SQL query
-										//added coment here
-										$start_time_sql = $start->format("H:i");
-										$end_time_sql = $end->format("H:i");
-                                        $str = "SELECT hf_log_id, station_name, log_time FROM trial_daily_log WHERE log_time BETWEEN '$start_time_sql' AND '$end_time_sql'  GROUP BY station_name";
-                                        loadstationlist_time($str, "station_name", "station_name", "log_time", "Recorded");
+														// Format start and end time for SQL query
+														//added coment here
+														$start_time_sql = $start->format("H:i");
+														$end_time_sql = $end->format("H:i");
+														$str = "SELECT hf_log_id, station_name, log_time FROM trial_daily_log WHERE log_time BETWEEN '$start_time_sql' AND '$end_time_sql'  GROUP BY station_name";
+														loadstationlist_time($str, "station_name", "station_name", "log_time", "Recorded");
+											
+													?>
+												</ul>
+									</div>
+									<br>
+									<p class="label"><label for="disaster" id="label_log_option">Single HF Station Log</label></p>
+								
+									<!--<p class="label"><label for="disaster" id="label_log_option2">...</label></p>-->
+									<br><br>
+									<p class="label" id="station_name_label"><label for="disaster">Station Name:</label></p>				       
+										<input type="text" name="city" id="station_name" placeholder="Station Name *" list="list_station" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
 										
+											
+										<datalist id="list_station" name="list_station" hidden>	
+												<?php
+													$str="SELECT distinct hf_id, station_name, region FROM hf_locations WHERE NOT station_status ='Proposed'";
+													loadstationlist($str,"station_name","region","hf_id","station_name");
+												?>			
+											</datalist>
 
-										// $start = new DateTime(); // current time
-										// $diffInMinutes = 60 - $start->format('i'); // calculate difference to nearest hour
-										// $end = clone $start;
-										// $end->add(new DateInterval('PT' . $diffInMinutes . 'M')); // add difference to current time
-										// $start_time = $start->format("H:i");
-										// $end_time = $end->format("H:i");
-										// $str = "SELECT hf_log_id, station_name, log_time 
-										// 		FROM trial_daily_log 
-										// 		WHERE STR_TO_DATE(log_time, '%H:%i') BETWEEN '$start_time' AND '$end_time'
-										// 		GROUP BY station_name";
-										// loadstationlist_time($str, "station_name", "station_name", "log_time", "Recorded");
-										// 	echo $start_time_sql;
-										// 	echo $end_time_sql;
-                                    ?>
-                                </ul>
-						</div>
-						<br>
-	                    <p class="label"><label for="disaster" id="label_log_option">Single HF Station Log</label></p>
-					
-						<!--<p class="label"><label for="disaster" id="label_log_option2">...</label></p>-->
-                        <br><br>
-						<p class="label" id="station_name_label"><label for="disaster">Station Name:</label></p>				       
-							<input type="text" name="city" id="station_name" placeholder="Station Name *" list="list_station" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
-							
+
+									<div class="input_wrapper entry" id="group_log_div">
+										<!--<p class="label"><label for="disaster">Group HF Station Log</label></p><br><br>
+										<p class="label"><label>Search Stations:</label></p>-->
+									
+										<input type="text" id="search_station" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
+										<select id="search_scope" style="width: fit-content;">
+											<option value="national">National </option>
+											<option value="regional">Regional </option>
+											<option value="provincial">Provincial</option>
+										</select>
+
+										<select id="search_region"  onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#search_provincial','id','name','')">
+											<?php 
+												$str="SELECT id,name FROM region";	
+												loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
+											?>
+										</select>
+
+										<select id="search_provincial" style="width: fit-content;">
+											
+										</select>	
+						
+										<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
+											<?php
+												$classes=array("all","item");
+												$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations WHERE NOT station_status ='Proposed'";
+												$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
+												loadtable($sql,$headers,true,true,$classes);
+											?>
+										</table>
+									</div>
+									
+									<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
+									<input type="text" id="station_assignee" placeholder="Call Sign *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
+									<br><br>
+									
+									<p class="label"><label for="disaster">Date:</label></p>
+									<input type="date" id="get_date"  class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;">
+									
+									<p class="label"><label for="disaster">Time:</label></p>
+									<input type="time" id="get_time"  class="station_log station_multi" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px;">
+									
+										<div class="input_wrapper" style="margin:auto">
+											<input type='submit' Value='Timestamp' class="btn btn-primary" id="get_Timestamp" style="color:white;font-weight:800;">
+										</div>	
+									<br>
+										
+									<div class="input_wrapper" id="weather_div">
+										<p class="label"><label >Weather</label></p>
+										<br>		
+										<input type='submit' Value='Sunny' 	class="btn btn-primary" id="get_Sunny" style="color:white;font-weight:800;">
+										<input type='submit' Value='Cloudy' class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;">
+										<input type='submit' Value='Rainy' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;">
+									</div>
+									<br>
+									<div class="input_wrapper" style="margin:0px;width:100%; justify-content:center;">
+									<p class="label"><label >Signal Status</label></p>
+									<select id="signal_value">
+										<option value="0">Select from below</option>
+										<option value="1x1">1 x 1</option>
+										<option value="2x2">2 x 2</option>
+										<option value="3x3">3 x 3</option>
+										<option value="4x4">4 x 4</option>
+										<option value="5x5">5 x 5</option>
+									</select>		
+											<!-- <input type='submit' Value='5x5' 	class="btn btn-primary" id="get_Sunny" style="color:white;font-weight:800;width:12%;">
+											<input type='submit' Value='4x4' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
+											<input type='submit' Value='3x3' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;">
+											<input type='submit' Value='2x2' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
+											<input type='submit' Value='1x1' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;"> -->
+											<br><br>
+									<p class="label"><label for="disaster" id="station_assignee_label">Remarks</label></p>
+										<textarea id="station_remarks" placeholder="type 'N/A' if none" class="station_log" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;" ></textarea>
+				
+									</div>
+									
+								</div>
 								
-							<datalist id="list_station" name="list_station" hidden>	
-									<?php
-										$str="SELECT distinct hf_id, station_name, region FROM hf_locations WHERE NOT station_status ='Proposed'";
-										loadstationlist($str,"station_name","region","hf_id","station_name");
-									?>			
-								</datalist>
+								<br>
 
-
-						<div class="input_wrapper entry" id="group_log_div">
-							<!--<p class="label"><label for="disaster">Group HF Station Log</label></p><br><br>
-							<p class="label"><label>Search Stations:</label></p>-->
-						
-							<input type="text" id="search_station" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
-							<select id="search_scope" style="width: fit-content;">
-								<option value="national">National </option>
-								<option value="regional">Regional </option>
-								<option value="provincial">Provincial</option>
-							</select>
-
-							<select id="search_region"  onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#search_provincial','id','name','')">
-								<?php 
-									$str="SELECT id,name FROM region";	
-									loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
-								?>
-							</select>
-
-							<select id="search_provincial" style="width: fit-content;">
-								
-							</select>	
-			
-							<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
-								<?php
-									$classes=array("all","item");
-									$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations WHERE NOT station_status ='Proposed'";
-									$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
-									loadtable($sql,$headers,true,true,$classes);
-								?>
-							</table>
-						</div>
-						
-						<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
-						<input type="text" id="station_assignee" placeholder="Call Sign *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
-						<br><br>
-						
-						<p class="label"><label for="disaster">Date:</label></p>
-						<input type="date" id="get_date"  class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;">
-						
-						<p class="label"><label for="disaster">Time:</label></p>
-						<input type="time" id="get_time"  class="station_log station_multi" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px;">
-						
-							<div class="input_wrapper" style="margin:auto">
-								<input type='submit' Value='Timestamp' class="btn btn-primary" id="get_Timestamp" style="color:white;font-weight:800;">
-							</div>	
-						<br>
-							
-						<div class="input_wrapper" style="margin:auto" id="weather_div">
-						<p class="label"><label >Weather</label></p>		
-								<input type='submit' Value='Sunny' 	class="btn btn-primary" id="get_Sunny" style="color:white;font-weight:800;">
-								<input type='submit' Value='Cloudy' class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;">
-								<input type='submit' Value='Rainy' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;">
-						</div>
-						<br>
-						<div class="input_wrapper" style="margin:auto">
-						<p class="label"><label >Signal Status</label></p>
-						<select id="signal_value">
-							<option value="0">Select from below</option>
-							<option value="1x1">1 x 1</option>
-							<option value="2x2">2 x 2</option>
-							<option value="3x3">3 x 3</option>
-							<option value="4x4">4 x 4</option>
-							<option value="5x5">5 x 5</option>
-						</select>		
-								<!-- <input type='submit' Value='5x5' 	class="btn btn-primary" id="get_Sunny" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='4x4' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='3x3' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='2x2' 	class="btn btn-primary" id="get_Cloudy" style="color:white;font-weight:800;width:12%;">
-								<input type='submit' Value='1x1' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;"> -->
-								<br><br>
-                        <p class="label"><label for="disaster" id="station_assignee_label">Remarks</label></p>
-                            <textarea id="station_remarks" placeholder="type 'N/A' if none" class="station_log" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;" ></textarea>
-    
-                        </div>
-						
+								<div class="input_wrapper" style="margin:auto">
+									<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
+									<input type='submit' Value='Submit All' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_all">
+									<input type='submit' Value='Clear' class="btn btn-primary" style="background-color:white;color:black;font-weight:800;" id="clear"> 
+								</div>
 							</div>
-						
-						<br><br>
-
-						<div class="input_wrapper" style="margin:auto">
-							<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
-							<input type='submit' Value='Submit All' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_all">
-							<input type='submit' Value='Clear' class="btn btn-primary" style="background-color:white;color:black;font-weight:800;" id="clear"> 
 						</div>
-					</div>
-                </div>
-				<br>
-            </div>
-        </div>
+						
+            		</div>
+        		</div>
+			</div>
+ 		</div>
 
 		<!--for Group ito na div -->
 		
@@ -486,7 +593,7 @@
 		<div class="imgform-container " id="station_table_div">
 			<div class="imgform-img">
 			<div class="inner-wrapper">
-				<input type="text" id="search_station_logged" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
+				<input type="text" id="search_station_logged" Placeholder="Search HF Station">
 				<select id="filter_type_selection">
 					<?php 
 					$today =date("Y-m-d");				
@@ -794,7 +901,7 @@
 
 		
 		var signal_val = $("select#signal_value").val();
-		var no_weather = "";
+		var no_weather = "none";
 
 		var select_input = is_empty_class("input.station_log","");
 		var select_remarks = is_empty_class("textarea.station_log","");

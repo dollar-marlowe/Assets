@@ -110,6 +110,7 @@ class Database{
         
     }
 
+
     function selectrows($query, $n){//0 will select all rows
         $query=linig($query);
         $data=array();
@@ -173,6 +174,38 @@ class Database{
         }
         return $result;
     }
+
+    // function select_two($query, $key1, $key2){
+    //     $query = trim($query);
+    //     $result = mysqli_query($this->con, $query);
+    //     $data = array();
+        
+    //     if (mysqli_num_rows($result) > 0) {
+    //         while($row = mysqli_fetch_assoc($result)) {
+    //             $data[$row[$key1]] = $row[$key2];
+    //         }
+    //         return $data;
+    //     } else {
+    //         return null;
+    //     }
+    // }
+
+    function select_two($query, $key1, $key2){
+        $query = trim($query);
+        $result = mysqli_query($this->con, $query);
+        $data = array();
+    
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $data[$key1] = $row[$key1];
+            $data[$key2] = $row[$key2];
+            return $data;
+        } else {
+            return null;
+        }
+    }
+    
+    
 
     function close(){
         mysqli_close($this->con);
@@ -1201,6 +1234,22 @@ function loadstationlist_time($str,$col1,$col2,$col3,$from){
         echo"<option value='0'>No Data  ".$from."</option>";
     }
 }
+
+function count_comparizon($str, $from) {
+    $db = new Database();
+    $db->connect();
+    $data = $db->select_two($str, "count_logs", "max_date");
+
+    if (!is_null($data)) {
+        $count_logs = reset($data);
+        $max_date = date("F j", strtotime($data["max_date"]));
+        echo "<label><span style='font-size: 16px;text-decoration:underline; color:orange;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+    } else {
+        echo "<span>No Data " . $from . " to be compared.</span>";
+    }
+}
+
+
 
 
 

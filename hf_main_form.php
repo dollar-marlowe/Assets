@@ -525,8 +525,24 @@
 				<p class="lbl_wrap" id="hf_daily_summary_lbl" onclick="slide('#station_daily_DA_div')" ><img src="images\compass4.png">Daily Monitoring</p>
 					<div class="pannel_holder" id = "station_daily_DA_div">
 							<div>
-								<p class="label_show_card" style="padding:10px 5px;">HF STATIONS<br><label><b><span style="font-size: 40px;text-decoration:underline; color:orange;" id="span_counter_total"></b></span><br>REPORTED</label></p>
+								<p class="label_show_card" style="padding:10px 5px;">HF STATIONS<br><label><b><span style="font-size: 40px;text-decoration:underline; color:orange;" id="span_counter_total"></b></span>
+								<br>REPORTED</label>
 								<br>
+								<?php
+									
+									$str="SELECT COUNT(*) AS count_logs, MAX(log_date) AS max_date
+									FROM trial_daily_log
+									WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -3 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY)
+									  AND log_date = (
+										SELECT MAX(log_date)
+										FROM trial_daily_log
+										WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -3 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY)
+									  )
+									GROUP BY log_date;";
+									count_comparizon($str,"count_logs","max_date","Recorded");
+								?>
+								</p>
+								
 								<div class="label_show_card" style="padding:20px 5px;">
 									<p class="label"><label >Monitored Weather</label></p>
 									<canvas id="myChart" style="width:100%; margin-top:10px; background-color:white;"></canvas>
@@ -787,6 +803,40 @@
 				attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
 				crossOrigin: true
 			}).addTo(map2);
+
+						// Create a legend control
+			var legend = L.control({position: 'topright'});
+
+			// Function to generate HTML for the legend
+			legend.onAdd = function (map) {
+				var div = L.DomUtil.create('div', 'legend');
+				div.innerHTML += 'SIGNAL STRENGTH:<br>';
+				div.innerHTML += '<img src="images/5x5_color.png"  style="width:15px;"> 5x5 <br>';
+				div.innerHTML += '<img src="images/4x4_color.png"  style="width:15px;"> 4x4 <br>';
+				div.innerHTML += '<img src="images/3x3_color.png"  style="width:15px;"> 3x3 <br>';
+				div.innerHTML += '<img src="images/2x2_color.png"  style="width:15px;"> 2x2 <br>';
+				div.innerHTML += '<img src="images/1x1_color.png"  style="width:15px;"> 1x1 <br><br>';
+				
+				div.innerHTML += 'WEATHER:<br>';
+				div.innerHTML += '<img src="images/HF_weather_sunny.png" style="width:20px;"> Sunny <br>';
+				div.innerHTML += '<img src="images/HF_weather_cloudy.png" style="width:20px;"> Cloudy <br>';
+				div.innerHTML += '<img src="images/HF_weather_rainy.png" style="width:20px;"> Rainy <br>';
+				return div;
+			};
+
+			var legend_dir = L.control({position: 'topleft'});
+			// Function to generate HTML for the legend
+			legend_dir.onAdd = function (map) {
+				var div2 = L.DomUtil.create('div', 'legend');
+				div2.innerHTML += '<img src="images/compass4.png" style="width:100px;"><br><br>';
+				return div2;
+			};
+
+			// Add the legend to the map
+			legend.addTo(map2);
+
+			// Add the legend to the map
+			legend_dir.addTo(map2);
 
    
 			function load_hf_stations_map_2(filter) {
@@ -1179,6 +1229,7 @@
 			}
 		}
 		});
+
 
 		var rowCount_sta = $("#hf_table tr").length;
 			//alert(rowCount);
