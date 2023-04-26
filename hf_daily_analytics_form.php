@@ -204,6 +204,14 @@
 				
 			}
 
+			#get_start_date{
+				font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;
+			}
+			
+			#get_end_date{
+				font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;
+			}
+
 		@media (max-width:1267px){
 			.imgform-container{
 				display:block;
@@ -261,7 +269,23 @@
 			#map_hf_all{
 			display:block;
 			}
+
+			#date_range_con{
+				display: block;
+			}
+		
+			#get_start_date{
+				font-size: 10px;
+		
+			}
+			#get_end_date{
+				font-size: 10px;
+		
+			}
+			.lbl_dim{
+				font-size: 10px;
 			
+			}
 			}
 			#hf_filter_status{
 				display: block;
@@ -533,11 +557,11 @@
 					<div class="label_show_card" style="padding:20px 5px;" id="station_daily_Analytics_div">
 						<p class="label"><label >HF Frequency Monitoring</label></p>
 						<div id="date_range_con">
-								<p class="label"><label for="disaster">Start Date:</label></p>
-								<input type="date" id="get_start_date"  class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;">
+								<p class="label lbl_dim"><label for="disaster">Start Date:</label></p>
+								<input type="date" id="get_start_date"  class="station_log station_multi ">
 								<!--end date -->
-								<p class="label"><label for="disaster">End Date:</label></p>
-								<input type="date" id="get_end_date" class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;">
+								<p class="label lbl_dim"><label for="disaster">End Date:</label></p>
+								<input type="date" id="get_end_date" class="station_log station_multi ">
 								<input type='submit' Value='Filter' class="btn btn-primary" id="enter_date_range" style="color:black;font-weight:800;background-color: white; ">
 								<!-- <p id="enter_date_range" class="label_show_card" style="padding:2px; margin:2px; width:fit-content"><label style="padding:2px; margin:2px; width:fit-content"> FILTER</label></p> -->
 							</div>
@@ -681,8 +705,8 @@
 							data: officeCountsArray.map(function(item) {
 								return item.sunnyCount;
 							}),
-							backgroundColor: 'rgba(255, 206, 86, 0.2)',
-							borderColor: 'rgba(255, 206, 86, 1)',
+							backgroundColor: 'rgba(255, 165, 0, 1)',
+							borderColor: 'rgba(255, 165, 0, 0.2)',
 							borderWidth: 1
 							
 						},
@@ -691,8 +715,8 @@
 							data: officeCountsArray.map(function(item) {
 								return item.cloudyCount;
 							}),
-							backgroundColor: 'rgba(255, 99, 132, 0.2)',
-							borderColor: 'rgba(255, 99, 132, 1)',
+							backgroundColor: 'rgba(37, 150, 190, 1)',
+							borderColor: 'rgba(255, 99, 132, 0.2)',
 							borderWidth: 1
 						},
 						{
@@ -700,8 +724,8 @@
 							data: officeCountsArray.map(function(item) {
 								return item.rainyCount;
 							}),
-							backgroundColor: 'rgba(54, 162, 235, 0.2)',
-							borderColor: 'rgba(54, 162, 235, 1)',
+							backgroundColor: 'rgba(46, 182, 25, 1)',
+							borderColor: 'rgba(54, 162, 235, 0.2)',
 							borderWidth: 1
 						}
 					]

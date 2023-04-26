@@ -901,7 +901,7 @@
 
 		
 		var signal_val = $("select#signal_value").val();
-		var no_weather = "";
+		var no_weather = "none";
 
 		var select_input = is_empty_class("input.station_log","");
 		var select_remarks = is_empty_class("textarea.station_log","");

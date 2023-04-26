@@ -525,8 +525,24 @@
 				<p class="lbl_wrap" id="hf_daily_summary_lbl" onclick="slide('#station_daily_DA_div')" ><img src="images\compass4.png">Daily Monitoring</p>
 					<div class="pannel_holder" id = "station_daily_DA_div">
 							<div>
-								<p class="label_show_card" style="padding:10px 5px;">HF STATIONS<br><label><b><span style="font-size: 40px;text-decoration:underline; color:orange;" id="span_counter_total"></b></span><br>REPORTED</label></p>
+								<p class="label_show_card" style="padding:10px 5px;">HF STATIONS<br><label><b><span style="font-size: 40px;text-decoration:underline; color:orange;" id="span_counter_total"></b></span>
+								<br>REPORTED</label>
 								<br>
+								<?php
+									
+									$str="SELECT COUNT(*) AS count_logs, MAX(log_date) AS max_date
+									FROM trial_daily_log
+									WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -3 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY)
+									  AND log_date = (
+										SELECT MAX(log_date)
+										FROM trial_daily_log
+										WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -3 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY)
+									  )
+									GROUP BY log_date;";
+									count_comparizon($str,"count_logs","max_date","Recorded");
+								?>
+								</p>
+								
 								<div class="label_show_card" style="padding:20px 5px;">
 									<p class="label"><label >Monitored Weather</label></p>
 									<canvas id="myChart" style="width:100%; margin-top:10px; background-color:white;"></canvas>
@@ -1213,6 +1229,7 @@
 			}
 		}
 		});
+
 
 		var rowCount_sta = $("#hf_table tr").length;
 			//alert(rowCount);
