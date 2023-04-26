@@ -424,7 +424,7 @@
 			<p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>H</u>F Stations Daily Log</p>
 		</div>
 
-		<div class="input_wrapper" style=" display:flex; padding:1%; width:100%; align-items:baseline;">
+		<div class="input_wrapper" style=" display:flex; padding:1%; width:100%; align-items:baseline;display:none;">
 			<!--this div is for single or group log entry-->
 			<p class="label"><label >Logging Option:</label></p>
 				<select id="log_option">
@@ -551,7 +551,7 @@
 											<input type='submit' Value='1x1' 	class="btn btn-primary" id="get_Rainy" style="color:white;font-weight:800;width:12%;"> -->
 											<br><br>
 									<p class="label"><label for="disaster" id="station_assignee_label">Remarks</label></p>
-										<textarea id="station_remarks" placeholder="type 'N/A' if none" class="station_log" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;" ></textarea>
+										<textarea id="station_remarks" placeholder="type 'N/A' if none" class="station_log" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px;" >N/A</textarea>
 				
 									</div>
 									

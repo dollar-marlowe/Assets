@@ -539,7 +539,7 @@
 										WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -3 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY)
 									  )
 									GROUP BY log_date;";
-									count_comparizon($str,"count_logs","max_date","Recorded");
+									count_comparizon($str);
 								?>
 								</p>
 								
