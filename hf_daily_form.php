@@ -891,17 +891,26 @@
 			$("#err_lbl").remove();
 			 //alert($("select#signal_value").val());
 			// alert($("input.station_log").val());
+			//    alert($("#station_name").val());
+			//    alert($("#get_date").val());
+			//    alert($("#get_time").val());
 			
-			var existing_station_name_log =  $("#station_name").val();
-			var existing_station_date_log =  $("#get_date").val();
-			var existing_station_time_log =  $("#get_time").val();
 
-			var str = "SELECT COUNT(*) FROM trial_daily_log WHERE log_date = '" + existing_station_date_log + "' AND station_name = '" + existing_station_name_log + "' AND log_time = '" + existing_station_time_log + "'";
+			// var str = "SELECT COUNT(*) FROM trial_daily_log WHERE log_date = '" + existing_station_date_log + "' AND station_name = '" + existing_station_name_log + "' AND log_time = '" + existing_station_time_log + "'";
 
-			$.post("AJAX/check_dupli.php", {query: str}, function(data) {
-				if(data > 0) {
-					alert("Possible duplicate record found!");
+			$.post("AJAX/check_dupli.php", {
+			 existing_station_name_log :  $("#station_name").val(),
+			 existing_station_date_log :  $("#get_date").val(),
+			 existing_station_time_log :  $("#get_time").val()
+			},
+			
+			function(data) {
+				
+				if(data=="Duplicate found!") {
+				 	// alert(data);
+					alert("This log already");
 				} else {
+					// alert(data);
 					$.post("AJAX/add_hf_log.php", {
 							station_name: 		stn_cd,
 							station_assignee: 	$("#station_assignee").val(),
