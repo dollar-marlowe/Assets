@@ -175,6 +175,7 @@ class Database{
         return $result;
     }
 
+
     // function select_two($query, $key1, $key2){
     //     $query = trim($query);
     //     $result = mysqli_query($this->con, $query);
@@ -1282,18 +1283,18 @@ function count_comparizon($str) {
 
     // }
 
-    function count_possible_dupli($str) {
-        $db = new Database();
-        $db->connect();
-        $result = $db->select($str);
+    // function count_possible_dupli($str) {
+    //     $db = new Database();
+    //     $db->connect();
+    //     $result = $db->select($str);
     
-        if($result) {
-            $count = mysqli_fetch_array($result)[0];
-            return $count;
-        }
+    //     if($result) {
+    //         $count = mysqli_fetch_array($result)[0];
+    //         return $count;
+    //     }
         
-        return -1; // Or any other value to indicate an error
-    }
+    //     return -1; // Or any other value to indicate an error
+    // }
     
 
 
