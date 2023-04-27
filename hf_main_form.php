@@ -535,11 +535,11 @@
 											FROM trial_daily_log 
 											WHERE log_date = CURDATE()) AS date_logs 
 										FROM trial_daily_log 
-										WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -3 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY) 
+										WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY) 
 											AND log_date = ( 
 												SELECT MAX(log_date) 
 												FROM trial_daily_log 
-												WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -3 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY) 
+												WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY) 
 											) 
 										GROUP BY log_date;";
 
