@@ -479,37 +479,7 @@
 											</datalist>
 
 
-									<div class="input_wrapper entry" id="group_log_div">
-										<!--<p class="label"><label for="disaster">Group HF Station Log</label></p><br><br>
-										<p class="label"><label>Search Stations:</label></p>-->
-									
-										<input type="text" id="search_station" Placeholder="Search HF Station" style="font-size: 18px;margin-right:10px;margin-left:5px;">
-										<select id="search_scope" style="width: fit-content;">
-											<option value="national">National </option>
-											<option value="regional">Regional </option>
-											<option value="provincial">Provincial</option>
-										</select>
-
-										<select id="search_region"  onchange="FetchRegion(this.value,'SELECT * FROM province where reg_id=','#search_provincial','id','name','')">
-											<?php 
-												$str="SELECT id,name FROM region";	
-												loadropdown($str,"id","name","Region");//function for loading values into the dropdown accepts sql command and name of columns 
-											?>
-										</select>
-
-										<select id="search_provincial" style="width: fit-content;">
-											
-										</select>	
-						
-										<table class="disasters" id="hf_table" style="margin-bottom:5px;margin-top:10px;">
-											<?php
-												$classes=array("all","item");
-												$sql="select hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc from hf_locations WHERE NOT station_status ='Proposed'";
-												$headers=array("","Station Name","Station_Code","Region_Code","Region","Prov_Code","Province","Muni_Code","Municipality","Brgy.Code","Barangay","Status","Lat","Long","desc");
-												loadtable($sql,$headers,true,true,$classes);
-											?>
-										</table>
-									</div>
+								
 									
 									<p class="label"><label for="disaster" id="station_assignee_label">Assignee:</label></p>
 									<input type="text" id="station_assignee" placeholder="Call Sign *" class="station_log" style="font-size: 18px;margin-right:10px;margin-left:10px;padding:5px">
@@ -561,7 +531,7 @@
 
 								<div class="input_wrapper" style="margin:auto">
 									<input type='submit' Value='Submit' class="btn btn-primary" style="color:white;font-weight:800;" id="submit">
-									<input type='submit' Value='Submit All' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_all">
+									<!-- <input type='submit' Value='Submit All' class="btn btn-primary" style="color:white;font-weight:800;" id="submit_all"> -->
 									<input type='submit' Value='Clear' class="btn btn-primary" style="background-color:white;color:black;font-weight:800;" id="clear"> 
 								</div>
 							</div>
@@ -914,37 +884,50 @@
 		// alert(select_select);
 		// alert(select_weather);
 
+
+
 		if(select_input==false && select_select==false  && select_weather==false && select_remarks==false) {
 			//alert("May value");
 			$("#err_lbl").remove();
 			 //alert($("select#signal_value").val());
 			// alert($("input.station_log").val());
-			$.post("AJAX/add_hf_log.php", 
 			
-			{
-					station_name: 		stn_cd,
-					station_assignee: 	$("#station_assignee").val(),
-					get_date: 			$("#get_date").val(),
-					get_time:			$("#get_time").val(),
-					hf_remarks:			$("#station_remarks").val(),
-					weather_status:		weather_stat,
-					signal_status:		signal_val				
-			},
-				function(data){
-						// alert(data);
-						if(data=="New record created!"){
-							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
-							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
-							setTimeout(function() {
-							$("#clear").click();
-							window.location.reload();
-							}, 2000);
-						}else{
-							alert("All fields are required to be filled with input.");
-							}
-			});		
-	
-		
+			var existing_station_name_log =  $("#station_name").val();
+			var existing_station_date_log =  $("#get_date").val();
+			var existing_station_time_log =  $("#get_time").val();
+
+			var str = "SELECT COUNT(*) FROM trial_daily_log WHERE log_date = '" + existing_station_date_log + "' AND station_name = '" + existing_station_name_log + "' AND log_time = '" + existing_station_time_log + "'";
+
+			$.post("AJAX/check_dupli.php", {query: str}, function(data) {
+				if(data > 0) {
+					alert("Possible duplicate record found!");
+				} else {
+					$.post("AJAX/add_hf_log.php", {
+							station_name: 		stn_cd,
+							station_assignee: 	$("#station_assignee").val(),
+							get_date: 			$("#get_date").val(),
+							get_time:			$("#get_time").val(),
+							hf_remarks:			$("#station_remarks").val(),
+							weather_status:		weather_stat,
+							signal_status:		signal_val				
+					},
+						function(data){
+								// alert(data);
+								if(data=="New record created!"){
+									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
+									load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");								
+									setTimeout(function() {
+									$("#clear").click();
+									window.location.reload();
+									}, 2000);
+								}else{
+									alert("All fields are required to be filled with input.");
+									}
+					});
+				}
+			});
+
+					
 		}else{
 			//alert("Empty");s
 			$("#err_lbl").remove();

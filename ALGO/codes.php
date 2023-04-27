@@ -190,7 +190,7 @@ class Database{
     //     }
     // }
 
-    function select_two($query, $key1, $key2){
+    function select_two($query, $key1, $key2,$key3 ){
         $query = trim($query);
         $result = mysqli_query($this->con, $query);
         $data = array();
@@ -199,6 +199,7 @@ class Database{
             $row = mysqli_fetch_assoc($result);
             $data[$key1] = $row[$key1];
             $data[$key2] = $row[$key2];
+            $data[$key3] = $row[$key3];
             return $data;
         } else {
             return null;
@@ -1235,22 +1236,65 @@ function loadstationlist_time($str,$col1,$col2,$col3,$from){
     }
 }
 
+// function count_comparizon($str) {
+//     $db = new Database();
+//     $db->connect();
+//     $data = $db->select_two($str, "count_logs", "max_date","today_date");
+
+//     if (!is_null($data)) {
+//         $count_logs = reset($data);
+//         $max_date = date("F j", strtotime($data["max_date"]));
+//         echo "<label><span style='font-size: 16px;text-decoration:underline; color:orange;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+//     } else {
+//         echo "<span>No Previous Data To Be Compared.</span>";
+//     }
+// }
+
 function count_comparizon($str) {
     $db = new Database();
     $db->connect();
-    $data = $db->select_two($str, "count_logs", "max_date");
+    $data = $db->select_two($str, "count_logs", "max_date","date_logs");
 
     if (!is_null($data)) {
         $count_logs = reset($data);
         $max_date = date("F j", strtotime($data["max_date"]));
-        echo "<label><span style='font-size: 16px;text-decoration:underline; color:orange;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+        $date_logs = $data["date_logs"];
+        if ($count_logs > $date_logs) {
+            echo "<i class='fas fa-arrow-down' style='color:red;'></i></span><br>REPORTED LOGS</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+        } else if ($count_logs == $date_logs) {
+            echo "<i class='fas fa-check-circle' style='color:yellow;'></i></span><br>REPORTED LOGS</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+        } else {
+            echo "<i class='fas fa-arrow-up' style='color:lightgreen;'></i></span><br>REPORTED LOGS</label> <br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+        }
     } else {
-        echo "<span>No Previous Data To Be Compared.</span>";
+        echo "</span><br>REPORTED LOGS<br><span>No Previous Data To Be Compared.</span>";
     }
 }
 
+    // function count_possible_dupli($str) {
+    //     $db = new Database();
+    //     $db->connect();
+    //     $data = $db->select($str);
 
+    //     if($data>0) {
+    //         echo "The value of data is: " . $data; 
+    //     }
 
+    // }
+
+    function count_possible_dupli($str) {
+        $db = new Database();
+        $db->connect();
+        $result = $db->select($str);
+    
+        if($result) {
+            $count = mysqli_fetch_array($result)[0];
+            return $count;
+        }
+        
+        return -1; // Or any other value to indicate an error
+    }
+    
 
 
 function loadropdown($str,$col1,$col2,$from){
