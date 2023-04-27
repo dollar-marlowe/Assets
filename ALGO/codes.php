@@ -32,7 +32,7 @@ if($arr_path[$arr_size-2]=="AJAX" && !isset($_SESSION["auth"]) && basename($_SER
  } */
   
 
-//Class for databce connection for dynamically re-using of codes
+//Class fore connection for dynamically re-using of codes
 class Database{
     //I USED A CLASS FOR THE DATABASE
     //THIS SERVES AS THE MODEL PART OF TdsfgdfHE SYSTEM
@@ -238,12 +238,10 @@ function make_label_inputs($sql,$class,$with_hidden,$is_empty_val,$cols){
                         echo "<select  class='".$class[2]."' value='".$val."'>";
                         echo  $option;
                         echo "</select>";
-                   
                     }  
                     else{
                         echo "<input type='text' class='".$class[2]."' value='".$val."' id='".$in_id."a' onkeyup=global_validate('#".$in_id."a','')>";
                         $in_id++;
-                   
                     }     
                     echo "</div>";
                 
@@ -269,16 +267,13 @@ function get_rows_implode($str,$item_delimeter,$row_delimeter,$cols){//brg_id[0]
     if($result!=null){
         $string_data="";
         foreach($result as $rows){
-     
             $data=summarize_list($rows[$cols[3]],$rows[$cols[4]],$rows[$cols[5]]);//calling the function to sumirize the list of items 
             //with corresponding serials 
             $string_data.=$data.$item_delimeter.$rows[$cols[1]].$item_delimeter.$rows[$cols[2]];
-          
             if($size < sizeof($result)-1){
                 $string_data.=$row_delimeter;
             }
             $size++;
-           
         }
     }
     
@@ -324,13 +319,12 @@ function summarize_list($cat_name, $serials, $count){
             }
             
             $result.=$serial;
-               
             $start=$i+1;
             $counter=1;
             $asset=$arr_values[$i];
-           if($i==$size-1){
+            if($i==$size-1){
             $result.="<b>".$counter." ". $asset.$plural."</b>: ".$arr_serials[$i];
-           }
+        }
         }
         else{
             $counter++;
@@ -343,12 +337,9 @@ function summarize_list($cat_name, $serials, $count){
                                     if($j<$i){
                                         $serial.=",";
                                     }
-                           
                         }
                         $result.=$serial;
-                       
-                 }
-                 
+                    }
         }
       // echo $arr_values[$i]." ";
         //$c++;
@@ -371,7 +362,7 @@ function get_rows_string_delimeter($str,$item_delimeter,$row_delimeter){//this i
     //THIS FUNCTION MUGHT STILL BE USEFUL FOR OTHER DATA QUERIES
     $db = new Database();
     $db->connect();
-     $result=$db->selectrows($str,0);// 0 is to select all rows
+    $result=$db->selectrows($str,0);// 0 is to select all rows
     $string_data="";
     $c1=1;
     foreach($result as $data){
@@ -381,7 +372,6 @@ function get_rows_string_delimeter($str,$item_delimeter,$row_delimeter){//this i
         }else{
             $fil2="";
         }
-       
         $string_data= $string_data.$fil2;
         $c1++;
         foreach($data as $item){
@@ -391,11 +381,9 @@ function get_rows_string_delimeter($str,$item_delimeter,$row_delimeter){//this i
             else{
                 $fil="";
             }
-           
             $string_data= $string_data.$fil.$item;
             $c2++;
         }
-       
     } 
 return   $string_data;
 
@@ -415,7 +403,7 @@ function linig($str){//USED FOR REMOVING SQL INJECTIONS
     $rows=explode(" ",$str);
     $size=sizeof($rows);
     for($i=0;$i<$size;$i++){
-      
+
         if($rows[$i]=="="){
             if($rows[$i-1]==$rows[$i+1]){
                 $rows[$i-1]="";
@@ -428,9 +416,9 @@ function linig($str){//USED FOR REMOVING SQL INJECTIONS
             }
         }
             
-         elseif(strpos($rows[$i],"=")>=1){
+        elseif(strpos($rows[$i],"=")>=1){
                 $row=explode("=",$rows[$i]);
-               
+
                 if($row[0]==$row[1]){
                     $rows[$i]="";
                     if(strtolower($rows[$i-1])=="or"){
@@ -517,7 +505,6 @@ function region_to_letter($val){
         case 17:
             $code="Q";
         break;
-       
         default:
             $code="AB";
         break;
@@ -578,7 +565,6 @@ function region_decode($val){
         case "Q":
             $code=17;
         break;
-       
         default:
             $code=0;
         break;
@@ -616,7 +602,6 @@ function abreviate($str,$num_char){//THIS IS USED FOR ABREVIATING WORDS $NUM_CHA
 
         $word= explode(" ",$str);
         $size=sizeof($word);
-       
         if($size>1){
             if($size>=$num_char){
                 for($i=0;$i<$num_char;$i++){
@@ -691,7 +676,6 @@ function abreviate_except($str,$num_char,$exp){//THIS IS USED FOR ABREVIATING WO
                     if(strtolower($ex)==strtolower($word[$i])){
                         $go=false;
                     }
-                   
                 }
                 if($go){
                     $chars=str_split($word[$i]);
@@ -708,7 +692,6 @@ function abreviate_except($str,$num_char,$exp){//THIS IS USED FOR ABREVIATING WO
                     if($ex==$word[$i]){
                         $go=false;
                     }
-                   
                 }
                 if($go){
                     $chars=str_split($word[$i]);
@@ -716,8 +699,6 @@ function abreviate_except($str,$num_char,$exp){//THIS IS USED FOR ABREVIATING WO
                 }
             }
         }
-        
-       
     }
     else{
         $chars=str_split($word[0]);
@@ -729,8 +710,6 @@ function abreviate_except($str,$num_char,$exp){//THIS IS USED FOR ABREVIATING WO
         }else{
             $abreviate=$chars[0];
         }
-       
-      
     }
     return strtoupper($abreviate);
 }
@@ -788,8 +767,8 @@ function loadlist($str, $col, $header,$label){
         echo "<li id='".$header."' style='list-style-type: none; font-weight: bold;'><p>".$label."</p></li>";
         $keys=",%.%:%/%\%-%_%)%(";
         foreach($data as $row){
-           echo "<li> 
-           ".replace($keys,shorten($row[$col[1]])).":&nbsp".replace($keys,shorten($row[$col[2]]))."</li>";
+            echo "<li> 
+            ".replace($keys,shorten($row[$col[1]])).":&nbsp".replace($keys,shorten($row[$col[2]]))."</li>";
         }
     
     }
@@ -801,7 +780,7 @@ function total($str, $col){
     
     if($data!=null){
         foreach($data as $row){
-          echo "<p class='assetstotal' style=' width:100%;margin: auto; text-align:center;'>Total: ".$row[$col]."</p>";
+            echo "<p class='assetstotal' style=' width:100%;margin: auto; text-align:center;'>Total: ".$row[$col]."</p>";
         }
     
     }
@@ -818,12 +797,13 @@ function loadtable_radio($str,$headers,$chkbox,$all,$class,$func){//paramerters 
     //the $class is an array with 2 elements: 
     //1st elem is the class header of checkbox for check all and the second elem 
     //is the class name for each checkbox in the table rows
-   $db =new Database();
+    $db =new Database();
     $db->connect();
     $data=$db->selectrows($str,0);
     if($data!=null){
         echo "<tr>";
         $chk=$chkbox;
+
         foreach($headers as $header){
             if($header==" "){
                 echo"<th>";
@@ -831,7 +811,6 @@ function loadtable_radio($str,$headers,$chkbox,$all,$class,$func){//paramerters 
                     echo"<input type='checkbox' 
                     class='".$class[0]."' >";
                 }
-               
             }
             else{
                 echo "<th>".$header;
@@ -841,11 +820,9 @@ function loadtable_radio($str,$headers,$chkbox,$all,$class,$func){//paramerters 
         echo "</tr>";
         $j=1;
         foreach($data as $elem){
-           $i=0;
-          
+            $i=0;
             echo "<tr id='".$j."'>";
             $size=sizeof($elem);
-           
             foreach($elem as $e){
                 
                 if($chkbox){
@@ -863,7 +840,6 @@ function loadtable_radio($str,$headers,$chkbox,$all,$class,$func){//paramerters 
                     if($e=='activation'){
                         $e="For ".$e;
                     }
-                       
                     if($i==$size-1){
                         echo"<td class='last'>".$e."</td>";
                     }else{
@@ -890,7 +866,7 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
     //the $class is an array with 2 elements: 
     //1st elem is the class header of checkbox for check all and the second elem 
     //is the class name for each checkbox in the table rows
-   $db =new Database();
+    $db =new Database();
     $db->connect();
     $data=$db->selectrows($str,0);
     if($data!=null){
@@ -903,7 +879,6 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
                     echo"<input type='checkbox' 
                     class='".$class[0]."' >";
                 }
-               
             }
             else{
                 echo "<th>".$header;
@@ -913,11 +888,10 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
         echo "</tr>";
         $j=1;
         foreach($data as $elem){
-           $i=0;
-          
+            $i=0;
             echo "<tr id='".$j."'>";
             $size=sizeof($elem);
-           
+
             foreach($elem as $e){
                 
                 if($chkbox){
@@ -931,7 +905,6 @@ function loadtable($str,$headers,$chkbox,$all,$class){//paramerters are as follo
                     if($e=='activation'){
                         $e="For ".$e;
                     }
-                       
                     if($i==$size-1){
                         echo"<td class='last'>".$e."</td>";
                     }else{
@@ -980,74 +953,74 @@ function load_news($sql) {
     }     
 }
 
-  function load_news_to_print($sql) {
+function load_news_to_print($sql) {
     $db= new Database();
     $db->connect();
     $result = $db->selectrows($sql, 0);
     if($result){
-      $html = "";
-      foreach($result as $row){
+        $html = "";
+        foreach($result as $row){
         $html .= '<br><div class="news-container">';
         $html .= '<img class="news-image" src="'.$row["news_url"].'" alt="news Image '.$row["news_ref"].'" title="Double click to proceed on the reference" ondblclick="window.open(\''.$row["news_ref"].'\',\'_blank\')">';
         $html .= '<div><p class="news-name">'.$row["news_title"].'</p>';
         $html .= '<p class="news-description">'.$row["news_desc"].'</p>';
         $html .= '</div></div><br>';
-      }
-      return $html;
+    }
+    return $html;
     }
     else{
-      return null;
+        return null;
     }     
-  }
-  
-  function load_hf_map($db, $sql) {
-    $result = $db->selectrows($sql, 0);
-    if ($result) {
-      $stations = array();
-      foreach ($result as $row) {
-        $station = array(
-          "station_name" => $row["station_name"],
-          "station_lat" => $row["station_lat"],
-          "station_long" => $row["station_long"],
-          "station_status" => $row["station_status"],
-          "station_desc" => $row["station_desc"]
-        );
-        array_push($stations, $station);
-      }
-        return $stations;
-    } else {
-         return null;
-    }
-  }
+}
 
-    
-  function load_hf_map_2($db, $sql) {
+function load_hf_map($db, $sql) {
     $result = $db->selectrows($sql, 0);
     if ($result) {
-      $stations = array();
-      foreach ($result as $row) {
+        $stations = array();
+        foreach ($result as $row) {
         $station = array(
-          "station_name" => $row["station_name"],
-          "station_lat" => $row["station_lat"],
-          "station_long" => $row["station_long"],
-          "weather" => $row["weather"],
-          "signal_status" => $row["signal_status"]
+            "station_name" => $row["station_name"],
+            "station_lat" => $row["station_lat"],
+            "station_long" => $row["station_long"],
+            "station_status" => $row["station_status"],
+            "station_desc" => $row["station_desc"]
         );
         array_push($stations, $station);
-      }
+    }
         return $stations;
     } else {
-         return null;
+        return null;
+    
     }
-  }
-  
+}
+    
+    function load_hf_map_2($db, $sql) {
+    $result = $db->selectrows($sql, 0);
+    if ($result) {
+        $stations = array();
+        foreach ($result as $row) {
+        $station = array(
+            "station_name" => $row["station_name"],
+            "station_lat" => $row["station_lat"],
+            "station_long" => $row["station_long"],
+            "weather" => $row["weather"],
+            "signal_status" => $row["signal_status"]
+        );
+        array_push($stations, $station);
+    }
+        return $stations;
+    } else {
+        return null;
+    }
+}
+
 
 
 function office_combobox(){
 	echo "<select id='office' name='office' >";
 							
-         $str="SELECT id,office_name FROM office";
-         loadropdown($str,"id","office_name","Offices");//function for loading values into the dropdown accepts sql command and name of columns 
+    $str="SELECT id,office_name FROM office";
+    loadropdown($str,"id","office_name","Offices");//function for loading values into the dropdown accepts sql command and name of columns 
 							
 	echo"</select>";
 }
@@ -1057,7 +1030,7 @@ function loadropdown1($str,$col1,$col2){//the second  dropdown has others
     $db->connect();
 
     $data=$db->selectrows($str,0);
-   
+
     if($data!=null){
         echo"<option value=0>Select from Options Below</option>";
         foreach($data as $d){
@@ -1209,7 +1182,7 @@ function loadropdown($str,$col1,$col2,$from){
     $db = new Database();
     $db->connect();
     $data=$db->selectrows($str,0);  
-   
+
     if($data!=null){
         echo"<option value=0>Select from Options Below</option>";
         foreach($data as $d){
@@ -1226,10 +1199,10 @@ function loadlist_withcheck($str,$col1,$col2,$from){
     $db = new Database();
     $db->connect();
     $data=$db->selectrows($str,0);  
-   
+
     if($data!=null){
         echo"<dt value=0><input type='checkbox' id='all_checker'> Select/Unselect all</dt>";
-       
+
         foreach($data as $d){
             echo "<dt value='".$d[$col1]."' class='HF_Status_dynamic'><input type='checkbox' class='hf_look4_checked' id='".str_replace(" ","_",$d[$col1])."_checker'> ".$d[$col2]."</dt>";
         }
@@ -1245,7 +1218,7 @@ function load_label_input($str, $div2,$class,$col1,$col2,$col3){
     $data=$db->selectrows($str,0);
     $elem="";
     if($data!=null){
-       
+
         foreach($data as $d){
             echo"<div class'".$div2."'><label>".ucfirst($d[$col2])."</label> <input type='hidden' id='".$d[$col1]."' value='".encrypt($d[$col1])."'><input class='".$class."' type='text' id='".$d[$col2]."'";
             if($col3!=""){
@@ -1268,7 +1241,7 @@ function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deaful
     $db = new Database();
     $db->connect();
     $data=$db->selectrows($str,0);
-   
+
     if($data!=null){
         echo"<option value=0>Select Below</option>";
         foreach($data as $d){
@@ -1281,10 +1254,10 @@ function loadropdown_encrypt($str,$col1,$col2,$from,$abrv){//$from is the deaful
                 else{
                     $val=$val."%".$d[$c];
                 }
-              
+
                 $c1++;
             }
-          
+
             $abr=$d[$col2];
             $start=strpos($abr,"(");
             $end=strpos($abr,")");
@@ -1317,23 +1290,23 @@ function loadintodb(){
     $lastRow = (int)$worksheet->getHighestRow();
     $lastCol=$worksheet->getHighestColumn();
     
-     $excel_arr=$worksheet->toArray(null,true,true,false);//parameters are as follows what data should be returend if there are no data in sheet, weather to evaluate formulas in sheets, weaher the data will have decimal, weather the index will be excalty same with the sheets if value is true the index should be row[1]['A] is the first element else row[0][0]
+    $excel_arr=$worksheet->toArray(null,true,true,false);//parameters are as follows what data should be returend if there are no data in sheet, weather to evaluate formulas in sheets, weaher the data will have decimal, weather the index will be excalty same with the sheets if value is true the index should be row[1]['A] is the first element else row[0][0]
     //echo $excel_arr[0][0];
     //$cast_lastrow=(int)$lastRow;
     //echo "<br>".$lastCol;
     $db=new Database();
     $db->connect();
-   $num=1;
-   $reg="";
-   $prov="";
-   $muni="";
-   $brgy="";
-   $regid=1;
-   $provid=1;
-   $munid=1;
-   $brgyid=1;
-   $queries=array();
-   
+    $num=1;
+    $reg="";
+    $prov="";
+    $muni="";
+    $brgy="";
+    $regid=1;
+    $provid=1;
+    $munid=1;
+    $brgyid=1;
+    $queries=array();
+
   //echo $lastRow."<br>";
   //the idea is to scan each line of data in excel
   //first it checks if the regional id in the next row is not the same
@@ -1353,7 +1326,7 @@ function loadintodb(){
         $data=array("geocode"=>$excel_arr[$row][0],"regcode"=>$excel_arr[$row][2],"regname"=>$excel_arr[$row][4],
                     "provcode"=>$excel_arr[$row][6],"provname"=>$excel_arr[$row][7],"municode"=>$excel_arr[$row][11],
                     "muniname"=>$excel_arr[$row][12],"brgycode"=>$excel_arr[$row][14],"brgyname"=>$excel_arr[$row][15],
-                     "lat"=>$excel_arr[$row][16],"long"=>$excel_arr[$row][17]);
+                    "lat"=>$excel_arr[$row][16],"long"=>$excel_arr[$row][17]);
         /*echo $excel_arr[$row][0]." -0- ".$excel_arr[$row][2]." -2- ".
         $excel_arr[$row][4]." -4- ".$excel_arr[$row][6]." -6- ".
         $excel_arr[$row][7]." -7- ".$excel_arr[$row][8]." -8- ".
@@ -1366,37 +1339,36 @@ function loadintodb(){
             $query="insert into region (id,reg_code,name,geocode)
             values (".$regid.",'".$data["regcode"]."','".$data["regname"]."','".$data["regcode"]."0000000')";
              //echo "<br><br>".$num." ".$query."<br>";
-             array_push($queries,$query);
-             $reg=$data["regcode"];
-               $db->insert($query);
-              $regid++;
-              $num++;
-            
-        }
+            array_push($queries,$query);
+            $reg=$data["regcode"];
+            $db->insert($query);
+            $regid++;
+            $num++;
+            }
         //this is for the province
-       if($prov!=$data["provcode"]){
+    if($prov!=$data["provcode"]){
         $query="insert into province (id,reg_id,prov_code,name, geocode)
         values (".$provid.",".($regid-1).",'".$data["provcode"]."',
         '".$data["provname"]."','".$data["regcode"].$data["provcode"]."00000')";
          //echo $num." ".$query."<br>";
-         $prov=$data["provcode"];
-       $db->insert($query);
-       array_push($queries,$query);
+        $prov=$data["provcode"];
+        $db->insert($query);
+        array_push($queries,$query);
         $provid++;
         $num++;
-       }
+    }
        //this is fo rthe minicipality
-       if($muni!=$data["municode"]){
-       $query="insert into municipality (id,province_id, muni_code, name, geocode)
-       values (".$munid.",".($provid-1).",'".$data["municode"]."',
-       '".$data["muniname"]."','".$data["regcode"].$data["provcode"].$data["municode"]."000')";
+    if($muni!=$data["municode"]){
+        $query="insert into municipality (id,province_id, muni_code, name, geocode)
+        values (".$munid.",".($provid-1).",'".$data["municode"]."',
+        '".$data["muniname"]."','".$data["regcode"].$data["provcode"].$data["municode"]."000')";
         //echo $num." ".$query."<br>";
         $muni=$data["municode"];
-         $db->insert($query);
-         array_push($queries,$query);
-       $munid++;
-       $num++;
-       }
+            $db->insert($query);
+            array_push($queries,$query);
+        $munid++;
+        $num++;
+    }
        //except for the branagay since each row in excell that contains unique brgy id and name
 
         $query="insert into barangay (id,muni_id,brgy_code, name, `long`,lat,geocode)
@@ -1405,15 +1377,15 @@ function loadintodb(){
         .$data["regcode"].$data["provcode"].$data["municode"].
         $data["brgycode"]."')";
         // echo $num." ".$query."<br>";
-         array_push($queries,$query);
-      $db->insert($query);
-       $brgyid++;
+        array_push($queries,$query);
+        $db->insert($query);
+        $brgyid++;
 
         $brgy=$data["brgycode"];  
         $num++;
     }
     echo $queries[43807]." ".$num;
-  $db->close();
+    $db->close();
 }
 
 //echo rand_aphanumeric(40);
@@ -1484,21 +1456,18 @@ function decrypt($data) {
 function reroute($level,$destination){//$level is for the access level, 2nd paramenter is for the destination of reroute if $_SESSION["auth_level"]<=$elvel 
     $statusCode="";
     if(intval($_SESSION["auth_level"])<=$level){
-      
         header('Location: ' . $destination, true, $statusCode);
         die();
-      }
+    }
 }
 function test2(){
-   
         $db= new Database();
         $db->connect();
         $status='activating';
         $sql="SELECT id,date_logged,disaster,`status`
-         FROM etc_disaster_view where `status`='".$status."' order by id";
+    FROM etc_disaster_view where `status`='".$status."' order by id";
         $result=$db->selectrows($sql,0);
         $counter=1;
-     
             $size=sizeof($result);
             echo $size;
 
@@ -1510,7 +1479,7 @@ function test(){
     $mydb = new Database();//connects to database using the object from codes.php
     $mydb->connect(); //connects ot db
     $staff_id=8;
-   
+
     $data=$mydb->selectrows("SELECT lname,gender FROM officials where id=". $staff_id,0);
     $lname=(!$data==0) ? $data[0]["lname"]: "Staff";
     $gender=(!$data==0) ? $data[0]["gender"]: "Mr./Ms.";
@@ -1607,7 +1576,7 @@ function update_session($data){
     foreach($data as $key => $value) {
         $_SESSION[$key]=$data[$key];
     }
- }
+}
  //echo $_SESSION["p"];
 // if(isset($_GET["fname"])){
 //    $_SESSION["fname"]=$_GET["fname"];
@@ -1619,11 +1588,11 @@ function update_session($data){
 //     header("Location:../userprofile.php");
 // }
 
-//echo $_SESSION["url"]. " ".decrypt($_SESSION["id"]);
-//echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
+// echo $_SESSION["url"]. " ".decrypt($_SESSION["id"]);
+// echo get_rows_string_delimeter("SELECT category,brgy_id,lat,`long`, COUNT(*) as `count` FROM deployed_assets_loc where id=2 group by  category","|","%");
 // echo summarize_list("Manpack Radio, Sat Phone, UHF Radio, Manpack Radio",
-  //"65464225, 356065065478581, a12312313, 65464225", 4);
- /*($str="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  , GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`, brgy_id,lat,`long`, count(*) as `count` FROM deployed_assets_loc i where id=2 group by  brgy_id order by brgy_id";
- $cols=array("brgy_id", "lat", "long", "category", "serial", "count");
- echo "<br>"."<br>".get_rows_implode($str,"@","%",$cols);*/
+// "65464225, 356065065478581, a12312313, 65464225", 4);
+// *($str="SELECT  GROUP_CONCAT( `category` SEPARATOR ', ') as category  , GROUP_CONCAT( `serial` SEPARATOR ', ') as  `serial`, brgy_id,lat,`long`, count(*) as `count` FROM deployed_assets_loc i where id=2 group by  brgy_id order by brgy_id";
+// $cols=array("brgy_id", "lat", "long", "category", "serial", "count");
+// echo "<br>"."<br>".get_rows_implode($str,"@","%",$cols);*/
 ?>
