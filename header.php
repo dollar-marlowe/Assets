@@ -484,25 +484,25 @@ border:solid 1px #33bbff;
 
          echo   "<div>";
          echo       "<input id='ac-1' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-1' id='home'><a href='home.php'><u>H</u>ome</a></label>";
+         echo       "<label for='ac-1' id='home'><a href='home'><u>H</u>ome</a></label>";
          echo  "</div>";
 
          echo   "<div>";
          echo       "<input id='ac-6' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-6'>My <u>P</u>rofile</label>";
          echo       "<article class='ac-small'>";
-         echo           "<a href='userprofile.php'><u>V</u>iew Profile</a>";
-         echo           "<a href='editprofile.php'>E<u>d</u>it Profile</a>"; 
+         echo           "<a href='userprofile'><u>V</u>iew Profile</a>";
+         echo           "<a href='editprofile'>E<u>d</u>it Profile</a>"; 
          echo       "</article>";
          echo   "</div>";
          if($_SESSION["auth_level"]>=1 && $_SESSION["auth_level"]!=2.5){
          echo   "<div>";
-         echo       "<input id='ac-2' name='accordion-1' type='checkbox' >";
+         echo       "<input id='ac-2' name='accordion-1' type='checkbox'>";
          echo       "<label for='ac-2'><u>A</u>ssets</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='assets.php'>Assets <u>D</u>ata Entry</a>";
-         echo           "<a href='assets_mgt.php'>A<u>s</u>sets Management</a>"; 
-         echo           "<a href='assetsmap.php'>Assets <u>M</u>ap</a>";
+         echo           "<a href='assets'>Assets <u>D</u>ata Entry</a>";
+         echo           "<a href='assets_mgt'>A<u>s</u>sets Management</a>"; 
+         echo           "<a href='assetsmap'>Assets <u>M</u>ap</a>";
          echo       "</article>";
          echo   "</div>";
          }
@@ -511,8 +511,8 @@ border:solid 1px #33bbff;
          echo       "<input id='ac-5' name='accordion-1' type='checkbox' >";
          echo       "<label for='ac-5'><u>E</u>TC</label>";
          echo       "<article class='ac-medium'>";
-         echo           "<a href='disaster_edit.php'><u>H</u>azards Management</a>";
-         echo           "<a href='risk_management.php'><u>R</u>isk Management</a>
+         echo           "<a href='disaster_edit'><u>H</u>azards Management</a>";
+         echo           "<a href='risk_management'><u>R</u>isk Management</a>
                           <a href=''>ETC <u>D</u>eactivation</a>"; 
          echo       "</article>";
          echo   "</div>";
@@ -525,9 +525,9 @@ border:solid 1px #33bbff;
          echo       "<label for='ac-3'><u>O</u>ffice Management</label>";
          echo       "<article class='ac-medium'>";
      
-         echo           "<a href='officesentry.php'>Office <u>D</u>ata Entry</a>";
-         echo           "<a href='officialsentry.php'><u>P</u>ersonnel Data Entry</a>"; 
-         echo           "<a href='loginaccount.php'>Personnel's <u>U</u>ser Account</a>";
+         echo           "<a href='officesentry'>Office <u>D</u>ata Entry</a>";
+         echo           "<a href='officialsentry'><u>P</u>ersonnel Data Entry</a>"; 
+         echo           "<a href='loginaccount'>Personnel's <u>U</u>ser Account</a>";
          
          echo       "</article>";
          echo   "</div>";        
@@ -539,10 +539,10 @@ border:solid 1px #33bbff;
           echo       "<label for='ac-7'><u>H</u>F Management</label>";
           echo       "<article class='ac-large'>";
       
-          echo           "<a href='hf_main.php'>HF Station Main <u>P</u>age</a>";
-          echo           "<a href='hf_daily.php'><u>H</u>F Station Daily Log</a>"; 
-          echo           "<a href='hf_entry.php'>HF Station Data <u>E</u>ntry</a>";
-          echo           "<a href='hf_daily_analytics.php'>HF Station <u>A</u>nalytics</a>";
+          echo           "<a href='hf_main'>HF Station Main <u>P</u>age</a>";
+          echo           "<a href='hf_daily'><u>H</u>F Station Daily Log</a>"; 
+          echo           "<a href='hf_entry'>HF Station Data <u>E</u>ntry</a>";
+          echo           "<a href='hf_daily_analytics'>HF Station <u>A</u>nalytics</a>";
 
          echo       "</article>";
          echo   "</div>";
@@ -550,7 +550,7 @@ border:solid 1px #33bbff;
           
          echo   "<div>";
          echo       "<input id='ac-4' name='accordion-1' type='checkbox' />";
-         echo       "<label for='ac-4'><a href='logout.php'><u>L</u>ogout</a></label>";
+         echo       "<label for='ac-4'><a href='logout'><u>L</u>ogout</a></label>";
          echo  "</div>";
          echo "</section>";
         }

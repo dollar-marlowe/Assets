@@ -33,7 +33,7 @@
       echo $msg." ".$msg2;
     }
     else{
-        echo "<script>window.location='../login.php';</script>";
-    }
+        include "ajax_out.php";
+      }
 
 ?>

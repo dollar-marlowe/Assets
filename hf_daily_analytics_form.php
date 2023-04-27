@@ -204,6 +204,14 @@
 				
 			}
 
+			#get_start_date{
+				font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;
+			}
+			
+			#get_end_date{
+				font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;
+			}
+
 		@media (max-width:1267px){
 			.imgform-container{
 				display:block;
@@ -261,7 +269,23 @@
 			#map_hf_all{
 			display:block;
 			}
+
+			#date_range_con{
+				display: block;
+			}
+		
+			#get_start_date{
+				font-size: 10px;
+		
+			}
+			#get_end_date{
+				font-size: 10px;
+		
+			}
+			.lbl_dim{
+				font-size: 10px;
 			
+			}
 			}
 			#hf_filter_status{
 				display: block;
@@ -490,6 +514,14 @@
 			list-style-position: inside;
 		} */
 
+		#list_station_suggestions{
+			list-style-type: disc;
+			-webkit-columns: 3;
+			-moz-columns: 3;
+			columns: 3;
+			list-style-position: inside;
+		}
+
 
 </style>
 
@@ -525,11 +557,11 @@
 					<div class="label_show_card" style="padding:20px 5px;" id="station_daily_Analytics_div">
 						<p class="label"><label >HF Frequency Monitoring</label></p>
 						<div id="date_range_con">
-								<p class="label"><label for="disaster">Start Date:</label></p>
-								<input type="date" id="get_start_date"  class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;">
+								<p class="label lbl_dim"><label for="disaster">Start Date:</label></p>
+								<input type="date" id="get_start_date"  class="station_log station_multi ">
 								<!--end date -->
-								<p class="label"><label for="disaster">End Date:</label></p>
-								<input type="date" id="get_end_date" class="station_log station_multi" style="font-size: 18px; margin-right:10px; margin-left:10px; padding:5px; height:inherit;">
+								<p class="label lbl_dim"><label for="disaster">End Date:</label></p>
+								<input type="date" id="get_end_date" class="station_log station_multi ">
 								<input type='submit' Value='Filter' class="btn btn-primary" id="enter_date_range" style="color:black;font-weight:800;background-color: white; ">
 								<!-- <p id="enter_date_range" class="label_show_card" style="padding:2px; margin:2px; width:fit-content"><label style="padding:2px; margin:2px; width:fit-content"> FILTER</label></p> -->
 							</div>
@@ -564,10 +596,10 @@
 				<p class="lbl_wrap" id="accounts"><img src="images\compass4.png"><u>A</u>ctive HF Stations List by Time</p>
 				</div>
 				<div class="imgform-container " id="station_time_div">
-					<div class="imgform-img">
+					<div class="imgform-img" style="width:100%;">
 						<div class="label_show_card" style="width:100%;">
-                                <p class="label"><label>Possible Active Stations</label></p>
-                                <ul id="list_station_remarks" style="font-size:12px; text-align:left;  padding:5px 20px;">
+                                <p class="label"><label>Frequently Active Stations</label></p>
+                                <ul id="list_station_suggestions" style="font-size:12px; text-align:left;  padding:5px 20px;">
                                     <?php
 										$timezone = new DateTimeZone('GMT+8');
 										$start = new DateTime('now', $timezone);
@@ -673,8 +705,8 @@
 							data: officeCountsArray.map(function(item) {
 								return item.sunnyCount;
 							}),
-							backgroundColor: 'rgba(255, 206, 86, 0.2)',
-							borderColor: 'rgba(255, 206, 86, 1)',
+							backgroundColor: 'rgba(255, 165, 0, 1)',
+							borderColor: 'rgba(255, 165, 0, 0.2)',
 							borderWidth: 1
 							
 						},
@@ -683,8 +715,8 @@
 							data: officeCountsArray.map(function(item) {
 								return item.cloudyCount;
 							}),
-							backgroundColor: 'rgba(255, 99, 132, 0.2)',
-							borderColor: 'rgba(255, 99, 132, 1)',
+							backgroundColor: 'rgba(37, 150, 190, 1)',
+							borderColor: 'rgba(255, 99, 132, 0.2)',
 							borderWidth: 1
 						},
 						{
@@ -692,8 +724,8 @@
 							data: officeCountsArray.map(function(item) {
 								return item.rainyCount;
 							}),
-							backgroundColor: 'rgba(54, 162, 235, 0.2)',
-							borderColor: 'rgba(54, 162, 235, 1)',
+							backgroundColor: 'rgba(46, 182, 25, 1)',
+							borderColor: 'rgba(54, 162, 235, 0.2)',
 							borderWidth: 1
 						}
 					]

@@ -719,11 +719,11 @@
 												<div id="attributes2" class="halfcol"   style="float:right;padding-bottom:10px;" >
 												<p class="box_label"><span><u>R</u>isk</span></p><br>
 													<div class="input_wrapper">
-														<p class="label">Pobability</p>
+														<p class="label">Probability</p>
 														<select id="probability">
 																<option value="0">Select</option>
 																
-																<option value="D Certain/Immenent">D Certain/Immenent</option>
+																<option value="D Certain/Imminent">D Certain/Imminent</option>
 																<option value="C Highly Likely">C Highly Likely</option>
 																<option value="B Less Likely">B Less Likely</option>
 																<option value="A Unlikely">A Unlikely</option>
@@ -736,7 +736,7 @@
 																<option value="4 Catastrophic">4 Catastrophic</option>
 																<option value="3 Major">3 Major</option>
 																<option value="2 Minor">2 Minor</option>
-																<option value="1 Neglegible">1 Neglegible</option>
+																<option value="1 Negligible">1 Negligible</option>
 														</select>
 													</div>
 												
@@ -832,7 +832,7 @@
 																<option value="4 Catastrophic">4 Catastrophic</option>
 																<option value="3 Major">3 Major</option>
 																<option value="2 Minor">2 Minor</option>
-																<option value="1 Neglegible">1 Neglegible</option>
+																<option value="1 Negligible">1 Negligible</option>
 														</select>
 													</div> 
 													<div class="input_wrapper">
@@ -1153,7 +1153,7 @@ $(document).ready(function(){
 	function desc_risk(val,type){
 		var table="";
 		if(type=="risk"){
-			if(val=="D Certain/Immenent"){
+			if(val=="D Certain/Imminent"){
 			table="<table id='desc_risk'> \
 			<tr><td colspan='2'>"+val+" \
 			<tr><td>Tropical Cyclone Track/Floods/Lanslide: <td> More than 2 Provinces/highly urbanized cities exposed \
@@ -1212,7 +1212,7 @@ $(document).ready(function(){
 				<tr><td>Affected Pupulation: <td> 10% of the overall Regional Population \
 				</table>";
 			}
-			if(val=="1 Neglegible"){
+			if(val=="1 Negligible"){
 				table="<table id='desc_risk'> \
 				<tr><td colspan='2'>"+val+" \
 				<tr><td>Wind Impact: <td>No ropical Cyclone Wind Signal  \
