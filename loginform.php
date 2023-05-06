@@ -1,20 +1,26 @@
-
-	 <section id="imgform" style="width:100%;height:100%;margin:auto;
-	 display:flex;background:fit-content;z-index:2;padding-bottom:150px;padding-top:150px;" >
-      <div class="imgform-container container" style="width:350px;margin:auto;box-shadow:5px 5px 25px #3f4240;">
-        
-        <div class="form-container" style="width:100%;margin:auto;" >
-       <div id='form_title'></div>
-				<input type="text" placeholder="Username*" id="username"/>
-				<input type="password" placeholder="Password*" id="password"/>
-        <input type="password" placeholder="Repeat Password*" id="repassword"/>
-				
-				<input type='submit' Value='L O G I N' class="btn btn-primary"  style="color:white;font-weight:500;border-radius:10px;"  id="submitlogin">
-       <!--  <input type='submit' Value='Clear' class="btn btn-primary"  style="color:white;font-weight:800;"  id="clearlogin">
-			 -->
+<section id="imgform-wrapper">
+      <div class="form-wrapper">
+        <div id='form_title'></div>
+        <div class="form-space">
+          <form class="login-form" method='post'>
+              <div class="input-box">
+                <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                <input type="text" id="username" required>
+                <label>Username</label>
+              </div>
+              <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                <input type="password" id="password" required>
+                <label>Password</label>
+              </div>
+              <div class="remember">
+                <label><input type="checkbox"> Remember me</label>
+              </div>
+                <input type='submit' Value='LOGIN' class="btn btn-primary" id="submitlogin">
+            </div>
         </div>
       </div>
-    </section>
+</section>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="JS/mm.js"></script>
     <script>
@@ -34,7 +40,6 @@
                     if(err_label<1){
                       $("#loginheader").after("<p  style='color:red' id='msgerrlogin'>Required Feild(s)* cannot be empty!</p>");
                       err_label++;
-                     
                     }
                     return false;
                   }else{

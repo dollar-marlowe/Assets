@@ -19,24 +19,21 @@ body {
 /* ///////////..utility classes../////////// */
 
 .container {
-   
   width: 90%;
   margin: auto;
 }
 
 .btn {
- 
   padding: 0.5em 1.5em;
   text-decoration: none;
-   cursor: pointer;
-    margin-top: 1em;
+  cursor: pointer;
+  margin-top: 1em;
   text-transform: uppercase;
   font-weight: small;
   display:inline-block;
 	position: relative;
 	border: 2px solid rgb(45, 44, 46);
 	transition: 0.2s ease;
-
 }
 
 .btn-primary {
@@ -503,7 +500,6 @@ box-shadow: -1px -1px 9px 6px rgba(0,0,0,0.34);
 @keyframes about-img-animation {
   100% {
     transform: translate(0);
- 
   }
 }
 
@@ -719,7 +715,6 @@ box-shadow: -1px -1px 9px 6px rgba(0,0,0,0.34);
   padding: 2rem 0;
   background: white;
 
-  
 }
 .imgform-container {
   display: flex;
@@ -727,7 +722,6 @@ box-shadow: -1px -1px 9px 6px rgba(0,0,0,0.34);
   margin-top:-0px;
   border: solid 1px rgb(209, 208, 208);
   border-radius: 5px;
- 
 }
 
 .imgform-img {
@@ -792,6 +786,7 @@ box-shadow: -1px -1px 9px 6px rgba(0,0,0,0.34);
 .form-container a {
   font-size: 1.3rem;
 }
+
 #footer{
   box-shadow: -1px -0.2px rgb(7, 7, 7);
   background: rgb(228, 227, 227);

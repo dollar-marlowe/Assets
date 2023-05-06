@@ -11,49 +11,26 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
       integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"          
-    />
+      referrerpolicy="no-referrer">
     <?php clearstatcache(true,'CSS/rubio.css'); ?>
-    <link rel="stylesheet" href="CSS/rubio.css?rnd=132"> 
-	
-  </head>
-  <style>
-    body{
-      background:url("images/bg2.png") center no-repeat;
-      /* background-size:100%; */
-      /*background-position: 50% 11%;*/
-      /* width:auto;
-      height:100%; */
-      background-size: cover;
-       -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -moz-background-size: 100% 100%; /* used for firefox */
-      -o-background-size: cover;
-      background-size: cover;
-    /*  background-size: auto; */
-    
+    <link rel="stylesheet" href="CSS/rubio.css?rnd=132">
+    <link rel="stylesheet" type="text/css" href="CSS/landing-page.css?v=<?php echo filemtime('CSS/landing-page.css'); ?>">
 
-    }
-    
-    @media (max-width: 900px){
-      
-    }
-    #imgform{
-      background:none;
-    }
-    #form_title{
-      height:100px;
-      width:100%;
-      background: url("images/samp5.png") center no-repeat;
-       background-size:100%;
-    }
-  </style>
+  </head>
   <body>
+    <header>
+      <h2 class='logo-login'>DRRMF Shared Assets Management Portal</h2>
+      <nav class="navigation">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <button class="btnLogin-popup">Login</button>
+      </nav>
+    </header>
     <?php
   
     include "ALGO/codes.php";
    // $_SESSION["auth"]=false;
-   
+
     if(isset($_SESSION["auth"])){
       if($_SESSION["auth"] &&   $_SESSION["status"]=="active" ){
         header("Location:home.php");
@@ -72,5 +49,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script src="JS/flexi.js"></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </html>
 </html>
