@@ -600,12 +600,12 @@
 							function(data){
 								//alert(data);
 								if(data=="New record created!"){
-									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
+									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",100);
 									load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
 									setTimeout(function() {
 										$("#clear").click();
 										window.location.reload();
-									}, 2000);
+									}, 1000);
 									 
 								}else{
 									alert("All fields are required to be filled with input.");
@@ -631,12 +631,12 @@
 							function(data){
 								// alert(data);
 								if(data=="New record created!"){
-									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
+									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",100);
 									load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
 									setTimeout(function() {
 										$("#clear").click();
 										window.location.reload();
-									}, 2000);
+									}, 1000);
 									
 									 
 								}else{
@@ -662,12 +662,12 @@
 							function(data){
 								// alert(data);
 								if(data=="New record created!"){
-									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",600);
+									Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>Record has been successfully updated!</b>",100);
 									load_hf_table("#hf_table","all%item","%Station Name%Station_Code%Region_Code%Region%Prov_Code%Province%Muni_Code%Municipality%Brgy.Code%Barangay%Status%Lat%Long%desc","hf_id, station_name, station_code, station_region, region, station_province, province, station_municipality, municipality, station_barangay, barangay, station_status, station_lat, station_long, station_desc",'true','false',"national","");
 									setTimeout(function() {
 										$("#clear").click();
 										window.location.reload();
-									}, 2000);
+									}, 1000);
 								  
 								}else{
 									alert("All fields are required to be filled with input.");

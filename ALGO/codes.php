@@ -1261,17 +1261,60 @@ function count_comparizon($str) {
         $max_date = date("F j", strtotime($data["max_date"]));
         $date_logs = $data["date_logs"];
         if ($count_logs > $date_logs) {
-            echo "<i class='fas fa-arrow-down' style='color:red;'></i></span><br>REPORTED LOGS</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+            echo "<i class='fas fa-arrow-down' style='color:red;'></i>  </span><br>REPORTED LOGS</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
         } else if ($count_logs == $date_logs) {
-            echo "<i class='fas fa-check-circle' style='color:yellow;'></i></span><br>REPORTED LOGS</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+            echo "<i class='fas fa-check-circle' style='color:lightgreen;'></i> </span><br>REPORTED LOGS</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
         } else {
-            echo "<i class='fas fa-arrow-up' style='color:lightgreen;'></i></span><br>REPORTED LOGS</label> <br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+            echo "<i class='fas fa-arrow-up' style='color:lightgreen;'></i> </span><br>REPORTED LOGS</label> <br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
         }
     } else {
         echo "</span><br>REPORTED LOGS<br><span>No Previous Data To Be Compared.</span>";
     }
 }
 
+function count_comparizon_station($str) {
+    $db = new Database();
+    $db->connect();
+    $data = $db->select_two($str, "count_logs", "max_date","date_logs");
+
+    if (!is_null($data)) {
+        $count_logs = reset($data);
+        $max_date = date("F j", strtotime($data["max_date"]));
+        $date_logs = $data["date_logs"];
+        if ($count_logs > $date_logs) {
+            echo "<i class='fas fa-arrow-down' style='color:red;'></i>  </span><br>HF STATIONS<br>REPORTED</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+        } else if ($count_logs == $date_logs) {
+            echo "<i class='fas fa-check-circle' style='color:lightgreen;'></i> </span><br>HF STATIONS<br>REPORTED</label><br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+        } else {
+            echo "<i class='fas fa-arrow-up' style='color:lightgreen;'></i> </span><br>HF STATIONS<br>REPORTED</label> <br><label style='font-size: 12px;'> <span style='text-decoration:underline;'><b>" . $count_logs . "</b></span> reported on " . $max_date . "</label>";
+        }
+    } else {
+        echo "</span><br>HF STATIONS<br>REPORTED<br><span>No Previous Data To Be Compared.</span>";
+    }
+}
+
+
+function loadstationlist_hover($str,$col1,$col2,$col3,$from){
+    
+    $db = new Database();
+    $db->connect();
+    $data=$db->selectrows($str,0);
+    
+    echo "<ul>";   
+    if($data!=null){
+        //echo"<option value=0>Select from Options Below</option>";
+        
+        foreach($data as $d){
+            
+            echo "<li value='".$d[$col1]."' name='".encrypt($d[$col3])."'>".$d[$col2]."</li>";
+        
+        }
+    }
+    else{
+        echo"<li value='0'>Select from ".$from."</li>";
+    }
+    echo "</ul>";
+}
     // function count_possible_dupli($str) {
     //     $db = new Database();
     //     $db->connect();

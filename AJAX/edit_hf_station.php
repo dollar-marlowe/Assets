@@ -3,7 +3,7 @@
     include "../ALGO/codes.php";
 
     if(isset($_POST["hf_name"])){
-        $hf_id=decrypt($_POST["hf_id"]);;
+        $hf_id=decrypt($_POST["hf_id"]);
         $hf_name=removepecialchars($_POST["hf_name"]);
         $hf_code=removepecialchars($_POST["hf_code"]);
         $region=($_POST["region"]);
