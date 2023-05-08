@@ -16,14 +16,18 @@
         $today=date("Y-m-d H:m:s");     
         $str="";   
         if($operations=="ADD NEW"){
-        $str="insert into office (office_name,category,region_id,province_id,muni_id,brgy_id,date,`lat`,`long`) values (
-            '".$name."','".$cat."',".$region.",".$prov.",".$muni.",".$brgy.",'".$today."','". $lat."','". $long."')";
+        $str="insert into office (office_name,category,region_id,province_id,muni_id,brgy_id,date ) values (
+            '".$name."','".$cat."',".$region.",".$prov.",".$muni.",".$brgy.",'".$today."')";
         }
         if($operations=="SAVE EDITS"){
             $str="update office set office_name='".$name."',category='".$cat."',
-            region_id=".$region.", province_id=".$prov.",
-            muni_id=".$muni.",brgy_id=".$brgy.",date='".$today."',
-            `lat`='". $lat."',`long`='". $long."' where id=".$id;
+            region_id=".$region.",
+            province_id=".$prov.",
+            muni_id=".$muni.",
+            brgy_id=".$brgy.",
+            date='".$today."',
+            `lat`='". $lat."',
+            `long`='". $long."' where id=".$id;
         }
        $mydb = new Database();
        $mydb->connect();

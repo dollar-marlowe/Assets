@@ -492,11 +492,25 @@
 			list-style-position: inside;
 		} */
 
+/* CSS for the modal */
+#list_div {
+  z-index: 9999;
+  text-align: center;
+  font-size: 16px;
+ 
+}
+
+#list_div_logs {
+  z-index: 9999;
+  text-align: center;
+  font-size: 16px;
+ 
+}
 
 </style>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 
@@ -517,7 +531,7 @@
 <section id="station_entry_form">
 	<!-- DAILY -->
 	<div>
-	<p class="lbl_wrap"  style="text-align:center; margin:0px; width:100%; justify-content:center;" onclick="slide('#daily_HF_main_DIV')">HF MODULE MAIN PAGE</p>
+	<p class="lbl_wrap"  style="text-align:center; margin:0px; width:100%; justify-content:center;" onclick="slide('#daily_HF_main_DIV')"><b>HIGH FREQUENCY STATIONS DASHBOARD</b></p>
 	<div id="daily_HF_main_DIV" style=" width:100%; display:flex; flex-direction: row; align-content: flex-start;">
 		<div style="align-self:stretch;" id="hf_info_only">
 			<!-- first Panel -->
@@ -525,7 +539,12 @@
 				<p class="lbl_wrap" id="hf_daily_summary_lbl" onclick="slide('#station_daily_DA_div')" ><img src="images\compass4.png">Daily Monitoring</p>
 					<div class="pannel_holder" id = "station_daily_DA_div">
 							<div>
-								<p class="label_show_card" style="padding:10px 5px;">HF STATIONS<br><label><b><span style="font-size: 40px;text-decoration:underline; color:orange;" id="span_counter_total"></b>
+								<p class="label_show_card" style="padding:10px 5px;" id="label_reported_logs">
+								<label style="width:50%;">
+									<b>
+										<span style="font-size: 40px;text-decoration:underline; color:orange;" id="span_counter_total">
+									</b>
+								<!-- end tags are included at php -->
 								<?php
 									
 									$str = "SELECT 
@@ -546,6 +565,34 @@
 									count_comparizon($str);
 								?>
 								</p>
+
+								<div>
+									<p class="label_show_card" style="padding:10px 5px;" id="label_with_hover">
+										<label style="width:50%;">
+											<b>
+												<span style="font-size: 40px;text-decoration:underline; color:orange;" id="listCount_sta">
+											</b>
+											<?php
+									
+									$str = "SELECT 
+											COUNT(DISTINCT station_name) AS count_logs,
+											MAX(log_date) AS max_date, 
+											(SELECT COUNT(*) 
+											FROM trial_daily_log 
+											WHERE log_date = CURDATE()) AS date_logs 
+										FROM trial_daily_log 
+										WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY) 
+											AND log_date = ( 
+												SELECT MAX(log_date) 
+												FROM trial_daily_log 
+												WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 DAY) AND DATE_ADD(CURDATE(), INTERVAL -1 DAY) 
+											) 
+										GROUP BY log_date;";
+
+									count_comparizon_station($str);
+								?>
+									</p>
+								</div>
 								
 								<div class="label_show_card" style="padding:20px 5px;">
 									<p class="label"><label >Monitored Weather</label></p>
@@ -1092,6 +1139,8 @@
 		});
 
 
+
+	
 	var rowCount = $("#hf_daily_log_table tr").length;
 			//alert(rowCount);
 
@@ -1233,6 +1282,13 @@
 			}
 		}
 		});
+
+		$("#listCount_sta").text($("#list_station_log li").length);
+
+		
+
+
+
 
 
 		var rowCount_sta = $("#hf_table tr").length;
@@ -1518,8 +1574,10 @@
 				function(data){
 						// alert(data);
 						if(data=="New record created!"){
-							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",600);
+							Popup_modal_show("<h4>SYSTEM NOTIFICATION!</h4><br><b>New record has been created!</b>",100);
+							$("html, body").animate({scrollTop:0,}, 500, 'swing');
 							load_hf_daily_table("#hf_daily_log_table","all%item_log","%Station Name%Station Assignee%Date%Time%Weather%Signal Status%","hf_log_id, station_name, station_assignee, log_date, log_time, weather, signal_status",'true','false',"default","");
+							
 							$("#clear").click();
 						}else{
 							alert("All fields are required to be filled with input.");
@@ -1647,6 +1705,75 @@
 			});
 			//alert(filterValue);
 		});
+
+
+		// $("#span_counter_total").mouseenter(function(){
+		// 	var listItems = $("#list_station_log li");
+		// 	var values = [];
+		// 	listItems.each(function() {
+		// 		values.push($(this).text());
+		// 	});
+		// 	alert(values); // This will log an array of the text values of the <li> elements
+		// });
+		
+		// $("#label_with_hover").mouseenter(function(){
+		// 	var listItems = $("#list_station_log li");
+		// 	var values = [];
+		// 	listItems.each(function() {
+		// 		var text = $(this).text();
+		// 		text = text.replace(/ \(\w+:\s*\d{1,2}\)/g, ""); // Regular expression to find and remove the string " (Frequency: one or two digit value)" and the preceding colon
+		// 		values.push(text);
+		// 	});
+		// 	alert(values.join("\n")); // This will log an array of the text values of the <li> elements with the " (Frequency: one or two digit value)" string and the preceding colon removed, and separated by a next line character
+		// });
+
+		$("#label_with_hover").click(function(){
+			var listItems = $("#list_station_log li");
+			var values = [];
+			listItems.each(function() {
+				var text = $(this).text();
+				text = text.replace(/ \(\w+:\s*\d{1,2}\)/g, ""); // Regular expression to find and remove the string " (Frequency: one or two digit value)" and the preceding colon
+				values.push(text);
+			});
+			
+			var elem = "<div id='list_div'> \
+                <p><b>HF Stations List</b></p>\
+                <p>" + values.join("<br>") + "</p>\
+            </div>\
+           ";
+			
+			Popup_modal_show(elem, 00);
+			$(".big div div .label").css("text-align","center");
+			$(".big ").css("height","auto");
+			$(".big ").css("width","fit-content");
+
+		});
+
+		$("#label_reported_logs").click(function(){
+			var listItems = $("#list_station_log li");
+			var values = [];
+			listItems.each(function() {
+				var text = $(this).text();
+				// text = text.replace(/ \(\w+:\s*\d{1,2}\)/g, ""); // Regular expression to find and remove the string " (Frequency: one or two digit value)" and the preceding colon
+				values.push(text);
+			});
+			
+			var elem = "<div id='list_div_logs'> \
+                <p><b>HF Station Reported Logs </b></p>\
+                <p>" + values.join("<br>") + "</p>\
+            </div>\
+           ";
+			
+			Popup_modal_show(elem, 00);
+			$(".big div div .label").css("text-align","center");
+			$(".big ").css("height","auto");
+			$(".big ").css("width","fit-content");
+		});
+
+		// $("#label_with_hover").mouseleave(function(){
+		// 	$("span.close").click();
+
+		// });
 
 
 		// $(".item").click(function(){
